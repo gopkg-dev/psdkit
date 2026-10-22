@@ -32,6 +32,8 @@ PR 只构建；主分支和手动触发部署。部署作业单独具有 pages:w
 
 当前项目单独绑定 `psdkit.asin1.com`，DNS 的 CNAME 指向 `gopkg-dev.github.io`，不修改账号首页域名。
 线上 Jekyll 的 `baseurl` 为空，文档与 Demo 从域名根路径加载。
+此子域名启用 Cloudflare 代理，由现有边缘证书提供 HTTPS，源站仍为 GitHub Pages。
+HTTP 到 HTTPS 的重定向仅匹配 `psdkit.asin1.com`；不修改其他主机的 DNS、SSL 模式或重定向。
 
 ## 本地构建与预览
 
