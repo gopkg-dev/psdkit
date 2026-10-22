@@ -1,0 +1,41 @@
+{
+  "application": "Adobe Photoshop",
+  "version": "26.1.0",
+  "native_manifest": "verification/photoshop-gaussian-controls.json",
+  "input_seed": "0x505344",
+  "scope": "opaque radius .5/1/2 exact RGB8; alpha radius3/8/16 within two premultiplied bytes",
+  "files": [
+    {
+      "path": "gaussian-noise-alpha-input.png",
+      "sha256": "c14c07839cfae1ede24fcd9256f686cf2f354ccb7a81afeeca8acf39c3eeb154"
+    },
+    {
+      "path": "gaussian-noise-alpha-r16.png",
+      "sha256": "7bf5ad16636a01422fa506e2e238b1adba045bc513f544dd98fe9d84ba0bd5f1"
+    },
+    {
+      "path": "gaussian-noise-alpha-r3.png",
+      "sha256": "cb8db92ec0f1b52a6cd35437f2216ae98baa4264a3b67f687bd64f1ba5728ac8"
+    },
+    {
+      "path": "gaussian-noise-alpha-r8.png",
+      "sha256": "8893c3102fdcf3808140261eecaa02ede41bdd127ee7c19c7fa6109f8fed5876"
+    },
+    {
+      "path": "gaussian-noise-opaque-input.png",
+      "sha256": "0db5c4581d5d47e63cde07c48e0ffacb7acef90f04b6646be8712a34b04048bc"
+    },
+    {
+      "path": "gaussian-noise-opaque-r0p5.png",
+      "sha256": "1c5b40683ca144df214b0b5287b7c9664e939f9cfa10c50069ede00aa749a96a"
+    },
+    {
+      "path": "gaussian-noise-opaque-r1.png",
+      "sha256": "9b7df6e2825d20f7b80b21d1883790554c096f074cec313111c6a612756d6208"
+    },
+    {
+      "path": "gaussian-noise-opaque-r2.png",
+      "sha256": "eb36244f26e032bda606b62e89f86af2b5fb608aeacf0a8e9ca92b1c98ddbe84"
+    }
+  ]
+}

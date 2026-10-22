@@ -1,0 +1,10 @@
+* text=auto eol=lf
+*.psd binary
+*.psb binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ttf binary
+*.otf binary
+*.ttc binary
+*.wasm binary

@@ -1,0 +1,2442 @@
+{
+  "psdadjust.Apply": {
+    "Description": "Apply returns independently owned adjusted pixels with the source rectangle and exact original alpha.\nCaller-owned input buffers and parameters must remain immutable for the duration of the call.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "adjustment",
+      "options"
+    ]
+  },
+  "psdadjust.Compile": {
+    "Description": "Compile validates parameters and prepares a bounded immutable RGB8 transform.",
+    "Parameters": [
+      "adjustment",
+      "options"
+    ]
+  },
+  "psdadjust.Decode": {
+    "Description": "Decode reads an owned typed view of one supported Photoshop adjustment tagged-block payload.\nOriginal bytes remain in Raw. Unknown trailing fields, versions and modern CgEd semantics return ErrUnsupported.",
+    "Parameters": [
+      "ctx",
+      "key",
+      "data",
+      "options"
+    ]
+  },
+  "psdadjust.Encode": {
+    "Description": "Encode serializes a known RGB8 adjustment family, preserving original bytes when semantically unchanged.\nColor Balance's known metadata can round-trip unchanged while non-neutral rendering remains unsupported.\nWith Raw supplied, the original family and supported wire representation remain fixed.\nScalar and level edits patch original fields; changed curves retain the source channel sets and extra-marker version.",
+    "Parameters": [
+      "ctx",
+      "adjustment",
+      "options"
+    ]
+  },
+  "psdadjust.Error.Error": {
+    "Description": "Error implements error.",
+    "Parameters": []
+  },
+  "psdadjust.Error.Unwrap": {
+    "Description": "Unwrap exposes the error category to errors.Is.",
+    "Parameters": []
+  },
+  "psdadjust.Transform.RGB": {
+    "Description": "RGB evaluates one straight encoded-RGB sample, clamping inputs and outputs to zero through one.\nIt does not alter alpha or retain HDR values; callers supply alpha independently.",
+    "Parameters": [
+      "color"
+    ]
+  },
+  "psdcolor.Convert": {
+    "Description": "Convert returns owned, straight-alpha sRGB display pixels from original PSD channel samples.\nAt most one Options value is accepted. Metadata such as ICC, palette and saved-image alpha semantics\nmust be supplied by the caller; extra channels are never silently assumed to be transparency.",
+    "Parameters": [
+      "ctx",
+      "pixels",
+      "options"
+    ]
+  },
+  "psdcolor.DefaultOptions": {
+    "Description": "DefaultOptions returns explicit allocation limits with conservative display policies.\nICC, palette, transparency and source float encoding overrides remain caller metadata.",
+    "Parameters": []
+  },
+  "psdcolor.ProfileTransformWorkingBytes": {
+    "Description": "ProfileTransformWorkingBytes reports the conservative peak allocation reserved\nby TransformProfile, excluding caller-owned image and profile buffers. It performs\nthe same size, image buffer, profile envelope and budget checks without allocating\npixels or parsing curves. Successful estimation does not prove that all ICC tags\nor destination curves are supported. Zero budgets retain their documented defaults.",
+    "Parameters": [
+      "ctx",
+      "input",
+      "sourceICC",
+      "destinationICC",
+      "options"
+    ]
+  },
+  "psdcolor.TransformProfile": {
+    "Description": "TransformProfile converts straight RGB8 between explicitly supplied ICC profiles.\nIt implements relative colorimetric RGB matrix/TRC transforms without black-point\ncompensation. Empty profiles require AssumeSRGB. Alpha and the input rectangle\nare preserved in an owned, tightly packed result; all inputs remain unchanged.\nD50 PCS values stay float64 until the final destination RGB8 clipping and rounding.\nLUT profiles, singular matrices and noninvertible destination curves are unsupported.",
+    "Parameters": [
+      "ctx",
+      "input",
+      "sourceICC",
+      "destinationICC",
+      "options"
+    ]
+  },
+  "psdedit.BuildRasterContents": {
+    "Description": "BuildRasterContents returns owned PSD/PSB bytes suitable for ReplaceContents or an explicit linked resolver.\nIt retains the complete input canvas, straight-alpha layer samples and RGB values underneath zero alpha.\nInput offsets are normalized to canvas origin; row padding is ignored and input bytes remain untouched.\nRaw compression keeps allocation bounds predictable. Profile declaration does not convert the input pixels.",
+    "Parameters": [
+      "ctx",
+      "input",
+      "options"
+    ]
+  },
+  "psdedit.Create": {
+    "Description": "Create constructs an owned editable transparent RGB8 document without allocating blank pixel planes.\nWidth and height must fit the bounded RGB8 snapshot path; source precision creation is separate.\nThe first layer has handle 1 and can be populated with ReplacePixels, renamed or grouped.",
+    "Parameters": [
+      "ctx",
+      "width",
+      "height",
+      "options"
+    ]
+  },
+  "psdedit.Editor.AddGroup": {
+    "Description": "AddGroup inserts an empty group with distinct PSD identifiers for its header and end marker.",
+    "Parameters": [
+      "parent",
+      "position",
+      "name",
+      "expanded"
+    ]
+  },
+  "psdedit.Editor.AddRaster": {
+    "Description": "AddRaster inserts an owned RGB8 raster at a bottom-to-top sibling position; parent zero denotes the canvas.",
+    "Parameters": [
+      "parent",
+      "position",
+      "name",
+      "pixels",
+      "origin"
+    ]
+  },
+  "psdedit.Editor.Changes": {
+    "Description": "Changes returns revisions and persistent differences from the original source.",
+    "Parameters": []
+  },
+  "psdedit.Editor.Close": {
+    "Description": "Close waits for ongoing editor operations, then releases any owned source; repeated calls are safe.",
+    "Parameters": []
+  },
+  "psdedit.Editor.Composite": {
+    "Description": "Composite renders the current edited RGB8 layer tree into independently owned RGBA pixels.\nIt applies the same feature checks and total working budgets used for an automatically rebuilt saved image.\nRendering leaves the edit revision and saved revision unchanged.\nAn optional composition policy may tighten working limits or explicitly select approximate Hue/Saturation.",
+    "Parameters": [
+      "ctx",
+      "options"
+    ]
+  },
+  "psdedit.Editor.CompositeGroup": {
+    "Description": "CompositeGroup renders one edited group and its descendants over transparency.\nThe group's own masks, opacity, blend semantics and child ordering are retained.\nAncestors and siblings are excluded; this is an isolated group preview, not its contribution to a backdrop.\nTransparent borders are trimmed, preserving document coordinates in the returned rectangle.\nAn empty group returns one transparent pixel. No editing or saved revisions are changed.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "options"
+    ]
+  },
+  "psdedit.Editor.EmbedLinkedContents": {
+    "Description": "EmbedLinkedContents resolves and embeds an external RGB8 PSD/PSB source for all shared instances.\nDestination corners remain fixed; the source and projected caches become owned editor overlays.\nThe resolver runs without the editor lock. Concurrent edits cause ErrStaleLinkedEdit without a commit.\nThis initial conversion accepts a global single-record lnkE block and at most one empty lnk2 container,\nor an external record already inside a standard embedded-link container.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "resolver"
+    ]
+  },
+  "psdedit.Editor.Layer": {
+    "Description": "Layer returns owned metadata for one stable editor handle, including its descendant tree.",
+    "Parameters": [
+      "id"
+    ]
+  },
+  "psdedit.Editor.Layers": {
+    "Description": "Layers returns owned flat metadata in physical bottom-to-top order, excluding group end markers.",
+    "Parameters": []
+  },
+  "psdedit.Editor.Move": {
+    "Description": "Move relocates a layer or group; position refers to the target siblings after removing the moving node.\nMoving a group into itself or any descendant is rejected without changing the document.",
+    "Parameters": [
+      "id",
+      "parent",
+      "position"
+    ]
+  },
+  "psdedit.Editor.OpenSmartObjectSource": {
+    "Description": "OpenSmartObjectSource opens a placed layer's embedded PSD/PSB or an explicitly resolved external source.\nThe caller closes the result. Unedited embedded results borrow the editor's original source.\nReplacement overlays are copied into an independent source; external documents come from resolver.\nResolver executes without holding the editor lock and may report unavailable or stale links.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "resolver"
+    ]
+  },
+  "psdedit.Editor.Remove": {
+    "Description": "Remove removes a layer and all of its descendants without reusing any editor or PSD identifiers.",
+    "Parameters": [
+      "id"
+    ]
+  },
+  "psdedit.Editor.Rename": {
+    "Description": "Rename changes one layer's Unicode name; an identical name leaves its revision unchanged.",
+    "Parameters": [
+      "id",
+      "name"
+    ]
+  },
+  "psdedit.Editor.ReplaceChannel": {
+    "Description": "ReplaceChannel copies one existing raster channel at its source precision and original geometry.\nRowBytes and Data must use the compact source layout, including packed MSB-first bitmap rows.",
+    "Parameters": [
+      "id",
+      "channelID",
+      "plane"
+    ]
+  },
+  "psdedit.Editor.ReplaceContents": {
+    "Description": "ReplaceContents replaces an embedded RGB8 PSD/PSB source and updates all its shared placed instances.\nEncoded input and projected caches are copied into owned overlays; original blocks remain immutable.\nDestination corners remain fixed when the prototype canvas changes size.\nSource-space custom controls are scaled per axis; live filters and unsupported Warp are rejected.\nPhotoshop's default Replace Contents instead retains pixel scale and the placement center.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "data"
+    ]
+  },
+  "psdedit.Editor.ReplaceContentsWithOptions": {
+    "Description": "ReplaceContentsWithOptions replaces shared embedded contents using explicit rendering policies.\nThe zero value has the same strict behavior and transactional guarantees as ReplaceContents.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "data",
+      "options"
+    ]
+  },
+  "psdedit.Editor.ReplacePixels": {
+    "Description": "ReplacePixels copies straight-alpha RGB8 raster pixels, retaining the layer's dimensions and position.\nExisting masks and extra source channels remain untouched; channel overlays cannot be mixed with this edit.",
+    "Parameters": [
+      "id",
+      "pixels"
+    ]
+  },
+  "psdedit.Editor.ReplaceSmartObjectContents": {
+    "Description": "ReplaceSmartObjectContents is an explicit alias for ReplaceContents.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "data"
+    ]
+  },
+  "psdedit.Editor.Save": {
+    "Description": "Save writes, syncs and closes a same-directory temporary file before atomic replacement.\nAny failure before replacement leaves an existing destination intact and removes the temporary file.",
+    "Parameters": [
+      "ctx",
+      "filename",
+      "options"
+    ]
+  },
+  "psdedit.Editor.SavePSD": {
+    "Description": "SavePSD atomically saves a PSD/PSB document using the same rules as Save.",
+    "Parameters": [
+      "ctx",
+      "filename",
+      "options"
+    ]
+  },
+  "psdedit.Editor.SetAdjustment": {
+    "Description": "SetAdjustment edits an existing RGB8 adjustment layer without changing its family.\nIt owns encoded parameters and semantic views, retaining all other layer blocks and metadata.\nModern CgEd-dependent adjustments and unrecognized source semantics are rejected before committing overlays.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "adjustment"
+    ]
+  },
+  "psdedit.Editor.SetEffects": {
+    "Description": "SetEffects edits existing modern RGB effects without changing their families, count or fixed semantics.\nColor and opacity are editable; interior effects also support existing RGB blend modes.\nShadow distance/local angle/blur and calibrated glow/stroke sizes use strict core validation.\nColorOverlay also accepts partial source alpha, while geometric effects require an opaque source rectangle.\nPure ColorOverlay additionally supports ordinary nested leaves and original pixel-mask semantics.\nGlobal resources, flags, descriptor structure and unsupported source metadata remain unchanged.\nEncoding and owned semantic decoding complete under a peak budget before committing editor overlays.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "desired"
+    ]
+  },
+  "psdedit.Editor.SetEffectsWithOptions": {
+    "Description": "SetEffectsWithOptions edits existing effects under an explicit rendering policy.\nSaveOptions.ApproximateDropShadow must also be selected when rebuilding an approximate saved preview.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "desired",
+      "options"
+    ]
+  },
+  "psdedit.Editor.SetFillOpacity": {
+    "Description": "SetFillOpacity changes the layer's byte fill opacity without changing source pixels or other tagged blocks.\nMissing fill defaults to 255. Existing iOpa records must all use four bytes with zero reserved bytes.\nA visual edit follows the existing automatic-preview gates; accurate explicit composites support other depths.",
+    "Parameters": [
+      "id",
+      "value"
+    ]
+  },
+  "psdedit.Editor.SetFillOpacityContext": {
+    "Description": "SetFillOpacityContext adds cancellation to the bounded source reads required by SetFillOpacity.\nInvalid source representations, read failures, budgets and cancellation leave all edit state unchanged.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "value"
+    ]
+  },
+  "psdedit.Editor.SetGradientFill": {
+    "Description": "SetGradientFill changes one existing classic RGB GdFl layer's live parameters and saved descriptor.\nOriginal descriptor entry order, encodings, known stop metadata and unrelated blocks are retained.\nUnsupported source semantics, duplicate fill families and failed peak-budget checks leave the editor unchanged.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "fill"
+    ]
+  },
+  "psdedit.Editor.SetNativeTextState": {
+    "Description": "SetNativeTextState atomically imports source-compatible native text state, artwork and preview.\nOne global schema-7 Txt2 block and one populated active layer set are required.\nAffine bits, warp, descriptor ordering, non-text descriptor entries and unmodified opaque state are preserved.\nDifferent native text bounds are accepted; moving relative masks or resizing unknown channels is unsupported.\nA native preview remains usable after renaming, and is discarded by every later visual edit.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "options"
+    ]
+  },
+  "psdedit.Editor.SetOpacity": {
+    "Description": "SetOpacity changes the layer's byte opacity without modifying its source record.",
+    "Parameters": [
+      "id",
+      "opacity"
+    ]
+  },
+  "psdedit.Editor.SetPatternFill": {
+    "Description": "SetPatternFill changes an existing PtFl layer's local pattern reference or integer document phase.\nOnly uniquely retained RGB8 tiles at 50, 100 or 200 percent scale and zero angle are editable.\nDescriptor encodings, original entry order and pattern pixel blocks remain unchanged.\nRecognized zero descriptor alignment is regenerated inside the declared payload for Photoshop compatibility.\nThe editor never searches external files or application preset libraries.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "fill"
+    ]
+  },
+  "psdedit.Editor.SetSmartFilterParameters": {
+    "Description": "SetSmartFilterParameters changes existing Gaussian controls and their saved source artwork atomically.\nAccurate caller pixels are required because changing metadata does not refresh Photoshop's saved layer raster.\nFilter families, count, order, blending, placement geometry, linked contents and unknown metadata are preserved.\nRadius, filter enabled/opacity and whole-stack enabled are editable; failed edits leave overlays unchanged.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "stack",
+      "options"
+    ]
+  },
+  "psdedit.Editor.SetSolidFill": {
+    "Description": "SetSolidFill changes an existing RGB solid-color layer's live fill and saved descriptor.\nRGB components are encoded values between zero and one; opacity remains a separate layer property.\nVector geometry, original raster caches and unrelated descriptor entries are retained.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "rgb"
+    ]
+  },
+  "psdedit.Editor.SetTextContent": {
+    "Description": "SetTextContent changes an existing single-style Latin point-text layer without a document-wide Txt2 block.\nAccurate new layer pixels are mandatory: Photoshop does not automatically refresh its saved text raster on open.\nNewlines are normalized to carriage returns and character/paragraph ranges use UTF-16 code units.\nOrdered descriptors, unknown engine properties, typography, affine bits, warp, TySh bounds and tail are preserved.\nThe replacement source artwork is copied and committed atomically with the updated TySh payload.\nModern Txt2 text, multiple character/paragraph styles, paragraph text and warps return ErrUnsupported.\nMoving relative masks or resizing unknown extra layer channels is also unsupported.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "text",
+      "options"
+    ]
+  },
+  "psdedit.Editor.SetVectorMask": {
+    "Description": "SetVectorMask replaces an existing vmsk/vsms block with independently owned typed vector geometry.\nDocument dimensions, mask density/feather and other source metadata stay unchanged.\nEncoding, decoding and budget checks complete before the editor revision or overlays change.\nAutomatic preview reconstruction retains the renderer's documented antialiasing approximation limits.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "mask"
+    ]
+  },
+  "psdedit.Editor.SetVisible": {
+    "Description": "SetVisible changes the layer's visibility without changing its source flags.",
+    "Parameters": [
+      "id",
+      "visible"
+    ]
+  },
+  "psdedit.Editor.SmartObjects": {
+    "Description": "SmartObjects returns owned placement views for the editor's active source layer set.",
+    "Parameters": [
+      "ctx"
+    ]
+  },
+  "psdedit.Editor.Tree": {
+    "Description": "Tree returns an owned hierarchy whose sibling arrays are ordered bottom to top.",
+    "Parameters": []
+  },
+  "psdedit.Editor.UpdateLinkedContents": {
+    "Description": "UpdateLinkedContents refreshes all shared instances while retaining the external link and its path metadata.\nIt refreshes file-size metadata, optionally its timestamp and existing nonempty linked content caches.\nZero-length linked caches remain empty, matching native PSD/PSB external-link storage.\nThe editor retains owned source bytes for live access and rebuilds every shared instance's raster cache.\nDestination corners remain fixed, including when the replacement canvas changes dimensions.\nThe resolver runs without the editor lock; a concurrent edit causes ErrStaleLinkedEdit and commits nothing.\nParent-document saving and external-file persistence are separate caller-controlled operations.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "resolver"
+    ]
+  },
+  "psdedit.Editor.Write": {
+    "Description": "Write writes a complete PSD/PSB while keeping edits stable for the whole operation.\nSuccessful output marks the current revision saved; a partial or failed write does not.\nChanged 32-bit layer channels requested as ZIP use ZIP prediction for Photoshop compatibility.",
+    "Parameters": [
+      "ctx",
+      "writer",
+      "options"
+    ]
+  },
+  "psdedit.Editor.WritePSD": {
+    "Description": "WritePSD writes a PSD/PSB document using the same preservation and revision rules as Write.",
+    "Parameters": [
+      "ctx",
+      "writer",
+      "options"
+    ]
+  },
+  "psdedit.New": {
+    "Description": "New creates an editor borrowing an immutable source; closing the editor does not close the source.",
+    "Parameters": [
+      "source"
+    ]
+  },
+  "psdedit.Open": {
+    "Description": "Open indexes an owned file and closes that source when the returned editor is closed.",
+    "Parameters": [
+      "filename",
+      "options"
+    ]
+  },
+  "psdedit.RasterContentsWorkingBytes": {
+    "Description": "RasterContentsWorkingBytes reports BuildRasterContents' conservative peak reservation without copying pixels.\nIt validates shape, options and the ICC envelope; successful estimation does not prove supported ICC curves.\nMaxWorkingBytes is enforced by BuildRasterContents, allowing this estimator to size a caller's chosen budget.",
+    "Parameters": [
+      "ctx",
+      "input",
+      "options"
+    ]
+  },
+  "psdedit.blankSource.ReadAt": {
+    "Description": "",
+    "Parameters": [
+      "target",
+      "offset"
+    ]
+  },
+  "psdedit.gradientEditReader.ReadAt": {
+    "Description": "",
+    "Parameters": [
+      "data",
+      "offset"
+    ]
+  },
+  "psdedit.rasterContentsBuffer.Write": {
+    "Description": "",
+    "Parameters": [
+      "data"
+    ]
+  },
+  "psdeffects.Decode": {
+    "Description": "Decode interprets an owned snapshot of a modern effect descriptor while retaining unknown entries.\nDisabled unimplemented effects remain readable and do not prevent rendering supported enabled effects.",
+    "Parameters": [
+      "ctx",
+      "descriptor",
+      "options"
+    ]
+  },
+  "psdeffects.DropShadowSourceBounds": {
+    "Description": "DropShadowSourceBounds returns the source-alpha window needed to compute a shadow in output.\nIt includes the local alpha needed for LayerConceals and never clips to a document canvas.\nEmpty output is returned unchanged; disabled or zero-opacity shadows need no source samples.\nIt describes the primitive's sampling support, not a claim of Photoshop pixel equivalence.",
+    "Parameters": [
+      "output",
+      "effect",
+      "scale",
+      "globalAngle",
+      "options"
+    ]
+  },
+  "psdeffects.Error.Error": {
+    "Description": "",
+    "Parameters": []
+  },
+  "psdeffects.Error.Unwrap": {
+    "Description": "Unwrap exposes the effect error category to errors.Is.",
+    "Parameters": []
+  },
+  "psdeffects.EstimateWorking": {
+    "Description": "EstimateWorking predicts the same bounded primitive work as Rasterize without allocating pixel buffers.",
+    "Parameters": [
+      "bounds",
+      "set",
+      "options"
+    ]
+  },
+  "psdeffects.Rasterize": {
+    "Description": "Rasterize builds independently owned coverage planes without changing source alpha or effect metadata.\nCoverage excludes color and effect opacity. Input alpha must describe the shape before layer Fill opacity.\nShadows and interior glows use a separable tent kernel; exterior glow blur remains approximate.\nStrokes use a one-pixel linear distance boundary.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "set",
+      "options"
+    ]
+  },
+  "psdeffects.Validate": {
+    "Description": "Validate checks active primitive semantics before a compositor allocates output or changes state.\nDisabled effects and a disabled master switch retain readable unsupported metadata.",
+    "Parameters": [
+      "set"
+    ]
+  },
+  "psdfile.DecodeSmartFilters": {
+    "Description": "DecodeSmartFilters returns live smart-filter metadata from an already decoded placement.\nA placement without filterFX returns nil; no raster cache or original source payload is read.\nMaxBytes bounds only this additional typed view; the placement's owned descriptors are borrowed unchanged.",
+    "Parameters": [
+      "ctx",
+      "placement",
+      "options"
+    ]
+  },
+  "psdfile.DefaultLimits": {
+    "Description": "DefaultLimits returns independent, bounded budgets without limiting PSB metadata to RGB8 images.",
+    "Parameters": []
+  },
+  "psdfile.Document.Artboards": {
+    "Description": "Artboards reads ordered layer and document-level artboard metadata with an aggregate owned-view budget.\nA descriptor's presence does not promise that a renderer understands artboard clipping or backgrounds.",
+    "Parameters": [
+      "ctx",
+      "options"
+    ]
+  },
+  "psdfile.Document.Close": {
+    "Description": "Close releases an owned file and makes all subsequent source operations return ErrClosed.\nIt waits for ongoing reads and decodes; repeated calls are safe.",
+    "Parameters": []
+  },
+  "psdfile.Document.CopySpan": {
+    "Description": "CopySpan streams an original span without rewriting headers, payloads or padding.\nThis is byte preservation for future writers, not an editor or SavePSD implementation.",
+    "Parameters": [
+      "ctx",
+      "writer",
+      "span"
+    ]
+  },
+  "psdfile.Document.CopySpanBuffer": {
+    "Description": "CopySpanBuffer streams an original span using borrowed caller scratch without retaining it.\nA nil buffer selects the same 64 KiB allocation as CopySpan; a non-nil empty buffer is invalid.\nAt most the first 64 KiB is used; callers must not access that prefix until this call returns.\nWriter ReaderFrom dispatch is preserved and may bypass scratch, matching io.CopyBuffer behavior.\nSource validation, Close synchronization, cancellation and I/O errors follow CopySpan's rules.",
+    "Parameters": [
+      "ctx",
+      "writer",
+      "span",
+      "scratch"
+    ]
+  },
+  "psdfile.Document.Decode": {
+    "Description": "Decode creates an independent RGB8 snapshot for the existing renderer.\nUse DecodeLayer/DecodeChannel/DecodeComposite to retain other source depths and color modes.\nThis compatibility path retains the renderer's original dimensions and total-pixel guards.",
+    "Parameters": [
+      "ctx"
+    ]
+  },
+  "psdfile.Document.DecodeAdjustment": {
+    "Description": "DecodeAdjustment returns an owned typed view of one retained adjustment tagged block.\nOriginal bytes and source spans remain available even when an unsupported interpretation is returned.\nIt never changes source data or decodes pixels and does not approximate modern CgEd parameters.",
+    "Parameters": [
+      "ctx",
+      "block"
+    ]
+  },
+  "psdfile.Document.DecodeArtboard": {
+    "Description": "DecodeArtboard reads artb/artd/abdd versioned descriptors into owned structural metadata.\nIt does not composite a background, crop children, infer document coordinates or change source blocks.",
+    "Parameters": [
+      "ctx",
+      "block",
+      "options"
+    ]
+  },
+  "psdfile.Document.DecodeChannel": {
+    "Description": "DecodeChannel decodes one layer channel into owned samples at its original bit depth.",
+    "Parameters": [
+      "ctx",
+      "layerIndex",
+      "channelIndex"
+    ]
+  },
+  "psdfile.Document.DecodeChannelRegion": {
+    "Description": "DecodeChannelRegion decodes a channel-local rectangle into owned source-precision samples.\nThe origin is the channel's Bounds.Min, including for mask channels; rectangles must lie entirely inside it.\nMaxDecodePixels bounds the region, and MaxDecodeBytes bounds output plus row/table scratch, not the full image.\nRaw/RLE requests read only selected pixel segments; nonempty ZIP requests validate the entire compressed stream.",
+    "Parameters": [
+      "ctx",
+      "layerIndex",
+      "channelIndex",
+      "rectangle",
+      "options"
+    ]
+  },
+  "psdfile.Document.DecodeComposite": {
+    "Description": "DecodeComposite decodes the saved image into owned source-precision channel planes.",
+    "Parameters": [
+      "ctx"
+    ]
+  },
+  "psdfile.Document.DecodeCompositeChannel": {
+    "Description": "DecodeCompositeChannel decodes one saved-image channel, without retaining other channel samples.\nZIP streams are validated in full; MaxDecodeBytes also bounds their complete decompressed size.",
+    "Parameters": [
+      "ctx",
+      "channelIndex"
+    ]
+  },
+  "psdfile.Document.DecodeCompositeChannelRegion": {
+    "Description": "DecodeCompositeChannelRegion decodes a channel-local saved-image rectangle at its original bit depth.\nZIP validates every channel in the shared stream, retaining only the requested channel region.",
+    "Parameters": [
+      "ctx",
+      "channelIndex",
+      "rectangle",
+      "options"
+    ]
+  },
+  "psdfile.Document.DecodeDescriptor": {
+    "Description": "DecodeDescriptor explicitly decodes an Action descriptor within a bounded original source span.\nTyped values are int32, int64, bool, float64, string, the public descriptor types,\n*Descriptor, *DescriptorObjectArray, *DescriptorReference, or []DescriptorValue.\nIt never decodes pixel data or mutates the indexed raw blocks. Unsupported OSTypes\nreturn ErrUnsupported; the supplied span remains available through ReadSpan/CopySpan.\nA descriptor may be followed by other fields; its returned Span records consumed bytes only.",
+    "Parameters": [
+      "span",
+      "versioned"
+    ]
+  },
+  "psdfile.Document.DecodeDescriptorContext": {
+    "Description": "DecodeDescriptorContext decodes a source descriptor with cancellation during structural reads.",
+    "Parameters": [
+      "ctx",
+      "span",
+      "versioned",
+      "options"
+    ]
+  },
+  "psdfile.Document.DecodeDocumentTextEngine": {
+    "Description": "DecodeDocumentTextEngine explicitly reads one retained Txt2 payload with source and caller limits combined.\nParsing owns the exact original bytes and spans; it does not shape glyphs or infer private schema fields.",
+    "Parameters": [
+      "ctx",
+      "record",
+      "options"
+    ]
+  },
+  "psdfile.Document.DecodeEffects": {
+    "Description": "DecodeEffects reads modern lfx2/lmfx layer effects without decoding pixels or changing source blocks.\nOrdered descriptor entries and unknown raw spans survive source closure as owned metadata.\nActive rendering support is validated separately by psdeffects.Rasterize.",
+    "Parameters": [
+      "ctx",
+      "block",
+      "options"
+    ]
+  },
+  "psdfile.Document.DecodeEngineData": {
+    "Description": "DecodeEngineData parses an original EngineData span with source and caller budgets combined.\nSourceOffset is always the original span offset; caller limits may lower but never raise source limits.",
+    "Parameters": [
+      "ctx",
+      "span",
+      "options"
+    ]
+  },
+  "psdfile.Document.DecodeFilterCacheRegion": {
+    "Description": "DecodeFilterCacheRegion decodes an explicitly selected source-precision cache array or additional mask.\nThe rectangle is local to Array.Bounds.Min; filter-cache RLE tables always contain four-byte row lengths.\nReturned samples are owned and remain usable after source closure.",
+    "Parameters": [
+      "ctx",
+      "array",
+      "rectangle",
+      "options"
+    ]
+  },
+  "psdfile.Document.DecodeGradientFill": {
+    "Description": "DecodeGradientFill reads one GdFl descriptor under owned metadata and source lifecycle budgets.\nUnsupported interpolation, colors and unrecognized semantic fields return a retained view plus ErrUnsupported.\nIt does not convert source RGB through ICC, open any external file or mutate source bytes.",
+    "Parameters": [
+      "ctx",
+      "block",
+      "options"
+    ]
+  },
+  "psdfile.Document.DecodeLayer": {
+    "Description": "DecodeLayer decodes all source channel planes, including masks, without color conversion.",
+    "Parameters": [
+      "ctx",
+      "layerIndex"
+    ]
+  },
+  "psdfile.Document.DecodeLayers": {
+    "Description": "DecodeLayers returns an owned RGB8 layer tree without decoding the saved merged image.\nIt preserves eager layer limits; large regional reconstruction uses ReadLayerMetadata and channel ROI APIs.",
+    "Parameters": [
+      "ctx"
+    ]
+  },
+  "psdfile.Document.DecodeLinkedRaster": {
+    "Description": "DecodeLinkedRaster decodes indexed embedded PNG/JPEG and flat RGB8 TIFF content with bounded storage.\nStraight RGBA8 output is owned, including for 16-bit PNG input. Source ICC data is returned explicitly.\nTIFF accepts classic, single-image, top-left chunky RGB8 strips using Raw or PackBits encoding.\nExplicit TIFF associated alpha is unpremultiplied; unassociated alpha retains hidden RGB values.\nBigTIFF, private Photoshop layers, tiles and unsupported TIFF encodings return ErrUnsupported.",
+    "Parameters": [
+      "ctx",
+      "record",
+      "options"
+    ]
+  },
+  "psdfile.Document.DecodePath": {
+    "Description": "DecodePath decodes retained headerless records from a saved or working path image resource.\nIt uses the same ownership, metadata budgets and source lifecycle as DecodeVectorMask.",
+    "Parameters": [
+      "ctx",
+      "span"
+    ]
+  },
+  "psdfile.Document.DecodePathResource": {
+    "Description": "DecodePathResource checks a saved-path or working-path resource ID before decoding its records.\nResource 2999 contains a clipping-path name reference, which remains available through ReadSpan/CopySpan.",
+    "Parameters": [
+      "ctx",
+      "block"
+    ]
+  },
+  "psdfile.Document.DecodePattern": {
+    "Description": "DecodePattern decodes every written virtual-memory array into owned original-depth samples.\nRGB, mask and other arrays retain their ordinals; unknown versions, flags and compression are rejected.",
+    "Parameters": [
+      "ctx",
+      "record",
+      "options"
+    ]
+  },
+  "psdfile.Document.DecodePatternFill": {
+    "Description": "DecodePatternFill explicitly reads ordered PtFl metadata under source and allocation budgets.\nUnknown fields remain in Descriptor and return a retained view plus ErrUnsupported.",
+    "Parameters": [
+      "ctx",
+      "block",
+      "options"
+    ]
+  },
+  "psdfile.Document.DecodePatternTileRGB8": {
+    "Description": "DecodePatternTileRGB8 returns a source encoded RGB8 NRGBA tile with exact preserved transparency.\nHigh-bit-depth and non-RGB samples remain available through DecodePattern and are not guessed into display RGB.",
+    "Parameters": [
+      "ctx",
+      "record",
+      "options"
+    ]
+  },
+  "psdfile.Document.DecodeTextEngine": {
+    "Description": "DecodeTextEngine reads and parses only the selected record's retained EngineData blob.\nA text descriptor without EngineData returns ErrUnsupported rather than invented style metadata.",
+    "Parameters": [
+      "ctx",
+      "record",
+      "options"
+    ]
+  },
+  "psdfile.Document.DecodeVectorMask": {
+    "Description": "DecodeVectorMask decodes a retained vmsk/vsms payload into owned typed path records.\nThe span excludes the additional-block header and external alignment bytes.\nMetadata and record counts are bounded by MaxMetadataBytes/MaxDecodeBytes and MaxDescriptorItems.\nIt does not decode source pixels or change the retained vector block.",
+    "Parameters": [
+      "ctx",
+      "span"
+    ]
+  },
+  "psdfile.Document.DecodeVectorMaskBlock": {
+    "Description": "DecodeVectorMaskBlock checks the additional-block key before decoding its retained vector payload.",
+    "Parameters": [
+      "ctx",
+      "block"
+    ]
+  },
+  "psdfile.Document.EncodeDescriptor": {
+    "Description": "EncodeDescriptor encodes current typed values while retaining unchanged source spellings.\nEntries and duplicate keys retain their order. Source spans are hints, never overrides:\nchanged values are encoded even when their original spans remain attached. Unchanged\nidentifiers, Unicode strings and boolean bytes retain their original representation.\nChanged Unicode strings retain the source field's terminating-NUL convention.\nDescriptorUnit.Number and Bits may each be edited: comparison with the source\nidentifies which changed. Conflicting changes are rejected. New units may leave\nBits zero when Number is supplied, or leave Number nil to supply exact Bits.\nFloat bits, including signed zero and NaN payloads, are retained without conversion.\nOnly explicit blob values read their payloads; unrelated source blocks are never read.\nThe caller must not mutate the supplied values during encoding.",
+    "Parameters": [
+      "ctx",
+      "descriptor",
+      "versioned",
+      "options"
+    ]
+  },
+  "psdfile.Document.EncodeSmartFilterParameters": {
+    "Description": "EncodeSmartFilterParameters changes existing filter controls in one original SoLd/SoLE payload.\nIt returns owned block data and never mutates the source or caller metadata.\nFilter count, order, IDs, blending mode and all unrelated fields, encodings, prefix and tail are retained.\nExisting Gaussian radius, per-filter enabled/opacity and whole-stack enabled are editable.\nThis metadata operation does not refresh raster caches or document previews; saving requires a chosen render policy.",
+    "Parameters": [
+      "ctx",
+      "block",
+      "desired",
+      "options"
+    ]
+  },
+  "psdfile.Document.EstimatePatternTileRGB8": {
+    "Description": "EstimatePatternTileRGB8 checks source records and estimates decode cost without reading pixel payloads.\nA combined renderer reserves WorkingBytes before DecodePatternTileRGB8, then retains only RetainedBytes.",
+    "Parameters": [
+      "record"
+    ]
+  },
+  "psdfile.Document.FilterCaches": {
+    "Description": "FilterCaches indexes all FEid/FXid blocks, including duplicate and layer-local records, in physical order.\nAll pixel data and unknown record tails remain source spans; no cached pixel is loaded by this operation.",
+    "Parameters": [
+      "ctx",
+      "options"
+    ]
+  },
+  "psdfile.Document.IndexMetadataBytes": {
+    "Description": "IndexMetadataBytes reports the conservative retained allocation reservation from original indexing.\nIt excludes encoded payloads and later decoded views, and remains available after Close.",
+    "Parameters": []
+  },
+  "psdfile.Document.LayerMetadata": {
+    "Description": "LayerMetadata decodes one active layer's semantics while leaving pixel and embedded content deferred.",
+    "Parameters": [
+      "ctx",
+      "index",
+      "options"
+    ]
+  },
+  "psdfile.Document.Limits": {
+    "Description": "Limits returns the document's effective allocation limits.",
+    "Parameters": []
+  },
+  "psdfile.Document.LinkedFiles": {
+    "Description": "LinkedFiles indexes every linked-file block, including duplicates and entries in alternate layer sets.\nIt returns owned metadata in file order and never opens external paths or reads embedded payload bytes.\nDescriptor structures are bounded to identify their spans; their content remains available for explicit decoding.\nLimits apply to this complete operation, independently of source indexing and later content reads.",
+    "Parameters": [
+      "ctx",
+      "options"
+    ]
+  },
+  "psdfile.Document.LinkedRasterFormat": {
+    "Description": "LinkedRasterFormat identifies indexed PNG/JPEG/TIFF content without decoding pixels.\nOther formats return an empty string; this method never opens an external path.",
+    "Parameters": [
+      "ctx",
+      "record"
+    ]
+  },
+  "psdfile.Document.OpenLinkedDocument": {
+    "Description": "OpenLinkedDocument indexes an embedded or cached PSD/PSB without copying its encoded payload.\nThe child borrows its parent's source: keep the parent open until the child is no longer used.\nNo external path is opened; non-PSD image data requires an explicit image decoder.",
+    "Parameters": [
+      "ctx",
+      "record",
+      "options"
+    ]
+  },
+  "psdfile.Document.OpenLinkedTIFFLayers": {
+    "Description": "OpenLinkedTIFFLayers indexes private Layr records without decoding saved pixels or embedded media.\nLimits may only lower the original source budgets. Unknown private block schemas return ErrUnsupported.\nMetadata, placement descriptors and RLE tables are normalized by bounded ReaderAt unit reversals.",
+    "Parameters": [
+      "ctx",
+      "record",
+      "options"
+    ]
+  },
+  "psdfile.Document.Patterns": {
+    "Description": "Patterns indexes all global and layer-local Patt/Pat2/Pat3 blocks in physical source order.\nIt owns names and structural records, preserves duplicates and never reads array payloads.",
+    "Parameters": [
+      "ctx",
+      "options"
+    ]
+  },
+  "psdfile.Document.RGB8SnapshotMetadataBytes": {
+    "Description": "RGB8SnapshotMetadataBytes reports a conservative reservation for advanced decoded layer metadata.\nIt excludes indexed source metadata and rasters, reading only linked-name structure lengths when present.",
+    "Parameters": []
+  },
+  "psdfile.Document.RGB8SnapshotMetadataBytesContext": {
+    "Description": "RGB8SnapshotMetadataBytesContext adds cancellation to bounded snapshot metadata preflight.\nUnicode names and embedded media remain unread; only their original declared lengths are inspected.",
+    "Parameters": [
+      "ctx"
+    ]
+  },
+  "psdfile.Document.ReadAt": {
+    "Description": "ReadAt reads bounded original bytes while the document remains open.",
+    "Parameters": [
+      "data",
+      "offset"
+    ]
+  },
+  "psdfile.Document.ReadDocumentTextAssociations": {
+    "Description": "ReadDocumentTextAssociations checks unique layer indices without reading EngineData or raster channels.\nWithin each layer set, duplicate TySh entries and repeated TextIndex references return ErrUnsupported.\nDifferent physical layer sets may share an index only when their TySh text matches the document record.",
+    "Parameters": [
+      "ctx",
+      "metadata",
+      "options"
+    ]
+  },
+  "psdfile.Document.ReadDocumentTextView": {
+    "Description": "ReadDocumentTextView indexes global Txt2 blocks in source order without reading text or raster data.\nDuplicate blocks remain separately available and are never silently collapsed or removed.",
+    "Parameters": [
+      "ctx",
+      "options"
+    ]
+  },
+  "psdfile.Document.ReadFilterCacheView": {
+    "Description": "ReadFilterCacheView indexes smart-filter cache blocks without reading any sample payload.",
+    "Parameters": [
+      "ctx",
+      "options"
+    ]
+  },
+  "psdfile.Document.ReadLayerMetadata": {
+    "Description": "ReadLayerMetadata returns an owned semantic view for one indexed physical layer.\nLarge document/layer dimensions are retained; eager renderer pixel limits do not apply to metadata alone.",
+    "Parameters": [
+      "ctx",
+      "index",
+      "options"
+    ]
+  },
+  "psdfile.Document.ReadLinkedFileView": {
+    "Description": "ReadLinkedFileView returns linked records with a measured reservation for combined-operation budgeting.",
+    "Parameters": [
+      "ctx",
+      "options"
+    ]
+  },
+  "psdfile.Document.ReadPatternView": {
+    "Description": "ReadPatternView returns patterns together with a reservation for combined operation budgets.",
+    "Parameters": [
+      "ctx",
+      "options"
+    ]
+  },
+  "psdfile.Document.ReadSmartObjectView": {
+    "Description": "ReadSmartObjectView returns placements with a measured reservation for combined-operation budgeting.",
+    "Parameters": [
+      "ctx",
+      "options"
+    ]
+  },
+  "psdfile.Document.ReadSpan": {
+    "Description": "ReadSpan returns owned original bytes subject to MaxReadBytes; use CopySpan for large payloads.",
+    "Parameters": [
+      "span"
+    ]
+  },
+  "psdfile.Document.ReadTextLayerView": {
+    "Description": "ReadTextLayerView returns text metadata with its reservation for compound rendering budgets.",
+    "Parameters": [
+      "ctx",
+      "options"
+    ]
+  },
+  "psdfile.Document.ResolveLinkedDocument": {
+    "Description": "ResolveLinkedDocument indexes embedded PSD/PSB data or invokes an explicit external resolver.\nEmbedded results borrow this document's source and require it to remain open.\nExternal links are never read from disk automatically, including links with cached bytes.",
+    "Parameters": [
+      "ctx",
+      "record",
+      "resolver"
+    ]
+  },
+  "psdfile.Document.ResolvePattern": {
+    "Description": "ResolvePattern resolves one opaque PtFl reference only against retained local pattern records.\nMissing and duplicate references return ErrUnsupported without searching external pattern libraries.",
+    "Parameters": [
+      "ctx",
+      "fill",
+      "options"
+    ]
+  },
+  "psdfile.Document.SmartObjects": {
+    "Description": "SmartObjects decodes modern SoLd/SoLE placement metadata without opening linked contents.\nOrdered duplicate placement blocks remain separate records. Legacy PlLd blocks are retained by the source index.",
+    "Parameters": [
+      "ctx",
+      "options"
+    ]
+  },
+  "psdfile.Document.TextLayers": {
+    "Description": "TextLayers decodes modern TySh descriptors without reading their EngineData blobs or raster channels.\nIt preserves duplicate text blocks and descriptor entries in original source order.\nLegacy tySh and unknown header versions return ErrUnsupported, with original blocks still indexed.",
+    "Parameters": [
+      "ctx",
+      "options"
+    ]
+  },
+  "psdfile.EncodeComposite": {
+    "Description": "EncodeComposite encodes planar saved-image samples with default allocation limits.\nRLE has one shared row-count table and ZIP has one shared zlib stream for all channels.",
+    "Parameters": [
+      "ctx",
+      "pixels",
+      "compression",
+      "version"
+    ]
+  },
+  "psdfile.EncodeCompositeWithOptions": {
+    "Description": "EncodeCompositeWithOptions encodes source-precision saved-image channels with explicit budgets.\nChannel IDs must match their planar positions, with equal dimensions, depth, and row bytes.",
+    "Parameters": [
+      "ctx",
+      "pixels",
+      "compression",
+      "version",
+      "options"
+    ]
+  },
+  "psdfile.EncodeDescriptor": {
+    "Description": "EncodeDescriptor encodes ordered typed values without requiring a source document.\nIt accepts the types returned by DecodeDescriptor, with []byte also accepted for\nalis, tdta and Pth payloads. Nonempty DescriptorBlob values require the document method.\nStrings use UTF-16 with a counted terminating NUL; identifiers use their byte values.\nVersioned descriptors default Version zero to 16 and reject other versions.",
+    "Parameters": [
+      "ctx",
+      "descriptor",
+      "versioned",
+      "options"
+    ]
+  },
+  "psdfile.EncodePlane": {
+    "Description": "EncodePlane encodes one channel, including its compression word, with default allocation limits.\nVersion is 1 for PSD or 2 for PSB; compression is Raw (0), RLE (1), ZIP (2), or ZIP prediction (3).",
+    "Parameters": [
+      "ctx",
+      "plane",
+      "compression",
+      "version"
+    ]
+  },
+  "psdfile.EncodePlaneWithOptions": {
+    "Description": "EncodePlaneWithOptions encodes one channel with explicit sample and output budgets.\nEmpty layer or mask channels are accepted; packed 1-bit row padding is preserved.",
+    "Parameters": [
+      "ctx",
+      "plane",
+      "compression",
+      "version",
+      "options"
+    ]
+  },
+  "psdfile.Error.Error": {
+    "Description": "Error describes the failed operation without embedding raw identifiers or payloads.",
+    "Parameters": []
+  },
+  "psdfile.Error.Unwrap": {
+    "Description": "Unwrap supports errors.Is and errors.As for the category and underlying I/O error.",
+    "Parameters": []
+  },
+  "psdfile.NewRegionCache": {
+    "Description": "NewRegionCache creates a bounded LRU using 64 MiB and 256 entries by default.",
+    "Parameters": [
+      "source",
+      "options"
+    ]
+  },
+  "psdfile.Open": {
+    "Description": "Open indexes a PSD/PSB file and owns the open file until Document.Close.",
+    "Parameters": [
+      "filename",
+      "options"
+    ]
+  },
+  "psdfile.Parse": {
+    "Description": "Parse indexes and retains the supplied bytes; callers must not mutate them before Close.",
+    "Parameters": [
+      "data",
+      "options"
+    ]
+  },
+  "psdfile.Read": {
+    "Description": "Read indexes a borrowed ReaderAt without closing it, including after Document.Close.\nThe caller keeps the source alive and immutable until all document operations have finished.",
+    "Parameters": [
+      "reader",
+      "size",
+      "options"
+    ]
+  },
+  "psdfile.RegionCache.Clear": {
+    "Description": "Clear releases retained samples while keeping cumulative hit and miss counters.",
+    "Parameters": []
+  },
+  "psdfile.RegionCache.Close": {
+    "Description": "Close releases retained samples and makes subsequent cache requests return ErrClosed.",
+    "Parameters": []
+  },
+  "psdfile.RegionCache.DecodeChannelRegion": {
+    "Description": "DecodeChannelRegion returns an owned layer-channel region, reusing a retained sample block when present.",
+    "Parameters": [
+      "ctx",
+      "layerIndex",
+      "channelIndex",
+      "rectangle"
+    ]
+  },
+  "psdfile.RegionCache.DecodeCompositeChannelRegion": {
+    "Description": "DecodeCompositeChannelRegion returns an owned saved-image region through the same bounded LRU.",
+    "Parameters": [
+      "ctx",
+      "channelIndex",
+      "rectangle"
+    ]
+  },
+  "psdfile.RegionCache.Stats": {
+    "Description": "Stats returns a synchronized snapshot of cache counters and retained storage.",
+    "Parameters": []
+  },
+  "psdfile.TIFFLayerSource.Close": {
+    "Description": "Close invalidates private-layer operations without closing or modifying the original document.",
+    "Parameters": []
+  },
+  "psdfile.TIFFLayerSource.DecodeChannel": {
+    "Description": "DecodeChannel returns one owned saved layer channel, including source masks or transparency.",
+    "Parameters": [
+      "ctx",
+      "layer",
+      "channel"
+    ]
+  },
+  "psdfile.TIFFLayerSource.DecodeChannelRegion": {
+    "Description": "DecodeChannelRegion reads a channel-local region without retaining unrelated saved rows.",
+    "Parameters": [
+      "ctx",
+      "layer",
+      "channel",
+      "rectangle",
+      "options"
+    ]
+  },
+  "psdfile.TIFFLayerSource.DecodeLayer": {
+    "Description": "DecodeLayer returns owned saved channel samples at their original RGB8 precision.",
+    "Parameters": [
+      "ctx",
+      "index"
+    ]
+  },
+  "psdfile.TIFFLayerSource.DecodeTextEngine": {
+    "Description": "DecodeTextEngine reads only a selected original TIFF EngineData blob and returns an owned typed engine tree.\nByte order normalization never changes PostScript-like EngineData wire bytes or string escapes.",
+    "Parameters": [
+      "ctx",
+      "record",
+      "options"
+    ]
+  },
+  "psdfile.TIFFLayerSource.ICCProfile": {
+    "Description": "ICCProfile returns the original owned TIFF profile bytes without converting saved color encoding.",
+    "Parameters": [
+      "ctx"
+    ]
+  },
+  "psdfile.TIFFLayerSource.Info": {
+    "Description": "Info returns an owned value describing indexed geometry and source provenance, including after Close.",
+    "Parameters": []
+  },
+  "psdfile.TIFFLayerSource.LayerRecord": {
+    "Description": "LayerRecord returns one owned physical Layr record with normalized metadata spans.\nIts saved channel pixels are decoded only by an explicit channel or layer request.",
+    "Parameters": [
+      "ctx",
+      "index"
+    ]
+  },
+  "psdfile.TIFFLayerSource.NormalizationRanges": {
+    "Description": "NormalizationRanges returns owned complete unit-reversal ranges intersecting the requested source interval.",
+    "Parameters": [
+      "ctx",
+      "span"
+    ]
+  },
+  "psdfile.TIFFLayerSource.OpaqueBlocks": {
+    "Description": "OpaqueBlocks returns known private payloads unavailable for normalized semantic decoding.",
+    "Parameters": [
+      "ctx"
+    ]
+  },
+  "psdfile.TIFFLayerSource.OpenLinkedDocument": {
+    "Description": "OpenLinkedDocument opens an actual borrowed embedded PSD/PSB from a private TIFF linked record.\nThe returned child has its original PSD/PSB header and bytes; no external path is opened.",
+    "Parameters": [
+      "ctx",
+      "record",
+      "options"
+    ]
+  },
+  "psdfile.TIFFLayerSource.OriginalSpan": {
+    "Description": "OriginalSpan maps a normalized structural interval to its original TIFF address interval.\nReadOriginalSpan returns wire bytes; ReadNormalizedSpan applies the separately reported unit reversals.",
+    "Parameters": [
+      "ctx",
+      "normalized"
+    ]
+  },
+  "psdfile.TIFFLayerSource.ReadLinkedFileView": {
+    "Description": "ReadLinkedFileView indexes private linked entries without copying their embedded media payloads.",
+    "Parameters": [
+      "ctx",
+      "options"
+    ]
+  },
+  "psdfile.TIFFLayerSource.ReadNormalizedSpan": {
+    "Description": "ReadNormalizedSpan returns owned structural bytes with known TIFF unit reversals applied.\nA span intersecting an opaque block payload returns ErrUnsupported instead of mislabeling its wire bytes.",
+    "Parameters": [
+      "ctx",
+      "span"
+    ]
+  },
+  "psdfile.TIFFLayerSource.ReadOriginalSpan": {
+    "Description": "ReadOriginalSpan returns owned original TIFF bytes, leaving byte order and payloads unchanged.",
+    "Parameters": [
+      "ctx",
+      "span"
+    ]
+  },
+  "psdfile.TIFFLayerSource.ReadSmartObjectView": {
+    "Description": "ReadSmartObjectView returns owned modern placement descriptors without opening or rendering their contents.",
+    "Parameters": [
+      "ctx",
+      "options"
+    ]
+  },
+  "psdfile.TIFFLayerSource.ReadTextLayerView": {
+    "Description": "ReadTextLayerView returns owned mixed-order TIFF TySh metadata without reading saved pixels or EngineData.\nIt does not resolve fonts, render glyphs or reconstruct live private-layer contents.",
+    "Parameters": [
+      "ctx",
+      "options"
+    ]
+  },
+  "psdfile.TIFFLayerSource.Resources": {
+    "Description": "Resources returns owned Photoshop image-resource records retained in their original big-endian TIFF encoding.",
+    "Parameters": [
+      "ctx"
+    ]
+  },
+  "psdfile.TIFFLayerSource.SavedPreview": {
+    "Description": "SavedPreview decodes only the standard TIFF main IFD saved preview.\nThis explicit preview operation retains the source's white matte when it was stored in the TIFF main image.",
+    "Parameters": [
+      "ctx",
+      "options"
+    ]
+  },
+  "psdfile.TextLayerRecord.ResolveDocumentText": {
+    "Description": "ResolveDocumentText checks one unambiguous TySh TextIndex and its matching schema-7 Txt2 record.\nMetadata borrows the supplied owned engine tree, which must remain read-only while this association is used.\nNo absent index, terminal paragraph marker or differing text is invented to force a match.",
+    "Parameters": [
+      "ctx",
+      "metadata"
+    ]
+  },
+  "psdfile.cancelReader.Read": {
+    "Description": "",
+    "Parameters": [
+      "data"
+    ]
+  },
+  "psdfile.checkedReaderAt.ReadAt": {
+    "Description": "",
+    "Parameters": [
+      "data",
+      "offset"
+    ]
+  },
+  "psdfile.contextReaderAt.ReadAt": {
+    "Description": "",
+    "Parameters": [
+      "data",
+      "offset"
+    ]
+  },
+  "psdfile.decodeCursor.Read": {
+    "Description": "",
+    "Parameters": [
+      "data"
+    ]
+  },
+  "psdfile.decodeCursor.ReadByte": {
+    "Description": "",
+    "Parameters": []
+  },
+  "psdfile.encodeOutput.Write": {
+    "Description": "",
+    "Parameters": [
+      "data"
+    ]
+  },
+  "psdfile.linkedDocumentReader.ReadAt": {
+    "Description": "",
+    "Parameters": [
+      "data",
+      "offset"
+    ]
+  },
+  "psdfile.regionReaderAt.ReadAt": {
+    "Description": "",
+    "Parameters": [
+      "data",
+      "offset"
+    ]
+  },
+  "psdfile.strictPatternReaderAt.ReadAt": {
+    "Description": "",
+    "Parameters": [
+      "data",
+      "offset"
+    ]
+  },
+  "psdfile.strictRasterReaderAt.ReadAt": {
+    "Description": "",
+    "Parameters": [
+      "data",
+      "offset"
+    ]
+  },
+  "psdfile.tiffPrivateOriginalReader.ReadAt": {
+    "Description": "",
+    "Parameters": [
+      "data",
+      "offset"
+    ]
+  },
+  "psdfile.tiffPrivateReader.ReadAt": {
+    "Description": "",
+    "Parameters": [
+      "data",
+      "offset"
+    ]
+  },
+  "psdfilter.Apply": {
+    "Description": "Apply returns an owned filtered image, preserves input pixels and uses first-applied-to-last-applied order.\nGaussian samples premultiplied encoded-RGB and alpha; Surface Blur and Smart Sharpen retain center alpha.\nSpatial sampling clamps image edges and excludes hidden transparent colors; the source rectangle is retained.\nEach approximation requires its explicit policy; Photoshop pixel parity is not claimed.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "stack",
+      "options"
+    ]
+  },
+  "psdfilter.ApplyRegion": {
+    "Description": "ApplyRegion filters an owned input window with explicit complete-image opacity facts.\nfullInputOpaque contains one fact per Stack.Filters entry, describing that filter's complete input image.\nA false fact keeps premultiplied precision even when the local window happens to be opaque.\nTrue facts are rejected when local alpha contradicts them; callers prove the complete-image facts independently.\nRequired filter halos must be present in source, and callers retain only their intended interior output region.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "stack",
+      "fullInputOpaque",
+      "options"
+    ]
+  },
+  "psdfilter.Error.Error": {
+    "Description": "Error describes the failed operation.",
+    "Parameters": []
+  },
+  "psdfilter.Error.Unwrap": {
+    "Description": "Unwrap exposes the error category to errors.Is.",
+    "Parameters": []
+  },
+  "psdfilter.RequiredHalo": {
+    "Description": "RequiredHalo validates a complete stack and sums its active spatial dependencies.\nCallers provide this halo around an output region before calling ApplyRegion.",
+    "Parameters": [
+      "stack",
+      "options"
+    ]
+  },
+  "psdfilter.SupportRadius": {
+    "Description": "SupportRadius validates one filter and returns its finite input dependency radius in pixels.\nColor adjustments have zero support but remain active operations.",
+    "Parameters": [
+      "filter",
+      "options"
+    ]
+  },
+  "psdfilter.WorkingEstimate": {
+    "Description": "WorkingEstimate validates a source layout and estimates Apply's peak allocation before any allocation.\nImage rectangles, nonzero origins and caller-owned row strides are preserved in the owned result.",
+    "Parameters": [
+      "source",
+      "stack",
+      "options"
+    ]
+  },
+  "psdfont.Decode": {
+    "Description": "Decode reads one static TrueType or CFF1 sfnt face or an explicitly selected TTC face.\nCFF2, variable fonts, bitmap-only faces and unsupported collection versions are rejected.",
+    "Parameters": [
+      "ctx",
+      "data",
+      "options"
+    ]
+  },
+  "psdfont.Error.Error": {
+    "Description": "Error implements error.",
+    "Parameters": []
+  },
+  "psdfont.Error.Unwrap": {
+    "Description": "Unwrap exposes the category for errors.Is.",
+    "Parameters": []
+  },
+  "psdfont.Face.Glyph": {
+    "Description": "Glyph decodes a design-space outline into independent owned points and quadratic or cubic commands.\nTrueType instructions and Type2 hints never execute pixel-grid fitting.\nName-keyed CFF1 endchar components resolve StandardEncoding names, including .notdef, inside this font.\nTheir raw offsets precede FontMatrix application; an existing parent path is retained before both components.\nParent hmtx and Type2 width remain authoritative. Nested components and cycles are rejected; CID is unsupported.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "options"
+    ]
+  },
+  "psdfont.Face.InstanceMetrics": {
+    "Description": "InstanceMetrics returns an owned precise CFF2 instance record using the same bounded outline decode.\nStatic fonts return nil. Raw hmtx values remain available on Glyph without integer clamping of instance values.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "options"
+    ]
+  },
+  "psdfont.Face.Kerning": {
+    "Description": "Kerning returns legacy horizontal kern-format-zero adjustment in design units.\nIt does not apply GPOS positioning. Unsupported legacy kern subtables return ErrUnsupported.",
+    "Parameters": [
+      "ctx",
+      "left",
+      "right"
+    ]
+  },
+  "psdfont.Face.LookupRune": {
+    "Description": "LookupRune maps a Unicode scalar through the selected Unicode cmap without .notdef substitution.\nFormat 12 takes precedence over format 4; a zero mapping returns ErrMissingGlyph.",
+    "Parameters": [
+      "ctx",
+      "character"
+    ]
+  },
+  "psdfont.Face.NamedVariationInstances": {
+    "Description": "NamedVariationInstances returns owned coordinates and source name IDs without resolving or substituting names.",
+    "Parameters": [
+      "ctx"
+    ]
+  },
+  "psdfont.Face.ReadSpan": {
+    "Description": "ReadSpan returns an independent copy of original font bytes, including retained instructions.\nA zero or omitted byte budget selects 8 MiB; no file is reopened and no bytecode executes.",
+    "Parameters": [
+      "ctx",
+      "span",
+      "maxBytes"
+    ]
+  },
+  "psdfont.Face.VariationAxes": {
+    "Description": "VariationAxes returns an owned copy of the original fvar axes in source order.\nFonts without variation metadata return nil; strings are immutable values owned by the decoded face.",
+    "Parameters": [
+      "ctx"
+    ]
+  },
+  "psdfont.Face.VariationCoordinates": {
+    "Description": "VariationCoordinates returns the owned selected user and normalized coordinates in fvar order.",
+    "Parameters": [
+      "ctx"
+    ]
+  },
+  "psdfont.Face.VariationMetrics": {
+    "Description": "VariationMetrics returns an owned copy of all MVAR records in binary tag order.\nDeltas remain precise values in their source field's units; hhea leading is not modified.",
+    "Parameters": [
+      "ctx"
+    ]
+  },
+  "psdfont.Glyph.WorkingBytes": {
+    "Description": "WorkingBytes reports the conservative allocation reservation used to produce this owned glyph.",
+    "Parameters": []
+  },
+  "psdfont.HintRun": {
+    "Description": "HintRun returns independent device paths with Scale=1 and positioned glyph origins at zero.\nDevice paths use upward-positive Y, matching RasterizeRun's outline convention.\nInput paths, original hmtx metrics, cluster advances and fractional baselines are never modified.\nFitting requires opt-in CFF1 metadata and positive axis-aligned source and caller matrices.\nActive mask ranges are respected; counter masks retain their source identity but do not change active hints.\nOrdinary active stems must not overlap or produce a reversed piecewise map.\nFractional policies reject paired blue captures requiring a change to the original stem width.",
+    "Parameters": [
+      "ctx",
+      "run",
+      "transform",
+      "options"
+    ]
+  },
+  "psdfont.Layout": {
+    "Description": "Layout places a single-style Latin run using explicit font resolution and legacy kern pairs.\nIt rejects combining marks, bidirectional text, tabs, complex scripts, GSUB shaping requests\nand missing characters. Native hinting, fractional Photoshop spacing and text warps are not reproduced.",
+    "Parameters": [
+      "ctx",
+      "text",
+      "style",
+      "resolver",
+      "options"
+    ]
+  },
+  "psdfont.LayoutOpenType": {
+    "Description": "LayoutOpenType places one explicit single-line Latin OpenType run with owned unhinted outlines.\nShapeOptions alone controls optional features; Style.Kerning must be false and Tracking must be zero.\nIt never calls legacy kern or applies AAT, hinting, paragraph layout, or Photoshop antialiasing.\nGlyph X/Y include shaped placement offsets; Advance and AdvanceWidth are pixel X advances.\nPositive design-unit Y offsets and advances move upwards in the downwards-positive pixel canvas.\nScale products round to float64 before translation, keeping integer bounds consistent across FMA targets.\nLayoutOptions bounds the maximum of the Shape and outline-cache phases before allocations.\nThe resolver's already-owned Face is borrowed, not copied or retained; its decode budget is independent.\nRepeated outlines share a read-only Glyph within this returned Run and never with another run or the Face.",
+    "Parameters": [
+      "ctx",
+      "text",
+      "style",
+      "resolver",
+      "shapeOptions",
+      "options"
+    ]
+  },
+  "psdfont.Open": {
+    "Description": "Open reads only the explicit caller-supplied file and closes it before returning an owned face.",
+    "Parameters": [
+      "ctx",
+      "filename",
+      "options"
+    ]
+  },
+  "psdfont.RasterizeRun": {
+    "Description": "RasterizeRun returns independent grayscale glyph coverage in the supplied pixel rectangle.\nQuadratic outlines are converted exactly to cubic controls; cubic outlines retain both controls.\nIt does not apply TrueType hinting, Photoshop antialias modes, text warps or color.",
+    "Parameters": [
+      "ctx",
+      "run",
+      "bounds",
+      "options"
+    ]
+  },
+  "psdfont.ResolverFunc.ResolveFont": {
+    "Description": "ResolveFont invokes the caller's explicit resolver.",
+    "Parameters": [
+      "ctx",
+      "name"
+    ]
+  },
+  "psdfont.Run.WorkingBytes": {
+    "Description": "WorkingBytes reports the conservative allocation peak recorded when Layout or LayoutOpenType produced this run.\nTransient shaping and outline decoding are included where applicable; the borrowed Face is excluded.\nIt covers the returned owned storage, but does not recompute memory after callers mutate public fields.\nA nil run or a caller-constructed run has no recorded reservation and returns zero.",
+    "Parameters": []
+  },
+  "psdfont.Shape": {
+    "Description": "Shape executes a selected bounded Latin OpenType pipeline, independent of Layout.\nIt uses left-to-right horizontal layout, so GPOS vertical YAdvance adjustments are not applied.\nIt never executes legacy kern in addition to selected GPOS.\nMissing glyph zero, complex scripts, nonzero flags, contextual lookups and hinted devices error.\nSelected CFF2 instances retain precise totals and project integer positions with floor(value+.5) once.",
+    "Parameters": [
+      "ctx",
+      "face",
+      "text",
+      "options"
+    ]
+  },
+  "psdfont.ShapedRun.WorkingBytes": {
+    "Description": "WorkingBytes reports the conservative peak allocation reserved for shaping.\nThe existing owned Face is borrowed during shaping and is excluded from this reservation.",
+    "Parameters": []
+  },
+  "psdgradient.Error.Error": {
+    "Description": "Error implements error.",
+    "Parameters": []
+  },
+  "psdgradient.Error.Unwrap": {
+    "Description": "Unwrap exposes the error category to errors.Is.",
+    "Parameters": []
+  },
+  "psdgradient.Render": {
+    "Description": "Render returns owned straight NRGBA pixels for one classic encoded-RGB gradient fill.\nDocument coordinates determine the ramp; optional cropping never rescales its geometry.\nCaller-owned stop slices remain immutable for the call and are never changed or retained.",
+    "Parameters": [
+      "ctx",
+      "fill",
+      "documentBounds",
+      "options"
+    ]
+  },
+  "psdgradient.Validate": {
+    "Description": "Validate checks supported fill semantics without allocating pixels or retaining input slices.",
+    "Parameters": [
+      "fill"
+    ]
+  },
+  "psdkit.ApplySmartFilters": {
+    "Description": "ApplySmartFilters executes a bounded pipeline and returns owned pixels.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "stack",
+      "options"
+    ]
+  },
+  "psdkit.AssertImageSize": {
+    "Description": "AssertImageSize checks dimensions before allocating or decoding an image.",
+    "Parameters": [
+      "width",
+      "height"
+    ]
+  },
+  "psdkit.BuildRasterContents": {
+    "Description": "BuildRasterContents builds editable PSD/PSB content without cropping or changing input samples.",
+    "Parameters": [
+      "ctx",
+      "input",
+      "options"
+    ]
+  },
+  "psdkit.CompilePresetWarpGeometry": {
+    "Description": "CompilePresetWarpGeometry prepares owned horizontal Arc Lower coordinates with validated source metadata.\nCoordinate certification and native pixel sampling have separate acceptance scopes.",
+    "Parameters": [
+      "ctx",
+      "placed",
+      "options"
+    ]
+  },
+  "psdkit.CompileUniformGridWarpGeometry": {
+    "Description": "CompileUniformGridWarpGeometry prepares a uniform split grid from preserved source metadata.\nNonuniform slices, stale source dimensions and unqualified projective placement are rejected.\nThe explicit raster model and Photoshop pixel acceptance remain separate from geometry certification.",
+    "Parameters": [
+      "ctx",
+      "placed",
+      "options"
+    ]
+  },
+  "psdkit.Composite": {
+    "Description": "Composite rebuilds an owned RGB8 image from layers, independent of the saved preview.\nIt borrows an immutable decoded document and never modifies source buffers.",
+    "Parameters": [
+      "ctx",
+      "document",
+      "options"
+    ]
+  },
+  "psdkit.CompositeRegion": {
+    "Description": "CompositeRegion rebuilds an owned absolute-coordinate RGB8 window from an immutable layer tree.",
+    "Parameters": [
+      "ctx",
+      "document",
+      "bounds",
+      "options"
+    ]
+  },
+  "psdkit.ConvertSamples": {
+    "Description": "ConvertSamples returns an owned sRGB8 display image without changing original sample bytes.",
+    "Parameters": [
+      "ctx",
+      "pixels",
+      "options"
+    ]
+  },
+  "psdkit.CreateDocument": {
+    "Description": "CreateDocument returns an owned editor containing one transparent canvas-sized RGB8 layer.\nPopulate handle 1 with ReplacePixels or add layers and groups before SavePSD.",
+    "Parameters": [
+      "ctx",
+      "width",
+      "height",
+      "options"
+    ]
+  },
+  "psdkit.DecodeDisplayComposite": {
+    "Description": "DecodeDisplayComposite converts stored composite samples using their palette, ICC and transparency markers.\nIt displays the saved preview, including any placeholder or quantization already present in that preview.\nThis operation does not re-render high-precision document layers or change their source precision.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "options"
+    ]
+  },
+  "psdkit.DecodeDisplayRegion": {
+    "Description": "DecodeDisplayRegion returns an owned sRGB8 display tile at absolute saved-canvas coordinates.\nRaw/RLE reads selected pixels; ZIP still validates its complete shared compressed stream.\nIt displays stored merged samples and does not reconstruct document layers or alter source precision.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "rectangle",
+      "options"
+    ]
+  },
+  "psdkit.DecodeSmartFilters": {
+    "Description": "DecodeSmartFilters decodes an owned placement's filter controls without reading raster caches.",
+    "Parameters": [
+      "ctx",
+      "placement",
+      "options"
+    ]
+  },
+  "psdkit.DefaultColorOptions": {
+    "Description": "DefaultColorOptions returns explicit default display policies and budgets.",
+    "Parameters": []
+  },
+  "psdkit.DefaultConfig": {
+    "Description": "DefaultConfig enables each visible smart object using its source filename as the image tag.",
+    "Parameters": [
+      "metadata"
+    ]
+  },
+  "psdkit.DefaultSourceLimits": {
+    "Description": "DefaultSourceLimits returns the default metadata and decode budgets.",
+    "Parameters": []
+  },
+  "psdkit.EmptyImage": {
+    "Description": "EmptyImage allocates a bounded transparent straight-alpha image.",
+    "Parameters": [
+      "width",
+      "height"
+    ]
+  },
+  "psdkit.Encode": {
+    "Description": "Encode writes PNG or quality-95 JPEG pixels without modifying source or closing writer.\nIt exports a raster image, not a PSD file. JPEG transparency is flattened against white.",
+    "Parameters": [
+      "writer",
+      "source",
+      "format"
+    ]
+  },
+  "psdkit.EncodeVectorMask": {
+    "Description": "EncodeVectorMask returns an owned vmsk/vsms payload containing the mask's current typed fields.",
+    "Parameters": [
+      "ctx",
+      "mask",
+      "options"
+    ]
+  },
+  "psdkit.EstimateSmartFilters": {
+    "Description": "EstimateSmartFilters validates a pipeline and estimates peak additional storage before allocation.",
+    "Parameters": [
+      "source",
+      "stack",
+      "options"
+    ]
+  },
+  "psdkit.Inspect": {
+    "Description": "Inspect reports rendering capabilities without creating a renderer's caches.",
+    "Parameters": [
+      "document"
+    ]
+  },
+  "psdkit.LayoutOpenType": {
+    "Description": "LayoutOpenType places a single-line Latin run using explicitly selected OpenType features.\nTracking must be zero and FontStyle.Kerning false; OpenTypeShapeOptions alone controls kerning.\nIt does not reproduce hinting or Photoshop antialiasing and leaves scene text rendering unchanged.",
+    "Parameters": [
+      "ctx",
+      "text",
+      "style",
+      "resolver",
+      "shapeOptions",
+      "options"
+    ]
+  },
+  "psdkit.NewEditor": {
+    "Description": "NewEditor borrows an indexed source; closing the editor does not close that source.",
+    "Parameters": [
+      "source"
+    ]
+  },
+  "psdkit.NewRenderer": {
+    "Description": "NewRenderer validates the supported RGB8 subset and borrows an immutable document.\nUnsupported features return an error wrapping ErrUnsupported.",
+    "Parameters": [
+      "document"
+    ]
+  },
+  "psdkit.Open": {
+    "Description": "Open reads an RGB8 PSD/PSB file and closes it before returning decoded pixels and metadata.\nUse OpenDocument for original-block retention and on-demand source-precision decoding.",
+    "Parameters": [
+      "filename"
+    ]
+  },
+  "psdkit.OpenDocument": {
+    "Description": "OpenDocument indexes a PSD/PSB file and keeps it open until SourceDocument.Close.\nThe optional LoadOptions configures resource limits; pixels remain encoded until requested.",
+    "Parameters": [
+      "filename",
+      "options"
+    ]
+  },
+  "psdkit.OpenEditor": {
+    "Description": "OpenEditor owns an indexed PSD/PSB source and releases it when the editor is closed.",
+    "Parameters": [
+      "filename",
+      "options"
+    ]
+  },
+  "psdkit.OpenFont": {
+    "Description": "OpenFont opens the exact caller-selected font file without directory searches or substitutions.",
+    "Parameters": [
+      "ctx",
+      "path",
+      "options"
+    ]
+  },
+  "psdkit.Parse": {
+    "Description": "Parse eagerly reads an in-memory RGB8 PSD/PSB without retaining or copying its encoded source.",
+    "Parameters": [
+      "data"
+    ]
+  },
+  "psdkit.ParseDocument": {
+    "Description": "ParseDocument indexes and retains PSD/PSB bytes without copying their encoded payloads.\nCallers must keep the supplied bytes unchanged until SourceDocument.Close.",
+    "Parameters": [
+      "data",
+      "options"
+    ]
+  },
+  "psdkit.PrepareOutput": {
+    "Description": "PrepareOutput shrinks an image to Options.MaxSize and otherwise borrows the original pixels.\nThe returned image must be treated as read-only. Format must be \"png\" or \"jpeg\".",
+    "Parameters": [
+      "source",
+      "options"
+    ]
+  },
+  "psdkit.ProfileTransformWorkingBytes": {
+    "Description": "ProfileTransformWorkingBytes estimates additional peak storage excluding borrowed inputs.",
+    "Parameters": [
+      "ctx",
+      "input",
+      "sourceICC",
+      "destinationICC",
+      "options"
+    ]
+  },
+  "psdkit.RasterContentsWorkingBytes": {
+    "Description": "RasterContentsWorkingBytes estimates conservative peak storage before constructing a prototype.",
+    "Parameters": [
+      "ctx",
+      "input",
+      "options"
+    ]
+  },
+  "psdkit.RasterizeFontRun": {
+    "Description": "RasterizeFontRun returns owned grayscale coverage in the supplied absolute pixel rectangle.\nIt applies the existing unhinted approximation without text color, warps or Photoshop antialias modes.",
+    "Parameters": [
+      "ctx",
+      "run",
+      "bounds",
+      "options"
+    ]
+  },
+  "psdkit.RasterizeVectorMask": {
+    "Description": "RasterizeVectorMask returns owned approximate filled-path coverage for absolute canvas bounds.",
+    "Parameters": [
+      "ctx",
+      "mask",
+      "bounds",
+      "options"
+    ]
+  },
+  "psdkit.Read": {
+    "Description": "Read eagerly reads a bounded RGB8 PSD/PSB from a random-access source of the supplied size.\nIt does not close or retain reader; the caller owns the source's lifetime.",
+    "Parameters": [
+      "reader",
+      "size"
+    ]
+  },
+  "psdkit.ReadDocument": {
+    "Description": "ReadDocument indexes a borrowed ReaderAt; closing the document does not close reader.\nThe caller keeps reader alive and immutable until all document operations finish.",
+    "Parameters": [
+      "reader",
+      "size",
+      "options"
+    ]
+  },
+  "psdkit.ReadSourceRGBProfile": {
+    "Description": "ReadSourceRGBProfile returns owned saved ICC bytes without guessing an untagged working space.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "maxBytes"
+    ]
+  },
+  "psdkit.RenderArtboard": {
+    "Description": "RenderArtboard rebuilds one selected board from its live layers and saved background.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "options"
+    ]
+  },
+  "psdkit.RenderArtboards": {
+    "Description": "RenderArtboards rebuilds every top-level RGB8 PSD/PSB artboard independently.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "options"
+    ]
+  },
+  "psdkit.RenderOpenTypeTextLayer": {
+    "Description": "RenderOpenTypeTextLayer returns owned approximate source pixels for supported RGB8 point text.\nIt verifies the record against source metadata and uses explicit caller-selected fonts and features.\nThe default supports single-line Latin at 72ppi, Sharp metadata and no text warp.\nApproximateTypography also executes supported point paragraphs, tracking, leading, capitalization and FauxBold.\nFauxBold selects outline-only or explicit synthetic advance and anchored outline expansion.\nOne style remains the default; explicit StyleBoundaries selects approximate multi-style typography.\nClusterPaint defaults to rejecting mixed colors; explicit FirstStyle selects the logical start style's entire RGBA.\nNative style-boundary coloring and antialiasing remain unqualified beyond finite reference observations.\nOptional Hinting fits preserved CFF1 source hints without executing TrueType instructions.\nLayer masks, opacity, effects and blending apply separately; native pixel equality is not guaranteed.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "record",
+      "resolver",
+      "options"
+    ]
+  },
+  "psdkit.RenderPattern": {
+    "Description": "RenderPattern samples an explicitly supplied RGB8 tile without preset or filesystem lookups.",
+    "Parameters": [
+      "ctx",
+      "tile",
+      "fill",
+      "bounds",
+      "options"
+    ]
+  },
+  "psdkit.RenderSource": {
+    "Description": "RenderSource rebuilds source layers and embedded PSD/PSB/PNG/JPEG smart-object content.\nIt returns owned encoded-RGB pixels in the document or explicitly requested output profile.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "options"
+    ]
+  },
+  "psdkit.RenderSourcePlacedLayer": {
+    "Description": "RenderSourcePlacedLayer rebuilds one original smart-object layer from its embedded source.\nThe owned result retains placement, masks and effects for subsequent composition.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "layerIndex",
+      "options"
+    ]
+  },
+  "psdkit.RenderSourcePrecision": {
+    "Description": "RenderSourcePrecision rebuilds supported ordinary RGB/Gray16 or RGB/Gray32 layer trees.\nIt preserves finite HDR values, source encoding and ICC bytes without applying a display transform.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "options"
+    ]
+  },
+  "psdkit.RenderSourcePrecisionTile": {
+    "Description": "RenderSourcePrecisionTile reconstructs RGB/Gray16 or RGB/Gray32 in an absolute source window.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "bounds",
+      "options"
+    ]
+  },
+  "psdkit.RenderSourceTile": {
+    "Description": "RenderSourceTile rebuilds an RGB8 window without allocating the complete source canvas.\nThe returned owned image retains absolute document coordinates.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "bounds",
+      "options"
+    ]
+  },
+  "psdkit.RenderTextLayer": {
+    "Description": "RenderTextLayer returns owned approximate source pixels for a supported point-text layer.\nApply layer masks, opacity and blending separately or opt into SceneOptions.ApproximateText.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "record",
+      "resolver",
+      "options"
+    ]
+  },
+  "psdkit.ShapeOpenType": {
+    "Description": "ShapeOpenType executes selected Latin single/ligature substitutions and pair positioning.\nIt uses left-to-right horizontal layout; vertical advance adjustments are not applied.\nIt does not execute Apple AAT, hinting, complex scripts, or implicit legacy kerning.\nThe returned design-unit positions are independent of Photoshop layout and rasterization.",
+    "Parameters": [
+      "ctx",
+      "face",
+      "text",
+      "options"
+    ]
+  },
+  "psdkit.TransformProfile": {
+    "Description": "TransformProfile returns owned RGB8 pixels in the destination profile while preserving alpha.",
+    "Parameters": [
+      "ctx",
+      "input",
+      "sourceICC",
+      "destinationICC",
+      "options"
+    ]
+  },
+  "psdkit.ValidateConfig": {
+    "Description": "ValidateConfig rejects invalid fitting, stale targets and conflicting replacements.",
+    "Parameters": [
+      "config",
+      "metadata"
+    ]
+  },
+  "psdkit.ValidateOptions": {
+    "Description": "ValidateOptions checks the PNG/JPEG output format and longest-edge limit.",
+    "Parameters": [
+      "options"
+    ]
+  },
+  "psdkit.VisitSourcePrecisionTiles": {
+    "Description": "VisitSourcePrecisionTiles traverses a source window without retaining the complete output canvas.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "bounds",
+      "size",
+      "visit",
+      "options"
+    ]
+  },
+  "psdkit.VisitSourceTiles": {
+    "Description": "VisitSourceTiles rebuilds a source window one owned tile at a time in row-major order.\nPixels retained by the callback are caller storage and are outside the per-tile budget.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "bounds",
+      "size",
+      "visit",
+      "options"
+    ]
+  },
+  "psdpattern.Error.Error": {
+    "Description": "Error implements error.",
+    "Parameters": []
+  },
+  "psdpattern.Error.Unwrap": {
+    "Description": "Unwrap exposes the error category to errors.Is.",
+    "Parameters": []
+  },
+  "psdpattern.Render": {
+    "Description": "Render repeats a caller-immutable straight NRGBA tile into independently owned document pixels.\nAxis sampling supports exact repeats at 100 percent, periodic box reduction at 50 percent,\nand origin-anchored straight-RGBA interpolation at 200 percent, all with integer document-pixel phase.\nNo source pixel, descriptor parameter or ICC profile is changed or retained.",
+    "Parameters": [
+      "ctx",
+      "tile",
+      "fill",
+      "documentBounds",
+      "options"
+    ]
+  },
+  "psdpattern.Validate": {
+    "Description": "Validate checks tile ownership bounds and the verified axis sampling subset without allocating output pixels.\nIt does not read or alter caller-owned samples and never prints the opaque fill ID.",
+    "Parameters": [
+      "tile",
+      "fill"
+    ]
+  },
+  "psdrender.AssertImageSize": {
+    "Description": "AssertImageSize applies the frontend's 20 MP and 30000-pixel limits before allocation.",
+    "Parameters": [
+      "width",
+      "height"
+    ]
+  },
+  "psdrender.BuildBatchInputs": {
+    "Description": "BuildBatchInputs pairs images by upload order and broadcasts singleton tags to every group.",
+    "Parameters": [
+      "config",
+      "byTag"
+    ]
+  },
+  "psdrender.CanvasPixels": {
+    "Description": "CanvasPixels matches an 8-bit sRGB Canvas premultiply/readback round trip before PNG encoding.\nOpaque images are borrowed; translucent images receive an owned buffer so templates remain immutable.",
+    "Parameters": [
+      "source"
+    ]
+  },
+  "psdrender.ClampByte": {
+    "Description": "ClampByte matches ECMAScript ToUint8Clamp, including ties to even and NaN handling.",
+    "Parameters": [
+      "value"
+    ]
+  },
+  "psdrender.CompilePresetWarpGeometry": {
+    "Description": "CompilePresetWarpGeometry certifies supported native preset coordinates without exposing pixel projection.\nHorizontal Arc Lower has native control evidence; its texture tessellation remains outside the live renderer.",
+    "Parameters": [
+      "ctx",
+      "layer",
+      "options"
+    ]
+  },
+  "psdrender.CompileProjection": {
+    "Description": "CompileProjection clips transformed bounds to a document when width and height are positive.",
+    "Parameters": [
+      "layer",
+      "width",
+      "height",
+      "forCompositing"
+    ]
+  },
+  "psdrender.CompileProjectionRegion": {
+    "Description": "CompileProjectionRegion retains complete placement geometry while clipping only its output allocation.\nIt never allocates or checks the complete transformed layer against the eager canvas pixel limit.\nEmpty intersections return a zero-sized plan; callers can skip source resolution for that plan.",
+    "Parameters": [
+      "layer",
+      "canvas",
+      "rectangle"
+    ]
+  },
+  "psdrender.CompileWarp": {
+    "Description": "CompileWarp copies and certifies supported custom warp geometry without allocating pixels.",
+    "Parameters": [
+      "ctx",
+      "layer",
+      "options"
+    ]
+  },
+  "psdrender.CompositeBackgroundReplacement": {
+    "Description": "CompositeBackgroundReplacement replaces the original footprint, including candidate transparency.",
+    "Parameters": [
+      "target",
+      "layer",
+      "replacement"
+    ]
+  },
+  "psdrender.CompositeLayer": {
+    "Description": "CompositeLayer paints a source over the destination with saved opacity, fill opacity and mask.",
+    "Parameters": [
+      "target",
+      "layer",
+      "source"
+    ]
+  },
+  "psdrender.CropImage": {
+    "Description": "CropImage copies a valid local crop, or borrows the source for a full-frame crop.",
+    "Parameters": [
+      "source",
+      "rect"
+    ]
+  },
+  "psdrender.DefaultConfig": {
+    "Description": "DefaultConfig enables every smart object under its complete source filename.",
+    "Parameters": [
+      "metadata"
+    ]
+  },
+  "psdrender.EmptyImage": {
+    "Description": "EmptyImage creates a bounded transparent straight-alpha buffer.",
+    "Parameters": [
+      "width",
+      "height"
+    ]
+  },
+  "psdrender.Encode": {
+    "Description": "Encode writes standard PNG or quality-95 JPEG, with no browser or native library dependency.",
+    "Parameters": [
+      "writer",
+      "source",
+      "format"
+    ]
+  },
+  "psdrender.Engine.Metadata": {
+    "Description": "Metadata returns a detached report suitable for a frontend API response.",
+    "Parameters": []
+  },
+  "psdrender.Engine.Regions": {
+    "Description": "Regions returns sorted user slices or one complete document crop.",
+    "Parameters": [
+      "options"
+    ]
+  },
+  "psdrender.Engine.Render": {
+    "Description": "Render paints a group while reusing only immutable template geometry and static layers.",
+    "Parameters": [
+      "ctx",
+      "config",
+      "replacements",
+      "backgroundReplacements"
+    ]
+  },
+  "psdrender.Engine.RenderWithOptions": {
+    "Description": "RenderWithOptions trims each unique input print once, leaving random background bounds unchanged.",
+    "Parameters": [
+      "ctx",
+      "config",
+      "replacements",
+      "backgrounds",
+      "options"
+    ]
+  },
+  "psdrender.FitImage": {
+    "Description": "FitImage fits an input with premultiplied bilinear sampling and editor alignment semantics.\nAn opaque identity input may be borrowed; callers must treat the returned image as immutable.",
+    "Parameters": [
+      "source",
+      "width",
+      "height",
+      "fit",
+      "align"
+    ]
+  },
+  "psdrender.FlattenWhite": {
+    "Description": "FlattenWhite returns owned pixels with frontend-compatible white JPEG flattening.",
+    "Parameters": [
+      "source"
+    ]
+  },
+  "psdrender.GroupOutputName": {
+    "Description": "GroupOutputName matches the frontend batch filename convention, including extension removal.",
+    "Parameters": [
+      "groupIndex",
+      "imageIndex",
+      "name",
+      "format"
+    ]
+  },
+  "psdrender.Inspect": {
+    "Description": "Inspect collects capability metadata without creating render caches.",
+    "Parameters": [
+      "document"
+    ]
+  },
+  "psdrender.LayerMaskAlpha": {
+    "Description": "LayerMaskAlpha reads absolute grayscale coverage, including default, inversion and density.",
+    "Parameters": [
+      "layer",
+      "x",
+      "y"
+    ]
+  },
+  "psdrender.New": {
+    "Description": "New validates a parsed document and rejects unsupported features before rendering.",
+    "Parameters": [
+      "document"
+    ]
+  },
+  "psdrender.OutputNames": {
+    "Description": "OutputNames gives every region a filesystem-safe unique name in document order.",
+    "Parameters": [
+      "regions"
+    ]
+  },
+  "psdrender.PickBackgrounds": {
+    "Description": "PickBackgrounds draws independently per enabled row, treating the saved original as one equal option.\nAbsent keys deliberately retain original pixels, and disabled/empty rows consume no random draw.",
+    "Parameters": [
+      "config",
+      "metadata",
+      "random"
+    ]
+  },
+  "psdrender.PlacedCorners": {
+    "Description": "PlacedCorners validates convex, ordered smart-object corners.",
+    "Parameters": [
+      "placed"
+    ]
+  },
+  "psdrender.PrepareOutput": {
+    "Description": "PrepareOutput only shrinks a result; input trimming never changes output slice bounds.",
+    "Parameters": [
+      "source",
+      "options"
+    ]
+  },
+  "psdrender.ProjectImage": {
+    "Description": "ProjectImage projects one fitted object and returns its document-space origin.",
+    "Parameters": [
+      "layer",
+      "source",
+      "plan"
+    ]
+  },
+  "psdrender.ProjectImageContext": {
+    "Description": "ProjectImageContext projects one fitted object with cancellation during pixel sampling.",
+    "Parameters": [
+      "ctx",
+      "layer",
+      "source",
+      "plan"
+    ]
+  },
+  "psdrender.ProjectPlacedContentsContext": {
+    "Description": "ProjectPlacedContentsContext projects a PSD/PSB prototype canvas through its placement.\nTransparent outer borders use native ink support for calibrated axis-aligned placements.\nThe complete canvas UV mapping and cache rectangle remain fixed; masks remain separate.\nImage-print fitting retains the legacy ProjectImageContext sampling contract.",
+    "Parameters": [
+      "ctx",
+      "layer",
+      "source",
+      "plan"
+    ]
+  },
+  "psdrender.ProjectPlacedContentsWithOptions": {
+    "Description": "ProjectPlacedContentsWithOptions preserves the strict prototype sampler unless an approximation is selected.\nApproximateTransparentBorder falls back only when transformed transparent support causes ErrUnsupportedCrop.\nThe original canvas, placement metadata and projection plan are never cropped or modified.",
+    "Parameters": [
+      "ctx",
+      "layer",
+      "source",
+      "plan",
+      "options"
+    ]
+  },
+  "psdrender.ProjectWarp": {
+    "Description": "ProjectWarp projects source content through one supported custom 4x4 envelope.\nOpacity, masks, blend modes and effects are left to the document compositor.",
+    "Parameters": [
+      "ctx",
+      "layer",
+      "source",
+      "canvas",
+      "options"
+    ]
+  },
+  "psdrender.RequiresWarpRendering": {
+    "Description": "RequiresWarpRendering recognizes exactly the unchanged-grid subset accepted by the editor.",
+    "Parameters": [
+      "placed"
+    ]
+  },
+  "psdrender.SeededRandom": {
+    "Description": "SeededRandom reproduces the editor backend's per-group Mulberry32 sequence.",
+    "Parameters": [
+      "seed",
+      "index"
+    ]
+  },
+  "psdrender.SolveHomography": {
+    "Description": "SolveHomography uses the frontend's normalized Gauss-Jordan solve and operation ordering.",
+    "Parameters": [
+      "from",
+      "to"
+    ]
+  },
+  "psdrender.TrimInputTransparency": {
+    "Description": "TrimInputTransparency removes fully transparent borders only from input print pixels.",
+    "Parameters": [
+      "source"
+    ]
+  },
+  "psdrender.ValidateConfig": {
+    "Description": "ValidateConfig rejects stale references, duplicate targets and print/background conflicts.",
+    "Parameters": [
+      "config",
+      "metadata"
+    ]
+  },
+  "psdrender.ValidateOptions": {
+    "Description": "ValidateOptions rejects unsupported output formats and invalid longest-edge limits.",
+    "Parameters": [
+      "options"
+    ]
+  },
+  "psdvector.DecodeMask": {
+    "Description": "DecodeMask decodes a complete vector-mask payload without retaining or changing the supplied bytes.\nPaths use signed 8.24 normalized coordinates, with vertical components preceding horizontal components.\nSupported version-three data may contain zero alignment bytes after its final complete path record.",
+    "Parameters": [
+      "ctx",
+      "data",
+      "width",
+      "height",
+      "options"
+    ]
+  },
+  "psdvector.DecodePath": {
+    "Description": "DecodePath decodes headerless 26-byte records used by saved and working path image resources.\nThe returned geometry has Version zero and no vector-mask header or flags.",
+    "Parameters": [
+      "ctx",
+      "data",
+      "width",
+      "height",
+      "options"
+    ]
+  },
+  "psdvector.EncodeMask": {
+    "Description": "EncodeMask writes an owned version-three vmsk/vsms payload from typed metadata and geometry.\nUnchanged records, unknown selectors and alignment bytes retain their original encoding.\nX/Y and RawX/RawY edits are resolved against retained source knots; conflicting edits are rejected.\nNew subpaths and knots use RecordIndex -1; source record, header and span fields are provenance.",
+    "Parameters": [
+      "ctx",
+      "mask",
+      "options"
+    ]
+  },
+  "psdvector.EncodePath": {
+    "Description": "EncodePath writes owned headerless saved/working path records with the same edit-preservation rules.\nA path resource cannot encode vector-mask flags; export geometry with those fields cleared.",
+    "Parameters": [
+      "ctx",
+      "mask",
+      "options"
+    ]
+  },
+  "psdvector.EqualEncoding": {
+    "Description": "EqualEncoding reports whether a complete mask payload is unchanged after typed round-trip encoding.\nIt is useful for callers choosing a raw-block preservation path before a writer rebuild.",
+    "Parameters": [
+      "ctx",
+      "mask",
+      "data",
+      "options"
+    ]
+  },
+  "psdvector.Error.Error": {
+    "Description": "Error implements error.",
+    "Parameters": []
+  },
+  "psdvector.Error.Unwrap": {
+    "Description": "Unwrap exposes the error category to errors.Is.",
+    "Parameters": []
+  },
+  "psdvector.Rasterize": {
+    "Description": "Rasterize creates an independently owned alpha mask in absolute document coordinates.\nCurves are adaptively flattened, then each pixel averages a fixed 4 by 4 or 8 by 8 sample grid.\nOpen contours are implicitly closed for filling; this entry point does not draw path strokes.\nAbsolute output coordinates must lie within plus or minus 2^40 pixels to preserve subpixel precision.\nInput metadata and geometry must remain read-only for the duration of the call.",
+    "Parameters": [
+      "ctx",
+      "mask",
+      "bounds",
+      "options"
+    ]
+  },
+  "psdvector.RasterizeNRGBA": {
+    "Description": "RasterizeNRGBA returns coverage in all three color channels with an opaque alpha channel.\nIts working budget includes both the temporary alpha mask and the returned grayscale image.",
+    "Parameters": [
+      "ctx",
+      "mask",
+      "bounds",
+      "options"
+    ]
+  },
+  "psdwarp.Compile": {
+    "Description": "Compile validates a custom tensor-product cubic patch and copies its geometry.\nThe control-point hull is mapped through NonAffineTransform when present,\notherwise Transform. Photoshop's warped quad describes that hull; Warp.Bounds\nidentifies the original content rectangle rather than a second expansion to apply.\nSelected placement must be affine because native projective Warp composition is unverified.",
+    "Parameters": [
+      "ctx",
+      "placed",
+      "options"
+    ]
+  },
+  "psdwarp.CompileMathematical": {
+    "Description": "CompileMathematical computes a source-space cubic followed by a placement homography.\nIt explicitly permits projective placement without claiming Photoshop-native composition or pixels.\nCallers may use Forward, Inverse, Bounds and Project for this mathematical model only.\nConsumers must select this model explicitly rather than rely on default projection.",
+    "Parameters": [
+      "ctx",
+      "placed",
+      "options"
+    ]
+  },
+  "psdwarp.CompilePresetGeometry": {
+    "Description": "CompilePresetGeometry validates and copies native horizontal Arc Lower placement geometry.\nBounds and source coordinates are preserved; unsupported schemas are never replaced by a flat quad.\nPlacement must be an affine quad because projective preset composition is unverified.",
+    "Parameters": [
+      "ctx",
+      "placed",
+      "options"
+    ]
+  },
+  "psdwarp.CompileUniformGrid": {
+    "Description": "CompileUniformGrid copies and certifies an explicitly uniform quilt envelope.\nInternal source slices must divide Warp.Bounds equally. Outer slice guards may\nbe the bounds themselves or Photoshop's paired 0.6-pixel guards. The complete\ntyped slice window is normalized to the source domain, moving guarded interior\nknots slightly away from i/count. All controls share one control-hull mapping.\nA common P-matrix Jacobian certificate excludes overlaps between pieces,\nincluding across C0 seams where adjacent derivatives need not agree.",
+    "Parameters": [
+      "ctx",
+      "placed",
+      "options"
+    ]
+  },
+  "psdwarp.Patch.Bounds": {
+    "Description": "Bounds returns a conservative document-space pixel rectangle covering the complete curved patch.\nEmpty canvas means no clipping; a nonempty canvas clips to its own document-space rectangle.",
+    "Parameters": [
+      "canvas"
+    ]
+  },
+  "psdwarp.Patch.Forward": {
+    "Description": "Forward maps a source unit-square point to its warped document location.",
+    "Parameters": [
+      "u",
+      "v"
+    ]
+  },
+  "psdwarp.Patch.Inverse": {
+    "Description": "Inverse recovers source UV coordinates for a document point.\nExterior points return inside=false. Failure for a point inside the certified\nboundary returns ErrConvergence, preventing silent transparent holes.",
+    "Parameters": [
+      "ctx",
+      "point"
+    ]
+  },
+  "psdwarp.Patch.Project": {
+    "Description": "Project samples a four-pixel lattice at the smaller of content and document resolution.\nThe analytic Forward/Inverse methods evaluate the actual cubic surface instead.\nCaller-owned source pixels remain unchanged.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "canvas"
+    ]
+  },
+  "psdwarp.Patch.ProjectWithOptions": {
+    "Description": "ProjectWithOptions projects immutable compiled geometry using the current operation's resource limits.\nMaxBytes includes the already retained Patch.WorkingBytes as well as new raster scratch and output.\nThe geometry and its original options remain unchanged; no second geometry or input pixel copy is made.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "canvas",
+      "options"
+    ]
+  },
+  "psdwarp.Patch.WorkingBytes": {
+    "Description": "WorkingBytes reports retained compiled geometry, excluding stack-local numerical work.",
+    "Parameters": []
+  },
+  "psdwarp.PresetGeometry.Bounds": {
+    "Description": "Bounds returns a conservative curved document rectangle, optionally clipped to a canvas.",
+    "Parameters": [
+      "canvas"
+    ]
+  },
+  "psdwarp.PresetGeometry.Forward": {
+    "Description": "Forward maps a source unit-square point to its warped document location.",
+    "Parameters": [
+      "u",
+      "v"
+    ]
+  },
+  "psdwarp.PresetGeometry.Inverse": {
+    "Description": "Inverse recovers a source unit-square point from a warped document location.",
+    "Parameters": [
+      "ctx",
+      "point"
+    ]
+  },
+  "psdwarp.PresetGeometry.WorkingBytes": {
+    "Description": "WorkingBytes reports retained immutable geometry including this wrapper.",
+    "Parameters": []
+  },
+  "psdwarp.Project": {
+    "Description": "Project compiles and projects a supported custom patch into owned straight-alpha pixels.\nIt does not bake layer opacity, masks, blend modes or effects into the replacement cache.\nDefault projection rejects projective Warp placement whose native composition is unverified.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "placed",
+      "canvas",
+      "options"
+    ]
+  },
+  "psdwarp.ProjectUniformGrid": {
+    "Description": "ProjectUniformGrid compiles and samples an explicitly uniform cubic quilt.\nOpacity, masks, blend modes and effects remain separate from the replacement pixels.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "placed",
+      "canvas",
+      "options"
+    ]
+  },
+  "psdwarp.UniformGrid.Bounds": {
+    "Description": "Bounds returns a conservative whole-grid rectangle, optionally clipped in document coordinates.",
+    "Parameters": [
+      "canvas"
+    ]
+  },
+  "psdwarp.UniformGrid.Forward": {
+    "Description": "Forward maps whole-source unit-square coordinates into document coordinates.",
+    "Parameters": [
+      "u",
+      "v"
+    ]
+  },
+  "psdwarp.UniformGrid.Inverse": {
+    "Description": "Inverse recovers whole-source UV coordinates. Exterior points return inside=false.\nNumerical failure inside any certified piece returns ErrConvergence.",
+    "Parameters": [
+      "ctx",
+      "point"
+    ]
+  },
+  "psdwarp.UniformGrid.Project": {
+    "Description": "Project samples one whole-source lattice with premultiplied bilinear filtering and returns straight-alpha pixels.\nThe lattice uses approximately four source/document pixels per cell and includes all\npiece boundaries. Internal seams never receive transparent-border coverage and\nclipped projections retain the same global sampling phase as full projections.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "canvas"
+    ]
+  },
+  "psdwarp.UniformGrid.ProjectSupersampled": {
+    "Description": "ProjectSupersampled explicitly selects the report's fixed uniform-grid sampling experiment.\nIt uses one whole-source extended lattice, approximately 2.5 document pixels per cell,\n4x4 document-space subpixels, RGB Keys a=0 and transparent-border alpha Keys a=-0.75.\nSigned channels are averaged over owned subpixels before clipping. This mathematical\nprofile does not claim Photoshop parity. The default Project method remains unchanged.\nWith no options, the compiled grid's limits apply; supplied options replace those limits.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "canvas",
+      "options"
+    ]
+  },
+  "psdwarp.UniformGrid.ProjectWithOptions": {
+    "Description": "ProjectWithOptions samples immutable grid geometry with this operation's resource limits.\nIts budget includes all retained pieces as well as the complete raster plan and output.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "canvas",
+      "options"
+    ]
+  },
+  "psdwarp.UniformGrid.WorkingBytes": {
+    "Description": "WorkingBytes reports all retained grid and piece geometry, excluding caller-owned inputs.",
+    "Parameters": []
+  }
+}

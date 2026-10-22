@@ -1,0 +1,1645 @@
+{
+  "source": "ag-psd 31.0.2, readPsd with useImageData=true",
+  "sourceSHA256": "c2d05f94ce67e61cd70dd29790592dadbfd99b1aeb0a2074f813533514f34833",
+  "width": 800,
+  "height": 7200,
+  "composite": {
+    "width": 800,
+    "height": 7200,
+    "bytes": 23040000,
+    "sha256": "e340d350edb28a59bb722249edcef81ade8b7c9789d4dbe29ecc59868004c3b3"
+  },
+  "layers": [
+    {
+      "name": "背景层",
+      "left": 0,
+      "top": 0,
+      "right": 800,
+      "bottom": 7200,
+      "hidden": false,
+      "blendMode": "normal",
+      "opacity": 1,
+      "pixels": {
+        "width": 800,
+        "height": 7200,
+        "bytes": 23040000,
+        "sha256": "838f2f5faf9b3c620b0d912fffc55ff09b385818045ce421517ad308d1c86791"
+      },
+      "mask": null,
+      "realMask": null,
+      "placed": null
+    },
+    {
+      "name": "印花A",
+      "left": 144,
+      "top": 6621,
+      "right": 581,
+      "bottom": 7112,
+      "hidden": false,
+      "blendMode": "normal",
+      "opacity": 1,
+      "pixels": {
+        "width": 437,
+        "height": 491,
+        "bytes": 858268,
+        "sha256": "3f792c7c7174704238696fe6286b40f06cf66b2439e5b96e68d34e1aa9f93f82"
+      },
+      "mask": {
+        "left": 158,
+        "top": 6634,
+        "right": 568,
+        "bottom": 7099,
+        "disabled": false,
+        "defaultColor": 0,
+        "pixels": {
+          "width": 410,
+          "height": 465,
+          "bytes": 762600,
+          "sha256": "754147b2e130092756b02339b41a3b316f794ba5ea8a72771154c1e76501eb82"
+        }
+      },
+      "realMask": null,
+      "placed": {
+        "idSHA256": "e08fd633053240047f4640e68a427a5529bba921d655e654ee004a42e0c9c546",
+        "type": "raster",
+        "width": 1000,
+        "height": 2000,
+        "transform": [
+          144.4782660418814,
+          6621.422174776974,
+          580.4935622317596,
+          6621.422174776974,
+          580.4935622317596,
+          7112.429253218805,
+          144.4782660418814,
+          7112.429253218805
+        ],
+        "nonAffineTransform": [
+          144.4782660418814,
+          6739.573760078403,
+          320.61918854549174,
+          6621.422174776974,
+          580.4935622317596,
+          6984.2467811158795,
+          408.33020227120767,
+          7112.429253218805
+        ],
+        "warp": {
+          "style": "none",
+          "value": 0,
+          "perspective": 0,
+          "perspectiveOther": 0,
+          "rotate": "horizontal",
+          "bounds": {
+            "top": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "left": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "bottom": {
+              "value": 2000,
+              "units": "Pixels"
+            },
+            "right": {
+              "value": 1000,
+              "units": "Pixels"
+            }
+          },
+          "uOrder": 4,
+          "vOrder": 4
+        }
+      }
+    },
+    {
+      "name": "印花A",
+      "left": 377,
+      "top": 6494,
+      "right": 649,
+      "bottom": 6965,
+      "hidden": false,
+      "blendMode": "normal",
+      "opacity": 1,
+      "pixels": {
+        "width": 272,
+        "height": 471,
+        "bytes": 512448,
+        "sha256": "2bd5bb9d102b44514a48d924c1c5e7e3647b13be70fb5f0797c69f42f845ec49"
+      },
+      "mask": {
+        "left": 381,
+        "top": 6496,
+        "right": 644,
+        "bottom": 6961,
+        "disabled": false,
+        "defaultColor": 0,
+        "pixels": {
+          "width": 263,
+          "height": 465,
+          "bytes": 489180,
+          "sha256": "d117c111d9a6e5c2e547e6c11521d9f5f8682b2c3a8139a39e7a50b60c252712"
+        }
+      },
+      "realMask": null,
+      "placed": {
+        "idSHA256": "e08fd633053240047f4640e68a427a5529bba921d655e654ee004a42e0c9c546",
+        "type": "raster",
+        "width": 1000,
+        "height": 2000,
+        "transform": [
+          377.17583684014613,
+          6494.289465561544,
+          648,
+          6494.289465561544,
+          648,
+          6965.111163165087,
+          377.17583684014613,
+          6965.111163165087
+        ],
+        "nonAffineTransform": [
+          377.17583684014613,
+          6513.338785694171,
+          580.8915585253382,
+          6494.289465561544,
+          648,
+          6934,
+          437.24695920425046,
+          6965.111163165087
+        ],
+        "warp": {
+          "style": "none",
+          "value": 0,
+          "perspective": 0,
+          "perspectiveOther": 0,
+          "rotate": "horizontal",
+          "bounds": {
+            "top": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "left": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "bottom": {
+              "value": 2000,
+              "units": "Pixels"
+            },
+            "right": {
+              "value": 1000,
+              "units": "Pixels"
+            }
+          },
+          "uOrder": 4,
+          "vOrder": 4
+        }
+      }
+    },
+    {
+      "name": "印花A",
+      "left": 214,
+      "top": 5898,
+      "right": 634,
+      "bottom": 6158,
+      "hidden": false,
+      "blendMode": "normal",
+      "opacity": 1,
+      "pixels": {
+        "width": 420,
+        "height": 260,
+        "bytes": 436800,
+        "sha256": "8a4cd4806619687274cb935153b375cdc09a631ec551e1198bb5ddcb9ebcf631"
+      },
+      "mask": {
+        "left": 270,
+        "top": 5963,
+        "right": 615,
+        "bottom": 6144,
+        "disabled": false,
+        "defaultColor": 0,
+        "pixels": {
+          "width": 345,
+          "height": 181,
+          "bytes": 249780,
+          "sha256": "4605cf1233834d046cef51b9993195bd6c4b712fe2e294248e0633e823edbc54"
+        }
+      },
+      "realMask": null,
+      "placed": {
+        "idSHA256": "e08fd633053240047f4640e68a427a5529bba921d655e654ee004a42e0c9c546",
+        "type": "raster",
+        "width": 1000,
+        "height": 2000,
+        "transform": [
+          214.20561993722058,
+          5898.90958071615,
+          634,
+          5898.90958071615,
+          634,
+          6157.612301213388,
+          214.20561993722058,
+          6157.612301213388
+        ],
+        "nonAffineTransform": [
+          214.20561993722058,
+          5993.1778771955305,
+          411.779416692146,
+          5898.90958071615,
+          634,
+          5990,
+          302.79006347055224,
+          6157.612301213388
+        ],
+        "warp": {
+          "style": "none",
+          "value": 0,
+          "perspective": 0,
+          "perspectiveOther": 0,
+          "rotate": "horizontal",
+          "bounds": {
+            "top": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "left": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "bottom": {
+              "value": 2000,
+              "units": "Pixels"
+            },
+            "right": {
+              "value": 1000,
+              "units": "Pixels"
+            }
+          },
+          "uOrder": 4,
+          "vOrder": 4
+        }
+      }
+    },
+    {
+      "name": "印花A",
+      "left": 105,
+      "top": 5868,
+      "right": 577,
+      "bottom": 6076,
+      "hidden": false,
+      "blendMode": "normal",
+      "opacity": 1,
+      "pixels": {
+        "width": 472,
+        "height": 208,
+        "bytes": 392704,
+        "sha256": "86ae7994536f0421ce86a246c89161fb98baa5385ea5ed7b9a94e7bc3c7c2262"
+      },
+      "mask": {
+        "left": 113,
+        "top": 5870,
+        "right": 557,
+        "bottom": 6066,
+        "disabled": false,
+        "defaultColor": 0,
+        "pixels": {
+          "width": 444,
+          "height": 196,
+          "bytes": 348096,
+          "sha256": "125b573742c004b45a17b7074679e29e8cc14619acb54656ed3bb3af04fb08d2"
+        }
+      },
+      "realMask": null,
+      "placed": {
+        "idSHA256": "e08fd633053240047f4640e68a427a5529bba921d655e654ee004a42e0c9c546",
+        "type": "raster",
+        "width": 1000,
+        "height": 2000,
+        "transform": [
+          107.56122744916087,
+          5868.136146988128,
+          576.233502538071,
+          5868.136146988128,
+          576.233502538071,
+          6075.713355370353,
+          107.56122744916087,
+          6075.713355370353
+        ],
+        "nonAffineTransform": [
+          107.56122744916087,
+          5961.332492208148,
+          297.6954504061476,
+          5868.136146988128,
+          576.233502538071,
+          5914.442701470133,
+          293.9444456174686,
+          6075.713355370353
+        ],
+        "warp": {
+          "style": "none",
+          "value": 0,
+          "perspective": 0,
+          "perspectiveOther": 0,
+          "rotate": "horizontal",
+          "bounds": {
+            "top": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "left": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "bottom": {
+              "value": 2000,
+              "units": "Pixels"
+            },
+            "right": {
+              "value": 1000,
+              "units": "Pixels"
+            }
+          },
+          "uOrder": 4,
+          "vOrder": 4
+        }
+      }
+    },
+    {
+      "name": "印花A",
+      "left": 108,
+      "top": 5007,
+      "right": 543,
+      "bottom": 5670,
+      "hidden": false,
+      "blendMode": "normal",
+      "opacity": 1,
+      "pixels": {
+        "width": 435,
+        "height": 663,
+        "bytes": 1153620,
+        "sha256": "6fd0bdedac34bc0ab7d920d4e6891ef3e130a20c6d3cadf5003ec08550602c4d"
+      },
+      "mask": {
+        "left": 119,
+        "top": 5014,
+        "right": 427,
+        "bottom": 5600,
+        "disabled": false,
+        "defaultColor": 0,
+        "pixels": {
+          "width": 308,
+          "height": 586,
+          "bytes": 721952,
+          "sha256": "59dc2579d9ca22999ef13fd8911e5b9d2caf3f1f6ee33753d10e63d0977649bf"
+        }
+      },
+      "realMask": null,
+      "placed": {
+        "idSHA256": "e08fd633053240047f4640e68a427a5529bba921d655e654ee004a42e0c9c546",
+        "type": "raster",
+        "width": 1000,
+        "height": 2000,
+        "transform": [
+          109.00765782504806,
+          5007.061319829827,
+          542.374409634519,
+          5007.061319829827,
+          542.374409634519,
+          5670.323883869553,
+          109.00765782504806,
+          5670.323883869553
+        ],
+        "nonAffineTransform": [
+          109.00765782504806,
+          5065.019380862746,
+          390.46656712807044,
+          5007.061319829827,
+          542.374409634519,
+          5584.195027966275,
+          266.50372654672606,
+          5670.323883869553
+        ],
+        "warp": {
+          "style": "none",
+          "value": 0,
+          "perspective": 0,
+          "perspectiveOther": 0,
+          "rotate": "horizontal",
+          "bounds": {
+            "top": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "left": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "bottom": {
+              "value": 2000,
+              "units": "Pixels"
+            },
+            "right": {
+              "value": 1000,
+              "units": "Pixels"
+            }
+          },
+          "uOrder": 4,
+          "vOrder": 4
+        }
+      }
+    },
+    {
+      "name": "印花A",
+      "left": 379,
+      "top": 5145,
+      "right": 701,
+      "bottom": 5765,
+      "hidden": false,
+      "blendMode": "normal",
+      "opacity": 1,
+      "pixels": {
+        "width": 322,
+        "height": 620,
+        "bytes": 798560,
+        "sha256": "6b4b690b4512dd726e0fae61700cae50968aa7939507453c210004b09aec2de8"
+      },
+      "mask": {
+        "left": 381,
+        "top": 5147,
+        "right": 690,
+        "bottom": 5600,
+        "disabled": false,
+        "defaultColor": 0,
+        "pixels": {
+          "width": 309,
+          "height": 453,
+          "bytes": 559908,
+          "sha256": "fd7e319e3e792a0c1faf925ff43b194441f809a9d153d187457085c2459082cb"
+        }
+      },
+      "realMask": null,
+      "placed": {
+        "idSHA256": "e08fd633053240047f4640e68a427a5529bba921d655e654ee004a42e0c9c546",
+        "type": "raster",
+        "width": 1000,
+        "height": 2000,
+        "transform": [
+          378.97479156997,
+          5145.085651844572,
+          701,
+          5145.085651844572,
+          701,
+          5764.12702602044,
+          378.97479156997,
+          5764.12702602044
+        ],
+        "nonAffineTransform": [
+          378.97479156997,
+          5157.095404777741,
+          648.9184457905966,
+          5145.085651844572,
+          701,
+          5729,
+          411.9547573175247,
+          5764.12702602044
+        ],
+        "warp": {
+          "style": "none",
+          "value": 0,
+          "perspective": 0,
+          "perspectiveOther": 0,
+          "rotate": "horizontal",
+          "bounds": {
+            "top": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "left": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "bottom": {
+              "value": 2000,
+              "units": "Pixels"
+            },
+            "right": {
+              "value": 1000,
+              "units": "Pixels"
+            }
+          },
+          "uOrder": 4,
+          "vOrder": 4
+        }
+      }
+    },
+    {
+      "name": "印花A",
+      "left": 274,
+      "top": 4128,
+      "right": 591,
+      "bottom": 4657,
+      "hidden": false,
+      "blendMode": "normal",
+      "opacity": 1,
+      "pixels": {
+        "width": 317,
+        "height": 529,
+        "bytes": 670772,
+        "sha256": "e345d8a62fc8369372aacd25ca01a4971ba0b487f07afc5ee55642109ff551d6"
+      },
+      "mask": {
+        "left": 279,
+        "top": 4133,
+        "right": 585,
+        "bottom": 4652,
+        "disabled": false,
+        "defaultColor": 0,
+        "pixels": {
+          "width": 306,
+          "height": 519,
+          "bytes": 635256,
+          "sha256": "5f34f4c241bf3c8fa0ae4a32d62485b38013096d29f17c018238dd3a40d14356"
+        }
+      },
+      "realMask": null,
+      "placed": {
+        "idSHA256": "e08fd633053240047f4640e68a427a5529bba921d655e654ee004a42e0c9c546",
+        "type": "raster",
+        "width": 1000,
+        "height": 2000,
+        "transform": [
+          274.04818304087104,
+          4128.188470300372,
+          590,
+          4128.188470300372,
+          590,
+          4657.144705343614,
+          274.04818304087104,
+          4657.144705343614
+        ],
+        "nonAffineTransform": [
+          274.04818304087104,
+          4164.307244440946,
+          505.86002362470475,
+          4128.188470300372,
+          590,
+          4616,
+          356.17765012043895,
+          4657.144705343614
+        ],
+        "warp": {
+          "style": "none",
+          "value": 0,
+          "perspective": 0,
+          "perspectiveOther": 0,
+          "rotate": "horizontal",
+          "bounds": {
+            "top": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "left": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "bottom": {
+              "value": 2000,
+              "units": "Pixels"
+            },
+            "right": {
+              "value": 1000,
+              "units": "Pixels"
+            }
+          },
+          "uOrder": 4,
+          "vOrder": 4
+        }
+      }
+    },
+    {
+      "name": "印花A",
+      "left": 177,
+      "top": 3368,
+      "right": 463,
+      "bottom": 3759,
+      "hidden": false,
+      "blendMode": "normal",
+      "opacity": 1,
+      "pixels": {
+        "width": 286,
+        "height": 391,
+        "bytes": 447304,
+        "sha256": "8c5284fa5fa455465470be5546ca7ecada8ec74235ad1d7a7e6019abf23e1ed5"
+      },
+      "mask": {
+        "left": 186,
+        "top": 3374,
+        "right": 458,
+        "bottom": 3753,
+        "disabled": false,
+        "defaultColor": 0,
+        "pixels": {
+          "width": 272,
+          "height": 379,
+          "bytes": 412352,
+          "sha256": "5732b3d1a26185ac5eeae730d13c42ffc0687aec5366464169c07e18296b7153"
+        }
+      },
+      "realMask": null,
+      "placed": {
+        "idSHA256": "e08fd633053240047f4640e68a427a5529bba921d655e654ee004a42e0c9c546",
+        "type": "raster",
+        "width": 1000,
+        "height": 2000,
+        "transform": [
+          177.7630159739827,
+          3368,
+          462.5680994243693,
+          3368,
+          462.5680994243693,
+          3758.8621289047974,
+          177.7630159739827,
+          3758.8621289047974
+        ],
+        "nonAffineTransform": [
+          371.4882654402353,
+          3758.8621289047974,
+          177.7630159739827,
+          3702.6596055390814,
+          298,
+          3368,
+          462.5680994243693,
+          3419.176665064895
+        ],
+        "warp": {
+          "style": "none",
+          "value": 0,
+          "perspective": 0,
+          "perspectiveOther": 0,
+          "rotate": "horizontal",
+          "bounds": {
+            "top": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "left": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "bottom": {
+              "value": 2000,
+              "units": "Pixels"
+            },
+            "right": {
+              "value": 1000,
+              "units": "Pixels"
+            }
+          },
+          "uOrder": 4,
+          "vOrder": 4
+        }
+      }
+    },
+    {
+      "name": "印花A",
+      "left": 422,
+      "top": 3433,
+      "right": 671,
+      "bottom": 3833,
+      "hidden": false,
+      "blendMode": "normal",
+      "opacity": 1,
+      "pixels": {
+        "width": 249,
+        "height": 400,
+        "bytes": 398400,
+        "sha256": "9a47db30c3131628bff5846f1c065322a984ce98738cb9cd5c24dea4391f781f"
+      },
+      "mask": {
+        "left": 429,
+        "top": 3440,
+        "right": 668,
+        "bottom": 3826,
+        "disabled": false,
+        "defaultColor": 0,
+        "pixels": {
+          "width": 239,
+          "height": 386,
+          "bytes": 369016,
+          "sha256": "3fb57c6fefa23573231c116852ee7c8ebc3f3bfde61d56db607e07abc8685cbc"
+        }
+      },
+      "realMask": null,
+      "placed": {
+        "idSHA256": "e08fd633053240047f4640e68a427a5529bba921d655e654ee004a42e0c9c546",
+        "type": "raster",
+        "width": 1000,
+        "height": 2000,
+        "transform": [
+          422.3298662442709,
+          3433.3305107401443,
+          671.0831867657201,
+          3433.3305107401443,
+          671.0831867657201,
+          3833,
+          422.3298662442709,
+          3833
+        ],
+        "nonAffineTransform": [
+          509.55765378306205,
+          3433.3305107401443,
+          671.0831867657201,
+          3484.5008794056794,
+          613,
+          3833,
+          422.3298662442709,
+          3775.798959873281
+        ],
+        "warp": {
+          "style": "none",
+          "value": 0,
+          "perspective": 0,
+          "perspectiveOther": 0,
+          "rotate": "horizontal",
+          "bounds": {
+            "top": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "left": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "bottom": {
+              "value": 2000,
+              "units": "Pixels"
+            },
+            "right": {
+              "value": 1000,
+              "units": "Pixels"
+            }
+          },
+          "uOrder": 4,
+          "vOrder": 4
+        }
+      }
+    },
+    {
+      "name": "印花A",
+      "left": 260,
+      "top": 2577,
+      "right": 609,
+      "bottom": 3022,
+      "hidden": false,
+      "blendMode": "normal",
+      "opacity": 1,
+      "pixels": {
+        "width": 349,
+        "height": 445,
+        "bytes": 621220,
+        "sha256": "428fd4aac61a51cef68251d2b10372b90a95621ea8bcff6414c7c1b9d5730ad6"
+      },
+      "mask": {
+        "left": 272,
+        "top": 2583,
+        "right": 604,
+        "bottom": 3015,
+        "disabled": false,
+        "defaultColor": 0,
+        "pixels": {
+          "width": 332,
+          "height": 432,
+          "bytes": 573696,
+          "sha256": "b5fd0a2c49595d16286baabe4dd9b6effe0fa668e5c94354e893008621c60d0c"
+        }
+      },
+      "realMask": null,
+      "placed": {
+        "idSHA256": "e08fd633053240047f4640e68a427a5529bba921d655e654ee004a42e0c9c546",
+        "type": "raster",
+        "width": 1000,
+        "height": 2000,
+        "transform": [
+          260.6772135818903,
+          2577,
+          608.7073113091317,
+          2577,
+          608.7073113091317,
+          3022.1126984419916,
+          260.6772135818903,
+          3022.1126984419916
+        ],
+        "nonAffineTransform": [
+          520.7257052208528,
+          3022.1126984419916,
+          260.6772135818903,
+          2954.827826392023,
+          408,
+          2577,
+          608.7073113091317,
+          2624.1662181576457
+        ],
+        "warp": {
+          "style": "none",
+          "value": 0,
+          "perspective": 0,
+          "perspectiveOther": 0,
+          "rotate": "horizontal",
+          "bounds": {
+            "top": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "left": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "bottom": {
+              "value": 2000,
+              "units": "Pixels"
+            },
+            "right": {
+              "value": 1000,
+              "units": "Pixels"
+            }
+          },
+          "uOrder": 4,
+          "vOrder": 4
+        }
+      }
+    },
+    {
+      "name": "印花A",
+      "left": 294,
+      "top": 1756,
+      "right": 560,
+      "bottom": 2236,
+      "hidden": false,
+      "blendMode": "normal",
+      "opacity": 1,
+      "pixels": {
+        "width": 266,
+        "height": 480,
+        "bytes": 510720,
+        "sha256": "6a5f32d7d4449d94562ed34640282cb35724cfdc62d58e3db1a35939bd38424f"
+      },
+      "mask": {
+        "left": 298,
+        "top": 1761,
+        "right": 556,
+        "bottom": 2235,
+        "disabled": false,
+        "defaultColor": 0,
+        "pixels": {
+          "width": 258,
+          "height": 474,
+          "bytes": 489168,
+          "sha256": "f3975ec5caadc1cf428f3d3dacc9facad034c7e1ee9559fb959de09fa954860a"
+        }
+      },
+      "realMask": null,
+      "placed": {
+        "idSHA256": "e08fd633053240047f4640e68a427a5529bba921d655e654ee004a42e0c9c546",
+        "type": "raster",
+        "width": 1000,
+        "height": 2000,
+        "transform": [
+          294.31384869223297,
+          1755.93874193073,
+          559.0711765046872,
+          1755.93874193073,
+          559.0711765046872,
+          2236.0074388947924,
+          294.31384869223297,
+          2236.0074388947924
+        ],
+        "nonAffineTransform": [
+          351.85987306818,
+          1755.93874193073,
+          559.0711765046872,
+          1792.0143916225024,
+          506.9148275379153,
+          2236.0074388947924,
+          294.31384869223297,
+          2216.8339421059914
+        ],
+        "warp": {
+          "style": "none",
+          "value": 0,
+          "perspective": 0,
+          "perspectiveOther": 0,
+          "rotate": "horizontal",
+          "bounds": {
+            "top": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "left": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "bottom": {
+              "value": 2000,
+              "units": "Pixels"
+            },
+            "right": {
+              "value": 1000,
+              "units": "Pixels"
+            }
+          },
+          "uOrder": 4,
+          "vOrder": 4
+        }
+      }
+    },
+    {
+      "name": "印花A",
+      "left": 449,
+      "top": 995,
+      "right": 681,
+      "bottom": 1436,
+      "hidden": false,
+      "blendMode": "normal",
+      "opacity": 1,
+      "pixels": {
+        "width": 232,
+        "height": 441,
+        "bytes": 409248,
+        "sha256": "e81c16aed8a9d9336bc66ce6ba3bceb87b2f4e37e99e1ad1d750f5d4b1dcdbd8"
+      },
+      "mask": {
+        "left": 451,
+        "top": 996,
+        "right": 679,
+        "bottom": 1435,
+        "disabled": false,
+        "defaultColor": 0,
+        "pixels": {
+          "width": 228,
+          "height": 439,
+          "bytes": 400368,
+          "sha256": "2863d09f45c99b158cdf79983dba0e75a55bbf16f504833dbc526d5424858951"
+        }
+      },
+      "realMask": null,
+      "placed": {
+        "idSHA256": "e08fd633053240047f4640e68a427a5529bba921d655e654ee004a42e0c9c546",
+        "type": "raster",
+        "width": 1000,
+        "height": 2000,
+        "transform": [
+          449.2496108075969,
+          995.3000197773147,
+          679.9428604246365,
+          995.3000197773147,
+          679.9428604246365,
+          1436.0751246616278,
+          449.2496108075969,
+          1436.0751246616278
+        ],
+        "nonAffineTransform": [
+          449.2496108075969,
+          1003.2680929302626,
+          648.0705961268119,
+          995.3000197773147,
+          679.9428604246365,
+          1419.9248968261859,
+          479.4168604098614,
+          1436.0751246616278
+        ],
+        "warp": {
+          "style": "none",
+          "value": 0,
+          "perspective": 0,
+          "perspectiveOther": 0,
+          "rotate": "horizontal",
+          "bounds": {
+            "top": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "left": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "bottom": {
+              "value": 2000,
+              "units": "Pixels"
+            },
+            "right": {
+              "value": 1000,
+              "units": "Pixels"
+            }
+          },
+          "uOrder": 4,
+          "vOrder": 4
+        }
+      }
+    },
+    {
+      "name": "印花A",
+      "left": 161,
+      "top": 973,
+      "right": 564,
+      "bottom": 1492,
+      "hidden": false,
+      "blendMode": "normal",
+      "opacity": 1,
+      "pixels": {
+        "width": 403,
+        "height": 519,
+        "bytes": 836628,
+        "sha256": "9d8700f29824a0cfcb90526804b6ebb7d12463a0a3cf499b002edc579da3e685"
+      },
+      "mask": {
+        "left": 174,
+        "top": 982,
+        "right": 553,
+        "bottom": 1480,
+        "disabled": false,
+        "defaultColor": 0,
+        "pixels": {
+          "width": 379,
+          "height": 498,
+          "bytes": 754968,
+          "sha256": "b6817182a75d1b1eeab3c1aa5a5dbf33bff9ec0f375ba7a5ae712c0da1398f5a"
+        }
+      },
+      "realMask": null,
+      "placed": {
+        "idSHA256": "e08fd633053240047f4640e68a427a5529bba921d655e654ee004a42e0c9c546",
+        "type": "raster",
+        "width": 1000,
+        "height": 2000,
+        "transform": [
+          161.8963648442635,
+          973.3200561061511,
+          563,
+          973.3200561061511,
+          563,
+          1492.4040592073084,
+          161.8963648442635,
+          1492.4040592073084
+        ],
+        "nonAffineTransform": [
+          161.8963648442635,
+          1051.5624460653573,
+          366.6749536507454,
+          973.3200561061511,
+          563,
+          1384,
+          368.2741899424277,
+          1492.4040592073084
+        ],
+        "warp": {
+          "style": "none",
+          "value": 0,
+          "perspective": 0,
+          "perspectiveOther": 0,
+          "rotate": "horizontal",
+          "bounds": {
+            "top": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "left": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "bottom": {
+              "value": 2000,
+              "units": "Pixels"
+            },
+            "right": {
+              "value": 1000,
+              "units": "Pixels"
+            }
+          },
+          "uOrder": 4,
+          "vOrder": 4
+        }
+      }
+    },
+    {
+      "name": "印花A",
+      "left": 235,
+      "top": 139,
+      "right": 608,
+      "bottom": 669,
+      "hidden": false,
+      "blendMode": "normal",
+      "opacity": 1,
+      "pixels": {
+        "width": 373,
+        "height": 530,
+        "bytes": 790760,
+        "sha256": "8ec60b0dcd43b0adaad93ba95fc5f00a88d444df4ff9178a7b519c7beb783b99"
+      },
+      "mask": {
+        "left": 246,
+        "top": 145,
+        "right": 599,
+        "bottom": 658,
+        "disabled": false,
+        "defaultColor": 0,
+        "pixels": {
+          "width": 353,
+          "height": 513,
+          "bytes": 724356,
+          "sha256": "ca64b1665ab1ba7065403514932115c6e5962d3ff8ae173f5ddb0c0f154322ef"
+        }
+      },
+      "realMask": null,
+      "placed": {
+        "idSHA256": "e08fd633053240047f4640e68a427a5529bba921d655e654ee004a42e0c9c546",
+        "type": "raster",
+        "width": 1000,
+        "height": 2000,
+        "transform": [
+          235.9050503641161,
+          139.27255985077696,
+          608,
+          139.27255985077696,
+          608,
+          669.3521864453808,
+          235.9050503641161,
+          669.3521864453808
+        ],
+        "nonAffineTransform": [
+          235.9050503641161,
+          189.39452327459807,
+          448.73532498003095,
+          139.27255985077696,
+          608,
+          577,
+          407.2343772926505,
+          669.3521864453808
+        ],
+        "warp": {
+          "style": "none",
+          "value": 0,
+          "perspective": 0,
+          "perspectiveOther": 0,
+          "rotate": "horizontal",
+          "bounds": {
+            "top": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "left": {
+              "value": 0,
+              "units": "Pixels"
+            },
+            "bottom": {
+              "value": 2000,
+              "units": "Pixels"
+            },
+            "right": {
+              "value": 1000,
+              "units": "Pixels"
+            }
+          },
+          "uOrder": 4,
+          "vOrder": 4
+        }
+      }
+    },
+    {
+      "name": "摄像头部分",
+      "left": 0,
+      "top": 0,
+      "right": 800,
+      "bottom": 7200,
+      "hidden": false,
+      "blendMode": "normal",
+      "opacity": 1,
+      "pixels": {
+        "width": 800,
+        "height": 7200,
+        "bytes": 23040000,
+        "sha256": "838f2f5faf9b3c620b0d912fffc55ff09b385818045ce421517ad308d1c86791"
+      },
+      "mask": {
+        "left": 80,
+        "top": 162,
+        "right": 606,
+        "bottom": 7113,
+        "disabled": false,
+        "defaultColor": 0,
+        "pixels": {
+          "width": 526,
+          "height": 6951,
+          "bytes": 14624904,
+          "sha256": "6f4fa3d68434dc68c75e7236c6fadd1c88e0c1af566026b2383dfcb68fc23524"
+        }
+      },
+      "realMask": null,
+      "placed": null
+    }
+  ],
+  "slices": [
+    {
+      "groupName": "用户",
+      "bounds": {
+        "top": 0,
+        "left": 0,
+        "bottom": 7200,
+        "right": 800
+      },
+      "slices": [
+        {
+          "id": 74,
+          "groupId": 28,
+          "associatedLayerId": 0,
+          "origin": "userGenerated",
+          "type": "image",
+          "bounds": {
+            "top": 7200,
+            "left": 0,
+            "bottom": 7200,
+            "right": 800
+          },
+          "url": "",
+          "target": "",
+          "message": "",
+          "altTag": "",
+          "cellTextIsHTML": true,
+          "cellText": "",
+          "horizontalAlignment": "default",
+          "verticalAlignment": "default",
+          "backgroundColorType": "none",
+          "backgroundColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0
+          },
+          "topOutset": 0,
+          "leftOutset": 0,
+          "bottomOutset": 0,
+          "rightOutset": 0
+        },
+        {
+          "id": 73,
+          "groupId": 27,
+          "associatedLayerId": 0,
+          "origin": "userGenerated",
+          "type": "image",
+          "bounds": {
+            "top": 6400,
+            "left": 0,
+            "bottom": 7200,
+            "right": 800
+          },
+          "url": "",
+          "target": "",
+          "message": "",
+          "altTag": "",
+          "cellTextIsHTML": true,
+          "cellText": "",
+          "horizontalAlignment": "default",
+          "verticalAlignment": "default",
+          "backgroundColorType": "none",
+          "backgroundColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0
+          },
+          "topOutset": 0,
+          "leftOutset": 0,
+          "bottomOutset": 0,
+          "rightOutset": 0
+        },
+        {
+          "id": 70,
+          "groupId": 26,
+          "associatedLayerId": 0,
+          "origin": "userGenerated",
+          "type": "image",
+          "bounds": {
+            "top": 5600,
+            "left": 0,
+            "bottom": 6400,
+            "right": 800
+          },
+          "url": "",
+          "target": "",
+          "message": "",
+          "altTag": "",
+          "cellTextIsHTML": true,
+          "cellText": "",
+          "horizontalAlignment": "default",
+          "verticalAlignment": "default",
+          "backgroundColorType": "none",
+          "backgroundColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0
+          },
+          "topOutset": 0,
+          "leftOutset": 0,
+          "bottomOutset": 0,
+          "rightOutset": 0
+        },
+        {
+          "id": 67,
+          "groupId": 25,
+          "associatedLayerId": 0,
+          "origin": "userGenerated",
+          "type": "image",
+          "bounds": {
+            "top": 4800,
+            "left": 0,
+            "bottom": 5600,
+            "right": 800
+          },
+          "url": "",
+          "target": "",
+          "message": "",
+          "altTag": "",
+          "cellTextIsHTML": true,
+          "cellText": "",
+          "horizontalAlignment": "default",
+          "verticalAlignment": "default",
+          "backgroundColorType": "none",
+          "backgroundColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0
+          },
+          "topOutset": 0,
+          "leftOutset": 0,
+          "bottomOutset": 0,
+          "rightOutset": 0
+        },
+        {
+          "id": 64,
+          "groupId": 24,
+          "associatedLayerId": 0,
+          "origin": "userGenerated",
+          "type": "image",
+          "bounds": {
+            "top": 4000,
+            "left": 0,
+            "bottom": 4800,
+            "right": 800
+          },
+          "url": "",
+          "target": "",
+          "message": "",
+          "altTag": "",
+          "cellTextIsHTML": true,
+          "cellText": "",
+          "horizontalAlignment": "default",
+          "verticalAlignment": "default",
+          "backgroundColorType": "none",
+          "backgroundColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0
+          },
+          "topOutset": 0,
+          "leftOutset": 0,
+          "bottomOutset": 0,
+          "rightOutset": 0
+        },
+        {
+          "id": 61,
+          "groupId": 23,
+          "associatedLayerId": 0,
+          "origin": "userGenerated",
+          "type": "image",
+          "bounds": {
+            "top": 3200,
+            "left": 0,
+            "bottom": 4000,
+            "right": 800
+          },
+          "url": "",
+          "target": "",
+          "message": "",
+          "altTag": "",
+          "cellTextIsHTML": true,
+          "cellText": "",
+          "horizontalAlignment": "default",
+          "verticalAlignment": "default",
+          "backgroundColorType": "none",
+          "backgroundColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0
+          },
+          "topOutset": 0,
+          "leftOutset": 0,
+          "bottomOutset": 0,
+          "rightOutset": 0
+        },
+        {
+          "id": 58,
+          "groupId": 22,
+          "associatedLayerId": 0,
+          "origin": "userGenerated",
+          "type": "image",
+          "bounds": {
+            "top": 2400,
+            "left": 0,
+            "bottom": 3200,
+            "right": 800
+          },
+          "url": "",
+          "target": "",
+          "message": "",
+          "altTag": "",
+          "cellTextIsHTML": true,
+          "cellText": "",
+          "horizontalAlignment": "default",
+          "verticalAlignment": "default",
+          "backgroundColorType": "none",
+          "backgroundColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0
+          },
+          "topOutset": 0,
+          "leftOutset": 0,
+          "bottomOutset": 0,
+          "rightOutset": 0
+        },
+        {
+          "id": 55,
+          "groupId": 21,
+          "associatedLayerId": 0,
+          "origin": "userGenerated",
+          "type": "image",
+          "bounds": {
+            "top": 1600,
+            "left": 0,
+            "bottom": 2400,
+            "right": 800
+          },
+          "url": "",
+          "target": "",
+          "message": "",
+          "altTag": "",
+          "cellTextIsHTML": true,
+          "cellText": "",
+          "horizontalAlignment": "default",
+          "verticalAlignment": "default",
+          "backgroundColorType": "none",
+          "backgroundColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0
+          },
+          "topOutset": 0,
+          "leftOutset": 0,
+          "bottomOutset": 0,
+          "rightOutset": 0
+        },
+        {
+          "id": 52,
+          "groupId": 20,
+          "associatedLayerId": 0,
+          "origin": "userGenerated",
+          "type": "image",
+          "bounds": {
+            "top": 800,
+            "left": 0,
+            "bottom": 1600,
+            "right": 800
+          },
+          "url": "",
+          "target": "",
+          "message": "",
+          "altTag": "",
+          "cellTextIsHTML": true,
+          "cellText": "",
+          "horizontalAlignment": "default",
+          "verticalAlignment": "default",
+          "backgroundColorType": "none",
+          "backgroundColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0
+          },
+          "topOutset": 0,
+          "leftOutset": 0,
+          "bottomOutset": 0,
+          "rightOutset": 0
+        },
+        {
+          "id": 49,
+          "groupId": 19,
+          "associatedLayerId": 0,
+          "origin": "userGenerated",
+          "type": "image",
+          "bounds": {
+            "top": 0,
+            "left": 0,
+            "bottom": 800,
+            "right": 800
+          },
+          "url": "",
+          "target": "",
+          "message": "",
+          "altTag": "",
+          "cellTextIsHTML": true,
+          "cellText": "",
+          "horizontalAlignment": "default",
+          "verticalAlignment": "default",
+          "backgroundColorType": "none",
+          "backgroundColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0
+          },
+          "topOutset": 0,
+          "leftOutset": 0,
+          "bottomOutset": 0,
+          "rightOutset": 0
+        },
+        {
+          "id": 46,
+          "groupId": 18,
+          "associatedLayerId": 0,
+          "origin": "userGenerated",
+          "type": "image",
+          "bounds": {
+            "top": 0,
+            "left": 0,
+            "bottom": 0,
+            "right": 800
+          },
+          "url": "",
+          "target": "",
+          "message": "",
+          "altTag": "",
+          "cellTextIsHTML": true,
+          "cellText": "",
+          "horizontalAlignment": "default",
+          "verticalAlignment": "default",
+          "backgroundColorType": "none",
+          "backgroundColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0
+          },
+          "topOutset": 0,
+          "leftOutset": 0,
+          "bottomOutset": 0,
+          "rightOutset": 0
+        },
+        {
+          "id": 0,
+          "groupId": 0,
+          "associatedLayerId": 0,
+          "origin": "autoGenerated",
+          "type": "image",
+          "bounds": {
+            "top": 0,
+            "left": 0,
+            "bottom": 7200,
+            "right": 800
+          },
+          "url": "",
+          "target": "",
+          "message": "",
+          "altTag": "",
+          "cellTextIsHTML": true,
+          "cellText": "",
+          "horizontalAlignment": "default",
+          "verticalAlignment": "default",
+          "backgroundColorType": "none",
+          "backgroundColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0
+          },
+          "topOutset": 0,
+          "leftOutset": 0,
+          "bottomOutset": 0,
+          "rightOutset": 0
+        }
+      ]
+    }
+  ],
+  "linkedFiles": [
+    {
+      "idSHA256": "e08fd633053240047f4640e68a427a5529bba921d655e654ee004a42e0c9c546",
+      "name": "1000X2000图案层.psd",
+      "type": "8BPS"
+    }
+  ]
+}

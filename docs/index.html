@@ -1,0 +1,303 @@
+---
+layout: home
+title: psdkit
+description: 纯 Go 的 Photoshop PSD/PSB 工具库：按需读取图层与通道，受控编辑并保存，再把图层树渲染成 PNG/JPEG；同一份实现编译为 WebAssembly，在浏览器本机运行。
+---
+{%- assign status_page = site.pages | where: "name", "status.md" | first -%}
+{%- assign matrix = status_page.matrix -%}
+{%- assign count_done = 0 -%}{%- assign count_partial = 0 -%}{%- assign count_none = 0 -%}{%- assign count_opt = 0 -%}
+{%- assign dims = "read,edit,preview,live" | split: "," -%}
+{%- for row in matrix -%}
+  {%- for key in dims -%}
+    {%- assign s = row[key][0] -%}
+    {%- if s == "done" -%}{%- assign count_done = count_done | plus: 1 -%}{%- elsif s == "partial" -%}{%- assign count_partial = count_partial | plus: 1 -%}{%- elsif s == "none" -%}{%- assign count_none = count_none | plus: 1 -%}{%- endif -%}
+  {%- endfor -%}
+  {%- if row.approx[0] == "opt" -%}{%- assign count_opt = count_opt | plus: 1 -%}{%- endif -%}
+{%- endfor -%}
+
+<!-- ═══════════════ 首屏 ═══════════════ -->
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__bg" aria-hidden="true"><div class="hero__grid"></div><div class="hero__glow hero__glow--a"></div><div class="hero__glow hero__glow--b"></div></div>
+  <div class="hero__inner">
+    <div class="hero__copy">
+      <p class="eyebrow"><span class="eyebrow__dot"></span>纯 Go · PSD / PSB · WebAssembly</p>
+      <h1 id="hero-title" class="hero__title">让 PSD，<br><span class="nowrap">成为<span class="text-gradient">可编程</span>的画布</span></h1>
+      <p class="hero__lead">psdkit 用纯 Go 读取、编辑并重新渲染 Photoshop 文档：按需解码图层与通道，改完保存为仍可继续编辑的 PSD/PSB，再输出 PNG / JPEG。同一份实现编译为 WebAssembly，在浏览器里本机处理文件。</p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="{{ '/guide/quickstart.html' | relative_url }}">开始使用 {% include icon.html name="arrowRight" px=16 %}</a>
+        <a class="btn btn--ghost" href="{{ '/demo/' | relative_url }}">{% include icon.html name="play" px=15 %}打开 Playground</a>
+        <a class="btn btn--ghost" href="{{ site.github_url }}">{% include icon.html name="github" px=17 %}GitHub</a>
+      </div>
+      <div class="install" role="group" aria-label="安装命令">
+        <span class="install__prompt" aria-hidden="true">$</span>
+        <code id="install-command">go get github.com/gopkg-dev/psdkit</code>
+        <button class="install__copy" type="button" data-copy-target="#install-command" aria-label="复制安装命令">
+          {% include icon.html name="copy" px=15 %}<span data-copy-label>复制</span>
+        </button>
+      </div>
+      <ul class="hero__facts" aria-label="项目要点">
+        <li><strong>0</strong> 第三方依赖<small>核心库仅用标准库</small></li>
+        <li><strong>200+</strong> 个 Go 入口<small>浏览器能力目录</small></li>
+        <li><strong>MIT</strong> 开源许可<small>Go 1.27.3+</small></li>
+      </ul>
+    </div>
+
+    <div class="rig" data-rig data-mode="explode">
+      <div class="rig__badge" aria-hidden="true"><span class="rig__badge-dot"></span>概念演示 · CSS 示意，非引擎输出</div>
+      <div class="rig__viewport" data-rig-viewport>
+        <div class="rig__tilt" data-rig-tilt>
+          <div class="rig__stack" data-rig-stack role="img" aria-label="PSD 图层装置示意：透明画布、背景渐变、带蒙版的智能对象、滤色光晕、远山形状和文字图层，可分解或合成。">
+            {% include home-art.html p="hero" %}
+            <div class="rig__labels" aria-hidden="true">
+              <span class="rig-label" data-for="title" style="--i:5"><b>T</b>文字 · 正常 · <em data-op-label>100%</em></span>
+              <span class="rig-label" data-for="ridge" style="--i:4"><b>◆</b>远山 · 形状图层</span>
+              <span class="rig-label" data-for="glow" style="--i:3"><b>✦</b>光晕 · 滤色 · <em data-op-label>80%</em></span>
+              <span class="rig-label" data-for="subject" style="--i:2"><b>▣</b>主体 · 智能对象 <i class="rig-label__mask">◐ 蒙版</i></span>
+              <span class="rig-label" data-for="bg" style="--i:1"><b>▤</b>背景 · 渐变填充</span>
+              <span class="rig-label rig-label--canvas" data-for="canvas" style="--i:0"><b>▦</b>透明画布 640 × 480</span>
+            </div>
+            <div class="rig__selection" data-rig-selection aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rig__panel" role="group" aria-label="图层装置控制">
+        <div class="seg" role="radiogroup" aria-label="视图">
+          <button type="button" role="radio" aria-checked="true" data-rig-mode="explode">{% include icon.html name="layers" px=15 %}分解</button>
+          <button type="button" role="radio" aria-checked="false" data-rig-mode="compose">{% include icon.html name="image" px=15 %}合成</button>
+        </div>
+        <ul class="rig__layers" aria-label="图层">
+          <li data-layer-row="title"><button type="button" class="rig__eye" data-eye="title" aria-pressed="true" aria-label="隐藏 文字">{% include icon.html name="eye" px=15 %}</button><button type="button" class="rig__pick" data-pick="title">文字</button></li>
+          <li data-layer-row="ridge"><button type="button" class="rig__eye" data-eye="ridge" aria-pressed="true" aria-label="隐藏 远山">{% include icon.html name="eye" px=15 %}</button><button type="button" class="rig__pick" data-pick="ridge">远山</button></li>
+          <li data-layer-row="glow"><button type="button" class="rig__eye" data-eye="glow" aria-pressed="true" aria-label="隐藏 光晕">{% include icon.html name="eye" px=15 %}</button><button type="button" class="rig__pick" data-pick="glow">光晕</button></li>
+          <li data-layer-row="subject"><button type="button" class="rig__eye" data-eye="subject" aria-pressed="true" aria-label="隐藏 主体">{% include icon.html name="eye" px=15 %}</button><button type="button" class="rig__pick" data-pick="subject">主体</button></li>
+          <li data-layer-row="bg"><button type="button" class="rig__eye" data-eye="bg" aria-pressed="true" aria-label="隐藏 背景">{% include icon.html name="eye" px=15 %}</button><button type="button" class="rig__pick" data-pick="bg">背景</button></li>
+        </ul>
+        <label class="rig__opacity"><span>不透明度 <output data-opacity-out>100%</output></span><input type="range" min="0" max="100" value="100" data-opacity aria-label="选中图层不透明度"></label>
+        <button type="button" class="rig__mask" data-mask aria-pressed="true">{% include icon.html name="mask" px=15 %}蒙版</button>
+      </div>
+      <pre class="rig__code" aria-live="polite"><code data-rig-code><span class="tok-c">// 选择图层或拖动滑块，查看对应的 Go 调用</span></code></pre>
+    </div>
+  </div>
+  <a class="hero__scroll" href="#story" aria-label="向下浏览：从图层到画面"><span></span></a>
+</section>
+
+<!-- ═══════════════ 1. 从图层到画面 ═══════════════ -->
+<section class="story" id="story" aria-labelledby="story-title" data-story>
+  <div class="story__sticky">
+    <div class="story__inner">
+      <div class="story__text">
+        <p class="kicker">01 · 图层结构</p>
+        <h2 id="story-title" class="section-title">从分解的图层，<br>到一张完整的画面</h2>
+        <p class="section-lead">PSD 不是一张图片，而是一棵图层树。psdkit 读取每一层的像素、蒙版、混合方式与参数，再按 Photoshop 的规则把它们合成回来。</p>
+        <ol class="story__steps" data-story-steps>
+          <li data-step="0"><span class="story__num">1</span><div><strong>透明画布</strong><small>Header 描述尺寸、位深与色彩模式</small></div></li>
+          <li data-step="1"><span class="story__num">2</span><div><strong>背景 · 渐变填充</strong><small>DecodeGradientFill 读取参数</small></div></li>
+          <li data-step="2"><span class="story__num">3</span><div><strong>主体 · 智能对象 + 蒙版</strong><small>像素蒙版裁出圆形主体</small></div></li>
+          <li data-step="3"><span class="story__num">4</span><div><strong>光晕 · 滤色混合</strong><small>26 种确定性混合模式之一</small></div></li>
+          <li data-step="4"><span class="story__num">5</span><div><strong>远山 · 形状与文字</strong><small>矢量形状与文字图层</small></div></li>
+          <li data-step="5"><span class="story__num">✓</span><div><strong>合成完成</strong><small>Composite / RenderSource 输出整图</small></div></li>
+        </ol>
+      </div>
+      <div class="story__stage">
+        <div class="story__board" data-story-board data-step="0">
+          {% include home-art.html p="story" %}
+          <div class="story__ants" aria-hidden="true"></div>
+        </div>
+        <div class="story__panel" aria-hidden="true">
+          <div class="story__panel-head">图层 <span data-story-count>1</span></div>
+          <ul>
+            <li data-story-layer="4"><i class="sw sw--ridge"></i>远山 + 文字</li>
+            <li data-story-layer="3"><i class="sw sw--glow"></i>光晕<em>滤色</em></li>
+            <li data-story-layer="2"><i class="sw sw--subject"></i>主体<em>◐</em></li>
+            <li data-story-layer="1"><i class="sw sw--bg"></i>背景</li>
+            <li data-story-layer="0" class="is-on"><i class="sw sw--canvas checker"></i>画布</li>
+          </ul>
+        </div>
+        <p class="story__caption" data-story-caption aria-live="polite">透明画布</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 2. 处理流程 ═══════════════ -->
+<section class="pipeline" aria-labelledby="pipeline-title">
+  <div class="container">
+    <p class="kicker">02 · 处理流程</p>
+    <h2 id="pipeline-title" class="section-title">读取、编辑、渲染、导出</h2>
+    <p class="section-lead">每一步都是独立、有预算、可取消的 Go 调用。不支持的特性返回结构化错误，而不是一张“看起来差不多”的图。</p>
+    <ol class="flow" data-flow>
+      <li class="flow__step">
+        <div class="flow__icon">{% include icon.html name="file" px=22 %}</div>
+        <h3>读取</h3>
+        <p>只索引结构，不预先解码像素；按图层、通道、区域和原位深按需读取。</p>
+        <code>OpenDocument · DecodeChannel</code>
+      </li>
+      <li class="flow__step">
+        <div class="flow__icon">{% include icon.html name="sliders" px=22 %}</div>
+        <h3>编辑</h3>
+        <p>稳定 LayerID 定位，改名、显隐、不透明度、像素替换、增删图层与智能对象内容。</p>
+        <code>OpenEditor · SetOpacity · ReplaceContents</code>
+      </li>
+      <li class="flow__step">
+        <div class="flow__icon">{% include icon.html name="layers" px=22 %}</div>
+        <h3>渲染</h3>
+        <p>在支持范围内实时重绘整图、区域、分块与画板；保存预览与实时结果分开报告。</p>
+        <code>RenderSource · Composite</code>
+      </li>
+      <li class="flow__step">
+        <div class="flow__icon">{% include icon.html name="download" px=22 %}</div>
+        <h3>导出</h3>
+        <p>写回可继续编辑的 PSD/PSB，未改动的数据尽量保持原字节；或编码 PNG / JPEG。</p>
+        <code>SavePSD · Encode</code>
+      </li>
+    </ol>
+    <div class="flow__rail" aria-hidden="true"><span class="flow__packet"></span></div>
+  </div>
+</section>
+
+<!-- ═══════════════ 3. 代码与真实预览 ═══════════════ -->
+<section class="live" id="live" aria-labelledby="live-title">
+  <div class="container">
+    <p class="kicker">03 · 接入方式</p>
+    <h2 id="live-title" class="section-title">写几行代码，<br>画面真的会变</h2>
+    <p class="section-lead">Go WebAssembly 在浏览器中打开模板PSD。点选印花或上传自己的图片，自动替换共享智能图层并重绘成衣效果，也可下载 PNG 或编辑后的 PSD。</p>
+
+    <div class="live__grid" data-live>
+      <div class="code-panel">
+        <div class="code-panel__tabs" role="tablist" aria-label="代码语言">
+          <button type="button" role="tab" id="tab-js" aria-selected="true" aria-controls="panel-js" data-code-tab="js">浏览器 SDK</button>
+          <button type="button" role="tab" id="tab-go" aria-selected="false" aria-controls="panel-go" data-code-tab="go" tabindex="-1">Go</button>
+          <span class="code-panel__file" data-code-file>main.js</span>
+        </div>
+        <div class="code-panel__body" role="tabpanel" id="panel-js" aria-labelledby="tab-js" tabindex="0"><pre><code data-code-js><span class="tok-k">import</span> { PsdkitClient } <span class="tok-k">from</span> <span class="tok-s">'./demo/sdk/client.js'</span>;
+
+<span class="tok-k">const</span> engine = <span class="tok-k">new</span> <span class="tok-f">PsdkitClient</span>({ workerURL: <span class="tok-s">'./demo/wasm/worker.js'</span> });
+<span class="tok-k">await</span> engine.<span class="tok-f">ready</span>();
+<span class="tok-k">const</span> file = <span class="tok-k">await</span> engine.<span class="tok-f">call</span>(<span class="tok-s">'asset.put'</span>, { bytes: psdBytes, kind: <span class="tok-s">'document'</span> });
+<span class="tok-k">const</span> doc = <span class="tok-k">await</span> engine.<span class="tok-f">call</span>(<span class="tok-s">'document.open'</span>, { args: [{ $asset: file.data.asset }] });
+<span class="tok-c">// ↓ 启动引擎后，这里会追加你实际执行的调用</span></code></pre></div>
+        <div class="code-panel__body" role="tabpanel" id="panel-go" aria-labelledby="tab-go" tabindex="0" hidden><pre><code data-code-go><span class="tok-k">editor</span>, err := psdkit.<span class="tok-f">OpenEditor</span>(<span class="tok-s">"muban.psd"</span>)
+<span class="tok-k">if</span> err != <span class="tok-k">nil</span> {
+	<span class="tok-k">return</span> err
+}
+<span class="tok-k">defer</span> editor.<span class="tok-f">Close</span>()
+<span class="tok-c">// ↓ 与左侧浏览器调用一一对应的 Go 代码</span></code></pre></div>
+      </div>
+
+      <div class="preview-panel">
+        <div class="preview-panel__bar">
+          <span class="source-tag source-tag--idle" data-live-source>引擎未启动</span>
+          <span class="preview-panel__meta" data-live-meta></span>
+          <div class="preview-panel__actions">
+            <button type="button" class="btn btn--sm btn--ghost" data-live-download="png" disabled>{% include icon.html name="download" px=14 %}PNG</button>
+            <button type="button" class="btn btn--sm btn--ghost" data-live-download="psd" disabled>{% include icon.html name="download" px=14 %}PSD</button>
+          </div>
+        </div>
+        <div class="preview-panel__canvas" data-live-canvas>
+          <img data-live-image alt="" hidden>
+          <div class="engine-gate" data-live-gate>
+            <div class="engine-gate__icon">{% include icon.html name="cpu" px=26 %}</div>
+            <p class="engine-gate__title">在浏览器中运行真实的 Go 引擎</p>
+            <p class="engine-gate__text">将下载约 14 MB 的 WebAssembly（启用压缩时约 4 MB）。文件只在本机处理。</p>
+            <button type="button" class="btn btn--primary" data-live-start>{% include icon.html name="play" px=15 %}启动 Go 引擎</button>
+            <p class="engine-gate__status" data-live-status role="status" aria-live="polite"></p>
+          </div>
+          <div class="busy-chip" data-live-busy hidden><span class="spinner"></span><span data-live-busy-text>处理中</span><button type="button" data-live-cancel>取消</button></div>
+        </div>
+        <div class="live-prints" data-live-prints hidden>
+          <div class="preview-panel__row"><span class="preview-panel__label">上衣印花</span><span class="live-prints__status" data-live-print-status role="status" aria-live="polite">点选后自动渲染</span></div>
+          <div class="live-prints__choices" role="group" aria-label="选择上衣印花">
+            <button type="button" class="live-print" data-live-print="mountain" data-print-name="山野日落" aria-label="使用山野日落印花" aria-pressed="true"><img src="{{ '/demo/samples/mountain.png' | relative_url }}" alt="山峦与落日印花" width="64" height="64" loading="lazy"><span>山野日落</span></button>
+            <button type="button" class="live-print" data-live-print="botanical" data-print-name="向阳花园" aria-label="使用向阳花园印花" aria-pressed="false"><img src="{{ '/demo/samples/botanical.png' | relative_url }}" alt="向日葵与蝴蝶印花" width="64" height="64" loading="lazy"><span>向阳花园</span></button>
+            <button type="button" class="live-print" data-live-print="local" data-live-local aria-label="使用本地印花" aria-pressed="false" hidden><img data-live-local-image alt="本地上传的印花" width="64" height="64"><span data-live-local-name>本地印花</span></button>
+            <button type="button" class="live-print live-print--upload" data-live-upload aria-label="上传本地印花" title="PNG / JPEG / WebP"><span class="live-print__upload-icon">{% include icon.html name="upload" px=24 %}</span><span>本地上传</span></button>
+          </div>
+          <input type="file" accept="image/png,image/jpeg,image/webp" data-live-file aria-label="选择本地印花文件" hidden>
+          <p class="preview-panel__policy">PNG / JPEG / WebP · 图片只在本机处理</p>
+        </div>
+        <div class="preview-panel__controls" data-live-controls hidden>
+          <div class="preview-panel__row">
+            <span class="preview-panel__label">画面来源</span>
+            <div class="seg seg--sm" role="radiogroup" aria-label="画面来源">
+              <button type="button" role="radio" aria-checked="false" data-live-view="saved">保存预览</button>
+              <button type="button" role="radio" aria-checked="true" data-live-view="live">实时重绘</button>
+            </div>
+          </div>
+          <p class="preview-panel__policy">5 个共享衣片联动 · 显式数学 Warp 近似 · 印花按 sRGB 处理</p>
+          <ul class="live-layers" data-live-layers aria-label="示例文档图层"></ul>
+          <label class="live-opacity"><span>选中图层不透明度 <output data-live-opacity-out>100%</output></span><input type="range" min="0" max="255" value="255" data-live-opacity aria-label="选中图层不透明度（0–255）"></label>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 4. 支持范围 ═══════════════ -->
+<section class="scope" aria-labelledby="scope-title">
+  <div class="container">
+    <p class="kicker">04 · 支持范围</p>
+    <h2 id="scope-title" class="section-title">清楚标出，<br>能做什么、做到哪一步</h2>
+    <p class="section-lead">每项能力按五个维度分别报告。“已完成”只适用于声明范围；近似算法默认关闭，必须显式开启。数据与<a href="{{ '/status.html' | relative_url }}">能力矩阵</a>同源，来自 <code>docs/status.md</code>。</p>
+
+    <div class="scope__stats">
+      <div class="stat stat--done"><strong>{{ count_done }}</strong><span>项已完成</span></div>
+      <div class="stat stat--partial"><strong>{{ count_partial }}</strong><span>项部分支持</span></div>
+      <div class="stat stat--none"><strong>{{ count_none }}</strong><span>项未支持</span></div>
+      <div class="stat stat--opt"><strong>{{ count_opt }}</strong><span>类显式近似</span></div>
+    </div>
+
+    <div class="heat" role="table" aria-label="能力完成度概览">
+      <div class="heat__row heat__row--head" role="row">
+        <span role="columnheader">能力</span><span role="columnheader">读取</span><span role="columnheader">编辑保存</span><span role="columnheader">保存预览</span><span role="columnheader">实时重绘</span><span role="columnheader">近似</span>
+      </div>
+      {%- assign heat_keys = "read,edit,preview,live,approx" | split: "," -%}
+      {%- assign heat_heads = "读取,编辑保存,保存预览,实时重绘,近似" | split: "," -%}
+      {%- for row in matrix -%}
+      <div class="heat__row" role="row">
+        <span role="rowheader" class="heat__area">{{ row.area }}</span>
+        {%- for key in heat_keys -%}
+        {%- assign cell = row[key] -%}
+        {%- capture state_text -%}{%- case cell[0] -%}{%- when "done" -%}已完成{%- when "partial" -%}部分支持{%- when "none" -%}未支持{%- when "opt" -%}可选近似{%- when "no" -%}不近似{%- else -%}不涉及{%- endcase -%}{%- endcapture -%}
+        <span role="cell" class="heat__cell heat__cell--{{ cell[0] }}" title="{{ heat_heads[forloop.index0] }}：{{ state_text }}{% if cell[1] != '' %} — {{ cell[1] }}{% endif %}"><i></i><span class="visually-hidden">{{ heat_heads[forloop.index0] }}：</span><span class="heat__label">{{ state_text }}</span></span>
+        {%- endfor -%}
+      </div>
+      {%- endfor -%}
+    </div>
+    <div class="scope__foot">
+      <div class="matrix-legend" aria-hidden="true">
+        <span class="chip chip--done"><i></i>已完成</span><span class="chip chip--partial"><i></i>部分支持</span><span class="chip chip--none"><i></i>未支持</span><span class="chip chip--na"><i></i>不涉及</span><span class="chip chip--opt"><i></i>可选近似</span><span class="chip chip--no"><i></i>不近似</span>
+      </div>
+      <a class="btn btn--ghost btn--sm" href="{{ '/status.html' | relative_url }}">查看完整矩阵与说明 {% include icon.html name="arrowRight" px=14 %}</a>
+    </div>
+
+    <div class="limits">
+      <h3>{% include icon.html name="warning" px=18 %}明确限制</h3>
+      <ul>
+        {%- for item in status_page.limits -%}<li>{{ item }}</li>{%- endfor -%}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 5. 开始 ═══════════════ -->
+<section class="cta" aria-labelledby="cta-title">
+  <div class="container">
+    <h2 id="cta-title" class="cta__title">从一个图层开始</h2>
+    <p class="section-lead">五分钟跑通新建、编辑、保存与导出；或者直接把你的 PSD 拖进 Playground。</p>
+    <div class="cta__cards">
+      <a class="cta-card" href="{{ '/guide/quickstart.html' | relative_url }}">
+        <span class="cta-card__icon">{% include icon.html name="book" px=24 %}</span>
+        <strong>阅读快速开始</strong>
+        <span>完整可运行的 Go 示例，覆盖读取图层、编辑、保存和导出图片。</span>
+        <span class="cta-card__go">开始使用 {% include icon.html name="arrowRight" px=16 %}</span>
+      </a>
+      <a class="cta-card cta-card--alt" href="{{ '/demo/' | relative_url }}">
+        <span class="cta-card__icon">{% include icon.html name="grid" px=24 %}</span>
+        <strong>打开 Playground</strong>
+        <span>导入本机 PSD/PSB、图片、字体与 ICC，在浏览器中调用全部 Go 入口。</span>
+        <span class="cta-card__go">进入工作台 {% include icon.html name="arrowRight" px=16 %}</span>
+      </a>
+    </div>
+  </div>
+</section>

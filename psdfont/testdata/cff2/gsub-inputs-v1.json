@@ -1,0 +1,33 @@
+{
+  "file": "testdata/cff2/fonts/InstanceLigature-v2.otf",
+  "sha256": "2cba9096aac3f65a5d5b0c0048422194df9f695e6efbb8a73c85c5b9a17a677b",
+  "base_font": "testdata/cff2/fonts/InstancePair.otf",
+  "base_sha256": "4a6578dff999dc877f8b45287dca868ba518561b71f9ac3d2d5406628344d258",
+  "cases": [
+    {
+      "wght": 0,
+      "glyph": 3,
+      "advance": 500,
+      "precise": 500.0
+    },
+    {
+      "wght": 0.5,
+      "glyph": 4,
+      "advance": 499,
+      "precise": 498.5
+    },
+    {
+      "wght": 0.25,
+      "glyph": 4,
+      "advance": 499,
+      "precise": 499.25
+    },
+    {
+      "wght": -0.5,
+      "glyph": 3,
+      "advance": 500,
+      "precise": 500.0
+    }
+  ],
+  "corrected_pairset_profile": "GPOS format1 VarIndex offsets relativePairSet; numeric expectations unchanged."
+}

@@ -1,0 +1,2719 @@
+{
+  "scope": "Owned QA fixture only: quadratic/off-curve/composite contours and GPOS x/y advance/placement; no Go implementation results",
+  "fonts": [
+    {
+      "file": "fonts/geometry-y-position.ttf",
+      "sha256": "99e226491441a66ad0db4ef34ec3373809932e7680182bd352425116316fd687"
+    }
+  ],
+  "cases": [
+    {
+      "id": "geometry:0",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 0,
+      "glyphs": []
+    },
+    {
+      "id": "geometry:1",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 0,
+      "glyphs": []
+    },
+    {
+      "id": "geometry:2",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 0,
+      "glyphs": []
+    },
+    {
+      "id": "geometry:3",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 0,
+      "glyphs": []
+    },
+    {
+      "id": "geometry:4",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": " ",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 1,
+      "glyphs": [
+        {
+          "glyph_id": 1,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 250,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:5",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": " ",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 1,
+      "glyphs": [
+        {
+          "glyph_id": 1,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 250,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:6",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": " ",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 1,
+      "glyphs": [
+        {
+          "glyph_id": 1,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 250,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:7",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": " ",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 1,
+      "glyphs": [
+        {
+          "glyph_id": 1,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 250,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:8",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "AV",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 2,
+      "glyphs": [
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:9",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "AV",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 2,
+      "glyphs": [
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 17,
+          "y_offset": 43
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 605,
+          "y_advance": 0,
+          "x_offset": -11,
+          "y_offset": -23
+        }
+      ]
+    },
+    {
+      "id": "geometry:10",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "AV",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 2,
+      "glyphs": [
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:11",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "AV",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 2,
+      "glyphs": [
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 17,
+          "y_offset": 43
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 605,
+          "y_advance": 0,
+          "x_offset": -11,
+          "y_offset": -23
+        }
+      ]
+    },
+    {
+      "id": "geometry:12",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "AVA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 3,
+      "glyphs": [
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:13",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "AVA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 3,
+      "glyphs": [
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 17,
+          "y_offset": 43
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 605,
+          "y_advance": 0,
+          "x_offset": -11,
+          "y_offset": -23
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:14",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "AVA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 3,
+      "glyphs": [
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:15",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "AVA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 3,
+      "glyphs": [
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 17,
+          "y_offset": 43
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 605,
+          "y_advance": 0,
+          "x_offset": -11,
+          "y_offset": -23
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:16",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "AVAVA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 5,
+      "glyphs": [
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 4,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:17",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "AVAVA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 5,
+      "glyphs": [
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 17,
+          "y_offset": 43
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 605,
+          "y_advance": 0,
+          "x_offset": -11,
+          "y_offset": -23
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 17,
+          "y_offset": 43
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 605,
+          "y_advance": 0,
+          "x_offset": -11,
+          "y_offset": -23
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 4,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:18",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "AVAVA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 5,
+      "glyphs": [
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 4,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:19",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "AVAVA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 5,
+      "glyphs": [
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 17,
+          "y_offset": 43
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 605,
+          "y_advance": 0,
+          "x_offset": -11,
+          "y_offset": -23
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 17,
+          "y_offset": 43
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 605,
+          "y_advance": 0,
+          "x_offset": -11,
+          "y_offset": -23
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 4,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:20",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "VAV",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 3,
+      "glyphs": [
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:21",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "VAV",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 3,
+      "glyphs": [
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 560,
+          "y_advance": 0,
+          "x_offset": -9,
+          "y_offset": -31
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 597,
+          "y_advance": 0,
+          "x_offset": 7,
+          "y_offset": 19
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:22",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "VAV",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 3,
+      "glyphs": [
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:23",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "VAV",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 3,
+      "glyphs": [
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 560,
+          "y_advance": 0,
+          "x_offset": -9,
+          "y_offset": -31
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 597,
+          "y_advance": 0,
+          "x_offset": 7,
+          "y_offset": 19
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:24",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "fiA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 3,
+      "glyphs": [
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 310,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 8,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 180,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:25",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "fiA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 3,
+      "glyphs": [
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 285,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": -21
+        },
+        {
+          "glyph_id": 8,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 180,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:26",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "fiA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 3,
+      "glyphs": [
+        {
+          "glyph_id": 11,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 2,
+          "x_advance": 430,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:27",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "fiA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 3,
+      "glyphs": [
+        {
+          "glyph_id": 11,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 2,
+          "x_advance": 415,
+          "y_advance": 0,
+          "x_offset": 20,
+          "y_offset": 51
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 608,
+          "y_advance": 0,
+          "x_offset": -13,
+          "y_offset": -41
+        }
+      ]
+    },
+    {
+      "id": "geometry:28",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "fiAVA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 5,
+      "glyphs": [
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 310,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 8,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 180,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 4,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:29",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "fiAVA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 5,
+      "glyphs": [
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 285,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": -21
+        },
+        {
+          "glyph_id": 8,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 180,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 17,
+          "y_offset": 43
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 605,
+          "y_advance": 0,
+          "x_offset": -11,
+          "y_offset": -23
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 4,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:30",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "fiAVA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 5,
+      "glyphs": [
+        {
+          "glyph_id": 11,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 2,
+          "x_advance": 430,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 4,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:31",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "fiAVA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 5,
+      "glyphs": [
+        {
+          "glyph_id": 11,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 2,
+          "x_advance": 415,
+          "y_advance": 0,
+          "x_offset": 20,
+          "y_offset": 51
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 608,
+          "y_advance": 0,
+          "x_offset": -13,
+          "y_offset": -41
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 560,
+          "y_advance": 0,
+          "x_offset": -9,
+          "y_offset": -31
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 4,
+          "cluster_length_utf16": 1,
+          "x_advance": 597,
+          "y_advance": 0,
+          "x_offset": 7,
+          "y_offset": 19
+        }
+      ]
+    },
+    {
+      "id": "geometry:32",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "ffi",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 3,
+      "glyphs": [
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 310,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 310,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 8,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 180,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:33",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "ffi",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 3,
+      "glyphs": [
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 310,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 310,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 8,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 180,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:34",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "ffi",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 3,
+      "glyphs": [
+        {
+          "glyph_id": 13,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 3,
+          "x_advance": 710,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:35",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "ffi",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 3,
+      "glyphs": [
+        {
+          "glyph_id": 13,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 3,
+          "x_advance": 710,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:36",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "ffl",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 3,
+      "glyphs": [
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 310,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 310,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 9,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 190,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:37",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "ffl",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 3,
+      "glyphs": [
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 310,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 310,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 9,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 190,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:38",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "ffl",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 3,
+      "glyphs": [
+        {
+          "glyph_id": 14,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 3,
+          "x_advance": 720,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:39",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "ffl",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 3,
+      "glyphs": [
+        {
+          "glyph_id": 14,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 3,
+          "x_advance": 720,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:40",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "fflA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 4,
+      "glyphs": [
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 310,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 310,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 9,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 190,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:41",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "fflA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 4,
+      "glyphs": [
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 310,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 310,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 9,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 190,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:42",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "fflA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 4,
+      "glyphs": [
+        {
+          "glyph_id": 14,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 3,
+          "x_advance": 720,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:43",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "fflA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 4,
+      "glyphs": [
+        {
+          "glyph_id": 14,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 3,
+          "x_advance": 695,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": -21
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:44",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "A\ud837\udf00fiV",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 6,
+      "glyphs": [
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 16,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 2,
+          "x_advance": 650,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 310,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 8,
+          "cluster_start_utf16": 4,
+          "cluster_length_utf16": 1,
+          "x_advance": 180,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 5,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:45",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "A\ud837\udf00fiV",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 6,
+      "glyphs": [
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 16,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 2,
+          "x_advance": 650,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 285,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": -21
+        },
+        {
+          "glyph_id": 8,
+          "cluster_start_utf16": 4,
+          "cluster_length_utf16": 1,
+          "x_advance": 180,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 5,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:46",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "A\ud837\udf00fiV",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 6,
+      "glyphs": [
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 16,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 2,
+          "x_advance": 650,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 11,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 2,
+          "x_advance": 430,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 5,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:47",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "A\ud837\udf00fiV",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 6,
+      "glyphs": [
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 16,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 2,
+          "x_advance": 650,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 11,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 2,
+          "x_advance": 430,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 5,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:48",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "fi AVA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 6,
+      "glyphs": [
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 310,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 8,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 180,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 1,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 250,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 4,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 5,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:49",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "fi AVA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 6,
+      "glyphs": [
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 285,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": -21
+        },
+        {
+          "glyph_id": 8,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 180,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 1,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 250,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 17,
+          "y_offset": 43
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 4,
+          "cluster_length_utf16": 1,
+          "x_advance": 605,
+          "y_advance": 0,
+          "x_offset": -11,
+          "y_offset": -23
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 5,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:50",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "fi AVA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 6,
+      "glyphs": [
+        {
+          "glyph_id": 11,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 2,
+          "x_advance": 430,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 1,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 250,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 4,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 5,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:51",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "fi AVA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 6,
+      "glyphs": [
+        {
+          "glyph_id": 11,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 2,
+          "x_advance": 430,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 1,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 250,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 17,
+          "y_offset": 43
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 4,
+          "cluster_length_utf16": 1,
+          "x_advance": 605,
+          "y_advance": 0,
+          "x_offset": -11,
+          "y_offset": -23
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 5,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:52",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "VAfiA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 5,
+      "glyphs": [
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 310,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 8,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 180,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 4,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:53",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "VAfiA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": false
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 5,
+      "glyphs": [
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 560,
+          "y_advance": 0,
+          "x_offset": -9,
+          "y_offset": -31
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 597,
+          "y_advance": 0,
+          "x_offset": 7,
+          "y_offset": 19
+        },
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 285,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": -21
+        },
+        {
+          "glyph_id": 8,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 180,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 4,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:54",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "VAfiA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": false
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 5,
+      "glyphs": [
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 11,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 2,
+          "x_advance": 430,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 4,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "id": "geometry:55",
+      "font": "fonts/geometry-y-position.ttf",
+      "text": "VAfiA",
+      "script": "latn",
+      "language": "",
+      "features": [
+        {
+          "tag": "liga",
+          "enabled": true
+        },
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "expected_error": "",
+      "utf16_units": 5,
+      "glyphs": [
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 560,
+          "y_advance": 0,
+          "x_offset": -9,
+          "y_offset": -31
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 597,
+          "y_advance": 0,
+          "x_offset": 7,
+          "y_offset": 19
+        },
+        {
+          "glyph_id": 11,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 2,
+          "x_advance": 415,
+          "y_advance": 0,
+          "x_offset": 20,
+          "y_offset": 51
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 4,
+          "cluster_length_utf16": 1,
+          "x_advance": 608,
+          "y_advance": 0,
+          "x_offset": -13,
+          "y_offset": -41
+        }
+      ]
+    }
+  ],
+  "fonttools_version": "4.66.1",
+  "uharfbuzz_binding_version": "0.56.3",
+  "harfbuzz_engine_version": "14.6.0",
+  "script_sha256": "20d0e350f63c88d8ee1657cf687e55469cb29c7ff6d84bdb5ef2b73b92c70f47",
+  "base_font_sha256": "d509ffa7479c63f5b0c60f05c4feafb751f4ea12a3efd4f7bc540684b144a8f2",
+  "base_font_unchanged": true
+}

@@ -1,0 +1,33 @@
+{
+  "scope": "Portable self-generated static TrueType oracle; no system or derived system fonts; glyph IDs/design-unit values and UTF16 clusters computed by independent HarfBuzz.",
+  "font_count": 12,
+  "case_count": 238,
+  "files": {
+    "psdkit-font-shape-extra-feature-oracle.json.source.json": "7213312db2920168d41998ec0116a96340e0d178f16da34051a3eeed162d6149",
+    "oracle.json": "1d212530584be87a3830ff144cc5ea8025aff44421d9655d3d10eb23217ec467",
+    "psdkit-font-shape-union-order-oracle.json.source.json": "441a448b854921825f4c6ffc94d53d7b7ecea182a5f899e5beba3ddccfdf1319",
+    "psdkit-font-shape-owned-harfbuzz-oracle.json.source.json": "6c75e8f7adc772f1e69945fedb8618c7212fcc10b513f7ad32eadf50ce25e08d",
+    "psdkit-font-shape-named-language-positive-oracle.json.source.json": "27455609b34329ec307986e7dccdb2168c335d1eb4bb54a20d29595998dd7a31",
+    "psdkit-font-shape-zero-controls-oracle.json.source.json": "142022a5dbcddf9417f60dc3820a0aefb38835d07f21d158b874ed044cb8826b",
+    "generators/psdkit-font-shape-named-language-positive.py": "8957a0806b86376805fc6837bf2e0d5e040e8f198f78ac0027148308bc093992",
+    "generators/psdkit-font-shape-zero-controls.py": "20203d1b8006f7b2e51bde32dbcc007ccf031f1ca8c79af7104036316cf82925",
+    "generators/psdkit-font-shape-union-control.py": "8e4174f5a1b479046d2904ba97c5fac966ae1526756ffbe5367f878ac97ddc0c",
+    "generators/psdkit-font-shape-own-fixtures.py": "d1b7e34e644eb0f884732ea84162bedb2348f86ac96abd4a7abd6f2592b15901",
+    "generators/psdkit-font-shape-extra-feature-fixtures.py": "b71fbd47425df4901d9a5ea58b83e20ad5966778be2840c450ded57685d6689d",
+    "fonts/legal-ligature-glyph-zero.ttf": "f72ac3977ea923108291177bd08ae9e52472fff3a11470bd4b6c6e9f1d6f26c5",
+    "fonts/short-ligature-priority.ttf": "7238fe93b2032f914d6841952a8c87c8a105bde65699e2bb5568a68059cbaec0",
+    "fonts/named-TRK-both-tables.ttf": "cf304151ef4f457a1b566c8d204756eb40ed486c572063f74d14f2114f5c131c",
+    "fonts/zero-value-class-matrix.ttf": "2ccc52d2153af1f8fc2c7503c3d08cc13a7478572e888a3c66c7fa37b5e97978",
+    "fonts/base.ttf": "d509ffa7479c63f5b0c60f05c4feafb751f4ea12a3efd4f7bc540684b144a8f2",
+    "fonts/named-language-without-liga.ttf": "40bb98be349ff8f6f8fdbcec1fff712713b981688e5cfac0d3615329e9ad40cc",
+    "fonts/required-liga.ttf": "8dbae11a036c25cf033ff35b76ca30cab0a1e13dd868fc4c22e4bec49e3a344d",
+    "fonts/selected-ignore-marks-flag.ttf": "9f440ecb8bf474e53cece57809620abc334af90092042c8f46cfcdae23cc990e",
+    "fonts/selected-single-substitution.ttf": "10e786ad690afd288c374767def2a9ffe932db2336bb6285db0e034a3d85daa0",
+    "fonts/pair-second-value-present-zero.ttf": "368070acd6ab68f32b0ea0b0fd15cca6237bc41c0186b417ce539a971186a5d5",
+    "fonts/extension-equivalent.ttf": "f771b93521b1dbb7c7c6aa6c195e477403d381c80ccfaab5c1d9d7dccf2c48fc",
+    "fonts/lookup-union-order.ttf": "38dd5d2de9a122b06ff3c3ab1d57d4756acb66e4cfeffefd1b3a226abcdb0ac1"
+  },
+  "bundle_source_sha256": "d8c57a3cbe8694967214c19f7383d0e717c4edf2dbea40fd1ca5e48d1f81a1e3",
+  "bundle_script_sha256": "5dd1a03e2258f7135ec479447c65fdfc4a409ae6fb7b96b427386e26f42ea6fa",
+  "all_fonts_self_generated": true
+}

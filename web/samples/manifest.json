@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "document": {
+    "file": "muban.psd",
+    "sha256": "8694bc80049d3aeebf89f0498c0ce86305120358a1fcfc700d398ddbe12ea540",
+    "name": "上衣印花样机",
+    "preferredLayerID": 15,
+    "width": 1000,
+    "height": 1000,
+    "contentWidth": 1000,
+    "contentHeight": 823,
+    "sharedInstances": 5
+  },
+  "prints": [
+    {
+      "file": "mountain.png",
+      "sha256": "324e143f1336aa3e0b6636a3cd855e72be88444fc3754a178e0ca9c299fbc221",
+      "id": "mountain",
+      "name": "山野日落"
+    },
+    {
+      "file": "botanical.png",
+      "sha256": "540cb9ba6a58de6dcbdd0c2930f091f3f38409448b89e1d22a32a7639be0e375",
+      "id": "botanical",
+      "name": "向阳花园"
+    }
+  ]
+}

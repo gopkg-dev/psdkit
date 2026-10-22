@@ -1,0 +1,21 @@
+StandardEncoding table data adapted from the Adobe Font Development Kit
+for OpenType (AFDKO).
+
+Source commit: c53bdc6d489942d48c9d83d22ed02e2973d40637
+Source repository: https://github.com/adobe-type-tools/afdko
+Source files:
+  c/shared/resource/stdenc1.h
+  c/shared/resource/stdenc2.h
+  c/shared/resource/stdstr1.h
+
+Copyright 2014 Adobe Systems Incorporated (http://www.adobe.com/). All Rights Reserved.
+This software is licensed as OpenSource, under the Apache License, Version 2.0.
+This license is available at: http://opensource.org/licenses/Apache-2.0.
+
+Changes: The original C table data was converted to a complete Go literal
+table, with a defined flag distinguishing encoded names from .notdef
+placeholders. The code, glyph-name, and standard-SID values were retained.
+
+The Apache License, Version 2.0 text is reproduced in LICENSE-Apache-2.0.txt.
+The upstream AFDKO LICENSE.md is reproduced verbatim in LICENSE-AFDKO.
+This notice identifies the origin and modifications of the adapted table data.

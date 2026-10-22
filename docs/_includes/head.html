@@ -1,0 +1,13 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+{% if page.url == "/" %}{% assign full_title = site.title | append: " · " | append: site.tagline %}{% else %}{% assign full_title = page.title | default: site.title | append: " · psdkit" %}{% endif %}
+<title>{{ full_title }}</title>
+<meta name="description" content="{{ page.description | default: site.description | strip_html | normalize_whitespace }}">
+<link rel="canonical" href="{{ page.url | absolute_url }}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ full_title }}">
+<meta property="og:description" content="{{ page.description | default: site.description | strip_html | normalize_whitespace }}">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
+<meta name="theme-color" content="#070a12">
+<link rel="icon" type="image/svg+xml" href="{{ '/assets/img/favicon.svg' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/tokens.css' | relative_url }}?v={{ site.time | date: '%s' }}">

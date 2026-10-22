@@ -1,0 +1,3573 @@
+{
+  "source_reference": "/tmp/psdkit-avar2-primary-owned-v1/avar2-actual-v5.json",
+  "source_sha256": "89e67fd2c4e637dd4775240a88563012052b11c4985c16dd68d48d6282364af4",
+  "qualification": "Shared primary HB-stage Fraction oracle; author execution, not independent review.",
+  "fonts": [
+    {
+      "file": "testdata/cff2/fonts/Avar1Nonlinear.otf",
+      "sha256": "343b692bcf0042fd1227dc79603faee385685c5486bb1cd630bb06c4e0e42bb2"
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossExplicit.otf",
+      "sha256": "fabddb0ae5cd7892bc0cfe20a68afeb06a31be72d664ddad5e6d0d9c82326833"
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossImplicit.otf",
+      "sha256": "01be51483e38d0bf02e5ff3ed4b9ab9480d4bbe5c7e4d6ba161cb7d9fc753cc5"
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NullStore.otf",
+      "sha256": "e19f4fabc1d55f59641e3b94f87a6759fb4358bfcdbc082b73c44d8dbab48273"
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2HalfPrecise.otf",
+      "sha256": "82dec67f60858d3c2f45f1c6294dd937c205aef28d5508a77d42b7a563cb0c92"
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Clamp.otf",
+      "sha256": "211952e046a6ec8ed8be14b31ff5b5a74f81f69371181b4918f311cb54f40ada"
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoSegments.otf",
+      "sha256": "6f28fdaad3c9aa06b5480841e5a75f254c499ba0f7e73c5e1fb6ea9f00f8cf61"
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ShortMap.otf",
+      "sha256": "580af058dd1fa0aca36731871dd95156d122ce9737c6d11d904b169a6236c7d5"
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Sentinel.otf",
+      "sha256": "215d74d7e4749293c9e21aef662ed3a74e31a7ae12633fd35a85ab5b835b5acc"
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoMapNoStore.otf",
+      "sha256": "90263aad94cfdcffcfbff416cc81dfab90e6be73d14020b5f3f4e1c8d3595deb"
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ConstantDefaultShift.otf",
+      "sha256": "665f6d63aa42cb27fb111e50216993019de7e2998528c21eb00de6b63743fa7f"
+    }
+  ],
+  "cases": [
+    {
+      "file": "testdata/cff2/fonts/Avar1Nonlinear.otf",
+      "label": "default",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.0
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        0,
+        0
+      ],
+      "first_x": 50.0,
+      "shape_advance": 500
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar1Nonlinear.otf",
+      "label": "positive-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.5
+        }
+      ],
+      "normalized": [
+        12288,
+        4096
+      ],
+      "first_x": 75.0,
+      "shape_advance": 625
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar1Nonlinear.otf",
+      "label": "negative-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": -0.5
+        }
+      ],
+      "normalized": [
+        -12288,
+        -4096
+      ],
+      "first_x": 25.0,
+      "shape_advance": 375
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar1Nonlinear.otf",
+      "label": "mixed-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.5
+        }
+      ],
+      "normalized": [
+        -12288,
+        4096
+      ],
+      "first_x": 45.0,
+      "shape_advance": 475
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar1Nonlinear.otf",
+      "label": "other-mixed-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": -0.5
+        }
+      ],
+      "normalized": [
+        12288,
+        -4096
+      ],
+      "first_x": 55.0,
+      "shape_advance": 525
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar1Nonlinear.otf",
+      "label": "positive-half",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        12288,
+        0
+      ],
+      "first_x": 65.0,
+      "shape_advance": 575
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar1Nonlinear.otf",
+      "label": "negative-half",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        -12288,
+        0
+      ],
+      "first_x": 35.0,
+      "shape_advance": 425
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar1Nonlinear.otf",
+      "label": "positive-peak",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 1.0
+        },
+        {
+          "tag": "wdth",
+          "value": 1.0
+        }
+      ],
+      "normalized": [
+        16384,
+        16384
+      ],
+      "first_x": 110.0,
+      "shape_advance": 800
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar1Nonlinear.otf",
+      "label": "negative-peak",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -1.0
+        },
+        {
+          "tag": "wdth",
+          "value": -1.0
+        }
+      ],
+      "normalized": [
+        -16384,
+        -16384
+      ],
+      "first_x": -10.0,
+      "shape_advance": 200
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar1Nonlinear.otf",
+      "label": "clamp-positive",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.75
+        },
+        {
+          "tag": "wdth",
+          "value": 1.0
+        }
+      ],
+      "normalized": [
+        -14336,
+        16384
+      ],
+      "first_x": 72.5,
+      "shape_advance": 613
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar1Nonlinear.otf",
+      "label": "clamp-negative",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.75
+        },
+        {
+          "tag": "wdth",
+          "value": -1.0
+        }
+      ],
+      "normalized": [
+        14336,
+        -16384
+      ],
+      "first_x": 27.5,
+      "shape_advance": 388
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar1Nonlinear.otf",
+      "label": "quarter",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.25
+        },
+        {
+          "tag": "wdth",
+          "value": 0.125
+        }
+      ],
+      "normalized": [
+        6144,
+        1024
+      ],
+      "first_x": 60.0,
+      "shape_advance": 550
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar1Nonlinear.otf",
+      "label": "base-sub-f2dot14",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5000457763671875
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        12289,
+        0
+      ],
+      "first_x": 65.001220703125,
+      "shape_advance": 575
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar1Nonlinear.otf",
+      "label": "negative-base-sub-f2dot14",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5000457763671875
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        -12288,
+        0
+      ],
+      "first_x": 35.0,
+      "shape_advance": 425
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar1Nonlinear.otf",
+      "label": "nonbinary",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.1
+        },
+        {
+          "tag": "wdth",
+          "value": 0.3
+        }
+      ],
+      "normalized": [
+        2458,
+        2458
+      ],
+      "first_x": 59.00146484375,
+      "shape_advance": 545
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar1Nonlinear.otf",
+      "label": "outside-user-range",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 2.0
+        },
+        {
+          "tag": "wdth",
+          "value": -2.0
+        }
+      ],
+      "normalized": [
+        16384,
+        -16384
+      ],
+      "first_x": 30.0,
+      "shape_advance": 400
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossExplicit.otf",
+      "label": "default",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.0
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        0,
+        0
+      ],
+      "first_x": 50.0,
+      "shape_advance": 500
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossExplicit.otf",
+      "label": "positive-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.5
+        }
+      ],
+      "normalized": [
+        13312,
+        -2048
+      ],
+      "first_x": 61.25,
+      "shape_advance": 556
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossExplicit.otf",
+      "label": "negative-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": -0.5
+        }
+      ],
+      "normalized": [
+        -13312,
+        2048
+      ],
+      "first_x": 38.75,
+      "shape_advance": 444
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossExplicit.otf",
+      "label": "mixed-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.5
+        }
+      ],
+      "normalized": [
+        -11264,
+        10240
+      ],
+      "first_x": 61.25,
+      "shape_advance": 556
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossExplicit.otf",
+      "label": "other-mixed-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": -0.5
+        }
+      ],
+      "normalized": [
+        11264,
+        -10240
+      ],
+      "first_x": 38.75,
+      "shape_advance": 444
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossExplicit.otf",
+      "label": "positive-half",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        12288,
+        -6144
+      ],
+      "first_x": 50.0,
+      "shape_advance": 500
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossExplicit.otf",
+      "label": "negative-half",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        -12288,
+        6144
+      ],
+      "first_x": 50.0,
+      "shape_advance": 500
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossExplicit.otf",
+      "label": "positive-peak",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 1.0
+        },
+        {
+          "tag": "wdth",
+          "value": 1.0
+        }
+      ],
+      "normalized": [
+        16384,
+        8192
+      ],
+      "first_x": 90.0,
+      "shape_advance": 700
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossExplicit.otf",
+      "label": "negative-peak",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -1.0
+        },
+        {
+          "tag": "wdth",
+          "value": -1.0
+        }
+      ],
+      "normalized": [
+        -16384,
+        -8192
+      ],
+      "first_x": 10.0,
+      "shape_advance": 300
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossExplicit.otf",
+      "label": "clamp-positive",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.75
+        },
+        {
+          "tag": "wdth",
+          "value": 1.0
+        }
+      ],
+      "normalized": [
+        -10240,
+        16384
+      ],
+      "first_x": 77.5,
+      "shape_advance": 638
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossExplicit.otf",
+      "label": "clamp-negative",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.75
+        },
+        {
+          "tag": "wdth",
+          "value": -1.0
+        }
+      ],
+      "normalized": [
+        10240,
+        -16384
+      ],
+      "first_x": 22.5,
+      "shape_advance": 363
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossExplicit.otf",
+      "label": "quarter",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.25
+        },
+        {
+          "tag": "wdth",
+          "value": 0.125
+        }
+      ],
+      "normalized": [
+        6400,
+        -2048
+      ],
+      "first_x": 52.8125,
+      "shape_advance": 514
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossExplicit.otf",
+      "label": "base-sub-f2dot14",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5000457763671875
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        12289,
+        -6144
+      ],
+      "first_x": 50.001220703125,
+      "shape_advance": 500
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossExplicit.otf",
+      "label": "negative-base-sub-f2dot14",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5000457763671875
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        -12288,
+        6144
+      ],
+      "first_x": 50.0,
+      "shape_advance": 500
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossExplicit.otf",
+      "label": "nonbinary",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.1
+        },
+        {
+          "tag": "wdth",
+          "value": 0.3
+        }
+      ],
+      "normalized": [
+        3072,
+        1229
+      ],
+      "first_x": 56.75048828125,
+      "shape_advance": 534
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossExplicit.otf",
+      "label": "outside-user-range",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 2.0
+        },
+        {
+          "tag": "wdth",
+          "value": -2.0
+        }
+      ],
+      "normalized": [
+        12288,
+        -16384
+      ],
+      "first_x": 25.0,
+      "shape_advance": 375
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossImplicit.otf",
+      "label": "default",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.0
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        0,
+        0
+      ],
+      "first_x": 50.0,
+      "shape_advance": 500
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossImplicit.otf",
+      "label": "positive-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.5
+        }
+      ],
+      "normalized": [
+        13312,
+        -2048
+      ],
+      "first_x": 61.25,
+      "shape_advance": 556
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossImplicit.otf",
+      "label": "negative-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": -0.5
+        }
+      ],
+      "normalized": [
+        -13312,
+        2048
+      ],
+      "first_x": 38.75,
+      "shape_advance": 444
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossImplicit.otf",
+      "label": "mixed-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.5
+        }
+      ],
+      "normalized": [
+        -11264,
+        10240
+      ],
+      "first_x": 61.25,
+      "shape_advance": 556
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossImplicit.otf",
+      "label": "other-mixed-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": -0.5
+        }
+      ],
+      "normalized": [
+        11264,
+        -10240
+      ],
+      "first_x": 38.75,
+      "shape_advance": 444
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossImplicit.otf",
+      "label": "positive-half",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        12288,
+        -6144
+      ],
+      "first_x": 50.0,
+      "shape_advance": 500
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossImplicit.otf",
+      "label": "negative-half",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        -12288,
+        6144
+      ],
+      "first_x": 50.0,
+      "shape_advance": 500
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossImplicit.otf",
+      "label": "positive-peak",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 1.0
+        },
+        {
+          "tag": "wdth",
+          "value": 1.0
+        }
+      ],
+      "normalized": [
+        16384,
+        8192
+      ],
+      "first_x": 90.0,
+      "shape_advance": 700
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossImplicit.otf",
+      "label": "negative-peak",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -1.0
+        },
+        {
+          "tag": "wdth",
+          "value": -1.0
+        }
+      ],
+      "normalized": [
+        -16384,
+        -8192
+      ],
+      "first_x": 10.0,
+      "shape_advance": 300
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossImplicit.otf",
+      "label": "clamp-positive",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.75
+        },
+        {
+          "tag": "wdth",
+          "value": 1.0
+        }
+      ],
+      "normalized": [
+        -10240,
+        16384
+      ],
+      "first_x": 77.5,
+      "shape_advance": 638
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossImplicit.otf",
+      "label": "clamp-negative",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.75
+        },
+        {
+          "tag": "wdth",
+          "value": -1.0
+        }
+      ],
+      "normalized": [
+        10240,
+        -16384
+      ],
+      "first_x": 22.5,
+      "shape_advance": 363
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossImplicit.otf",
+      "label": "quarter",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.25
+        },
+        {
+          "tag": "wdth",
+          "value": 0.125
+        }
+      ],
+      "normalized": [
+        6400,
+        -2048
+      ],
+      "first_x": 52.8125,
+      "shape_advance": 514
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossImplicit.otf",
+      "label": "base-sub-f2dot14",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5000457763671875
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        12289,
+        -6144
+      ],
+      "first_x": 50.001220703125,
+      "shape_advance": 500
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossImplicit.otf",
+      "label": "negative-base-sub-f2dot14",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5000457763671875
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        -12288,
+        6144
+      ],
+      "first_x": 50.0,
+      "shape_advance": 500
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossImplicit.otf",
+      "label": "nonbinary",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.1
+        },
+        {
+          "tag": "wdth",
+          "value": 0.3
+        }
+      ],
+      "normalized": [
+        3072,
+        1229
+      ],
+      "first_x": 56.75048828125,
+      "shape_advance": 534
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2CrossImplicit.otf",
+      "label": "outside-user-range",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 2.0
+        },
+        {
+          "tag": "wdth",
+          "value": -2.0
+        }
+      ],
+      "normalized": [
+        12288,
+        -16384
+      ],
+      "first_x": 25.0,
+      "shape_advance": 375
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NullStore.otf",
+      "label": "default",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.0
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        0,
+        0
+      ],
+      "first_x": 50.0,
+      "shape_advance": 500
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NullStore.otf",
+      "label": "positive-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.5
+        }
+      ],
+      "normalized": [
+        12288,
+        4096
+      ],
+      "first_x": 75.0,
+      "shape_advance": 625
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NullStore.otf",
+      "label": "negative-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": -0.5
+        }
+      ],
+      "normalized": [
+        -12288,
+        -4096
+      ],
+      "first_x": 25.0,
+      "shape_advance": 375
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NullStore.otf",
+      "label": "mixed-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.5
+        }
+      ],
+      "normalized": [
+        -12288,
+        4096
+      ],
+      "first_x": 45.0,
+      "shape_advance": 475
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NullStore.otf",
+      "label": "other-mixed-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": -0.5
+        }
+      ],
+      "normalized": [
+        12288,
+        -4096
+      ],
+      "first_x": 55.0,
+      "shape_advance": 525
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NullStore.otf",
+      "label": "positive-half",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        12288,
+        0
+      ],
+      "first_x": 65.0,
+      "shape_advance": 575
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NullStore.otf",
+      "label": "negative-half",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        -12288,
+        0
+      ],
+      "first_x": 35.0,
+      "shape_advance": 425
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NullStore.otf",
+      "label": "positive-peak",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 1.0
+        },
+        {
+          "tag": "wdth",
+          "value": 1.0
+        }
+      ],
+      "normalized": [
+        16384,
+        16384
+      ],
+      "first_x": 110.0,
+      "shape_advance": 800
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NullStore.otf",
+      "label": "negative-peak",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -1.0
+        },
+        {
+          "tag": "wdth",
+          "value": -1.0
+        }
+      ],
+      "normalized": [
+        -16384,
+        -16384
+      ],
+      "first_x": -10.0,
+      "shape_advance": 200
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NullStore.otf",
+      "label": "clamp-positive",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.75
+        },
+        {
+          "tag": "wdth",
+          "value": 1.0
+        }
+      ],
+      "normalized": [
+        -14336,
+        16384
+      ],
+      "first_x": 72.5,
+      "shape_advance": 613
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NullStore.otf",
+      "label": "clamp-negative",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.75
+        },
+        {
+          "tag": "wdth",
+          "value": -1.0
+        }
+      ],
+      "normalized": [
+        14336,
+        -16384
+      ],
+      "first_x": 27.5,
+      "shape_advance": 388
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NullStore.otf",
+      "label": "quarter",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.25
+        },
+        {
+          "tag": "wdth",
+          "value": 0.125
+        }
+      ],
+      "normalized": [
+        6144,
+        1024
+      ],
+      "first_x": 60.0,
+      "shape_advance": 550
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NullStore.otf",
+      "label": "base-sub-f2dot14",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5000457763671875
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        12289,
+        0
+      ],
+      "first_x": 65.001220703125,
+      "shape_advance": 575
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NullStore.otf",
+      "label": "negative-base-sub-f2dot14",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5000457763671875
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        -12288,
+        0
+      ],
+      "first_x": 35.0,
+      "shape_advance": 425
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NullStore.otf",
+      "label": "nonbinary",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.1
+        },
+        {
+          "tag": "wdth",
+          "value": 0.3
+        }
+      ],
+      "normalized": [
+        2458,
+        2458
+      ],
+      "first_x": 59.00146484375,
+      "shape_advance": 545
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NullStore.otf",
+      "label": "outside-user-range",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 2.0
+        },
+        {
+          "tag": "wdth",
+          "value": -2.0
+        }
+      ],
+      "normalized": [
+        16384,
+        -16384
+      ],
+      "first_x": 30.0,
+      "shape_advance": 400
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2HalfPrecise.otf",
+      "label": "default",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.0
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        0,
+        0
+      ],
+      "first_x": 50.0,
+      "shape_advance": 500
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2HalfPrecise.otf",
+      "label": "positive-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.5
+        }
+      ],
+      "normalized": [
+        8193,
+        8192
+      ],
+      "first_x": 80.001220703125,
+      "shape_advance": 650
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2HalfPrecise.otf",
+      "label": "negative-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": -0.5
+        }
+      ],
+      "normalized": [
+        -8192,
+        -8191
+      ],
+      "first_x": 20.00244140625,
+      "shape_advance": 350
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2HalfPrecise.otf",
+      "label": "mixed-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.5
+        }
+      ],
+      "normalized": [
+        -8192,
+        8193
+      ],
+      "first_x": 60.00244140625,
+      "shape_advance": 550
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2HalfPrecise.otf",
+      "label": "other-mixed-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": -0.5
+        }
+      ],
+      "normalized": [
+        8193,
+        -8192
+      ],
+      "first_x": 40.001220703125,
+      "shape_advance": 450
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2HalfPrecise.otf",
+      "label": "positive-half",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        8193,
+        0
+      ],
+      "first_x": 60.001220703125,
+      "shape_advance": 550
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2HalfPrecise.otf",
+      "label": "negative-half",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        -8192,
+        1
+      ],
+      "first_x": 40.00244140625,
+      "shape_advance": 450
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2HalfPrecise.otf",
+      "label": "positive-peak",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 1.0
+        },
+        {
+          "tag": "wdth",
+          "value": 1.0
+        }
+      ],
+      "normalized": [
+        16384,
+        16383
+      ],
+      "first_x": 109.99755859375,
+      "shape_advance": 800
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2HalfPrecise.otf",
+      "label": "negative-peak",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -1.0
+        },
+        {
+          "tag": "wdth",
+          "value": -1.0
+        }
+      ],
+      "normalized": [
+        -16384,
+        -16383
+      ],
+      "first_x": -9.99755859375,
+      "shape_advance": 200
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2HalfPrecise.otf",
+      "label": "clamp-positive",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.75
+        },
+        {
+          "tag": "wdth",
+          "value": 1.0
+        }
+      ],
+      "normalized": [
+        -12289,
+        16384
+      ],
+      "first_x": 74.998779296875,
+      "shape_advance": 625
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2HalfPrecise.otf",
+      "label": "clamp-negative",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.75
+        },
+        {
+          "tag": "wdth",
+          "value": -1.0
+        }
+      ],
+      "normalized": [
+        12289,
+        -16384
+      ],
+      "first_x": 25.001220703125,
+      "shape_advance": 375
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2HalfPrecise.otf",
+      "label": "quarter",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.25
+        },
+        {
+          "tag": "wdth",
+          "value": 0.125
+        }
+      ],
+      "normalized": [
+        4096,
+        2048
+      ],
+      "first_x": 60.0,
+      "shape_advance": 550
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2HalfPrecise.otf",
+      "label": "base-sub-f2dot14",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5000457763671875
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        8193,
+        0
+      ],
+      "first_x": 60.001220703125,
+      "shape_advance": 550
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2HalfPrecise.otf",
+      "label": "negative-base-sub-f2dot14",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5000457763671875
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        -8193,
+        1
+      ],
+      "first_x": 40.001220703125,
+      "shape_advance": 450
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2HalfPrecise.otf",
+      "label": "nonbinary",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.1
+        },
+        {
+          "tag": "wdth",
+          "value": 0.3
+        }
+      ],
+      "normalized": [
+        1639,
+        4915
+      ],
+      "first_x": 64.000244140625,
+      "shape_advance": 570
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2HalfPrecise.otf",
+      "label": "outside-user-range",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 2.0
+        },
+        {
+          "tag": "wdth",
+          "value": -2.0
+        }
+      ],
+      "normalized": [
+        16384,
+        -16384
+      ],
+      "first_x": 30.0,
+      "shape_advance": 400
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Clamp.otf",
+      "label": "default",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.0
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        0,
+        0
+      ],
+      "first_x": 50.0,
+      "shape_advance": 500
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Clamp.otf",
+      "label": "positive-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.5
+        }
+      ],
+      "normalized": [
+        16384,
+        -16384
+      ],
+      "first_x": 30.0,
+      "shape_advance": 400
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Clamp.otf",
+      "label": "negative-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": -0.5
+        }
+      ],
+      "normalized": [
+        -16384,
+        16384
+      ],
+      "first_x": 70.0,
+      "shape_advance": 600
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Clamp.otf",
+      "label": "mixed-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.5
+        }
+      ],
+      "normalized": [
+        16384,
+        16384
+      ],
+      "first_x": 110.0,
+      "shape_advance": 800
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Clamp.otf",
+      "label": "other-mixed-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": -0.5
+        }
+      ],
+      "normalized": [
+        -16384,
+        -16384
+      ],
+      "first_x": -10.0,
+      "shape_advance": 200
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Clamp.otf",
+      "label": "positive-half",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        8192,
+        -16384
+      ],
+      "first_x": 20.0,
+      "shape_advance": 350
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Clamp.otf",
+      "label": "negative-half",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        -8192,
+        16384
+      ],
+      "first_x": 80.0,
+      "shape_advance": 650
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Clamp.otf",
+      "label": "positive-peak",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 1.0
+        },
+        {
+          "tag": "wdth",
+          "value": 1.0
+        }
+      ],
+      "normalized": [
+        16384,
+        -16384
+      ],
+      "first_x": 30.0,
+      "shape_advance": 400
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Clamp.otf",
+      "label": "negative-peak",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -1.0
+        },
+        {
+          "tag": "wdth",
+          "value": -1.0
+        }
+      ],
+      "normalized": [
+        -16384,
+        16384
+      ],
+      "first_x": 70.0,
+      "shape_advance": 600
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Clamp.otf",
+      "label": "clamp-positive",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.75
+        },
+        {
+          "tag": "wdth",
+          "value": 1.0
+        }
+      ],
+      "normalized": [
+        16384,
+        16384
+      ],
+      "first_x": 110.0,
+      "shape_advance": 800
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Clamp.otf",
+      "label": "clamp-negative",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.75
+        },
+        {
+          "tag": "wdth",
+          "value": -1.0
+        }
+      ],
+      "normalized": [
+        -16384,
+        -16384
+      ],
+      "first_x": -10.0,
+      "shape_advance": 200
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Clamp.otf",
+      "label": "quarter",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.25
+        },
+        {
+          "tag": "wdth",
+          "value": 0.125
+        }
+      ],
+      "normalized": [
+        10240,
+        -10240
+      ],
+      "first_x": 37.5,
+      "shape_advance": 438
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Clamp.otf",
+      "label": "base-sub-f2dot14",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5000457763671875
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        8193,
+        -16384
+      ],
+      "first_x": 20.001220703125,
+      "shape_advance": 350
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Clamp.otf",
+      "label": "negative-base-sub-f2dot14",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5000457763671875
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        -8193,
+        16384
+      ],
+      "first_x": 79.998779296875,
+      "shape_advance": 650
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Clamp.otf",
+      "label": "nonbinary",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.1
+        },
+        {
+          "tag": "wdth",
+          "value": 0.3
+        }
+      ],
+      "normalized": [
+        16384,
+        -2
+      ],
+      "first_x": 69.9951171875,
+      "shape_advance": 600
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Clamp.otf",
+      "label": "outside-user-range",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 2.0
+        },
+        {
+          "tag": "wdth",
+          "value": -2.0
+        }
+      ],
+      "normalized": [
+        -16384,
+        -16384
+      ],
+      "first_x": -10.0,
+      "shape_advance": 200
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoSegments.otf",
+      "label": "default",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.0
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        0,
+        0
+      ],
+      "first_x": 50.0,
+      "shape_advance": 500
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoSegments.otf",
+      "label": "positive-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.5
+        }
+      ],
+      "normalized": [
+        10240,
+        4096
+      ],
+      "first_x": 72.5,
+      "shape_advance": 613
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoSegments.otf",
+      "label": "negative-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": -0.5
+        }
+      ],
+      "normalized": [
+        -10240,
+        -4096
+      ],
+      "first_x": 27.5,
+      "shape_advance": 388
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoSegments.otf",
+      "label": "mixed-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.5
+        }
+      ],
+      "normalized": [
+        -6144,
+        12288
+      ],
+      "first_x": 72.5,
+      "shape_advance": 613
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoSegments.otf",
+      "label": "other-mixed-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": -0.5
+        }
+      ],
+      "normalized": [
+        6144,
+        -12288
+      ],
+      "first_x": 27.5,
+      "shape_advance": 388
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoSegments.otf",
+      "label": "positive-half",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        8192,
+        -4096
+      ],
+      "first_x": 50.0,
+      "shape_advance": 500
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoSegments.otf",
+      "label": "negative-half",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        -8192,
+        4096
+      ],
+      "first_x": 50.0,
+      "shape_advance": 500
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoSegments.otf",
+      "label": "positive-peak",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 1.0
+        },
+        {
+          "tag": "wdth",
+          "value": 1.0
+        }
+      ],
+      "normalized": [
+        16384,
+        8192
+      ],
+      "first_x": 90.0,
+      "shape_advance": 700
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoSegments.otf",
+      "label": "negative-peak",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -1.0
+        },
+        {
+          "tag": "wdth",
+          "value": -1.0
+        }
+      ],
+      "normalized": [
+        -16384,
+        -8192
+      ],
+      "first_x": 10.0,
+      "shape_advance": 300
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoSegments.otf",
+      "label": "clamp-positive",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.75
+        },
+        {
+          "tag": "wdth",
+          "value": 1.0
+        }
+      ],
+      "normalized": [
+        -8192,
+        16384
+      ],
+      "first_x": 80.0,
+      "shape_advance": 650
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoSegments.otf",
+      "label": "clamp-negative",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.75
+        },
+        {
+          "tag": "wdth",
+          "value": -1.0
+        }
+      ],
+      "normalized": [
+        8192,
+        -16384
+      ],
+      "first_x": 20.0,
+      "shape_advance": 350
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoSegments.otf",
+      "label": "quarter",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.25
+        },
+        {
+          "tag": "wdth",
+          "value": 0.125
+        }
+      ],
+      "normalized": [
+        4608,
+        0
+      ],
+      "first_x": 55.625,
+      "shape_advance": 528
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoSegments.otf",
+      "label": "base-sub-f2dot14",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5000457763671875
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        8193,
+        -4096
+      ],
+      "first_x": 50.001220703125,
+      "shape_advance": 500
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoSegments.otf",
+      "label": "negative-base-sub-f2dot14",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5000457763671875
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        -8193,
+        4097
+      ],
+      "first_x": 50.001220703125,
+      "shape_advance": 500
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoSegments.otf",
+      "label": "nonbinary",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.1
+        },
+        {
+          "tag": "wdth",
+          "value": 0.3
+        }
+      ],
+      "normalized": [
+        2867,
+        4096
+      ],
+      "first_x": 63.499755859375,
+      "shape_advance": 567
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoSegments.otf",
+      "label": "outside-user-range",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 2.0
+        },
+        {
+          "tag": "wdth",
+          "value": -2.0
+        }
+      ],
+      "normalized": [
+        12288,
+        -16384
+      ],
+      "first_x": 25.0,
+      "shape_advance": 375
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ShortMap.otf",
+      "label": "default",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.0
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        0,
+        0
+      ],
+      "first_x": 50.0,
+      "shape_advance": 500
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ShortMap.otf",
+      "label": "positive-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.5
+        }
+      ],
+      "normalized": [
+        4096,
+        4096
+      ],
+      "first_x": 65.0,
+      "shape_advance": 575
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ShortMap.otf",
+      "label": "negative-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": -0.5
+        }
+      ],
+      "normalized": [
+        -4096,
+        -4096
+      ],
+      "first_x": 35.0,
+      "shape_advance": 425
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ShortMap.otf",
+      "label": "mixed-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.5
+        }
+      ],
+      "normalized": [
+        -4096,
+        12288
+      ],
+      "first_x": 75.0,
+      "shape_advance": 625
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ShortMap.otf",
+      "label": "other-mixed-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": -0.5
+        }
+      ],
+      "normalized": [
+        4096,
+        -12288
+      ],
+      "first_x": 25.0,
+      "shape_advance": 375
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ShortMap.otf",
+      "label": "positive-half",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        4096,
+        -4096
+      ],
+      "first_x": 45.0,
+      "shape_advance": 475
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ShortMap.otf",
+      "label": "negative-half",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        -4096,
+        4096
+      ],
+      "first_x": 55.0,
+      "shape_advance": 525
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ShortMap.otf",
+      "label": "positive-peak",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 1.0
+        },
+        {
+          "tag": "wdth",
+          "value": 1.0
+        }
+      ],
+      "normalized": [
+        8192,
+        8192
+      ],
+      "first_x": 80.0,
+      "shape_advance": 650
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ShortMap.otf",
+      "label": "negative-peak",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -1.0
+        },
+        {
+          "tag": "wdth",
+          "value": -1.0
+        }
+      ],
+      "normalized": [
+        -8192,
+        -8192
+      ],
+      "first_x": 20.0,
+      "shape_advance": 350
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ShortMap.otf",
+      "label": "clamp-positive",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.75
+        },
+        {
+          "tag": "wdth",
+          "value": 1.0
+        }
+      ],
+      "normalized": [
+        -6144,
+        16384
+      ],
+      "first_x": 82.5,
+      "shape_advance": 663
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ShortMap.otf",
+      "label": "clamp-negative",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.75
+        },
+        {
+          "tag": "wdth",
+          "value": -1.0
+        }
+      ],
+      "normalized": [
+        6144,
+        -16384
+      ],
+      "first_x": 17.5,
+      "shape_advance": 338
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ShortMap.otf",
+      "label": "quarter",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.25
+        },
+        {
+          "tag": "wdth",
+          "value": 0.125
+        }
+      ],
+      "normalized": [
+        2048,
+        0
+      ],
+      "first_x": 52.5,
+      "shape_advance": 513
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ShortMap.otf",
+      "label": "base-sub-f2dot14",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5000457763671875
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        4096,
+        -4096
+      ],
+      "first_x": 45.0,
+      "shape_advance": 475
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ShortMap.otf",
+      "label": "negative-base-sub-f2dot14",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5000457763671875
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        -4096,
+        4097
+      ],
+      "first_x": 55.00244140625,
+      "shape_advance": 525
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ShortMap.otf",
+      "label": "nonbinary",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.1
+        },
+        {
+          "tag": "wdth",
+          "value": 0.3
+        }
+      ],
+      "normalized": [
+        819,
+        4096
+      ],
+      "first_x": 60.999755859375,
+      "shape_advance": 555
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ShortMap.otf",
+      "label": "outside-user-range",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 2.0
+        },
+        {
+          "tag": "wdth",
+          "value": -2.0
+        }
+      ],
+      "normalized": [
+        8192,
+        -16384
+      ],
+      "first_x": 20.0,
+      "shape_advance": 350
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Sentinel.otf",
+      "label": "default",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.0
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        0,
+        0
+      ],
+      "first_x": 50.0,
+      "shape_advance": 500
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Sentinel.otf",
+      "label": "positive-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.5
+        }
+      ],
+      "normalized": [
+        8192,
+        4096
+      ],
+      "first_x": 70.0,
+      "shape_advance": 600
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Sentinel.otf",
+      "label": "negative-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": -0.5
+        }
+      ],
+      "normalized": [
+        -8192,
+        -4096
+      ],
+      "first_x": 30.0,
+      "shape_advance": 400
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Sentinel.otf",
+      "label": "mixed-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.5
+        }
+      ],
+      "normalized": [
+        -8192,
+        12288
+      ],
+      "first_x": 70.0,
+      "shape_advance": 600
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Sentinel.otf",
+      "label": "other-mixed-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": -0.5
+        }
+      ],
+      "normalized": [
+        8192,
+        -12288
+      ],
+      "first_x": 30.0,
+      "shape_advance": 400
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Sentinel.otf",
+      "label": "positive-half",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        8192,
+        -4096
+      ],
+      "first_x": 50.0,
+      "shape_advance": 500
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Sentinel.otf",
+      "label": "negative-half",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        -8192,
+        4096
+      ],
+      "first_x": 50.0,
+      "shape_advance": 500
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Sentinel.otf",
+      "label": "positive-peak",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 1.0
+        },
+        {
+          "tag": "wdth",
+          "value": 1.0
+        }
+      ],
+      "normalized": [
+        16384,
+        8192
+      ],
+      "first_x": 90.0,
+      "shape_advance": 700
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Sentinel.otf",
+      "label": "negative-peak",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -1.0
+        },
+        {
+          "tag": "wdth",
+          "value": -1.0
+        }
+      ],
+      "normalized": [
+        -16384,
+        -8192
+      ],
+      "first_x": 10.0,
+      "shape_advance": 300
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Sentinel.otf",
+      "label": "clamp-positive",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.75
+        },
+        {
+          "tag": "wdth",
+          "value": 1.0
+        }
+      ],
+      "normalized": [
+        -12288,
+        16384
+      ],
+      "first_x": 75.0,
+      "shape_advance": 625
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Sentinel.otf",
+      "label": "clamp-negative",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.75
+        },
+        {
+          "tag": "wdth",
+          "value": -1.0
+        }
+      ],
+      "normalized": [
+        12288,
+        -16384
+      ],
+      "first_x": 25.0,
+      "shape_advance": 375
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Sentinel.otf",
+      "label": "quarter",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.25
+        },
+        {
+          "tag": "wdth",
+          "value": 0.125
+        }
+      ],
+      "normalized": [
+        4096,
+        0
+      ],
+      "first_x": 55.0,
+      "shape_advance": 525
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Sentinel.otf",
+      "label": "base-sub-f2dot14",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5000457763671875
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        8193,
+        -4096
+      ],
+      "first_x": 50.001220703125,
+      "shape_advance": 500
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Sentinel.otf",
+      "label": "negative-base-sub-f2dot14",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5000457763671875
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        -8193,
+        4097
+      ],
+      "first_x": 50.001220703125,
+      "shape_advance": 500
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Sentinel.otf",
+      "label": "nonbinary",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.1
+        },
+        {
+          "tag": "wdth",
+          "value": 0.3
+        }
+      ],
+      "normalized": [
+        1639,
+        4096
+      ],
+      "first_x": 62.000732421875,
+      "shape_advance": 560
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2Sentinel.otf",
+      "label": "outside-user-range",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 2.0
+        },
+        {
+          "tag": "wdth",
+          "value": -2.0
+        }
+      ],
+      "normalized": [
+        16384,
+        -16384
+      ],
+      "first_x": 30.0,
+      "shape_advance": 400
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoMapNoStore.otf",
+      "label": "default",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.0
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        0,
+        0
+      ],
+      "first_x": 50.0,
+      "shape_advance": 500
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoMapNoStore.otf",
+      "label": "positive-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.5
+        }
+      ],
+      "normalized": [
+        12288,
+        4096
+      ],
+      "first_x": 75.0,
+      "shape_advance": 625
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoMapNoStore.otf",
+      "label": "negative-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": -0.5
+        }
+      ],
+      "normalized": [
+        -12288,
+        -4096
+      ],
+      "first_x": 25.0,
+      "shape_advance": 375
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoMapNoStore.otf",
+      "label": "mixed-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.5
+        }
+      ],
+      "normalized": [
+        -12288,
+        4096
+      ],
+      "first_x": 45.0,
+      "shape_advance": 475
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoMapNoStore.otf",
+      "label": "other-mixed-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": -0.5
+        }
+      ],
+      "normalized": [
+        12288,
+        -4096
+      ],
+      "first_x": 55.0,
+      "shape_advance": 525
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoMapNoStore.otf",
+      "label": "positive-half",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        12288,
+        0
+      ],
+      "first_x": 65.0,
+      "shape_advance": 575
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoMapNoStore.otf",
+      "label": "negative-half",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        -12288,
+        0
+      ],
+      "first_x": 35.0,
+      "shape_advance": 425
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoMapNoStore.otf",
+      "label": "positive-peak",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 1.0
+        },
+        {
+          "tag": "wdth",
+          "value": 1.0
+        }
+      ],
+      "normalized": [
+        16384,
+        16384
+      ],
+      "first_x": 110.0,
+      "shape_advance": 800
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoMapNoStore.otf",
+      "label": "negative-peak",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -1.0
+        },
+        {
+          "tag": "wdth",
+          "value": -1.0
+        }
+      ],
+      "normalized": [
+        -16384,
+        -16384
+      ],
+      "first_x": -10.0,
+      "shape_advance": 200
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoMapNoStore.otf",
+      "label": "clamp-positive",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.75
+        },
+        {
+          "tag": "wdth",
+          "value": 1.0
+        }
+      ],
+      "normalized": [
+        -14336,
+        16384
+      ],
+      "first_x": 72.5,
+      "shape_advance": 613
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoMapNoStore.otf",
+      "label": "clamp-negative",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.75
+        },
+        {
+          "tag": "wdth",
+          "value": -1.0
+        }
+      ],
+      "normalized": [
+        14336,
+        -16384
+      ],
+      "first_x": 27.5,
+      "shape_advance": 388
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoMapNoStore.otf",
+      "label": "quarter",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.25
+        },
+        {
+          "tag": "wdth",
+          "value": 0.125
+        }
+      ],
+      "normalized": [
+        6144,
+        1024
+      ],
+      "first_x": 60.0,
+      "shape_advance": 550
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoMapNoStore.otf",
+      "label": "base-sub-f2dot14",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5000457763671875
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        12289,
+        0
+      ],
+      "first_x": 65.001220703125,
+      "shape_advance": 575
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoMapNoStore.otf",
+      "label": "negative-base-sub-f2dot14",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5000457763671875
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        -12288,
+        0
+      ],
+      "first_x": 35.0,
+      "shape_advance": 425
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoMapNoStore.otf",
+      "label": "nonbinary",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.1
+        },
+        {
+          "tag": "wdth",
+          "value": 0.3
+        }
+      ],
+      "normalized": [
+        2458,
+        2458
+      ],
+      "first_x": 59.00146484375,
+      "shape_advance": 545
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2NoMapNoStore.otf",
+      "label": "outside-user-range",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 2.0
+        },
+        {
+          "tag": "wdth",
+          "value": -2.0
+        }
+      ],
+      "normalized": [
+        16384,
+        -16384
+      ],
+      "first_x": 30.0,
+      "shape_advance": 400
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ConstantDefaultShift.otf",
+      "label": "default",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.0
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        2048,
+        1024
+      ],
+      "first_x": 55.0,
+      "shape_advance": 525
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ConstantDefaultShift.otf",
+      "label": "positive-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.5
+        }
+      ],
+      "normalized": [
+        10240,
+        9216
+      ],
+      "first_x": 85.0,
+      "shape_advance": 675
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ConstantDefaultShift.otf",
+      "label": "negative-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": -0.5
+        }
+      ],
+      "normalized": [
+        -6144,
+        -7168
+      ],
+      "first_x": 25.0,
+      "shape_advance": 375
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ConstantDefaultShift.otf",
+      "label": "mixed-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.5
+        }
+      ],
+      "normalized": [
+        -6144,
+        9216
+      ],
+      "first_x": 65.0,
+      "shape_advance": 575
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ConstantDefaultShift.otf",
+      "label": "other-mixed-cross",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": -0.5
+        }
+      ],
+      "normalized": [
+        10240,
+        -7168
+      ],
+      "first_x": 45.0,
+      "shape_advance": 475
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ConstantDefaultShift.otf",
+      "label": "positive-half",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        10240,
+        1024
+      ],
+      "first_x": 65.0,
+      "shape_advance": 575
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ConstantDefaultShift.otf",
+      "label": "negative-half",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        -6144,
+        1024
+      ],
+      "first_x": 45.0,
+      "shape_advance": 475
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ConstantDefaultShift.otf",
+      "label": "positive-peak",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 1.0
+        },
+        {
+          "tag": "wdth",
+          "value": 1.0
+        }
+      ],
+      "normalized": [
+        16384,
+        16384
+      ],
+      "first_x": 110.0,
+      "shape_advance": 800
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ConstantDefaultShift.otf",
+      "label": "negative-peak",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -1.0
+        },
+        {
+          "tag": "wdth",
+          "value": -1.0
+        }
+      ],
+      "normalized": [
+        -14336,
+        -15360
+      ],
+      "first_x": -5.0,
+      "shape_advance": 225
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ConstantDefaultShift.otf",
+      "label": "clamp-positive",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.75
+        },
+        {
+          "tag": "wdth",
+          "value": 1.0
+        }
+      ],
+      "normalized": [
+        -10240,
+        16384
+      ],
+      "first_x": 77.5,
+      "shape_advance": 638
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ConstantDefaultShift.otf",
+      "label": "clamp-negative",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.75
+        },
+        {
+          "tag": "wdth",
+          "value": -1.0
+        }
+      ],
+      "normalized": [
+        14336,
+        -15360
+      ],
+      "first_x": 30.0,
+      "shape_advance": 400
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ConstantDefaultShift.otf",
+      "label": "quarter",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.25
+        },
+        {
+          "tag": "wdth",
+          "value": 0.125
+        }
+      ],
+      "normalized": [
+        6144,
+        3072
+      ],
+      "first_x": 65.0,
+      "shape_advance": 575
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ConstantDefaultShift.otf",
+      "label": "base-sub-f2dot14",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5000457763671875
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        10241,
+        1024
+      ],
+      "first_x": 65.001220703125,
+      "shape_advance": 575
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ConstantDefaultShift.otf",
+      "label": "negative-base-sub-f2dot14",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5000457763671875
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "normalized": [
+        -6145,
+        1024
+      ],
+      "first_x": 44.998779296875,
+      "shape_advance": 475
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ConstantDefaultShift.otf",
+      "label": "nonbinary",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.1
+        },
+        {
+          "tag": "wdth",
+          "value": 0.3
+        }
+      ],
+      "normalized": [
+        3687,
+        5939
+      ],
+      "first_x": 69.000244140625,
+      "shape_advance": 595
+    },
+    {
+      "file": "testdata/cff2/fonts/Avar2ConstantDefaultShift.otf",
+      "label": "outside-user-range",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 2.0
+        },
+        {
+          "tag": "wdth",
+          "value": -2.0
+        }
+      ],
+      "normalized": [
+        16384,
+        -15360
+      ],
+      "first_x": 32.5,
+      "shape_advance": 413
+    }
+  ]
+}

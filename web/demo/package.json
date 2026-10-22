@@ -1,0 +1,14 @@
+{
+  "name": "psdkit-browser-demo",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5194 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 5194 --strictPort",
+    "test": "node --test ../sdk/client.test.mjs ../sdk/samples.test.mjs ../sdk/apparel-prints.test.mjs ../sdk/print-sessions.test.mjs"
+  },
+  "dependencies": {"react": "19.3.1", "react-dom": "19.3.1"},
+  "devDependencies": {"vite": "8.3.4", "@vitejs/plugin-react": "6.1.2"}
+}

@@ -1,0 +1,257 @@
+{
+  "scope": "Explicit TRK is available in both tables; GSUB TRK has no liga while GPOS TRK retains kern. No missing-language fallback needed.",
+  "font": "/tmp/psdkit-font-shape-named-TRK-both-tables.ttf",
+  "font_sha256": "cf304151ef4f457a1b566c8d204756eb40ed486c572063f74d14f2114f5c131c",
+  "cases": [
+    {
+      "text": "fi",
+      "liga": false,
+      "kern": true,
+      "language_tag": "TRK ",
+      "glyphs": [
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 285,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 8,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 180,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "text": "fi",
+      "liga": true,
+      "kern": true,
+      "language_tag": "TRK ",
+      "glyphs": [
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 285,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 8,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 180,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "text": "ffi",
+      "liga": false,
+      "kern": true,
+      "language_tag": "TRK ",
+      "glyphs": [
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 310,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 285,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 8,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 180,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "text": "ffi",
+      "liga": true,
+      "kern": true,
+      "language_tag": "TRK ",
+      "glyphs": [
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 310,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 285,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 8,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 180,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "text": "fiAVAV",
+      "liga": false,
+      "kern": true,
+      "language_tag": "TRK ",
+      "glyphs": [
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 285,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 8,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 180,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 560,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 4,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 5,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "text": "fiAVAV",
+      "liga": true,
+      "kern": true,
+      "language_tag": "TRK ",
+      "glyphs": [
+        {
+          "glyph_id": 7,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 285,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 8,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 180,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 560,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 4,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 5,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    }
+  ],
+  "source_base_unchanged": true,
+  "script_sha256": "8957a0806b86376805fc6837bf2e0d5e040e8f198f78ac0027148308bc093992",
+  "uharfbuzz_python_binding_version": "0.56.3",
+  "harfbuzz_engine_version": "14.6.0"
+}

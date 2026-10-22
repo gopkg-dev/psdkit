@@ -1,0 +1,27 @@
+<header class="site-header {% if include.variant %}site-header--{{ include.variant }}{% endif %}">
+  <div class="site-header__inner">
+    {% if include.section == "docs" %}
+    <button class="icon-btn sidebar-toggle" type="button" aria-controls="docs-sidebar" aria-expanded="false" aria-label="打开文档导航">{% include icon.html name="menu" px=20 %}</button>
+    {% endif %}
+    <a class="brand" href="{{ '/' | relative_url }}" aria-label="psdkit 首页">
+      {% include logo.html id=include.section %}<span class="brand__name">psdkit</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="{{ '/guide/' | relative_url }}" {% if include.section == "docs" %}aria-current="true"{% endif %}>文档</a>
+      <a href="{{ '/status.html' | relative_url }}">能力矩阵</a>
+      <a href="{{ '/guide/api.html' | relative_url }}">API</a>
+      <a href="{{ '/demo/' | relative_url }}">Playground</a>
+    </nav>
+    <div class="site-header__actions">
+      <button class="search-trigger" type="button" data-search-open aria-haspopup="dialog" aria-label="搜索文档">
+        {% include icon.html name="search" px=16 %}<span class="search-trigger__label">搜索文档</span><kbd class="search-trigger__kbd">/</kbd>
+      </button>
+      {% if include.section == "docs" %}
+      <button class="icon-btn theme-toggle" type="button" data-theme-toggle aria-label="切换浅色 / 深色主题">
+        <span class="theme-toggle__sun">{% include icon.html name="sun" px=18 %}</span><span class="theme-toggle__moon">{% include icon.html name="moon" px=18 %}</span>
+      </button>
+      {% endif %}
+      <a class="icon-btn" href="{{ site.github_url }}" aria-label="GitHub 仓库">{% include icon.html name="github" px=19 %}</a>
+    </div>
+  </div>
+</header>

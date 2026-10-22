@@ -1,0 +1,111 @@
+/*
+ * psdkit 设计令牌：首页、文档和 Playground 共用。
+ * 深色为品牌基底；文档另提供浅色阅读主题。
+ */
+:root {
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* 品牌原色 */
+  --brand-cyan: #22e4ff;
+  --brand-blue: #4f7bff;
+  --brand-violet: #8b7bff;
+  --brand-magenta: #ff5bd6;
+  --brand-gradient: linear-gradient(115deg, #22e4ff 0%, #4f7bff 48%, #8b7bff 100%);
+
+  /* 状态色 */
+  --state-done: #34d399;
+  --state-partial: #fbbf24;
+  --state-none: #f87171;
+  --state-na: #64708a;
+
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --ease-in-out: cubic-bezier(.65, 0, .35, 1);
+  --dur-fast: 140ms;
+  --dur-mid: 260ms;
+  --dur-slow: 640ms;
+
+  /* 深色语义令牌（默认） */
+  --bg: #070a12;
+  --bg-elev: #0b101b;
+  --surface: #0f1522;
+  --surface-2: #141b2b;
+  --surface-3: #1b2436;
+  --border: #222c41;
+  --border-strong: #33405c;
+  --text: #e9edf6;
+  --text-2: #b6bfd2;
+  --text-muted: #8590a8;
+  --accent: #22e4ff;
+  --accent-2: #8b7bff;
+  --accent-text: #6eeeff;
+  --accent-contrast: #031018;
+  --accent-soft: rgba(34, 228, 255, .12);
+  --violet-soft: rgba(139, 123, 255, .14);
+  --focus: #6eeeff;
+  --code-bg: #0a0f1a;
+  --code-border: #1d2638;
+  --shadow-lg: 0 24px 80px rgba(0, 0, 0, .45);
+  --shadow-md: 0 10px 30px rgba(0, 0, 0, .35);
+  --checker-a: #1a2131;
+  --checker-b: #121826;
+  --ok-text: #6ee7b7;
+  --warn-text: #fcd34d;
+  --danger-text: #fca5a5;
+  --warn-bg: rgba(251, 191, 36, .1);
+  --danger-bg: rgba(248, 113, 113, .1);
+  --ok-bg: rgba(52, 211, 153, .1);
+  color-scheme: dark;
+}
+
+/* 浅色阅读主题：仅文档页面使用，跟随系统或手动切换。 */
+:root[data-theme="light"] {
+  --bg: #f7f8fb;
+  --bg-elev: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f2f4f9;
+  --surface-3: #e8ecf4;
+  --border: #e1e5ee;
+  --border-strong: #c9d0de;
+  --text: #121826;
+  --text-2: #364055;
+  --text-muted: #5f6a80;
+  --accent: #0b7fa6;
+  --accent-2: #5b4bd6;
+  --accent-text: #076b8d;
+  --accent-contrast: #ffffff;
+  --accent-soft: rgba(11, 127, 166, .09);
+  --violet-soft: rgba(91, 75, 214, .09);
+  --focus: #0b7fa6;
+  --code-bg: #0d1320;
+  --code-border: #1d2638;
+  --shadow-lg: 0 24px 60px rgba(20, 30, 60, .14);
+  --shadow-md: 0 8px 24px rgba(20, 30, 60, .1);
+  --checker-a: #e4e8f0;
+  --checker-b: #f6f7fa;
+  --ok-text: #047857;
+  --warn-text: #92400e;
+  --danger-text: #b42318;
+  --warn-bg: #fff7e6;
+  --danger-bg: #fff1f0;
+  --ok-bg: #ecfdf5;
+  color-scheme: light;
+}
+
+.checker {
+  background-color: var(--checker-b);
+  background-image:
+    linear-gradient(45deg, var(--checker-a) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--checker-a) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--checker-a) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--checker-a) 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+}

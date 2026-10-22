@@ -1,0 +1,5081 @@
+{
+  "fonts": [
+    {
+      "file": "testdata/cff2/fonts/UPM1000.otf",
+      "sha256": "0bf7314beded2f4bf0c0b9d18fbc12bca33c3da03399ab786274a127712cbb19",
+      "observations": [
+        {
+          "normalized": "0",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  120,
+                  0
+                ],
+                [
+                  220,
+                  300
+                ],
+                [
+                  320,
+                  700
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20,
+                  700
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600,
+          "id": 1,
+          "coordinates": [],
+          "final_normalized": 0
+        },
+        {
+          "normalized": "0",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620,
+          "id": 2,
+          "coordinates": [],
+          "final_normalized": 0
+        },
+        {
+          "normalized": "0",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250,
+          "id": 3,
+          "coordinates": [],
+          "final_normalized": 0
+        },
+        {
+          "normalized": "0",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500,
+          "id": 0,
+          "coordinates": [],
+          "final_normalized": 0
+        }
+      ]
+    },
+    {
+      "file": "testdata/cff2/fonts/UPM1001.otf",
+      "sha256": "a57ee66f86f49195ef54e5fc70d362be833ac36e9b95c5abf04df81fc00e97e2",
+      "observations": [
+        {
+          "normalized": "-1",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  90.0,
+                  0.0
+                ],
+                [
+                  205.0,
+                  260.0
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 100.0
+            }
+          ],
+          "final_normalized": -16384
+        },
+        {
+          "normalized": "-1",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 100.0
+            }
+          ],
+          "final_normalized": -16384
+        },
+        {
+          "normalized": "-1",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 100.0
+            }
+          ],
+          "final_normalized": -16384
+        },
+        {
+          "normalized": "-1",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 100.0
+            }
+          ],
+          "final_normalized": -16384
+        },
+        {
+          "normalized": "-3/4",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  97.5,
+                  0.0
+                ],
+                [
+                  208.75,
+                  270.0
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 150.0
+            }
+          ],
+          "final_normalized": -12288
+        },
+        {
+          "normalized": "-3/4",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 150.0
+            }
+          ],
+          "final_normalized": -12288
+        },
+        {
+          "normalized": "-3/4",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 150.0
+            }
+          ],
+          "final_normalized": -12288
+        },
+        {
+          "normalized": "-3/4",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 150.0
+            }
+          ],
+          "final_normalized": -12288
+        },
+        {
+          "normalized": "-1/2",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  105.0,
+                  0.0
+                ],
+                [
+                  212.5,
+                  280.0
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 200.0
+            }
+          ],
+          "final_normalized": -8192
+        },
+        {
+          "normalized": "-1/2",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 200.0
+            }
+          ],
+          "final_normalized": -8192
+        },
+        {
+          "normalized": "-1/2",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 200.0
+            }
+          ],
+          "final_normalized": -8192
+        },
+        {
+          "normalized": "-1/2",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 200.0
+            }
+          ],
+          "final_normalized": -8192
+        },
+        {
+          "normalized": "-1/4",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  112.5,
+                  0.0
+                ],
+                [
+                  216.25,
+                  290.0
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 250.0
+            }
+          ],
+          "final_normalized": -4096
+        },
+        {
+          "normalized": "-1/4",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 250.0
+            }
+          ],
+          "final_normalized": -4096
+        },
+        {
+          "normalized": "-1/4",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 250.0
+            }
+          ],
+          "final_normalized": -4096
+        },
+        {
+          "normalized": "-1/4",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 250.0
+            }
+          ],
+          "final_normalized": -4096
+        },
+        {
+          "normalized": "0",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  120.0,
+                  0.0
+                ],
+                [
+                  220.0,
+                  300.0
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 400.0
+            }
+          ],
+          "final_normalized": 0
+        },
+        {
+          "normalized": "0",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 400.0
+            }
+          ],
+          "final_normalized": 0
+        },
+        {
+          "normalized": "0",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 400.0
+            }
+          ],
+          "final_normalized": 0
+        },
+        {
+          "normalized": "0",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 400.0
+            }
+          ],
+          "final_normalized": 0
+        },
+        {
+          "normalized": "1/4",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  127.5,
+                  2.5
+                ],
+                [
+                  225.0,
+                  317.5
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 483.3333333333333
+            }
+          ],
+          "final_normalized": 4096
+        },
+        {
+          "normalized": "1/4",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 483.3333333333333
+            }
+          ],
+          "final_normalized": 4096
+        },
+        {
+          "normalized": "1/4",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 483.3333333333333
+            }
+          ],
+          "final_normalized": 4096
+        },
+        {
+          "normalized": "1/4",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 483.3333333333333
+            }
+          ],
+          "final_normalized": 4096
+        },
+        {
+          "normalized": "1/2",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  135.0,
+                  5.0
+                ],
+                [
+                  230.0,
+                  335.0
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 566.6666666666666
+            }
+          ],
+          "final_normalized": 8192
+        },
+        {
+          "normalized": "1/2",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  220.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  220.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 566.6666666666666
+            }
+          ],
+          "final_normalized": 8192
+        },
+        {
+          "normalized": "1/2",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 566.6666666666666
+            }
+          ],
+          "final_normalized": 8192
+        },
+        {
+          "normalized": "1/2",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 566.6666666666666
+            }
+          ],
+          "final_normalized": 8192
+        },
+        {
+          "normalized": "3/4",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  142.5,
+                  7.5
+                ],
+                [
+                  235.0,
+                  352.5
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 650.0
+            }
+          ],
+          "final_normalized": 12288
+        },
+        {
+          "normalized": "3/4",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 650.0
+            }
+          ],
+          "final_normalized": 12288
+        },
+        {
+          "normalized": "3/4",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 650.0
+            }
+          ],
+          "final_normalized": 12288
+        },
+        {
+          "normalized": "3/4",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 650.0
+            }
+          ],
+          "final_normalized": 12288
+        },
+        {
+          "normalized": "1",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  150.0,
+                  10.0
+                ],
+                [
+                  240.0,
+                  370.0
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 900.0
+            }
+          ],
+          "final_normalized": 16384
+        },
+        {
+          "normalized": "1",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 900.0
+            }
+          ],
+          "final_normalized": 16384
+        },
+        {
+          "normalized": "1",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 900.0
+            }
+          ],
+          "final_normalized": 16384
+        },
+        {
+          "normalized": "1",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 900.0
+            }
+          ],
+          "final_normalized": 16384
+        }
+      ]
+    },
+    {
+      "file": "testdata/cff2/fonts/UPM2048.otf",
+      "sha256": "278bd34619774382651c074db1722476d5cfe613aa80c7f238e5f6fc2390b157",
+      "observations": [
+        {
+          "normalized": "-1",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  90.0,
+                  0.0
+                ],
+                [
+                  205.0,
+                  260.0
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 100.0
+            }
+          ],
+          "final_normalized": -16384
+        },
+        {
+          "normalized": "-1",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 100.0
+            }
+          ],
+          "final_normalized": -16384
+        },
+        {
+          "normalized": "-1",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 100.0
+            }
+          ],
+          "final_normalized": -16384
+        },
+        {
+          "normalized": "-1",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 100.0
+            }
+          ],
+          "final_normalized": -16384
+        },
+        {
+          "normalized": "-3/4",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  97.5,
+                  0.0
+                ],
+                [
+                  208.75,
+                  270.0
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 150.0
+            }
+          ],
+          "final_normalized": -12288
+        },
+        {
+          "normalized": "-3/4",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 150.0
+            }
+          ],
+          "final_normalized": -12288
+        },
+        {
+          "normalized": "-3/4",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 150.0
+            }
+          ],
+          "final_normalized": -12288
+        },
+        {
+          "normalized": "-3/4",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 150.0
+            }
+          ],
+          "final_normalized": -12288
+        },
+        {
+          "normalized": "-1/2",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  105.0,
+                  0.0
+                ],
+                [
+                  212.5,
+                  280.0
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 200.0
+            }
+          ],
+          "final_normalized": -8192
+        },
+        {
+          "normalized": "-1/2",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 200.0
+            }
+          ],
+          "final_normalized": -8192
+        },
+        {
+          "normalized": "-1/2",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 200.0
+            }
+          ],
+          "final_normalized": -8192
+        },
+        {
+          "normalized": "-1/2",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 200.0
+            }
+          ],
+          "final_normalized": -8192
+        },
+        {
+          "normalized": "-1/4",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  112.5,
+                  0.0
+                ],
+                [
+                  216.25,
+                  290.0
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 250.0
+            }
+          ],
+          "final_normalized": -4096
+        },
+        {
+          "normalized": "-1/4",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 250.0
+            }
+          ],
+          "final_normalized": -4096
+        },
+        {
+          "normalized": "-1/4",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 250.0
+            }
+          ],
+          "final_normalized": -4096
+        },
+        {
+          "normalized": "-1/4",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 250.0
+            }
+          ],
+          "final_normalized": -4096
+        },
+        {
+          "normalized": "0",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  120.0,
+                  0.0
+                ],
+                [
+                  220.0,
+                  300.0
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 400.0
+            }
+          ],
+          "final_normalized": 0
+        },
+        {
+          "normalized": "0",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 400.0
+            }
+          ],
+          "final_normalized": 0
+        },
+        {
+          "normalized": "0",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 400.0
+            }
+          ],
+          "final_normalized": 0
+        },
+        {
+          "normalized": "0",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 400.0
+            }
+          ],
+          "final_normalized": 0
+        },
+        {
+          "normalized": "1/4",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  127.5,
+                  2.5
+                ],
+                [
+                  225.0,
+                  317.5
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 483.3333333333333
+            }
+          ],
+          "final_normalized": 4096
+        },
+        {
+          "normalized": "1/4",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 483.3333333333333
+            }
+          ],
+          "final_normalized": 4096
+        },
+        {
+          "normalized": "1/4",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 483.3333333333333
+            }
+          ],
+          "final_normalized": 4096
+        },
+        {
+          "normalized": "1/4",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 483.3333333333333
+            }
+          ],
+          "final_normalized": 4096
+        },
+        {
+          "normalized": "1/2",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  135.0,
+                  5.0
+                ],
+                [
+                  230.0,
+                  335.0
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 566.6666666666666
+            }
+          ],
+          "final_normalized": 8192
+        },
+        {
+          "normalized": "1/2",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  220.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  220.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 566.6666666666666
+            }
+          ],
+          "final_normalized": 8192
+        },
+        {
+          "normalized": "1/2",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 566.6666666666666
+            }
+          ],
+          "final_normalized": 8192
+        },
+        {
+          "normalized": "1/2",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 566.6666666666666
+            }
+          ],
+          "final_normalized": 8192
+        },
+        {
+          "normalized": "3/4",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  142.5,
+                  7.5
+                ],
+                [
+                  235.0,
+                  352.5
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 650.0
+            }
+          ],
+          "final_normalized": 12288
+        },
+        {
+          "normalized": "3/4",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 650.0
+            }
+          ],
+          "final_normalized": 12288
+        },
+        {
+          "normalized": "3/4",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 650.0
+            }
+          ],
+          "final_normalized": 12288
+        },
+        {
+          "normalized": "3/4",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 650.0
+            }
+          ],
+          "final_normalized": 12288
+        },
+        {
+          "normalized": "1",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  150.0,
+                  10.0
+                ],
+                [
+                  240.0,
+                  370.0
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 900.0
+            }
+          ],
+          "final_normalized": 16384
+        },
+        {
+          "normalized": "1",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 900.0
+            }
+          ],
+          "final_normalized": 16384
+        },
+        {
+          "normalized": "1",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 900.0
+            }
+          ],
+          "final_normalized": 16384
+        },
+        {
+          "normalized": "1",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 900.0
+            }
+          ],
+          "final_normalized": 16384
+        }
+      ]
+    },
+    {
+      "file": "testdata/cff2/fonts/UPM2000.otf",
+      "sha256": "0041ca1caebf9efccd2359ded5cadd6f2c7c788f5c5f9bd5ecf8551aadf5b28a",
+      "observations": [
+        {
+          "normalized": "-1",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  90.0,
+                  0.0
+                ],
+                [
+                  205.0,
+                  260.0
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 100.0
+            }
+          ],
+          "final_normalized": -16384
+        },
+        {
+          "normalized": "-1",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 100.0
+            }
+          ],
+          "final_normalized": -16384
+        },
+        {
+          "normalized": "-1",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 100.0
+            }
+          ],
+          "final_normalized": -16384
+        },
+        {
+          "normalized": "-1",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 100.0
+            }
+          ],
+          "final_normalized": -16384
+        },
+        {
+          "normalized": "-3/4",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  97.5,
+                  0.0
+                ],
+                [
+                  208.75,
+                  270.0
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 150.0
+            }
+          ],
+          "final_normalized": -12288
+        },
+        {
+          "normalized": "-3/4",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 150.0
+            }
+          ],
+          "final_normalized": -12288
+        },
+        {
+          "normalized": "-3/4",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 150.0
+            }
+          ],
+          "final_normalized": -12288
+        },
+        {
+          "normalized": "-3/4",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 150.0
+            }
+          ],
+          "final_normalized": -12288
+        },
+        {
+          "normalized": "-1/2",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  105.0,
+                  0.0
+                ],
+                [
+                  212.5,
+                  280.0
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 200.0
+            }
+          ],
+          "final_normalized": -8192
+        },
+        {
+          "normalized": "-1/2",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 200.0
+            }
+          ],
+          "final_normalized": -8192
+        },
+        {
+          "normalized": "-1/2",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 200.0
+            }
+          ],
+          "final_normalized": -8192
+        },
+        {
+          "normalized": "-1/2",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 200.0
+            }
+          ],
+          "final_normalized": -8192
+        },
+        {
+          "normalized": "-1/4",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  112.5,
+                  0.0
+                ],
+                [
+                  216.25,
+                  290.0
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 250.0
+            }
+          ],
+          "final_normalized": -4096
+        },
+        {
+          "normalized": "-1/4",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 250.0
+            }
+          ],
+          "final_normalized": -4096
+        },
+        {
+          "normalized": "-1/4",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 250.0
+            }
+          ],
+          "final_normalized": -4096
+        },
+        {
+          "normalized": "-1/4",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 250.0
+            }
+          ],
+          "final_normalized": -4096
+        },
+        {
+          "normalized": "0",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  120.0,
+                  0.0
+                ],
+                [
+                  220.0,
+                  300.0
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 400.0
+            }
+          ],
+          "final_normalized": 0
+        },
+        {
+          "normalized": "0",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 400.0
+            }
+          ],
+          "final_normalized": 0
+        },
+        {
+          "normalized": "0",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 400.0
+            }
+          ],
+          "final_normalized": 0
+        },
+        {
+          "normalized": "0",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 400.0
+            }
+          ],
+          "final_normalized": 0
+        },
+        {
+          "normalized": "1/4",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  127.5,
+                  2.5
+                ],
+                [
+                  225.0,
+                  317.5
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 483.3333333333333
+            }
+          ],
+          "final_normalized": 4096
+        },
+        {
+          "normalized": "1/4",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 483.3333333333333
+            }
+          ],
+          "final_normalized": 4096
+        },
+        {
+          "normalized": "1/4",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 483.3333333333333
+            }
+          ],
+          "final_normalized": 4096
+        },
+        {
+          "normalized": "1/4",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 483.3333333333333
+            }
+          ],
+          "final_normalized": 4096
+        },
+        {
+          "normalized": "1/2",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  135.0,
+                  5.0
+                ],
+                [
+                  230.0,
+                  335.0
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 566.6666666666666
+            }
+          ],
+          "final_normalized": 8192
+        },
+        {
+          "normalized": "1/2",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  220.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  220.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 566.6666666666666
+            }
+          ],
+          "final_normalized": 8192
+        },
+        {
+          "normalized": "1/2",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 566.6666666666666
+            }
+          ],
+          "final_normalized": 8192
+        },
+        {
+          "normalized": "1/2",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 566.6666666666666
+            }
+          ],
+          "final_normalized": 8192
+        },
+        {
+          "normalized": "3/4",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  142.5,
+                  7.5
+                ],
+                [
+                  235.0,
+                  352.5
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 650.0
+            }
+          ],
+          "final_normalized": 12288
+        },
+        {
+          "normalized": "3/4",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 650.0
+            }
+          ],
+          "final_normalized": 12288
+        },
+        {
+          "normalized": "3/4",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 650.0
+            }
+          ],
+          "final_normalized": 12288
+        },
+        {
+          "normalized": "3/4",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 650.0
+            }
+          ],
+          "final_normalized": 12288
+        },
+        {
+          "normalized": "1",
+          "name": "A",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  20,
+                  0
+                ]
+              ]
+            ],
+            [
+              "curveTo",
+              [
+                [
+                  150.0,
+                  10.0
+                ],
+                [
+                  240.0,
+                  370.0
+                ],
+                [
+                  320.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  700.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  20.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            600,
+            20
+          ],
+          "actual_width": 600.0,
+          "id": 1,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 900.0
+            }
+          ],
+          "final_normalized": 16384
+        },
+        {
+          "normalized": "1",
+          "name": "B",
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ],
+          "actual_width": 620.0,
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 900.0
+            }
+          ],
+          "final_normalized": 16384
+        },
+        {
+          "normalized": "1",
+          "name": "space",
+          "path": [],
+          "stored_hmtx": [
+            250,
+            0
+          ],
+          "actual_width": 250.0,
+          "id": 3,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 900.0
+            }
+          ],
+          "final_normalized": 16384
+        },
+        {
+          "normalized": "1",
+          "name": ".notdef",
+          "path": [],
+          "stored_hmtx": [
+            500,
+            0
+          ],
+          "actual_width": 500.0,
+          "id": 0,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 900.0
+            }
+          ],
+          "final_normalized": 16384
+        }
+      ]
+    },
+    {
+      "file": "testdata/cff2/fonts/UPM1001-private-inherited.otf",
+      "sha256": "dbbb3e5a10e36c0a2481b652dceb97f849c5f14f9454dc24487f655399b7e03d",
+      "observations": [
+        {
+          "normalized": "-1",
+          "name": "B",
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 100.0
+            }
+          ],
+          "final_normalized": -16384,
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ]
+        },
+        {
+          "normalized": "-3/4",
+          "name": "B",
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 150.0
+            }
+          ],
+          "final_normalized": -12288,
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ]
+        },
+        {
+          "normalized": "-1/2",
+          "name": "B",
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 200.0
+            }
+          ],
+          "final_normalized": -8192,
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ]
+        },
+        {
+          "normalized": "-1/4",
+          "name": "B",
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 250.0
+            }
+          ],
+          "final_normalized": -4096,
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ]
+        },
+        {
+          "normalized": "0",
+          "name": "B",
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 400.0
+            }
+          ],
+          "final_normalized": 0,
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ]
+        },
+        {
+          "normalized": "1/4",
+          "name": "B",
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 483.3333333333333
+            }
+          ],
+          "final_normalized": 4096,
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ]
+        },
+        {
+          "normalized": "1/2",
+          "name": "B",
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 566.6666666666666
+            }
+          ],
+          "final_normalized": 8192,
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  220.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  220.0,
+                  300.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ]
+        },
+        {
+          "normalized": "3/4",
+          "name": "B",
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 650.0
+            }
+          ],
+          "final_normalized": 12288,
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ]
+        },
+        {
+          "normalized": "1",
+          "name": "B",
+          "id": 2,
+          "coordinates": [
+            {
+              "tag": "wght",
+              "value": 900.0
+            }
+          ],
+          "final_normalized": 16384,
+          "path": [
+            [
+              "moveTo",
+              [
+                [
+                  50.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  0.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  170.0,
+                  300.0
+                ]
+              ]
+            ],
+            [
+              "lineTo",
+              [
+                [
+                  50.0,
+                  300.0
+                ]
+              ]
+            ],
+            [
+              "closePath",
+              []
+            ]
+          ],
+          "stored_hmtx": [
+            620,
+            50
+          ]
+        }
+      ]
+    }
+  ],
+  "scope": "112 sharedprimarypaths +9 independent Fraction Private.vsindex inheritance",
+  "original": {
+    "file": "/Users/karen/Desktop/psdkit/verification/cff2-primary-research-owned-v1/fixtures-v4/oracle.json",
+    "sha256": "e40f1f2130ad61eae04d14d7cf280f213dfd0ebb1c77f7d70d4216a1670d4848"
+  },
+  "inherited_original": {
+    "file": "/Users/karen/Desktop/psdkit/verification/cff2-primary-research-owned-v1/inherited-private-vsindex-reference-v2.json",
+    "sha256": "ee36a83b889e157d53f01e89ff46c077939b77e58f50511836b66630f3f00ace"
+  }
+}

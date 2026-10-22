@@ -1,0 +1,22 @@
+name: Bug report
+description: 报告可复现的解析、编辑、渲染或浏览器问题。
+body:
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 复现步骤和最小代码
+      description: 请使用可公开的小型输入或生成输入，不要上传客户 PSD、商业字体或凭据。
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: 预期行为和实际结果
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: psdkit 版本、Go 版本、操作系统或浏览器
+    validations:
+      required: true

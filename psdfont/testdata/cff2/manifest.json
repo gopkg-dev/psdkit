@@ -1,0 +1,174 @@
+{
+  "scope": "Self-owned CFF2 portable fonts and shared primary/math author test projections. No runtime external dependencies.",
+  "fonts": {
+    "MetricConsistentWidths.otf": {
+      "sha256": "4062c0188b53fc7a8d35c481a3b416678e56f27171715e713aa3a0216aa1e230",
+      "size": 1548,
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/first-metrics-inputs/MetricConsistentWidths.otf"
+    },
+    "Avar1Nonlinear.otf": {
+      "sha256": "343b692bcf0042fd1227dc79603faee385685c5486bb1cd630bb06c4e0e42bb2",
+      "size": 1308,
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/avar2-inputs-v1/Avar1Nonlinear.otf"
+    },
+    "Avar2CrossExplicit.otf": {
+      "sha256": "fabddb0ae5cd7892bc0cfe20a68afeb06a31be72d664ddad5e6d0d9c82326833",
+      "size": 1468,
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/avar2-inputs-v1/Avar2CrossExplicit.otf"
+    },
+    "Avar2CrossImplicit.otf": {
+      "sha256": "01be51483e38d0bf02e5ff3ed4b9ab9480d4bbe5c7e4d6ba161cb7d9fc753cc5",
+      "size": 1440,
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/avar2-inputs-v1/Avar2CrossImplicit.otf"
+    },
+    "Avar2NullStore.otf": {
+      "sha256": "e19f4fabc1d55f59641e3b94f87a6759fb4358bfcdbc082b73c44d8dbab48273",
+      "size": 1324,
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/avar2-inputs-v1/Avar2NullStore.otf"
+    },
+    "Avar2HalfPrecise.otf": {
+      "sha256": "82dec67f60858d3c2f45f1c6294dd937c205aef28d5508a77d42b7a563cb0c92",
+      "size": 1408,
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/avar2-inputs-v1/Avar2HalfPrecise.otf"
+    },
+    "Avar2Clamp.otf": {
+      "sha256": "211952e046a6ec8ed8be14b31ff5b5a74f81f69371181b4918f311cb54f40ada",
+      "size": 1420,
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/avar2-inputs-v1/Avar2Clamp.otf"
+    },
+    "Avar2NoSegments.otf": {
+      "sha256": "6f28fdaad3c9aa06b5480841e5a75f254c499ba0f7e73c5e1fb6ea9f00f8cf61",
+      "size": 1416,
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/avar2-inputs-v1/Avar2NoSegments.otf"
+    },
+    "Avar2ShortMap.otf": {
+      "sha256": "580af058dd1fa0aca36731871dd95156d122ce9737c6d11d904b169a6236c7d5",
+      "size": 1404,
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/avar2-inputs-v1/Avar2ShortMap.otf"
+    },
+    "Avar2Sentinel.otf": {
+      "sha256": "215d74d7e4749293c9e21aef662ed3a74e31a7ae12633fd35a85ab5b835b5acc",
+      "size": 1412,
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/avar2-inputs-v1/Avar2Sentinel.otf"
+    },
+    "Avar2NoMapNoStore.otf": {
+      "sha256": "90263aad94cfdcffcfbff416cc81dfab90e6be73d14020b5f3f4e1c8d3595deb",
+      "size": 1324,
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/avar2-inputs-v1/Avar2NoMapNoStore.otf"
+    },
+    "Avar2ConstantDefaultShift.otf": {
+      "sha256": "665f6d63aa42cb27fb111e50216993019de7e2998528c21eb00de6b63743fa7f",
+      "size": 1372,
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/avar2-inputs-v1/Avar2ConstantDefaultShift.otf"
+    },
+    "UPM1000.otf": {
+      "sha256": "0bf7314beded2f4bf0c0b9d18fbc12bca33c3da03399ab786274a127712cbb19",
+      "size": 816,
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/full-glyph-inputs-v1/UPM1000.otf"
+    },
+    "UPM1001.otf": {
+      "sha256": "a57ee66f86f49195ef54e5fc70d362be833ac36e9b95c5abf04df81fc00e97e2",
+      "size": 1308,
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/full-glyph-inputs-v1/UPM1001.otf"
+    },
+    "UPM2048.otf": {
+      "sha256": "278bd34619774382651c074db1722476d5cfe613aa80c7f238e5f6fc2390b157",
+      "size": 1312,
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/full-glyph-inputs-v1/UPM2048.otf"
+    },
+    "UPM2000.otf": {
+      "sha256": "0041ca1caebf9efccd2359ded5cadd6f2c7c788f5c5f9bd5ecf8551aadf5b28a",
+      "size": 4036,
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/full-glyph-inputs-v1/UPM2000.otf"
+    },
+    "UPM1001-private-inherited.otf": {
+      "sha256": "dbbb3e5a10e36c0a2481b652dceb97f849c5f14f9454dc24487f655399b7e03d",
+      "size": 1308,
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/full-glyph-inputs-v1/UPM1001-private-inherited.otf"
+    },
+    "Stack513.otf": {
+      "sha256": "7987a6b768a352b402e2fb16959f0842fdb9c887392ff922922341681fd79168",
+      "size": 6460,
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/stack-inputs-v1/Stack513.otf"
+    },
+    "RSBConsistentDefaultShift.otf": {
+      "sha256": "bd8f9f7005eb00e6937c0f8123212c34773c08e943a24aba63f6990ed8fd5d80",
+      "size": 1400,
+      "original": "/tmp/psdkit-cff2-rsb-baseline-owned-v1/fonts/RSBConsistentDefaultShift.otf"
+    },
+    "InstancePair-v2.otf": {
+      "sha256": "2cc809a0f56fb9684d42edde829eeb9c5e243d71a2176c33902db27f1befa994",
+      "size": 2148,
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/pairset-origin-v2/InstancePair-v2.otf"
+    },
+    "InstanceLigature-v2.otf": {
+      "sha256": "2cba9096aac3f65a5d5b0c0048422194df9f695e6efbb8a73c85c5b9a17a677b",
+      "size": 2332,
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/pairset-origin-v2/InstanceLigature-v2.otf"
+    },
+    "InstancePairFormat2.otf": {
+      "sha256": "c53c02a3c1f60b3ebd5da34f64b25ff003a1e49c7ad1a70f64e42abd4cb3912e",
+      "size": 2060,
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/pairset-origin-v2/InstancePairFormat2.otf"
+    },
+    "ConstantBaseRSB.otf": {
+      "sha256": "b4a6b87e60f8a5d6e4a18fd59e059549b08963cf0578c2e040933586ded71758",
+      "size": 1400,
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/constant-base-rsb-v1/ConstantBaseRSB.otf"
+    },
+    "SingleChain.otf": {
+      "sha256": "9dc357a1dc29e7968a3003735549d949937a2fd4818e84455f924d1c5e9f8e4d",
+      "size": 2296,
+      "original": "own SingleSub1/2 + Ligature/Extension/Required generator"
+    },
+    "SingleExtensionChain.otf": {
+      "sha256": "c091825e67574be70f0dbd2ac6f985ceab52451c5b39476c54757e64a95d47ad",
+      "size": 2304,
+      "original": "own SingleSub1/2 + Ligature/Extension/Required generator"
+    },
+    "SingleRequired.otf": {
+      "sha256": "4dc4dd012b4ff967092daac477eb71c34451b43ed143dcb6789066307f6b4433",
+      "size": 2232,
+      "original": "own SingleSub1/2 + Ligature/Extension/Required generator"
+    }
+  },
+  "oracles": [
+    {
+      "file": "layout-instance-v1.json",
+      "sha256": "2344c8b4bf20ea56eb447ad22a0b32fdb543a0ddf27f9b0d0de71604aa365206",
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/layout-instance-v1/oracle.json",
+      "original_sha256": "286a793866d5be49b06d0a6e5e6ac379c45765e79bd30a5f1d81ffa0f1c4d2b9"
+    },
+    {
+      "file": "gsub-inputs-v1.json",
+      "sha256": "3998ec533ec0cf38ee5ff03cea82c3dac5808c7c9a4f961c42e5523c0d3eb98a",
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/gsub-inputs-v1/oracle.json",
+      "original_sha256": "da6b5e799f5b34d203ddd9aef3d7092050df2b31d574b5e94bb2b019010a0ebc"
+    },
+    {
+      "file": "avar2-inputs-v1.json",
+      "sha256": "19421a239d42159702fba24be0359f07649a8393eb97dd520ac871c9517f61ed",
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/avar2-inputs-v1/oracle.json",
+      "original_sha256": "618411a9ace93b0bf0dafca9f765c36c8fa057d93b2c5057f08676b37be6b9e2"
+    },
+    {
+      "file": "fixed-metrics-inputs-v1.json",
+      "sha256": "73e2e7a9912f1f08339b431152b76fb857810e1d6f58bb655d892185257a1df2",
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/fixed-metrics-inputs-v1/oracle.json",
+      "original_sha256": "473ffea212dbf97d16990e34119a2d47986f5cdb99a410c951da75521a4cecdf"
+    },
+    {
+      "file": "full-glyph-inputs-v1.json",
+      "sha256": "0c48e64e60958e181a2fff2b2b0871234ea49fa9d354484071cd44932ead741b",
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/full-glyph-inputs-v1/oracle.json",
+      "original_sha256": "e4f68baf9f31cc7dc97b12da6a9afb09a7d6c01f9d0eb71d042eb78a7c3a73d8"
+    },
+    {
+      "file": "stack-inputs-v1.json",
+      "sha256": "a6a31546da8403b92c9bb4758396d9a0f4b176bc3cba895c907ae892a9cf4c05",
+      "original": "/tmp/psdkit-p5-cff2-owned-v1/research/stack-inputs-v1/oracle.json",
+      "original_sha256": "bd9e2c781c50a27be41e48b9ab8400bdcc0d9f1f1ef3229c8947a1724cf59cf8"
+    }
+  ],
+  "qualification": "MetricConsistentWidths and original avar2 fonts are local metadata/math compatibility controls; missing STAT is accepted explicitly. Primary variable glyph fonts and derived InstancePair/Ligature include STAT."
+}

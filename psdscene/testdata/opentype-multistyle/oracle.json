@@ -1,0 +1,1413 @@
+{
+  "scope": "Explicit mathematical policies; no Photoshop native qualification.",
+  "hb_version": "14.6.0",
+  "uharfbuzz_version": "0.56.3",
+  "fonts": [
+    {
+      "file": "psdfont/testdata/opentype/fonts/base.ttf",
+      "name": "psdkitOwnedShapeFixture-Regular",
+      "sha256": "d509ffa7479c63f5b0c60f05c4feafb751f4ea12a3efd4f7bc540684b144a8f2"
+    },
+    {
+      "file": "psdfont/testdata/opentype/fonts/style-run-second.ttf",
+      "name": "psdkitOwnedStyleSecond-Regular",
+      "sha256": "adc2ed9dd79e51de181f1eed013c6420d69c2ad72358241d3e842003541bf8a1"
+    }
+  ],
+  "cases": [
+    {
+      "label": "AV-color-p1-kFalse-s4",
+      "text": "AV",
+      "ends": [
+        1,
+        3
+      ],
+      "fonts": [
+        "psdkitOwnedShapeFixture-Regular",
+        "psdkitOwnedShapeFixture-Regular"
+      ],
+      "sizes": [
+        20,
+        20
+      ],
+      "colors": [
+        [
+          1,
+          0.4,
+          0.2,
+          0.8
+        ],
+        [
+          1,
+          0.8,
+          0.1,
+          0.2
+        ]
+      ],
+      "policy": 1,
+      "liga": false,
+      "kern": false,
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        20,
+        50
+      ],
+      "samples": 4,
+      "glyphs": [
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 2,
+          "start": 0,
+          "length": 1,
+          "x": 0.0,
+          "y": 0.0,
+          "advance": 12.0,
+          "scale": 0.02
+        },
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 3,
+          "start": 1,
+          "length": 1,
+          "x": 12.0,
+          "y": 0.0,
+          "advance": 12.0,
+          "scale": 0.02
+        }
+      ],
+      "advance": 24.0,
+      "unsupported_color_cluster": false,
+      "rgba_sha256": "7a69701c8a60493c663ce7a98b48d84d40c88a92dd865d923687addcfc8ae248",
+      "positive_pixels": 336
+    },
+    {
+      "label": "AV-color-p1-kFalse-s8",
+      "text": "AV",
+      "ends": [
+        1,
+        3
+      ],
+      "fonts": [
+        "psdkitOwnedShapeFixture-Regular",
+        "psdkitOwnedShapeFixture-Regular"
+      ],
+      "sizes": [
+        20,
+        20
+      ],
+      "colors": [
+        [
+          1,
+          0.4,
+          0.2,
+          0.8
+        ],
+        [
+          1,
+          0.8,
+          0.1,
+          0.2
+        ]
+      ],
+      "policy": 1,
+      "liga": false,
+      "kern": false,
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        20,
+        50
+      ],
+      "samples": 8,
+      "glyphs": [
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 2,
+          "start": 0,
+          "length": 1,
+          "x": 0.0,
+          "y": 0.0,
+          "advance": 12.0,
+          "scale": 0.02
+        },
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 3,
+          "start": 1,
+          "length": 1,
+          "x": 12.0,
+          "y": 0.0,
+          "advance": 12.0,
+          "scale": 0.02
+        }
+      ],
+      "advance": 24.0,
+      "unsupported_color_cluster": false,
+      "rgba_sha256": "a115023c2f456e528b75e8604f59fc1687180454e68e0c7cdc8e0528abe9021f",
+      "positive_pixels": 336
+    },
+    {
+      "label": "AV-color-p1-kTrue-s4",
+      "text": "AV",
+      "ends": [
+        1,
+        3
+      ],
+      "fonts": [
+        "psdkitOwnedShapeFixture-Regular",
+        "psdkitOwnedShapeFixture-Regular"
+      ],
+      "sizes": [
+        20,
+        20
+      ],
+      "colors": [
+        [
+          1,
+          0.4,
+          0.2,
+          0.8
+        ],
+        [
+          1,
+          0.8,
+          0.1,
+          0.2
+        ]
+      ],
+      "policy": 1,
+      "liga": false,
+      "kern": true,
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        20,
+        50
+      ],
+      "samples": 4,
+      "glyphs": [
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 2,
+          "start": 0,
+          "length": 1,
+          "x": 0.0,
+          "y": 0.0,
+          "advance": 12.0,
+          "scale": 0.02
+        },
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 3,
+          "start": 1,
+          "length": 1,
+          "x": 12.0,
+          "y": 0.0,
+          "advance": 12.0,
+          "scale": 0.02
+        }
+      ],
+      "advance": 24.0,
+      "unsupported_color_cluster": false,
+      "rgba_sha256": "7a69701c8a60493c663ce7a98b48d84d40c88a92dd865d923687addcfc8ae248",
+      "positive_pixels": 336
+    },
+    {
+      "label": "AV-color-p1-kTrue-s8",
+      "text": "AV",
+      "ends": [
+        1,
+        3
+      ],
+      "fonts": [
+        "psdkitOwnedShapeFixture-Regular",
+        "psdkitOwnedShapeFixture-Regular"
+      ],
+      "sizes": [
+        20,
+        20
+      ],
+      "colors": [
+        [
+          1,
+          0.4,
+          0.2,
+          0.8
+        ],
+        [
+          1,
+          0.8,
+          0.1,
+          0.2
+        ]
+      ],
+      "policy": 1,
+      "liga": false,
+      "kern": true,
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        20,
+        50
+      ],
+      "samples": 8,
+      "glyphs": [
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 2,
+          "start": 0,
+          "length": 1,
+          "x": 0.0,
+          "y": 0.0,
+          "advance": 12.0,
+          "scale": 0.02
+        },
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 3,
+          "start": 1,
+          "length": 1,
+          "x": 12.0,
+          "y": 0.0,
+          "advance": 12.0,
+          "scale": 0.02
+        }
+      ],
+      "advance": 24.0,
+      "unsupported_color_cluster": false,
+      "rgba_sha256": "a115023c2f456e528b75e8604f59fc1687180454e68e0c7cdc8e0528abe9021f",
+      "positive_pixels": 336
+    },
+    {
+      "label": "ffi-cross-color-p1",
+      "text": "ffi",
+      "ends": [
+        1,
+        4
+      ],
+      "fonts": [
+        "psdkitOwnedShapeFixture-Regular",
+        "psdkitOwnedShapeFixture-Regular"
+      ],
+      "sizes": [
+        20,
+        20
+      ],
+      "colors": [
+        [
+          1,
+          0.4,
+          0.2,
+          0.8
+        ],
+        [
+          1,
+          0.8,
+          0.1,
+          0.2
+        ]
+      ],
+      "policy": 1,
+      "liga": true,
+      "kern": false,
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        20,
+        50
+      ],
+      "samples": 8,
+      "glyphs": [
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 7,
+          "start": 0,
+          "length": 1,
+          "x": 0.0,
+          "y": 0.0,
+          "advance": 6.2,
+          "scale": 0.02
+        },
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 11,
+          "start": 1,
+          "length": 2,
+          "x": 6.2,
+          "y": 0.0,
+          "advance": 8.6,
+          "scale": 0.02
+        }
+      ],
+      "advance": 14.8,
+      "unsupported_color_cluster": false,
+      "rgba_sha256": "ecd62bb4700582520ac33cec922b3dc6cf292c3ddb7c57a4cc2432a831c2aa80",
+      "positive_pixels": 210
+    },
+    {
+      "label": "ffi-compatible-samecolor-p1",
+      "text": "ffi",
+      "ends": [
+        1,
+        4
+      ],
+      "fonts": [
+        "psdkitOwnedShapeFixture-Regular",
+        "psdkitOwnedShapeFixture-Regular"
+      ],
+      "sizes": [
+        20,
+        20
+      ],
+      "colors": [
+        [
+          1,
+          0.4,
+          0.2,
+          0.8
+        ],
+        [
+          1,
+          0.4,
+          0.2,
+          0.8
+        ]
+      ],
+      "policy": 1,
+      "liga": true,
+      "kern": true,
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        20,
+        50
+      ],
+      "samples": 8,
+      "glyphs": [
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 7,
+          "start": 0,
+          "length": 1,
+          "x": 0.0,
+          "y": 0.0,
+          "advance": 6.2,
+          "scale": 0.02
+        },
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 11,
+          "start": 1,
+          "length": 2,
+          "x": 6.2,
+          "y": 0.0,
+          "advance": 8.6,
+          "scale": 0.02
+        }
+      ],
+      "advance": 14.8,
+      "unsupported_color_cluster": false,
+      "rgba_sha256": "27a7ee66c2f5cea263d4e20f3e9b7abd725765d410f2f24cfb1016ebd50ea6f0",
+      "positive_pixels": 210
+    },
+    {
+      "label": "mixed-font-size-p1",
+      "text": "AVffiA",
+      "ends": [
+        1,
+        3,
+        7
+      ],
+      "fonts": [
+        "psdkitOwnedShapeFixture-Regular",
+        "psdkitOwnedStyleSecond-Regular",
+        "psdkitOwnedShapeFixture-Regular"
+      ],
+      "sizes": [
+        20,
+        31,
+        17.5
+      ],
+      "colors": [
+        [
+          1,
+          0.4,
+          0.2,
+          0.8
+        ],
+        [
+          1,
+          0.8,
+          0.1,
+          0.2
+        ],
+        [
+          0.6,
+          0.1,
+          0.8,
+          0.3
+        ]
+      ],
+      "policy": 1,
+      "liga": true,
+      "kern": true,
+      "transform": [
+        0.85,
+        0.17,
+        -0.23,
+        1.07,
+        21.3,
+        52.7
+      ],
+      "samples": 8,
+      "glyphs": [
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 2,
+          "start": 0,
+          "length": 1,
+          "x": 0.0,
+          "y": 0.0,
+          "advance": 12.0,
+          "scale": 0.02
+        },
+        {
+          "font": "psdkitOwnedStyleSecond-Regular",
+          "id": 3,
+          "start": 1,
+          "length": 1,
+          "x": 12.0,
+          "y": 0.0,
+          "advance": 21.39,
+          "scale": 0.031
+        },
+        {
+          "font": "psdkitOwnedStyleSecond-Regular",
+          "id": 7,
+          "start": 2,
+          "length": 1,
+          "x": 33.39,
+          "y": 0.0,
+          "advance": 12.4,
+          "scale": 0.031
+        },
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 11,
+          "start": 3,
+          "length": 2,
+          "x": 46.14,
+          "y": 0.0,
+          "advance": 7.262500000000001,
+          "scale": 0.0175
+        },
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 2,
+          "start": 5,
+          "length": 1,
+          "x": 53.0525,
+          "y": 0.0,
+          "advance": 10.500000000000002,
+          "scale": 0.0175
+        }
+      ],
+      "advance": 63.5525,
+      "unsupported_color_cluster": false,
+      "rgba_sha256": "d90ebcc76d9d79f325bfbd133144856b4b1c2e9e46b3b2887d3c674a076995be",
+      "positive_pixels": 1084
+    },
+    {
+      "label": "supplementary-utf16-p1",
+      "text": "A𝼀V",
+      "ends": [
+        1,
+        3,
+        5
+      ],
+      "fonts": [
+        "psdkitOwnedShapeFixture-Regular",
+        "psdkitOwnedStyleSecond-Regular",
+        "psdkitOwnedShapeFixture-Regular"
+      ],
+      "sizes": [
+        23,
+        18,
+        29
+      ],
+      "colors": [
+        [
+          1,
+          0.4,
+          0.2,
+          0.8
+        ],
+        [
+          1,
+          0.8,
+          0.1,
+          0.2
+        ],
+        [
+          0.6,
+          0.1,
+          0.8,
+          0.3
+        ]
+      ],
+      "policy": 1,
+      "liga": false,
+      "kern": true,
+      "transform": [
+        1.1,
+        -0.2,
+        0.3,
+        0.95,
+        19.75,
+        61.25
+      ],
+      "samples": 4,
+      "glyphs": [
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 2,
+          "start": 0,
+          "length": 1,
+          "x": 0.0,
+          "y": 0.0,
+          "advance": 13.799999999999999,
+          "scale": 0.023
+        },
+        {
+          "font": "psdkitOwnedStyleSecond-Regular",
+          "id": 16,
+          "start": 1,
+          "length": 2,
+          "x": 13.799999999999999,
+          "y": 0.0,
+          "advance": 13.319999999999999,
+          "scale": 0.018
+        },
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 3,
+          "start": 3,
+          "length": 1,
+          "x": 27.119999999999997,
+          "y": 0.0,
+          "advance": 17.400000000000002,
+          "scale": 0.029
+        }
+      ],
+      "advance": 44.519999999999996,
+      "unsupported_color_cluster": false,
+      "rgba_sha256": "54ace68201b3ed52d54a9b086c5d12d959a8d4adb04b2ffb1f1bb4c37a0755f3",
+      "positive_pixels": 845
+    },
+    {
+      "label": "overlap-alpha-p1",
+      "text": "AVAV",
+      "ends": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "fonts": [
+        "psdkitOwnedShapeFixture-Regular",
+        "psdkitOwnedShapeFixture-Regular",
+        "psdkitOwnedShapeFixture-Regular",
+        "psdkitOwnedShapeFixture-Regular"
+      ],
+      "sizes": [
+        20,
+        20,
+        20,
+        20
+      ],
+      "colors": [
+        [
+          1,
+          0.4,
+          0.2,
+          0.8
+        ],
+        [
+          1,
+          0.8,
+          0.1,
+          0.2
+        ],
+        [
+          0.6,
+          0.1,
+          0.8,
+          0.3
+        ],
+        [
+          1,
+          0.8,
+          0.1,
+          0.2
+        ]
+      ],
+      "policy": 1,
+      "liga": false,
+      "kern": true,
+      "transform": [
+        0.2,
+        0.1,
+        -0.1,
+        1,
+        20,
+        50
+      ],
+      "samples": 8,
+      "glyphs": [
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 2,
+          "start": 0,
+          "length": 1,
+          "x": 0.0,
+          "y": 0.0,
+          "advance": 12.0,
+          "scale": 0.02
+        },
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 3,
+          "start": 1,
+          "length": 1,
+          "x": 12.0,
+          "y": 0.0,
+          "advance": 12.0,
+          "scale": 0.02
+        },
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 2,
+          "start": 2,
+          "length": 1,
+          "x": 24.0,
+          "y": 0.0,
+          "advance": 12.0,
+          "scale": 0.02
+        },
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 3,
+          "start": 3,
+          "length": 1,
+          "x": 36.0,
+          "y": 0.0,
+          "advance": 12.0,
+          "scale": 0.02
+        }
+      ],
+      "advance": 48.0,
+      "unsupported_color_cluster": false,
+      "rgba_sha256": "36fe6d3c00388bbd1132468306fce79b173e90d2d6678272647817ec2a5d7cb9",
+      "positive_pixels": 162
+    },
+    {
+      "label": "AV-color-p2-kFalse-s4",
+      "text": "AV",
+      "ends": [
+        1,
+        3
+      ],
+      "fonts": [
+        "psdkitOwnedShapeFixture-Regular",
+        "psdkitOwnedShapeFixture-Regular"
+      ],
+      "sizes": [
+        20,
+        20
+      ],
+      "colors": [
+        [
+          1,
+          0.4,
+          0.2,
+          0.8
+        ],
+        [
+          1,
+          0.8,
+          0.1,
+          0.2
+        ]
+      ],
+      "policy": 2,
+      "liga": false,
+      "kern": false,
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        20,
+        50
+      ],
+      "samples": 4,
+      "glyphs": [
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 2,
+          "start": 0,
+          "length": 1,
+          "x": 0.0,
+          "y": 0.0,
+          "advance": 12.0,
+          "scale": 0.02
+        },
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 3,
+          "start": 1,
+          "length": 1,
+          "x": 12.0,
+          "y": 0.0,
+          "advance": 12.0,
+          "scale": 0.02
+        }
+      ],
+      "advance": 24.0,
+      "unsupported_color_cluster": false,
+      "rgba_sha256": "7a69701c8a60493c663ce7a98b48d84d40c88a92dd865d923687addcfc8ae248",
+      "positive_pixels": 336
+    },
+    {
+      "label": "AV-color-p2-kFalse-s8",
+      "text": "AV",
+      "ends": [
+        1,
+        3
+      ],
+      "fonts": [
+        "psdkitOwnedShapeFixture-Regular",
+        "psdkitOwnedShapeFixture-Regular"
+      ],
+      "sizes": [
+        20,
+        20
+      ],
+      "colors": [
+        [
+          1,
+          0.4,
+          0.2,
+          0.8
+        ],
+        [
+          1,
+          0.8,
+          0.1,
+          0.2
+        ]
+      ],
+      "policy": 2,
+      "liga": false,
+      "kern": false,
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        20,
+        50
+      ],
+      "samples": 8,
+      "glyphs": [
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 2,
+          "start": 0,
+          "length": 1,
+          "x": 0.0,
+          "y": 0.0,
+          "advance": 12.0,
+          "scale": 0.02
+        },
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 3,
+          "start": 1,
+          "length": 1,
+          "x": 12.0,
+          "y": 0.0,
+          "advance": 12.0,
+          "scale": 0.02
+        }
+      ],
+      "advance": 24.0,
+      "unsupported_color_cluster": false,
+      "rgba_sha256": "a115023c2f456e528b75e8604f59fc1687180454e68e0c7cdc8e0528abe9021f",
+      "positive_pixels": 336
+    },
+    {
+      "label": "AV-color-p2-kTrue-s4",
+      "text": "AV",
+      "ends": [
+        1,
+        3
+      ],
+      "fonts": [
+        "psdkitOwnedShapeFixture-Regular",
+        "psdkitOwnedShapeFixture-Regular"
+      ],
+      "sizes": [
+        20,
+        20
+      ],
+      "colors": [
+        [
+          1,
+          0.4,
+          0.2,
+          0.8
+        ],
+        [
+          1,
+          0.8,
+          0.1,
+          0.2
+        ]
+      ],
+      "policy": 2,
+      "liga": false,
+      "kern": true,
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        20,
+        50
+      ],
+      "samples": 4,
+      "glyphs": [
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 2,
+          "start": 0,
+          "length": 1,
+          "x": 0.0,
+          "y": 0.0,
+          "advance": 10.4,
+          "scale": 0.02
+        },
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 3,
+          "start": 1,
+          "length": 1,
+          "x": 10.4,
+          "y": 0.0,
+          "advance": 12.0,
+          "scale": 0.02
+        }
+      ],
+      "advance": 22.4,
+      "unsupported_color_cluster": false,
+      "rgba_sha256": "d3befcf93306fcb8fa6fdd1c81f5245f072a12ab2f8e2c5e36608b2c61194e69",
+      "positive_pixels": 308
+    },
+    {
+      "label": "AV-color-p2-kTrue-s8",
+      "text": "AV",
+      "ends": [
+        1,
+        3
+      ],
+      "fonts": [
+        "psdkitOwnedShapeFixture-Regular",
+        "psdkitOwnedShapeFixture-Regular"
+      ],
+      "sizes": [
+        20,
+        20
+      ],
+      "colors": [
+        [
+          1,
+          0.4,
+          0.2,
+          0.8
+        ],
+        [
+          1,
+          0.8,
+          0.1,
+          0.2
+        ]
+      ],
+      "policy": 2,
+      "liga": false,
+      "kern": true,
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        20,
+        50
+      ],
+      "samples": 8,
+      "glyphs": [
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 2,
+          "start": 0,
+          "length": 1,
+          "x": 0.0,
+          "y": 0.0,
+          "advance": 10.4,
+          "scale": 0.02
+        },
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 3,
+          "start": 1,
+          "length": 1,
+          "x": 10.4,
+          "y": 0.0,
+          "advance": 12.0,
+          "scale": 0.02
+        }
+      ],
+      "advance": 22.4,
+      "unsupported_color_cluster": false,
+      "rgba_sha256": "290aec98fea3f55d7030cb6b171e52bb49d2083d7e4a2f3a7d78c2b59b0fd125",
+      "positive_pixels": 308
+    },
+    {
+      "label": "ffi-cross-color-p2",
+      "text": "ffi",
+      "ends": [
+        1,
+        4
+      ],
+      "fonts": [
+        "psdkitOwnedShapeFixture-Regular",
+        "psdkitOwnedShapeFixture-Regular"
+      ],
+      "sizes": [
+        20,
+        20
+      ],
+      "colors": [
+        [
+          1,
+          0.4,
+          0.2,
+          0.8
+        ],
+        [
+          1,
+          0.8,
+          0.1,
+          0.2
+        ]
+      ],
+      "policy": 2,
+      "liga": true,
+      "kern": false,
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        20,
+        50
+      ],
+      "samples": 8,
+      "glyphs": [
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 13,
+          "start": 0,
+          "length": 3,
+          "x": 0.0,
+          "y": 0.0,
+          "advance": 14.200000000000001,
+          "scale": 0.02
+        }
+      ],
+      "advance": 14.200000000000001,
+      "unsupported_color_cluster": true
+    },
+    {
+      "label": "ffi-compatible-samecolor-p2",
+      "text": "ffi",
+      "ends": [
+        1,
+        4
+      ],
+      "fonts": [
+        "psdkitOwnedShapeFixture-Regular",
+        "psdkitOwnedShapeFixture-Regular"
+      ],
+      "sizes": [
+        20,
+        20
+      ],
+      "colors": [
+        [
+          1,
+          0.4,
+          0.2,
+          0.8
+        ],
+        [
+          1,
+          0.4,
+          0.2,
+          0.8
+        ]
+      ],
+      "policy": 2,
+      "liga": true,
+      "kern": true,
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        20,
+        50
+      ],
+      "samples": 8,
+      "glyphs": [
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 13,
+          "start": 0,
+          "length": 3,
+          "x": 0.0,
+          "y": 0.0,
+          "advance": 14.200000000000001,
+          "scale": 0.02
+        }
+      ],
+      "advance": 14.200000000000001,
+      "unsupported_color_cluster": false,
+      "rgba_sha256": "78c1efe307c1fc4e51dc2431e9526a5a5a21cac19efa461961998d74c454df9b",
+      "positive_pixels": 196
+    },
+    {
+      "label": "mixed-font-size-p2",
+      "text": "AVffiA",
+      "ends": [
+        1,
+        3,
+        7
+      ],
+      "fonts": [
+        "psdkitOwnedShapeFixture-Regular",
+        "psdkitOwnedStyleSecond-Regular",
+        "psdkitOwnedShapeFixture-Regular"
+      ],
+      "sizes": [
+        20,
+        31,
+        17.5
+      ],
+      "colors": [
+        [
+          1,
+          0.4,
+          0.2,
+          0.8
+        ],
+        [
+          1,
+          0.8,
+          0.1,
+          0.2
+        ],
+        [
+          0.6,
+          0.1,
+          0.8,
+          0.3
+        ]
+      ],
+      "policy": 2,
+      "liga": true,
+      "kern": true,
+      "transform": [
+        0.85,
+        0.17,
+        -0.23,
+        1.07,
+        21.3,
+        52.7
+      ],
+      "samples": 8,
+      "glyphs": [
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 2,
+          "start": 0,
+          "length": 1,
+          "x": 0.0,
+          "y": 0.0,
+          "advance": 12.0,
+          "scale": 0.02
+        },
+        {
+          "font": "psdkitOwnedStyleSecond-Regular",
+          "id": 3,
+          "start": 1,
+          "length": 1,
+          "x": 12.0,
+          "y": 0.0,
+          "advance": 21.39,
+          "scale": 0.031
+        },
+        {
+          "font": "psdkitOwnedStyleSecond-Regular",
+          "id": 7,
+          "start": 2,
+          "length": 1,
+          "x": 33.39,
+          "y": 0.0,
+          "advance": 12.4,
+          "scale": 0.031
+        },
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 11,
+          "start": 3,
+          "length": 2,
+          "x": 46.14,
+          "y": 0.0,
+          "advance": 7.262500000000001,
+          "scale": 0.0175
+        },
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 2,
+          "start": 5,
+          "length": 1,
+          "x": 53.0525,
+          "y": 0.0,
+          "advance": 10.500000000000002,
+          "scale": 0.0175
+        }
+      ],
+      "advance": 63.5525,
+      "unsupported_color_cluster": false,
+      "rgba_sha256": "d90ebcc76d9d79f325bfbd133144856b4b1c2e9e46b3b2887d3c674a076995be",
+      "positive_pixels": 1084
+    },
+    {
+      "label": "supplementary-utf16-p2",
+      "text": "A𝼀V",
+      "ends": [
+        1,
+        3,
+        5
+      ],
+      "fonts": [
+        "psdkitOwnedShapeFixture-Regular",
+        "psdkitOwnedStyleSecond-Regular",
+        "psdkitOwnedShapeFixture-Regular"
+      ],
+      "sizes": [
+        23,
+        18,
+        29
+      ],
+      "colors": [
+        [
+          1,
+          0.4,
+          0.2,
+          0.8
+        ],
+        [
+          1,
+          0.8,
+          0.1,
+          0.2
+        ],
+        [
+          0.6,
+          0.1,
+          0.8,
+          0.3
+        ]
+      ],
+      "policy": 2,
+      "liga": false,
+      "kern": true,
+      "transform": [
+        1.1,
+        -0.2,
+        0.3,
+        0.95,
+        19.75,
+        61.25
+      ],
+      "samples": 4,
+      "glyphs": [
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 2,
+          "start": 0,
+          "length": 1,
+          "x": 0.0,
+          "y": 0.0,
+          "advance": 13.799999999999999,
+          "scale": 0.023
+        },
+        {
+          "font": "psdkitOwnedStyleSecond-Regular",
+          "id": 16,
+          "start": 1,
+          "length": 2,
+          "x": 13.799999999999999,
+          "y": 0.0,
+          "advance": 13.319999999999999,
+          "scale": 0.018
+        },
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 3,
+          "start": 3,
+          "length": 1,
+          "x": 27.119999999999997,
+          "y": 0.0,
+          "advance": 17.400000000000002,
+          "scale": 0.029
+        }
+      ],
+      "advance": 44.519999999999996,
+      "unsupported_color_cluster": false,
+      "rgba_sha256": "54ace68201b3ed52d54a9b086c5d12d959a8d4adb04b2ffb1f1bb4c37a0755f3",
+      "positive_pixels": 845
+    },
+    {
+      "label": "overlap-alpha-p2",
+      "text": "AVAV",
+      "ends": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "fonts": [
+        "psdkitOwnedShapeFixture-Regular",
+        "psdkitOwnedShapeFixture-Regular",
+        "psdkitOwnedShapeFixture-Regular",
+        "psdkitOwnedShapeFixture-Regular"
+      ],
+      "sizes": [
+        20,
+        20,
+        20,
+        20
+      ],
+      "colors": [
+        [
+          1,
+          0.4,
+          0.2,
+          0.8
+        ],
+        [
+          1,
+          0.8,
+          0.1,
+          0.2
+        ],
+        [
+          0.6,
+          0.1,
+          0.8,
+          0.3
+        ],
+        [
+          1,
+          0.8,
+          0.1,
+          0.2
+        ]
+      ],
+      "policy": 2,
+      "liga": false,
+      "kern": true,
+      "transform": [
+        0.2,
+        0.1,
+        -0.1,
+        1,
+        20,
+        50
+      ],
+      "samples": 8,
+      "glyphs": [
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 2,
+          "start": 0,
+          "length": 1,
+          "x": 0.0,
+          "y": 0.0,
+          "advance": 10.4,
+          "scale": 0.02
+        },
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 3,
+          "start": 1,
+          "length": 1,
+          "x": 10.4,
+          "y": 0.0,
+          "advance": 11.200000000000001,
+          "scale": 0.02
+        },
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 2,
+          "start": 2,
+          "length": 1,
+          "x": 21.6,
+          "y": 0.0,
+          "advance": 10.4,
+          "scale": 0.02
+        },
+        {
+          "font": "psdkitOwnedShapeFixture-Regular",
+          "id": 3,
+          "start": 3,
+          "length": 1,
+          "x": 32.0,
+          "y": 0.0,
+          "advance": 12.0,
+          "scale": 0.02
+        }
+      ],
+      "advance": 44.0,
+      "unsupported_color_cluster": false,
+      "rgba_sha256": "80f53f3ce87204af2d9ea77c977b13a89c3b7769514100b0c726f1ac103ccf28",
+      "positive_pixels": 150
+    }
+  ]
+}

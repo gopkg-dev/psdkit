@@ -1,0 +1,118 @@
+{
+  "source": "testdata/cff2/fonts/MetricConsistentWidths.otf",
+  "source_sha256": "4062c0188b53fc7a8d35c481a3b416678e56f27171715e713aa3a0216aa1e230",
+  "file": "testdata/cff2/fonts/InstancePair-v2.otf",
+  "sha256": "2cc809a0f56fb9684d42edde829eeb9c5e243d71a2176c33902db27f1befa994",
+  "profile": "HVAR plus GPOS float totals then floor(total+.5); default FeatureVariations condition0",
+  "cases": [
+    {
+      "text": "AB",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0
+        },
+        {
+          "tag": "wdth",
+          "value": 0
+        }
+      ],
+      "features": [
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "advances": [
+        517,
+        500
+      ],
+      "precise": [
+        517.0,
+        500.0
+      ]
+    },
+    {
+      "text": "AB",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0
+        }
+      ],
+      "features": [
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "advances": [
+        501,
+        499
+      ],
+      "precise": [
+        501.0,
+        499.0
+      ]
+    },
+    {
+      "text": "AB",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0
+        }
+      ],
+      "features": [
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "advances": [
+        500,
+        500
+      ],
+      "precise": [
+        500.0,
+        500.0
+      ]
+    },
+    {
+      "text": "AB",
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.25
+        },
+        {
+          "tag": "wdth",
+          "value": 0
+        }
+      ],
+      "features": [
+        {
+          "tag": "kern",
+          "enabled": true
+        }
+      ],
+      "advances": [
+        501,
+        500
+      ],
+      "precise": [
+        500.5,
+        499.5
+      ]
+    }
+  ],
+  "corrected_pairset_profile": "GPOS format1 VarIndex offsets relativePairSet; numeric expectations unchanged."
+}

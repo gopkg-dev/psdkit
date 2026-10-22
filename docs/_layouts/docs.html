@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark" data-build="{{ site.time | date: '%s' }}">
+<head>
+{% include head.html %}
+<script>(function () { try { var t = localStorage.getItem('psdkit-theme'); if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; document.documentElement.dataset.theme = t; } catch (e) {} })();</script>
+<link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+<link rel="stylesheet" href="{{ '/assets/css/docs.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+<script type="module" src="{{ '/assets/js/site.js' | relative_url }}"></script>
+<script type="module" src="{{ '/assets/js/docs.js' | relative_url }}"></script>
+</head>
+<body class="page-docs{% if page.wide %} page-docs--wide{% endif %}">
+<a class="skip-link" href="#content">跳到正文</a>
+{% include site-header.html section="docs" %}
+{%- comment -%} 计算当前位置与上一页 / 下一页：顺序取自 _data/nav.yml。 {%- endcomment -%}
+{%- assign current_index = -1 -%}
+{%- assign index = 0 -%}
+{%- assign current_section = "" -%}
+{%- for section in site.data.nav -%}
+  {%- for item in section.items -%}
+    {%- assign item_path = item.url | split: "#" | first -%}
+    {%- if current_index == -1 and item_path == page.url -%}{%- assign current_index = index -%}{%- assign current_section = section.title -%}{%- endif -%}
+    {%- assign index = index | plus: 1 -%}
+  {%- endfor -%}
+{%- endfor -%}
+{%- assign prev_index = current_index | minus: 1 -%}
+{%- assign next_index = current_index | plus: 1 -%}
+{%- assign index = 0 -%}
+{%- for section in site.data.nav -%}
+  {%- for item in section.items -%}
+    {%- if current_index != -1 and index == prev_index -%}{%- assign prev_item = item -%}{%- endif -%}
+    {%- if current_index != -1 and index == next_index -%}{%- assign next_item = item -%}{%- endif -%}
+    {%- assign index = index | plus: 1 -%}
+  {%- endfor -%}
+{%- endfor -%}
+<div class="docs-shell">
+  <div class="docs-sidebar__scrim" data-sidebar-close hidden></div>
+  <aside class="docs-sidebar" id="docs-sidebar" aria-label="文档导航">
+    <div class="docs-sidebar__head">
+      <span>文档导航</span>
+      <button class="icon-btn" type="button" data-sidebar-close aria-label="关闭文档导航">{% include icon.html name="close" px=18 %}</button>
+    </div>
+    <nav class="docs-nav">
+      {%- assign marked = false -%}
+      {%- for section in site.data.nav -%}
+      <div class="docs-nav__section">
+        <h2 class="docs-nav__title">{{ section.title }}</h2>
+        <ul>
+          {%- for item in section.items -%}
+          {%- assign item_path = item.url | split: "#" | first -%}
+          {%- assign active = false -%}
+          {%- if marked == false and item_path == page.url -%}{%- assign active = true -%}{%- assign marked = true -%}{%- endif -%}
+          <li><a href="{{ item.url | relative_url }}"{% if active %} aria-current="page" class="is-active"{% endif %}>{{ item.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+      {%- endfor -%}
+      <a class="docs-nav__cta" href="{{ '/demo/' | relative_url }}">{% include icon.html name="play" px=15 %}在浏览器中试用 Playground</a>
+    </nav>
+  </aside>
+  <main id="content" class="docs-main" tabindex="-1">
+    <nav class="breadcrumb" aria-label="当前位置">
+      <a href="{{ '/guide/' | relative_url }}">文档</a>
+      {% if current_section != "" %}<span aria-hidden="true">/</span><span>{{ current_section }}</span>{% endif %}
+      <span aria-hidden="true">/</span><span aria-current="page">{{ page.title }}</span>
+    </nav>
+    <article class="doc-content">
+      {{ content }}
+    </article>
+    <div class="doc-meta">
+      <a href="{{ site.github_url }}/blob/main/docs/{{ page.path }}">{% include icon.html name="github" px=15 %}在 GitHub 查看此页源文件</a>
+      {% if page.source_note %}<span>{{ page.source_note }}</span>{% endif %}
+    </div>
+    {% if prev_item or next_item %}
+    <nav class="pager" aria-label="上一页 / 下一页">
+      {% if prev_item %}<a class="pager__link pager__link--prev" href="{{ prev_item.url | relative_url }}"><small>上一页</small><span>{{ prev_item.title }}</span></a>{% else %}<span></span>{% endif %}
+      {% if next_item %}<a class="pager__link pager__link--next" href="{{ next_item.url | relative_url }}"><small>下一页</small><span>{{ next_item.title }}</span></a>{% endif %}
+    </nav>
+    {% endif %}
+  </main>
+  <aside class="docs-toc" aria-labelledby="toc-title">
+    <div class="docs-toc__inner">
+      <h2 class="docs-toc__title" id="toc-title">本页目录</h2>
+      <ol class="docs-toc__list" data-toc></ol>
+    </div>
+  </aside>
+</div>
+{% include site-footer.html %}
+{% include search.html %}
+</body>
+</html>

@@ -1,0 +1,4302 @@
+{
+  "cases": [
+    {
+      "file": "Name-ExplicitAffine.otf",
+      "sha256": "674682048356a3e2731cb34319d95b0bb60b63e132609b935d2a4e0062474ba3",
+      "text": "A",
+      "open_type": false,
+      "size": 40,
+      "advance": 42.0,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 1.6,
+                  "Y": 0.6
+                },
+                "Preceding": {
+                  "X": 1.6,
+                  "Y": 0.6
+                },
+                "Leaving": {
+                  "X": 13.0,
+                  "Y": 0.6
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 36.4,
+                  "Y": 0.6
+                },
+                "Preceding": {
+                  "X": 25.0,
+                  "Y": 0.6
+                },
+                "Leaving": {
+                  "X": 36.4,
+                  "Y": 0.6
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 42.0,
+                  "Y": -21.8
+                },
+                "Preceding": {
+                  "X": 42.0,
+                  "Y": -21.8
+                },
+                "Leaving": {
+                  "X": 31.0,
+                  "Y": -23.400000000000002
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 7.2,
+                  "Y": -21.8
+                },
+                "Preceding": {
+                  "X": 19.0,
+                  "Y": -23.400000000000002
+                },
+                "Leaving": {
+                  "X": 7.2,
+                  "Y": -21.8
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "Name-ExplicitAffine.otf",
+      "sha256": "674682048356a3e2731cb34319d95b0bb60b63e132609b935d2a4e0062474ba3",
+      "text": "A",
+      "open_type": true,
+      "size": 40,
+      "advance": 42.0,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 1.6,
+                  "Y": 0.6
+                },
+                "Preceding": {
+                  "X": 1.6,
+                  "Y": 0.6
+                },
+                "Leaving": {
+                  "X": 13.0,
+                  "Y": 0.6
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 36.4,
+                  "Y": 0.6
+                },
+                "Preceding": {
+                  "X": 25.0,
+                  "Y": 0.6
+                },
+                "Leaving": {
+                  "X": 36.4,
+                  "Y": 0.6
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 42.0,
+                  "Y": -21.8
+                },
+                "Preceding": {
+                  "X": 42.0,
+                  "Y": -21.8
+                },
+                "Leaving": {
+                  "X": 31.0,
+                  "Y": -23.400000000000002
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 7.2,
+                  "Y": -21.8
+                },
+                "Preceding": {
+                  "X": 19.0,
+                  "Y": -23.400000000000002
+                },
+                "Leaving": {
+                  "X": 7.2,
+                  "Y": -21.8
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "CID-ExplicitBothAndInherited.otf",
+      "sha256": "d22a2d39408f2ff376c8f39275df62bc32db01b7f52f5b5552a4ed0d30d808dd",
+      "text": "A",
+      "open_type": false,
+      "size": 40,
+      "advance": 56.0,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 2.0,
+                  "Y": 0.8
+                },
+                "Preceding": {
+                  "X": 2.0,
+                  "Y": 0.8
+                },
+                "Leaving": {
+                  "X": 17.2,
+                  "Y": 0.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 48.4,
+                  "Y": 0.8
+                },
+                "Preceding": {
+                  "X": 33.2,
+                  "Y": 0.8
+                },
+                "Leaving": {
+                  "X": 48.4,
+                  "Y": 0.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 62.4,
+                  "Y": -27.2
+                },
+                "Preceding": {
+                  "X": 62.4,
+                  "Y": -27.2
+                },
+                "Leaving": {
+                  "X": 48.2,
+                  "Y": -29.2
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 16.0,
+                  "Y": -27.2
+                },
+                "Preceding": {
+                  "X": 32.2,
+                  "Y": -29.2
+                },
+                "Leaving": {
+                  "X": 16.0,
+                  "Y": -27.2
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "CID-ExplicitBothAndInherited.otf",
+      "sha256": "d22a2d39408f2ff376c8f39275df62bc32db01b7f52f5b5552a4ed0d30d808dd",
+      "text": "A",
+      "open_type": true,
+      "size": 40,
+      "advance": 56.0,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 2.0,
+                  "Y": 0.8
+                },
+                "Preceding": {
+                  "X": 2.0,
+                  "Y": 0.8
+                },
+                "Leaving": {
+                  "X": 17.2,
+                  "Y": 0.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 48.4,
+                  "Y": 0.8
+                },
+                "Preceding": {
+                  "X": 33.2,
+                  "Y": 0.8
+                },
+                "Leaving": {
+                  "X": 48.4,
+                  "Y": 0.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 62.4,
+                  "Y": -27.2
+                },
+                "Preceding": {
+                  "X": 62.4,
+                  "Y": -27.2
+                },
+                "Leaving": {
+                  "X": 48.2,
+                  "Y": -29.2
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 16.0,
+                  "Y": -27.2
+                },
+                "Preceding": {
+                  "X": 32.2,
+                  "Y": -29.2
+                },
+                "Leaving": {
+                  "X": 16.0,
+                  "Y": -27.2
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "CID-ImplicitTopAbsoluteFD.otf",
+      "sha256": "c260b572e8e6cb3cffdb75f8609103e656e2f14add72cf83f803c453a40a7d5a",
+      "text": "A",
+      "open_type": false,
+      "size": 40,
+      "advance": 28.0,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 0.8,
+                  "Y": 0.0
+                },
+                "Preceding": {
+                  "X": 0.8,
+                  "Y": 0.0
+                },
+                "Leaving": {
+                  "X": 8.4,
+                  "Y": 0.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 24.0,
+                  "Y": 0.0
+                },
+                "Preceding": {
+                  "X": 16.4,
+                  "Y": 0.0
+                },
+                "Leaving": {
+                  "X": 24.0,
+                  "Y": 0.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 24.0,
+                  "Y": -28.0
+                },
+                "Preceding": {
+                  "X": 24.0,
+                  "Y": -28.0
+                },
+                "Leaving": {
+                  "X": 16.4,
+                  "Y": -30.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 0.8,
+                  "Y": -28.0
+                },
+                "Preceding": {
+                  "X": 8.4,
+                  "Y": -30.0
+                },
+                "Leaving": {
+                  "X": 0.8,
+                  "Y": -28.0
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "CID-ImplicitTopAbsoluteFD.otf",
+      "sha256": "c260b572e8e6cb3cffdb75f8609103e656e2f14add72cf83f803c453a40a7d5a",
+      "text": "A",
+      "open_type": true,
+      "size": 40,
+      "advance": 28.0,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 0.8,
+                  "Y": 0.0
+                },
+                "Preceding": {
+                  "X": 0.8,
+                  "Y": 0.0
+                },
+                "Leaving": {
+                  "X": 8.4,
+                  "Y": 0.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 24.0,
+                  "Y": 0.0
+                },
+                "Preceding": {
+                  "X": 16.4,
+                  "Y": 0.0
+                },
+                "Leaving": {
+                  "X": 24.0,
+                  "Y": 0.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 24.0,
+                  "Y": -28.0
+                },
+                "Preceding": {
+                  "X": 24.0,
+                  "Y": -28.0
+                },
+                "Leaving": {
+                  "X": 16.4,
+                  "Y": -30.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 0.8,
+                  "Y": -28.0
+                },
+                "Preceding": {
+                  "X": 8.4,
+                  "Y": -30.0
+                },
+                "Leaving": {
+                  "X": 0.8,
+                  "Y": -28.0
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "CID-IdentityTopCanonicalFD.otf",
+      "sha256": "4c6c73b505f9fedc0ce6c29128b3a2e21b3989cac897f1247599fcfdf5adb1ce",
+      "text": "A",
+      "open_type": false,
+      "size": 40,
+      "advance": 28.0,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 0.8,
+                  "Y": 0.0
+                },
+                "Preceding": {
+                  "X": 0.8,
+                  "Y": 0.0
+                },
+                "Leaving": {
+                  "X": 8.4,
+                  "Y": 0.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 24.0,
+                  "Y": 0.0
+                },
+                "Preceding": {
+                  "X": 16.4,
+                  "Y": 0.0
+                },
+                "Leaving": {
+                  "X": 24.0,
+                  "Y": 0.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 24.0,
+                  "Y": -28.0
+                },
+                "Preceding": {
+                  "X": 24.0,
+                  "Y": -28.0
+                },
+                "Leaving": {
+                  "X": 16.4,
+                  "Y": -30.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 0.8,
+                  "Y": -28.0
+                },
+                "Preceding": {
+                  "X": 8.4,
+                  "Y": -30.0
+                },
+                "Leaving": {
+                  "X": 0.8,
+                  "Y": -28.0
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "CID-IdentityTopCanonicalFD.otf",
+      "sha256": "4c6c73b505f9fedc0ce6c29128b3a2e21b3989cac897f1247599fcfdf5adb1ce",
+      "text": "A",
+      "open_type": true,
+      "size": 40,
+      "advance": 28.0,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 0.8,
+                  "Y": 0.0
+                },
+                "Preceding": {
+                  "X": 0.8,
+                  "Y": 0.0
+                },
+                "Leaving": {
+                  "X": 8.4,
+                  "Y": 0.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 24.0,
+                  "Y": 0.0
+                },
+                "Preceding": {
+                  "X": 16.4,
+                  "Y": 0.0
+                },
+                "Leaving": {
+                  "X": 24.0,
+                  "Y": 0.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 24.0,
+                  "Y": -28.0
+                },
+                "Preceding": {
+                  "X": 24.0,
+                  "Y": -28.0
+                },
+                "Leaving": {
+                  "X": 16.4,
+                  "Y": -30.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 0.8,
+                  "Y": -28.0
+                },
+                "Preceding": {
+                  "X": 8.4,
+                  "Y": -30.0
+                },
+                "Leaving": {
+                  "X": 0.8,
+                  "Y": -28.0
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "Name-ExplicitDefault-UPM2048.otf",
+      "sha256": "3cc4bf14df821280e8a9905add80143ee2bac1a91d944c83a1a840457619ebfd",
+      "text": "A",
+      "open_type": false,
+      "size": 40,
+      "advance": 25.0,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 5.0,
+                  "Y": 0.0
+                },
+                "Preceding": {
+                  "X": 5.0,
+                  "Y": 0.0
+                },
+                "Leaving": {
+                  "X": 11.0,
+                  "Y": 0.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 24.0,
+                  "Y": 0.0
+                },
+                "Preceding": {
+                  "X": 18.0,
+                  "Y": 0.0
+                },
+                "Leaving": {
+                  "X": 24.0,
+                  "Y": 0.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 24.0,
+                  "Y": -28.000000000000004
+                },
+                "Preceding": {
+                  "X": 24.0,
+                  "Y": -28.000000000000004
+                },
+                "Leaving": {
+                  "X": 18.0,
+                  "Y": -30.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 5.0,
+                  "Y": -28.000000000000004
+                },
+                "Preceding": {
+                  "X": 11.0,
+                  "Y": -30.0
+                },
+                "Leaving": {
+                  "X": 5.0,
+                  "Y": -28.000000000000004
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "Name-ExplicitDefault-UPM2048.otf",
+      "sha256": "3cc4bf14df821280e8a9905add80143ee2bac1a91d944c83a1a840457619ebfd",
+      "text": "A",
+      "open_type": true,
+      "size": 40,
+      "advance": 25.0,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 5.0,
+                  "Y": 0.0
+                },
+                "Preceding": {
+                  "X": 5.0,
+                  "Y": 0.0
+                },
+                "Leaving": {
+                  "X": 11.0,
+                  "Y": 0.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 24.0,
+                  "Y": 0.0
+                },
+                "Preceding": {
+                  "X": 18.0,
+                  "Y": 0.0
+                },
+                "Leaving": {
+                  "X": 24.0,
+                  "Y": 0.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 24.0,
+                  "Y": -28.000000000000004
+                },
+                "Preceding": {
+                  "X": 24.0,
+                  "Y": -28.000000000000004
+                },
+                "Leaving": {
+                  "X": 18.0,
+                  "Y": -30.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 5.0,
+                  "Y": -28.000000000000004
+                },
+                "Preceding": {
+                  "X": 11.0,
+                  "Y": -30.0
+                },
+                "Leaving": {
+                  "X": 5.0,
+                  "Y": -28.000000000000004
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "Name-OmittedDefault-UPM2048.otf",
+      "sha256": "fc0b2a297c3ff66e4004af6ffe9a01375beb3976eab1f740aa209ea01a1e8e5d",
+      "text": "A",
+      "open_type": false,
+      "size": 40,
+      "advance": 25.0,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 5.0,
+                  "Y": 0.0
+                },
+                "Preceding": {
+                  "X": 5.0,
+                  "Y": 0.0
+                },
+                "Leaving": {
+                  "X": 11.0,
+                  "Y": 0.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 24.0,
+                  "Y": 0.0
+                },
+                "Preceding": {
+                  "X": 18.0,
+                  "Y": 0.0
+                },
+                "Leaving": {
+                  "X": 24.0,
+                  "Y": 0.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 24.0,
+                  "Y": -28.000000000000004
+                },
+                "Preceding": {
+                  "X": 24.0,
+                  "Y": -28.000000000000004
+                },
+                "Leaving": {
+                  "X": 18.0,
+                  "Y": -30.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 5.0,
+                  "Y": -28.000000000000004
+                },
+                "Preceding": {
+                  "X": 11.0,
+                  "Y": -30.0
+                },
+                "Leaving": {
+                  "X": 5.0,
+                  "Y": -28.000000000000004
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "Name-OmittedDefault-UPM2048.otf",
+      "sha256": "fc0b2a297c3ff66e4004af6ffe9a01375beb3976eab1f740aa209ea01a1e8e5d",
+      "text": "A",
+      "open_type": true,
+      "size": 40,
+      "advance": 25.0,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 5.0,
+                  "Y": 0.0
+                },
+                "Preceding": {
+                  "X": 5.0,
+                  "Y": 0.0
+                },
+                "Leaving": {
+                  "X": 11.0,
+                  "Y": 0.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 24.0,
+                  "Y": 0.0
+                },
+                "Preceding": {
+                  "X": 18.0,
+                  "Y": 0.0
+                },
+                "Leaving": {
+                  "X": 24.0,
+                  "Y": 0.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 24.0,
+                  "Y": -28.000000000000004
+                },
+                "Preceding": {
+                  "X": 24.0,
+                  "Y": -28.000000000000004
+                },
+                "Leaving": {
+                  "X": 18.0,
+                  "Y": -30.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 5.0,
+                  "Y": -28.000000000000004
+                },
+                "Preceding": {
+                  "X": 11.0,
+                  "Y": -30.0
+                },
+                "Leaving": {
+                  "X": 5.0,
+                  "Y": -28.000000000000004
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "Name-Rotation.otf",
+      "sha256": "ab78865f17acd03a932d3a54d260784e2b9fd958be298faec467801ffec38243",
+      "text": "AVfi",
+      "open_type": false,
+      "size": 40,
+      "advance": 88.0,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 5.2,
+                  "Y": 1.6
+                },
+                "Preceding": {
+                  "X": 5.2,
+                  "Y": 1.6
+                },
+                "Leaving": {
+                  "X": 5.2,
+                  "Y": 1.6
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 5.2,
+                  "Y": -2.4
+                },
+                "Preceding": {
+                  "X": 5.2,
+                  "Y": -2.4
+                },
+                "Leaving": {
+                  "X": 5.2,
+                  "Y": -2.4
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 1.2,
+                  "Y": -2.4
+                },
+                "Preceding": {
+                  "X": 1.2,
+                  "Y": -2.4
+                },
+                "Leaving": {
+                  "X": 1.2,
+                  "Y": -2.4
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 1.2,
+                  "Y": 1.6
+                },
+                "Preceding": {
+                  "X": 1.2,
+                  "Y": 1.6
+                },
+                "Leaving": {
+                  "X": 1.2,
+                  "Y": 1.6
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 28.4,
+                  "Y": 0.8
+                },
+                "Preceding": {
+                  "X": 28.4,
+                  "Y": 0.8
+                },
+                "Leaving": {
+                  "X": 28.4,
+                  "Y": 0.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 24.4,
+                  "Y": 0.0
+                },
+                "Preceding": {
+                  "X": 24.4,
+                  "Y": 0.0
+                },
+                "Leaving": {
+                  "X": 24.4,
+                  "Y": 0.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 28.4,
+                  "Y": -3.2
+                },
+                "Preceding": {
+                  "X": 28.4,
+                  "Y": -3.2
+                },
+                "Leaving": {
+                  "X": 28.4,
+                  "Y": -3.2
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 28.4,
+                  "Y": -1.2
+                },
+                "Preceding": {
+                  "X": 28.4,
+                  "Y": -1.2
+                },
+                "Leaving": {
+                  "X": 28.4,
+                  "Y": -1.2
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 57.6,
+                  "Y": 1.2
+                },
+                "Preceding": {
+                  "X": 57.6,
+                  "Y": 1.2
+                },
+                "Leaving": {
+                  "X": 57.6,
+                  "Y": 1.2
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 57.6,
+                  "Y": -0.8
+                },
+                "Preceding": {
+                  "X": 57.6,
+                  "Y": -0.8
+                },
+                "Leaving": {
+                  "X": 57.6,
+                  "Y": -0.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 54.4,
+                  "Y": -0.8
+                },
+                "Preceding": {
+                  "X": 54.4,
+                  "Y": -0.8
+                },
+                "Leaving": {
+                  "X": 54.4,
+                  "Y": -0.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 54.4,
+                  "Y": 1.2
+                },
+                "Preceding": {
+                  "X": 54.4,
+                  "Y": 1.2
+                },
+                "Leaving": {
+                  "X": 54.4,
+                  "Y": 1.2
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 77.6,
+                  "Y": 1.2
+                },
+                "Preceding": {
+                  "X": 77.6,
+                  "Y": 1.2
+                },
+                "Leaving": {
+                  "X": 77.6,
+                  "Y": 1.2
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 77.6,
+                  "Y": 0.0
+                },
+                "Preceding": {
+                  "X": 77.6,
+                  "Y": 0.0
+                },
+                "Leaving": {
+                  "X": 77.6,
+                  "Y": 0.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 74.4,
+                  "Y": 0.0
+                },
+                "Preceding": {
+                  "X": 74.4,
+                  "Y": 0.0
+                },
+                "Leaving": {
+                  "X": 74.4,
+                  "Y": 0.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 74.4,
+                  "Y": 1.2
+                },
+                "Preceding": {
+                  "X": 74.4,
+                  "Y": 1.2
+                },
+                "Leaving": {
+                  "X": 74.4,
+                  "Y": 1.2
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "Name-Rotation.otf",
+      "sha256": "ab78865f17acd03a932d3a54d260784e2b9fd958be298faec467801ffec38243",
+      "text": "AVfi",
+      "open_type": true,
+      "size": 40,
+      "advance": 78.8,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 5.2,
+                  "Y": 1.6
+                },
+                "Preceding": {
+                  "X": 5.2,
+                  "Y": 1.6
+                },
+                "Leaving": {
+                  "X": 5.2,
+                  "Y": 1.6
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 5.2,
+                  "Y": -2.4
+                },
+                "Preceding": {
+                  "X": 5.2,
+                  "Y": -2.4
+                },
+                "Leaving": {
+                  "X": 5.2,
+                  "Y": -2.4
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 1.2,
+                  "Y": -2.4
+                },
+                "Preceding": {
+                  "X": 1.2,
+                  "Y": -2.4
+                },
+                "Leaving": {
+                  "X": 1.2,
+                  "Y": -2.4
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 1.2,
+                  "Y": 1.6
+                },
+                "Preceding": {
+                  "X": 1.2,
+                  "Y": 1.6
+                },
+                "Leaving": {
+                  "X": 1.2,
+                  "Y": 1.6
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 25.200000000000003,
+                  "Y": 0.8
+                },
+                "Preceding": {
+                  "X": 25.200000000000003,
+                  "Y": 0.8
+                },
+                "Leaving": {
+                  "X": 25.200000000000003,
+                  "Y": 0.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 21.2,
+                  "Y": 0.0
+                },
+                "Preceding": {
+                  "X": 21.2,
+                  "Y": 0.0
+                },
+                "Leaving": {
+                  "X": 21.2,
+                  "Y": 0.0
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 25.200000000000003,
+                  "Y": -3.2
+                },
+                "Preceding": {
+                  "X": 25.200000000000003,
+                  "Y": -3.2
+                },
+                "Leaving": {
+                  "X": 25.200000000000003,
+                  "Y": -3.2
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 25.200000000000003,
+                  "Y": -1.2
+                },
+                "Preceding": {
+                  "X": 25.200000000000003,
+                  "Y": -1.2
+                },
+                "Leaving": {
+                  "X": 25.200000000000003,
+                  "Y": -1.2
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 54.0,
+                  "Y": 1.6
+                },
+                "Preceding": {
+                  "X": 54.0,
+                  "Y": 1.6
+                },
+                "Leaving": {
+                  "X": 54.0,
+                  "Y": 1.6
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 54.0,
+                  "Y": -3.2
+                },
+                "Preceding": {
+                  "X": 54.0,
+                  "Y": -3.2
+                },
+                "Leaving": {
+                  "X": 54.0,
+                  "Y": -3.2
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 50.0,
+                  "Y": -3.2
+                },
+                "Preceding": {
+                  "X": 50.0,
+                  "Y": -3.2
+                },
+                "Leaving": {
+                  "X": 50.0,
+                  "Y": -3.2
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 50.0,
+                  "Y": 1.6
+                },
+                "Preceding": {
+                  "X": 50.0,
+                  "Y": 1.6
+                },
+                "Leaving": {
+                  "X": 50.0,
+                  "Y": 1.6
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "Name-Reflection.otf",
+      "sha256": "55f284d2ed8e57c4ced6e3e3bc4d05130edda9bb0b95977c72a7cd33e63f338c",
+      "text": "AVfi",
+      "open_type": false,
+      "size": 40,
+      "advance": 88.0,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 0.5,
+                  "Y": 0.5
+                },
+                "Preceding": {
+                  "X": 0.5,
+                  "Y": 0.5
+                },
+                "Leaving": {
+                  "X": 0.5,
+                  "Y": 0.5
+                }
+              },
+              {
+                "Anchor": {
+                  "X": -3.5,
+                  "Y": -0.5
+                },
+                "Preceding": {
+                  "X": -3.5,
+                  "Y": -0.5
+                },
+                "Leaving": {
+                  "X": -3.5,
+                  "Y": -0.5
+                }
+              },
+              {
+                "Anchor": {
+                  "X": -3.0,
+                  "Y": -4.5
+                },
+                "Preceding": {
+                  "X": -3.0,
+                  "Y": -4.5
+                },
+                "Leaving": {
+                  "X": -3.0,
+                  "Y": -4.5
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 1.0,
+                  "Y": -3.5
+                },
+                "Preceding": {
+                  "X": 1.0,
+                  "Y": -3.5
+                },
+                "Leaving": {
+                  "X": 1.0,
+                  "Y": -3.5
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 23.8,
+                  "Y": -0.5
+                },
+                "Preceding": {
+                  "X": 23.8,
+                  "Y": -0.5
+                },
+                "Leaving": {
+                  "X": 23.8,
+                  "Y": -0.5
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 23.5,
+                  "Y": -4.7
+                },
+                "Preceding": {
+                  "X": 23.5,
+                  "Y": -4.7
+                },
+                "Leaving": {
+                  "X": 23.5,
+                  "Y": -4.7
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 19.8,
+                  "Y": -1.5
+                },
+                "Preceding": {
+                  "X": 19.8,
+                  "Y": -1.5
+                },
+                "Leaving": {
+                  "X": 19.8,
+                  "Y": -1.5
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 21.8,
+                  "Y": -1.0
+                },
+                "Preceding": {
+                  "X": 21.8,
+                  "Y": -1.0
+                },
+                "Leaving": {
+                  "X": 21.8,
+                  "Y": -1.0
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 52.05,
+                  "Y": 0.8
+                },
+                "Preceding": {
+                  "X": 52.05,
+                  "Y": 0.8
+                },
+                "Leaving": {
+                  "X": 52.05,
+                  "Y": 0.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 50.05,
+                  "Y": 0.3
+                },
+                "Preceding": {
+                  "X": 50.05,
+                  "Y": 0.3
+                },
+                "Leaving": {
+                  "X": 50.05,
+                  "Y": 0.3
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 50.45,
+                  "Y": -2.9
+                },
+                "Preceding": {
+                  "X": 50.45,
+                  "Y": -2.9
+                },
+                "Leaving": {
+                  "X": 50.45,
+                  "Y": -2.9
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 52.45,
+                  "Y": -2.4
+                },
+                "Preceding": {
+                  "X": 52.45,
+                  "Y": -2.4
+                },
+                "Leaving": {
+                  "X": 52.45,
+                  "Y": -2.4
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 72.05,
+                  "Y": 0.8
+                },
+                "Preceding": {
+                  "X": 72.05,
+                  "Y": 0.8
+                },
+                "Leaving": {
+                  "X": 72.05,
+                  "Y": 0.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 70.85,
+                  "Y": 0.5
+                },
+                "Preceding": {
+                  "X": 70.85,
+                  "Y": 0.5
+                },
+                "Leaving": {
+                  "X": 70.85,
+                  "Y": 0.5
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 71.25,
+                  "Y": -2.7
+                },
+                "Preceding": {
+                  "X": 71.25,
+                  "Y": -2.7
+                },
+                "Leaving": {
+                  "X": 71.25,
+                  "Y": -2.7
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 72.45,
+                  "Y": -2.4
+                },
+                "Preceding": {
+                  "X": 72.45,
+                  "Y": -2.4
+                },
+                "Leaving": {
+                  "X": 72.45,
+                  "Y": -2.4
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "Name-Reflection.otf",
+      "sha256": "55f284d2ed8e57c4ced6e3e3bc4d05130edda9bb0b95977c72a7cd33e63f338c",
+      "text": "AVfi",
+      "open_type": true,
+      "size": 40,
+      "advance": 78.8,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 0.5,
+                  "Y": 0.5
+                },
+                "Preceding": {
+                  "X": 0.5,
+                  "Y": 0.5
+                },
+                "Leaving": {
+                  "X": 0.5,
+                  "Y": 0.5
+                }
+              },
+              {
+                "Anchor": {
+                  "X": -3.5,
+                  "Y": -0.5
+                },
+                "Preceding": {
+                  "X": -3.5,
+                  "Y": -0.5
+                },
+                "Leaving": {
+                  "X": -3.5,
+                  "Y": -0.5
+                }
+              },
+              {
+                "Anchor": {
+                  "X": -3.0,
+                  "Y": -4.5
+                },
+                "Preceding": {
+                  "X": -3.0,
+                  "Y": -4.5
+                },
+                "Leaving": {
+                  "X": -3.0,
+                  "Y": -4.5
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 1.0,
+                  "Y": -3.5
+                },
+                "Preceding": {
+                  "X": 1.0,
+                  "Y": -3.5
+                },
+                "Leaving": {
+                  "X": 1.0,
+                  "Y": -3.5
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 20.6,
+                  "Y": -0.5
+                },
+                "Preceding": {
+                  "X": 20.6,
+                  "Y": -0.5
+                },
+                "Leaving": {
+                  "X": 20.6,
+                  "Y": -0.5
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 20.3,
+                  "Y": -4.7
+                },
+                "Preceding": {
+                  "X": 20.3,
+                  "Y": -4.7
+                },
+                "Leaving": {
+                  "X": 20.3,
+                  "Y": -4.7
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 16.6,
+                  "Y": -1.5
+                },
+                "Preceding": {
+                  "X": 16.6,
+                  "Y": -1.5
+                },
+                "Leaving": {
+                  "X": 16.6,
+                  "Y": -1.5
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 18.6,
+                  "Y": -1.0
+                },
+                "Preceding": {
+                  "X": 18.6,
+                  "Y": -1.0
+                },
+                "Leaving": {
+                  "X": 18.6,
+                  "Y": -1.0
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 49.3,
+                  "Y": 0.5
+                },
+                "Preceding": {
+                  "X": 49.3,
+                  "Y": 0.5
+                },
+                "Leaving": {
+                  "X": 49.3,
+                  "Y": 0.5
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 44.5,
+                  "Y": -0.7000000000000001
+                },
+                "Preceding": {
+                  "X": 44.5,
+                  "Y": -0.7000000000000001
+                },
+                "Leaving": {
+                  "X": 44.5,
+                  "Y": -0.7000000000000001
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 45.0,
+                  "Y": -4.7
+                },
+                "Preceding": {
+                  "X": 45.0,
+                  "Y": -4.7
+                },
+                "Leaving": {
+                  "X": 45.0,
+                  "Y": -4.7
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 49.8,
+                  "Y": -3.5
+                },
+                "Preceding": {
+                  "X": 49.8,
+                  "Y": -3.5
+                },
+                "Leaving": {
+                  "X": 49.8,
+                  "Y": -3.5
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "Name-ShearTranslation.otf",
+      "sha256": "87ab331845a79cdd5eb41041e86c93426b828bad0c2bdf01849c9240f79ca820",
+      "text": "AVfi",
+      "open_type": false,
+      "size": 40,
+      "advance": 88.0,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 2.8000000000000003,
+                  "Y": 2.1
+                },
+                "Preceding": {
+                  "X": 2.8000000000000003,
+                  "Y": 2.1
+                },
+                "Leaving": {
+                  "X": 2.8000000000000003,
+                  "Y": 2.1
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 6.8,
+                  "Y": 1.1
+                },
+                "Preceding": {
+                  "X": 6.8,
+                  "Y": 1.1
+                },
+                "Leaving": {
+                  "X": 6.8,
+                  "Y": 1.1
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 8.8,
+                  "Y": -2.9
+                },
+                "Preceding": {
+                  "X": 8.8,
+                  "Y": -2.9
+                },
+                "Leaving": {
+                  "X": 8.8,
+                  "Y": -2.9
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 4.8,
+                  "Y": -1.9000000000000001
+                },
+                "Preceding": {
+                  "X": 4.8,
+                  "Y": -1.9000000000000001
+                },
+                "Leaving": {
+                  "X": 4.8,
+                  "Y": -1.9000000000000001
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 28.0,
+                  "Y": 1.1
+                },
+                "Preceding": {
+                  "X": 28.0,
+                  "Y": 1.1
+                },
+                "Leaving": {
+                  "X": 28.0,
+                  "Y": 1.1
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 30.8,
+                  "Y": -3.1
+                },
+                "Preceding": {
+                  "X": 30.8,
+                  "Y": -3.1
+                },
+                "Leaving": {
+                  "X": 30.8,
+                  "Y": -3.1
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 32.0,
+                  "Y": 0.1
+                },
+                "Preceding": {
+                  "X": 32.0,
+                  "Y": 0.1
+                },
+                "Leaving": {
+                  "X": 32.0,
+                  "Y": 0.1
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 30.0,
+                  "Y": 0.6
+                },
+                "Preceding": {
+                  "X": 30.0,
+                  "Y": 0.6
+                },
+                "Leaving": {
+                  "X": 30.0,
+                  "Y": 0.6
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 55.0,
+                  "Y": 2.4
+                },
+                "Preceding": {
+                  "X": 55.0,
+                  "Y": 2.4
+                },
+                "Leaving": {
+                  "X": 55.0,
+                  "Y": 2.4
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 57.0,
+                  "Y": 1.9000000000000001
+                },
+                "Preceding": {
+                  "X": 57.0,
+                  "Y": 1.9000000000000001
+                },
+                "Leaving": {
+                  "X": 57.0,
+                  "Y": 1.9000000000000001
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 58.6,
+                  "Y": -1.3
+                },
+                "Preceding": {
+                  "X": 58.6,
+                  "Y": -1.3
+                },
+                "Leaving": {
+                  "X": 58.6,
+                  "Y": -1.3
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 56.6,
+                  "Y": -0.8
+                },
+                "Preceding": {
+                  "X": 56.6,
+                  "Y": -0.8
+                },
+                "Leaving": {
+                  "X": 56.6,
+                  "Y": -0.8
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 75.0,
+                  "Y": 2.4
+                },
+                "Preceding": {
+                  "X": 75.0,
+                  "Y": 2.4
+                },
+                "Leaving": {
+                  "X": 75.0,
+                  "Y": 2.4
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 76.2,
+                  "Y": 2.1
+                },
+                "Preceding": {
+                  "X": 76.2,
+                  "Y": 2.1
+                },
+                "Leaving": {
+                  "X": 76.2,
+                  "Y": 2.1
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 77.8,
+                  "Y": -1.1
+                },
+                "Preceding": {
+                  "X": 77.8,
+                  "Y": -1.1
+                },
+                "Leaving": {
+                  "X": 77.8,
+                  "Y": -1.1
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 76.6,
+                  "Y": -0.8
+                },
+                "Preceding": {
+                  "X": 76.6,
+                  "Y": -0.8
+                },
+                "Leaving": {
+                  "X": 76.6,
+                  "Y": -0.8
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "Name-ShearTranslation.otf",
+      "sha256": "87ab331845a79cdd5eb41041e86c93426b828bad0c2bdf01849c9240f79ca820",
+      "text": "AVfi",
+      "open_type": true,
+      "size": 40,
+      "advance": 78.8,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 2.8000000000000003,
+                  "Y": 2.1
+                },
+                "Preceding": {
+                  "X": 2.8000000000000003,
+                  "Y": 2.1
+                },
+                "Leaving": {
+                  "X": 2.8000000000000003,
+                  "Y": 2.1
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 6.8,
+                  "Y": 1.1
+                },
+                "Preceding": {
+                  "X": 6.8,
+                  "Y": 1.1
+                },
+                "Leaving": {
+                  "X": 6.8,
+                  "Y": 1.1
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 8.8,
+                  "Y": -2.9
+                },
+                "Preceding": {
+                  "X": 8.8,
+                  "Y": -2.9
+                },
+                "Leaving": {
+                  "X": 8.8,
+                  "Y": -2.9
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 4.8,
+                  "Y": -1.9000000000000001
+                },
+                "Preceding": {
+                  "X": 4.8,
+                  "Y": -1.9000000000000001
+                },
+                "Leaving": {
+                  "X": 4.8,
+                  "Y": -1.9000000000000001
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 24.8,
+                  "Y": 1.1
+                },
+                "Preceding": {
+                  "X": 24.8,
+                  "Y": 1.1
+                },
+                "Leaving": {
+                  "X": 24.8,
+                  "Y": 1.1
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 27.6,
+                  "Y": -3.1
+                },
+                "Preceding": {
+                  "X": 27.6,
+                  "Y": -3.1
+                },
+                "Leaving": {
+                  "X": 27.6,
+                  "Y": -3.1
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 28.8,
+                  "Y": 0.1
+                },
+                "Preceding": {
+                  "X": 28.8,
+                  "Y": 0.1
+                },
+                "Leaving": {
+                  "X": 28.8,
+                  "Y": 0.1
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 26.8,
+                  "Y": 0.6
+                },
+                "Preceding": {
+                  "X": 26.8,
+                  "Y": 0.6
+                },
+                "Leaving": {
+                  "X": 26.8,
+                  "Y": 0.6
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 51.599999999999994,
+                  "Y": 2.1
+                },
+                "Preceding": {
+                  "X": 51.599999999999994,
+                  "Y": 2.1
+                },
+                "Leaving": {
+                  "X": 51.599999999999994,
+                  "Y": 2.1
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 56.4,
+                  "Y": 0.9
+                },
+                "Preceding": {
+                  "X": 56.4,
+                  "Y": 0.9
+                },
+                "Leaving": {
+                  "X": 56.4,
+                  "Y": 0.9
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 58.4,
+                  "Y": -3.1
+                },
+                "Preceding": {
+                  "X": 58.4,
+                  "Y": -3.1
+                },
+                "Leaving": {
+                  "X": 58.4,
+                  "Y": -3.1
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 53.599999999999994,
+                  "Y": -1.9000000000000001
+                },
+                "Preceding": {
+                  "X": 53.599999999999994,
+                  "Y": -1.9000000000000001
+                },
+                "Leaving": {
+                  "X": 53.599999999999994,
+                  "Y": -1.9000000000000001
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "CID-FullSixBoth.otf",
+      "sha256": "09420fe065bf3d411fc4b528e8e83404717f3e61f8eb4857145f86e9051d24ea",
+      "text": "AVfi",
+      "open_type": false,
+      "size": 40,
+      "advance": 88.0,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 0.9550000000000001,
+                  "Y": -0.3325
+                },
+                "Preceding": {
+                  "X": 0.9550000000000001,
+                  "Y": -0.3325
+                },
+                "Leaving": {
+                  "X": 0.9550000000000001,
+                  "Y": -0.3325
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 5.705,
+                  "Y": -3.0825
+                },
+                "Preceding": {
+                  "X": 5.705,
+                  "Y": -3.0825
+                },
+                "Leaving": {
+                  "X": 5.705,
+                  "Y": -3.0825
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 4.33,
+                  "Y": -5.0825000000000005
+                },
+                "Preceding": {
+                  "X": 4.33,
+                  "Y": -5.0825000000000005
+                },
+                "Leaving": {
+                  "X": 4.33,
+                  "Y": -5.0825000000000005
+                }
+              },
+              {
+                "Anchor": {
+                  "X": -0.42,
+                  "Y": -2.3325
+                },
+                "Preceding": {
+                  "X": -0.42,
+                  "Y": -2.3325
+                },
+                "Leaving": {
+                  "X": -0.42,
+                  "Y": -2.3325
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 23.54625,
+                  "Y": -1.285
+                },
+                "Preceding": {
+                  "X": 23.54625,
+                  "Y": -1.285
+                },
+                "Leaving": {
+                  "X": 23.54625,
+                  "Y": -1.285
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 23.37125,
+                  "Y": -4.835
+                },
+                "Preceding": {
+                  "X": 23.37125,
+                  "Y": -4.835
+                },
+                "Leaving": {
+                  "X": 23.37125,
+                  "Y": -4.835
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 20.48375,
+                  "Y": -0.91
+                },
+                "Preceding": {
+                  "X": 20.48375,
+                  "Y": -0.91
+                },
+                "Leaving": {
+                  "X": 20.48375,
+                  "Y": -0.91
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 22.015,
+                  "Y": -1.0975
+                },
+                "Preceding": {
+                  "X": 22.015,
+                  "Y": -1.0975
+                },
+                "Leaving": {
+                  "X": 22.015,
+                  "Y": -1.0975
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 53.5675,
+                  "Y": -0.40750000000000003
+                },
+                "Preceding": {
+                  "X": 53.5675,
+                  "Y": -0.40750000000000003
+                },
+                "Leaving": {
+                  "X": 53.5675,
+                  "Y": -0.40750000000000003
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 55.9425,
+                  "Y": -1.7825
+                },
+                "Preceding": {
+                  "X": 55.9425,
+                  "Y": -1.7825
+                },
+                "Leaving": {
+                  "X": 55.9425,
+                  "Y": -1.7825
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 54.8425,
+                  "Y": -3.3825000000000003
+                },
+                "Preceding": {
+                  "X": 54.8425,
+                  "Y": -3.3825000000000003
+                },
+                "Leaving": {
+                  "X": 54.8425,
+                  "Y": -3.3825000000000003
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 52.4675,
+                  "Y": -2.0075
+                },
+                "Preceding": {
+                  "X": 52.4675,
+                  "Y": -2.0075
+                },
+                "Leaving": {
+                  "X": 52.4675,
+                  "Y": -2.0075
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 71.72125,
+                  "Y": -0.23500000000000001
+                },
+                "Preceding": {
+                  "X": 71.72125,
+                  "Y": -0.23500000000000001
+                },
+                "Leaving": {
+                  "X": 71.72125,
+                  "Y": -0.23500000000000001
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 70.8025,
+                  "Y": -0.1225
+                },
+                "Preceding": {
+                  "X": 70.8025,
+                  "Y": -0.1225
+                },
+                "Leaving": {
+                  "X": 70.8025,
+                  "Y": -0.1225
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 71.1525,
+                  "Y": -3.0225
+                },
+                "Preceding": {
+                  "X": 71.1525,
+                  "Y": -3.0225
+                },
+                "Leaving": {
+                  "X": 71.1525,
+                  "Y": -3.0225
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 72.07125,
+                  "Y": -3.1350000000000002
+                },
+                "Preceding": {
+                  "X": 72.07125,
+                  "Y": -3.1350000000000002
+                },
+                "Leaving": {
+                  "X": 72.07125,
+                  "Y": -3.1350000000000002
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "CID-FullSixBoth.otf",
+      "sha256": "09420fe065bf3d411fc4b528e8e83404717f3e61f8eb4857145f86e9051d24ea",
+      "text": "AVfi",
+      "open_type": true,
+      "size": 40,
+      "advance": 78.8,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 0.9550000000000001,
+                  "Y": -0.3325
+                },
+                "Preceding": {
+                  "X": 0.9550000000000001,
+                  "Y": -0.3325
+                },
+                "Leaving": {
+                  "X": 0.9550000000000001,
+                  "Y": -0.3325
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 5.705,
+                  "Y": -3.0825
+                },
+                "Preceding": {
+                  "X": 5.705,
+                  "Y": -3.0825
+                },
+                "Leaving": {
+                  "X": 5.705,
+                  "Y": -3.0825
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 4.33,
+                  "Y": -5.0825000000000005
+                },
+                "Preceding": {
+                  "X": 4.33,
+                  "Y": -5.0825000000000005
+                },
+                "Leaving": {
+                  "X": 4.33,
+                  "Y": -5.0825000000000005
+                }
+              },
+              {
+                "Anchor": {
+                  "X": -0.42,
+                  "Y": -2.3325
+                },
+                "Preceding": {
+                  "X": -0.42,
+                  "Y": -2.3325
+                },
+                "Leaving": {
+                  "X": -0.42,
+                  "Y": -2.3325
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 20.34625,
+                  "Y": -1.285
+                },
+                "Preceding": {
+                  "X": 20.34625,
+                  "Y": -1.285
+                },
+                "Leaving": {
+                  "X": 20.34625,
+                  "Y": -1.285
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 20.17125,
+                  "Y": -4.835
+                },
+                "Preceding": {
+                  "X": 20.17125,
+                  "Y": -4.835
+                },
+                "Leaving": {
+                  "X": 20.17125,
+                  "Y": -4.835
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 17.28375,
+                  "Y": -0.91
+                },
+                "Preceding": {
+                  "X": 17.28375,
+                  "Y": -0.91
+                },
+                "Leaving": {
+                  "X": 17.28375,
+                  "Y": -0.91
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 18.815,
+                  "Y": -1.0975
+                },
+                "Preceding": {
+                  "X": 18.815,
+                  "Y": -1.0975
+                },
+                "Leaving": {
+                  "X": 18.815,
+                  "Y": -1.0975
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 49.754999999999995,
+                  "Y": -0.3325
+                },
+                "Preceding": {
+                  "X": 49.754999999999995,
+                  "Y": -0.3325
+                },
+                "Leaving": {
+                  "X": 49.754999999999995,
+                  "Y": -0.3325
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 55.455,
+                  "Y": -3.6325000000000003
+                },
+                "Preceding": {
+                  "X": 55.455,
+                  "Y": -3.6325000000000003
+                },
+                "Leaving": {
+                  "X": 55.455,
+                  "Y": -3.6325000000000003
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 54.08,
+                  "Y": -5.6325
+                },
+                "Preceding": {
+                  "X": 54.08,
+                  "Y": -5.6325
+                },
+                "Leaving": {
+                  "X": 54.08,
+                  "Y": -5.6325
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 48.379999999999995,
+                  "Y": -2.3325
+                },
+                "Preceding": {
+                  "X": 48.379999999999995,
+                  "Y": -2.3325
+                },
+                "Leaving": {
+                  "X": 48.379999999999995,
+                  "Y": -2.3325
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "CID-FullSixFDOnly.otf",
+      "sha256": "a7addf7abf939bd5f34ed7f0ffa74870f658dae6532882d9fcbe740eedaffa36",
+      "text": "AVfi",
+      "open_type": false,
+      "size": 40,
+      "advance": 88.0,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 5.2,
+                  "Y": 1.4000000000000001
+                },
+                "Preceding": {
+                  "X": 5.2,
+                  "Y": 1.4000000000000001
+                },
+                "Leaving": {
+                  "X": 5.2,
+                  "Y": 1.4000000000000001
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 5.2,
+                  "Y": -2.6
+                },
+                "Preceding": {
+                  "X": 5.2,
+                  "Y": -2.6
+                },
+                "Leaving": {
+                  "X": 5.2,
+                  "Y": -2.6
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 1.2,
+                  "Y": -3.6
+                },
+                "Preceding": {
+                  "X": 1.2,
+                  "Y": -3.6
+                },
+                "Leaving": {
+                  "X": 1.2,
+                  "Y": -3.6
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 1.2,
+                  "Y": 0.4
+                },
+                "Preceding": {
+                  "X": 1.2,
+                  "Y": 0.4
+                },
+                "Leaving": {
+                  "X": 1.2,
+                  "Y": 0.4
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 23.8,
+                  "Y": -0.5
+                },
+                "Preceding": {
+                  "X": 23.8,
+                  "Y": -0.5
+                },
+                "Leaving": {
+                  "X": 23.8,
+                  "Y": -0.5
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 23.5,
+                  "Y": -4.7
+                },
+                "Preceding": {
+                  "X": 23.5,
+                  "Y": -4.7
+                },
+                "Leaving": {
+                  "X": 23.5,
+                  "Y": -4.7
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 19.8,
+                  "Y": -1.5
+                },
+                "Preceding": {
+                  "X": 19.8,
+                  "Y": -1.5
+                },
+                "Leaving": {
+                  "X": 19.8,
+                  "Y": -1.5
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 21.8,
+                  "Y": -1.0
+                },
+                "Preceding": {
+                  "X": 21.8,
+                  "Y": -1.0
+                },
+                "Leaving": {
+                  "X": 21.8,
+                  "Y": -1.0
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 57.6,
+                  "Y": 1.1
+                },
+                "Preceding": {
+                  "X": 57.6,
+                  "Y": 1.1
+                },
+                "Leaving": {
+                  "X": 57.6,
+                  "Y": 1.1
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 57.6,
+                  "Y": -0.9
+                },
+                "Preceding": {
+                  "X": 57.6,
+                  "Y": -0.9
+                },
+                "Leaving": {
+                  "X": 57.6,
+                  "Y": -0.9
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 54.4,
+                  "Y": -1.7
+                },
+                "Preceding": {
+                  "X": 54.4,
+                  "Y": -1.7
+                },
+                "Leaving": {
+                  "X": 54.4,
+                  "Y": -1.7
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 54.4,
+                  "Y": 0.3
+                },
+                "Preceding": {
+                  "X": 54.4,
+                  "Y": 0.3
+                },
+                "Leaving": {
+                  "X": 54.4,
+                  "Y": 0.3
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 72.05,
+                  "Y": 0.8
+                },
+                "Preceding": {
+                  "X": 72.05,
+                  "Y": 0.8
+                },
+                "Leaving": {
+                  "X": 72.05,
+                  "Y": 0.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 70.85,
+                  "Y": 0.5
+                },
+                "Preceding": {
+                  "X": 70.85,
+                  "Y": 0.5
+                },
+                "Leaving": {
+                  "X": 70.85,
+                  "Y": 0.5
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 71.25,
+                  "Y": -2.7
+                },
+                "Preceding": {
+                  "X": 71.25,
+                  "Y": -2.7
+                },
+                "Leaving": {
+                  "X": 71.25,
+                  "Y": -2.7
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 72.45,
+                  "Y": -2.4
+                },
+                "Preceding": {
+                  "X": 72.45,
+                  "Y": -2.4
+                },
+                "Leaving": {
+                  "X": 72.45,
+                  "Y": -2.4
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "CID-FullSixFDOnly.otf",
+      "sha256": "a7addf7abf939bd5f34ed7f0ffa74870f658dae6532882d9fcbe740eedaffa36",
+      "text": "AVfi",
+      "open_type": true,
+      "size": 40,
+      "advance": 78.8,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 5.2,
+                  "Y": 1.4000000000000001
+                },
+                "Preceding": {
+                  "X": 5.2,
+                  "Y": 1.4000000000000001
+                },
+                "Leaving": {
+                  "X": 5.2,
+                  "Y": 1.4000000000000001
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 5.2,
+                  "Y": -2.6
+                },
+                "Preceding": {
+                  "X": 5.2,
+                  "Y": -2.6
+                },
+                "Leaving": {
+                  "X": 5.2,
+                  "Y": -2.6
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 1.2,
+                  "Y": -3.6
+                },
+                "Preceding": {
+                  "X": 1.2,
+                  "Y": -3.6
+                },
+                "Leaving": {
+                  "X": 1.2,
+                  "Y": -3.6
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 1.2,
+                  "Y": 0.4
+                },
+                "Preceding": {
+                  "X": 1.2,
+                  "Y": 0.4
+                },
+                "Leaving": {
+                  "X": 1.2,
+                  "Y": 0.4
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 20.6,
+                  "Y": -0.5
+                },
+                "Preceding": {
+                  "X": 20.6,
+                  "Y": -0.5
+                },
+                "Leaving": {
+                  "X": 20.6,
+                  "Y": -0.5
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 20.3,
+                  "Y": -4.7
+                },
+                "Preceding": {
+                  "X": 20.3,
+                  "Y": -4.7
+                },
+                "Leaving": {
+                  "X": 20.3,
+                  "Y": -4.7
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 16.6,
+                  "Y": -1.5
+                },
+                "Preceding": {
+                  "X": 16.6,
+                  "Y": -1.5
+                },
+                "Leaving": {
+                  "X": 16.6,
+                  "Y": -1.5
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 18.6,
+                  "Y": -1.0
+                },
+                "Preceding": {
+                  "X": 18.6,
+                  "Y": -1.0
+                },
+                "Leaving": {
+                  "X": 18.6,
+                  "Y": -1.0
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 54.0,
+                  "Y": 1.4000000000000001
+                },
+                "Preceding": {
+                  "X": 54.0,
+                  "Y": 1.4000000000000001
+                },
+                "Leaving": {
+                  "X": 54.0,
+                  "Y": 1.4000000000000001
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 54.0,
+                  "Y": -3.4
+                },
+                "Preceding": {
+                  "X": 54.0,
+                  "Y": -3.4
+                },
+                "Leaving": {
+                  "X": 54.0,
+                  "Y": -3.4
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 50.0,
+                  "Y": -4.4
+                },
+                "Preceding": {
+                  "X": 50.0,
+                  "Y": -4.4
+                },
+                "Leaving": {
+                  "X": 50.0,
+                  "Y": -4.4
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 50.0,
+                  "Y": 0.4
+                },
+                "Preceding": {
+                  "X": 50.0,
+                  "Y": 0.4
+                },
+                "Leaving": {
+                  "X": 50.0,
+                  "Y": 0.4
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "psdkit-CFF1-TopMatrixReject.otf",
+      "sha256": "ec6758e4980dcd3e0c0af5a632383a56486bd6b8c6f5f137553d5de6315e78b0",
+      "text": "AVfi",
+      "open_type": false,
+      "size": 40,
+      "advance": 88.0,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 0.8,
+                  "Y": -0.8
+                },
+                "Preceding": {
+                  "X": 0.8,
+                  "Y": -0.8
+                },
+                "Leaving": {
+                  "X": 0.8,
+                  "Y": -0.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 8.8,
+                  "Y": -0.8
+                },
+                "Preceding": {
+                  "X": 8.8,
+                  "Y": -0.8
+                },
+                "Leaving": {
+                  "X": 8.8,
+                  "Y": -0.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 8.8,
+                  "Y": -4.8
+                },
+                "Preceding": {
+                  "X": 8.8,
+                  "Y": -4.8
+                },
+                "Leaving": {
+                  "X": 8.8,
+                  "Y": -4.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 0.8,
+                  "Y": -4.8
+                },
+                "Preceding": {
+                  "X": 0.8,
+                  "Y": -4.8
+                },
+                "Leaving": {
+                  "X": 0.8,
+                  "Y": -4.8
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 26.4,
+                  "Y": -1.6
+                },
+                "Preceding": {
+                  "X": 26.4,
+                  "Y": -1.6
+                },
+                "Leaving": {
+                  "X": 26.4,
+                  "Y": -1.6
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 28.0,
+                  "Y": -5.6000000000000005
+                },
+                "Preceding": {
+                  "X": 28.0,
+                  "Y": -5.6000000000000005
+                },
+                "Leaving": {
+                  "X": 28.0,
+                  "Y": -5.6000000000000005
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 34.4,
+                  "Y": -1.6
+                },
+                "Preceding": {
+                  "X": 34.4,
+                  "Y": -1.6
+                },
+                "Leaving": {
+                  "X": 34.4,
+                  "Y": -1.6
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 30.4,
+                  "Y": -1.6
+                },
+                "Preceding": {
+                  "X": 30.4,
+                  "Y": -1.6
+                },
+                "Leaving": {
+                  "X": 30.4,
+                  "Y": -1.6
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 53.6,
+                  "Y": -0.4
+                },
+                "Preceding": {
+                  "X": 53.6,
+                  "Y": -0.4
+                },
+                "Leaving": {
+                  "X": 53.6,
+                  "Y": -0.4
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 57.6,
+                  "Y": -0.4
+                },
+                "Preceding": {
+                  "X": 57.6,
+                  "Y": -0.4
+                },
+                "Leaving": {
+                  "X": 57.6,
+                  "Y": -0.4
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 57.6,
+                  "Y": -3.6
+                },
+                "Preceding": {
+                  "X": 57.6,
+                  "Y": -3.6
+                },
+                "Leaving": {
+                  "X": 57.6,
+                  "Y": -3.6
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 53.6,
+                  "Y": -3.6
+                },
+                "Preceding": {
+                  "X": 53.6,
+                  "Y": -3.6
+                },
+                "Leaving": {
+                  "X": 53.6,
+                  "Y": -3.6
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 73.6,
+                  "Y": -0.4
+                },
+                "Preceding": {
+                  "X": 73.6,
+                  "Y": -0.4
+                },
+                "Leaving": {
+                  "X": 73.6,
+                  "Y": -0.4
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 76.0,
+                  "Y": -0.4
+                },
+                "Preceding": {
+                  "X": 76.0,
+                  "Y": -0.4
+                },
+                "Leaving": {
+                  "X": 76.0,
+                  "Y": -0.4
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 76.0,
+                  "Y": -3.6
+                },
+                "Preceding": {
+                  "X": 76.0,
+                  "Y": -3.6
+                },
+                "Leaving": {
+                  "X": 76.0,
+                  "Y": -3.6
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 73.6,
+                  "Y": -3.6
+                },
+                "Preceding": {
+                  "X": 73.6,
+                  "Y": -3.6
+                },
+                "Leaving": {
+                  "X": 73.6,
+                  "Y": -3.6
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "psdkit-CFF1-TopMatrixReject.otf",
+      "sha256": "ec6758e4980dcd3e0c0af5a632383a56486bd6b8c6f5f137553d5de6315e78b0",
+      "text": "AVfi",
+      "open_type": true,
+      "size": 40,
+      "advance": 78.8,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 0.8,
+                  "Y": -0.8
+                },
+                "Preceding": {
+                  "X": 0.8,
+                  "Y": -0.8
+                },
+                "Leaving": {
+                  "X": 0.8,
+                  "Y": -0.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 8.8,
+                  "Y": -0.8
+                },
+                "Preceding": {
+                  "X": 8.8,
+                  "Y": -0.8
+                },
+                "Leaving": {
+                  "X": 8.8,
+                  "Y": -0.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 8.8,
+                  "Y": -4.8
+                },
+                "Preceding": {
+                  "X": 8.8,
+                  "Y": -4.8
+                },
+                "Leaving": {
+                  "X": 8.8,
+                  "Y": -4.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 0.8,
+                  "Y": -4.8
+                },
+                "Preceding": {
+                  "X": 0.8,
+                  "Y": -4.8
+                },
+                "Leaving": {
+                  "X": 0.8,
+                  "Y": -4.8
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 23.2,
+                  "Y": -1.6
+                },
+                "Preceding": {
+                  "X": 23.2,
+                  "Y": -1.6
+                },
+                "Leaving": {
+                  "X": 23.2,
+                  "Y": -1.6
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 24.8,
+                  "Y": -5.6000000000000005
+                },
+                "Preceding": {
+                  "X": 24.8,
+                  "Y": -5.6000000000000005
+                },
+                "Leaving": {
+                  "X": 24.8,
+                  "Y": -5.6000000000000005
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 31.200000000000003,
+                  "Y": -1.6
+                },
+                "Preceding": {
+                  "X": 31.200000000000003,
+                  "Y": -1.6
+                },
+                "Leaving": {
+                  "X": 31.200000000000003,
+                  "Y": -1.6
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 27.200000000000003,
+                  "Y": -1.6
+                },
+                "Preceding": {
+                  "X": 27.200000000000003,
+                  "Y": -1.6
+                },
+                "Leaving": {
+                  "X": 27.200000000000003,
+                  "Y": -1.6
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 49.599999999999994,
+                  "Y": -0.8
+                },
+                "Preceding": {
+                  "X": 49.599999999999994,
+                  "Y": -0.8
+                },
+                "Leaving": {
+                  "X": 49.599999999999994,
+                  "Y": -0.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 59.199999999999996,
+                  "Y": -0.8
+                },
+                "Preceding": {
+                  "X": 59.199999999999996,
+                  "Y": -0.8
+                },
+                "Leaving": {
+                  "X": 59.199999999999996,
+                  "Y": -0.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 59.199999999999996,
+                  "Y": -4.8
+                },
+                "Preceding": {
+                  "X": 59.199999999999996,
+                  "Y": -4.8
+                },
+                "Leaving": {
+                  "X": 59.199999999999996,
+                  "Y": -4.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 49.599999999999994,
+                  "Y": -4.8
+                },
+                "Preceding": {
+                  "X": 49.599999999999994,
+                  "Y": -4.8
+                },
+                "Leaving": {
+                  "X": 49.599999999999994,
+                  "Y": -4.8
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "psdkit-CFF1-FDMatrixReject.otf",
+      "sha256": "7d768d00f057b0103557fa631bc34d4e9a447e0a800c3381bf3f44975974de88",
+      "text": "AVfi",
+      "open_type": false,
+      "size": 40,
+      "advance": 88.0,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 0.8,
+                  "Y": -0.8
+                },
+                "Preceding": {
+                  "X": 0.8,
+                  "Y": -0.8
+                },
+                "Leaving": {
+                  "X": 0.8,
+                  "Y": -0.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 8.8,
+                  "Y": -0.8
+                },
+                "Preceding": {
+                  "X": 8.8,
+                  "Y": -0.8
+                },
+                "Leaving": {
+                  "X": 8.8,
+                  "Y": -0.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 8.8,
+                  "Y": -4.8
+                },
+                "Preceding": {
+                  "X": 8.8,
+                  "Y": -4.8
+                },
+                "Leaving": {
+                  "X": 8.8,
+                  "Y": -4.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 0.8,
+                  "Y": -4.8
+                },
+                "Preceding": {
+                  "X": 0.8,
+                  "Y": -4.8
+                },
+                "Leaving": {
+                  "X": 0.8,
+                  "Y": -4.8
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 26.4,
+                  "Y": -1.6
+                },
+                "Preceding": {
+                  "X": 26.4,
+                  "Y": -1.6
+                },
+                "Leaving": {
+                  "X": 26.4,
+                  "Y": -1.6
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 28.0,
+                  "Y": -5.6000000000000005
+                },
+                "Preceding": {
+                  "X": 28.0,
+                  "Y": -5.6000000000000005
+                },
+                "Leaving": {
+                  "X": 28.0,
+                  "Y": -5.6000000000000005
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 34.4,
+                  "Y": -1.6
+                },
+                "Preceding": {
+                  "X": 34.4,
+                  "Y": -1.6
+                },
+                "Leaving": {
+                  "X": 34.4,
+                  "Y": -1.6
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 30.4,
+                  "Y": -1.6
+                },
+                "Preceding": {
+                  "X": 30.4,
+                  "Y": -1.6
+                },
+                "Leaving": {
+                  "X": 30.4,
+                  "Y": -1.6
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 53.6,
+                  "Y": -0.4
+                },
+                "Preceding": {
+                  "X": 53.6,
+                  "Y": -0.4
+                },
+                "Leaving": {
+                  "X": 53.6,
+                  "Y": -0.4
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 57.6,
+                  "Y": -0.4
+                },
+                "Preceding": {
+                  "X": 57.6,
+                  "Y": -0.4
+                },
+                "Leaving": {
+                  "X": 57.6,
+                  "Y": -0.4
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 57.6,
+                  "Y": -3.6
+                },
+                "Preceding": {
+                  "X": 57.6,
+                  "Y": -3.6
+                },
+                "Leaving": {
+                  "X": 57.6,
+                  "Y": -3.6
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 53.6,
+                  "Y": -3.6
+                },
+                "Preceding": {
+                  "X": 53.6,
+                  "Y": -3.6
+                },
+                "Leaving": {
+                  "X": 53.6,
+                  "Y": -3.6
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 73.6,
+                  "Y": -0.4
+                },
+                "Preceding": {
+                  "X": 73.6,
+                  "Y": -0.4
+                },
+                "Leaving": {
+                  "X": 73.6,
+                  "Y": -0.4
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 76.0,
+                  "Y": -0.4
+                },
+                "Preceding": {
+                  "X": 76.0,
+                  "Y": -0.4
+                },
+                "Leaving": {
+                  "X": 76.0,
+                  "Y": -0.4
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 76.0,
+                  "Y": -3.6
+                },
+                "Preceding": {
+                  "X": 76.0,
+                  "Y": -3.6
+                },
+                "Leaving": {
+                  "X": 76.0,
+                  "Y": -3.6
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 73.6,
+                  "Y": -3.6
+                },
+                "Preceding": {
+                  "X": 73.6,
+                  "Y": -3.6
+                },
+                "Leaving": {
+                  "X": 73.6,
+                  "Y": -3.6
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "psdkit-CFF1-FDMatrixReject.otf",
+      "sha256": "7d768d00f057b0103557fa631bc34d4e9a447e0a800c3381bf3f44975974de88",
+      "text": "AVfi",
+      "open_type": true,
+      "size": 40,
+      "advance": 78.8,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 0.8,
+                  "Y": -0.8
+                },
+                "Preceding": {
+                  "X": 0.8,
+                  "Y": -0.8
+                },
+                "Leaving": {
+                  "X": 0.8,
+                  "Y": -0.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 8.8,
+                  "Y": -0.8
+                },
+                "Preceding": {
+                  "X": 8.8,
+                  "Y": -0.8
+                },
+                "Leaving": {
+                  "X": 8.8,
+                  "Y": -0.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 8.8,
+                  "Y": -4.8
+                },
+                "Preceding": {
+                  "X": 8.8,
+                  "Y": -4.8
+                },
+                "Leaving": {
+                  "X": 8.8,
+                  "Y": -4.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 0.8,
+                  "Y": -4.8
+                },
+                "Preceding": {
+                  "X": 0.8,
+                  "Y": -4.8
+                },
+                "Leaving": {
+                  "X": 0.8,
+                  "Y": -4.8
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 23.2,
+                  "Y": -1.6
+                },
+                "Preceding": {
+                  "X": 23.2,
+                  "Y": -1.6
+                },
+                "Leaving": {
+                  "X": 23.2,
+                  "Y": -1.6
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 24.8,
+                  "Y": -5.6000000000000005
+                },
+                "Preceding": {
+                  "X": 24.8,
+                  "Y": -5.6000000000000005
+                },
+                "Leaving": {
+                  "X": 24.8,
+                  "Y": -5.6000000000000005
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 31.200000000000003,
+                  "Y": -1.6
+                },
+                "Preceding": {
+                  "X": 31.200000000000003,
+                  "Y": -1.6
+                },
+                "Leaving": {
+                  "X": 31.200000000000003,
+                  "Y": -1.6
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 27.200000000000003,
+                  "Y": -1.6
+                },
+                "Preceding": {
+                  "X": 27.200000000000003,
+                  "Y": -1.6
+                },
+                "Leaving": {
+                  "X": 27.200000000000003,
+                  "Y": -1.6
+                }
+              }
+            ]
+          },
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 49.599999999999994,
+                  "Y": -0.8
+                },
+                "Preceding": {
+                  "X": 49.599999999999994,
+                  "Y": -0.8
+                },
+                "Leaving": {
+                  "X": 49.599999999999994,
+                  "Y": -0.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 59.199999999999996,
+                  "Y": -0.8
+                },
+                "Preceding": {
+                  "X": 59.199999999999996,
+                  "Y": -0.8
+                },
+                "Leaving": {
+                  "X": 59.199999999999996,
+                  "Y": -0.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 59.199999999999996,
+                  "Y": -4.8
+                },
+                "Preceding": {
+                  "X": 59.199999999999996,
+                  "Y": -4.8
+                },
+                "Leaving": {
+                  "X": 59.199999999999996,
+                  "Y": -4.8
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 49.599999999999994,
+                  "Y": -4.8
+                },
+                "Preceding": {
+                  "X": 49.599999999999994,
+                  "Y": -4.8
+                },
+                "Leaving": {
+                  "X": 49.599999999999994,
+                  "Y": -4.8
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "IntermediateOverflow.otf",
+      "sha256": "09e854e958b9d4266172faa22de309858e9dde5ca3071cd6621f726917799ed7",
+      "text": "A",
+      "open_type": false,
+      "size": 40,
+      "advance": 280.0,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 0.0,
+                  "Y": 0.0
+                },
+                "Preceding": {
+                  "X": 0.0,
+                  "Y": 0.0
+                },
+                "Leaving": {
+                  "X": 0.0,
+                  "Y": 39.99999999999999
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 79.99999999999999,
+                  "Y": 79.99999999999999
+                },
+                "Preceding": {
+                  "X": 39.99999999999999,
+                  "Y": 79.99999999999999
+                },
+                "Leaving": {
+                  "X": 79.99999999999999,
+                  "Y": 79.99999999999999
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "IntermediateOverflow.otf",
+      "sha256": "09e854e958b9d4266172faa22de309858e9dde5ca3071cd6621f726917799ed7",
+      "text": "A",
+      "open_type": true,
+      "size": 40,
+      "advance": 280.0,
+      "mask": {
+        "Width": 1,
+        "Height": 1,
+        "HasFillRule": true,
+        "FillRule": 1,
+        "Subpaths": [
+          {
+            "Closed": true,
+            "Operation": 1,
+            "Knots": [
+              {
+                "Anchor": {
+                  "X": 0.0,
+                  "Y": 0.0
+                },
+                "Preceding": {
+                  "X": 0.0,
+                  "Y": 0.0
+                },
+                "Leaving": {
+                  "X": 0.0,
+                  "Y": 39.99999999999999
+                }
+              },
+              {
+                "Anchor": {
+                  "X": 79.99999999999999,
+                  "Y": 79.99999999999999
+                },
+                "Preceding": {
+                  "X": 39.99999999999999,
+                  "Y": 79.99999999999999
+                },
+                "Leaving": {
+                  "X": 79.99999999999999,
+                  "Y": 79.99999999999999
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,479 @@
+{
+  "scope": "Independent required-feature and explicit named-LangSys fixtures in this owned static TTF only; no Go implementation result.",
+  "script_sha256": "b71fbd47425df4901d9a5ea58b83e20ad5966778be2840c450ded57685d6689d",
+  "uharfbuzz_binding_version": "0.56.3",
+  "harfbuzz_engine_version": "14.6.0",
+  "fonts": [
+    {
+      "variant": "required-liga",
+      "path": "/tmp/psdkit-font-shape-extra-features/required-liga.ttf",
+      "sha256": "8dbae11a036c25cf033ff35b76ca30cab0a1e13dd868fc4c22e4bec49e3a344d",
+      "cases": [
+        {
+          "text": "fi",
+          "liga": false,
+          "kern": true,
+          "script": "latn",
+          "language_tag": "",
+          "harfbuzz_language": "en",
+          "glyph_ids": [
+            11
+          ],
+          "clusters": [
+            0
+          ],
+          "positions": [
+            [
+              430,
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "text": "fi",
+          "liga": true,
+          "kern": true,
+          "script": "latn",
+          "language_tag": "",
+          "harfbuzz_language": "en",
+          "glyph_ids": [
+            11
+          ],
+          "clusters": [
+            0
+          ],
+          "positions": [
+            [
+              430,
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "text": "ffi",
+          "liga": false,
+          "kern": true,
+          "script": "latn",
+          "language_tag": "",
+          "harfbuzz_language": "en",
+          "glyph_ids": [
+            13
+          ],
+          "clusters": [
+            0
+          ],
+          "positions": [
+            [
+              710,
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "text": "ffi",
+          "liga": true,
+          "kern": true,
+          "script": "latn",
+          "language_tag": "",
+          "harfbuzz_language": "en",
+          "glyph_ids": [
+            13
+          ],
+          "clusters": [
+            0
+          ],
+          "positions": [
+            [
+              710,
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "text": "fiAVAV",
+          "liga": false,
+          "kern": true,
+          "script": "latn",
+          "language_tag": "",
+          "harfbuzz_language": "en",
+          "glyph_ids": [
+            11,
+            2,
+            3,
+            2,
+            3
+          ],
+          "clusters": [
+            0,
+            2,
+            3,
+            4,
+            5
+          ],
+          "positions": [
+            [
+              415,
+              0,
+              20,
+              0
+            ],
+            [
+              520,
+              0,
+              0,
+              0
+            ],
+            [
+              560,
+              0,
+              0,
+              0
+            ],
+            [
+              520,
+              0,
+              0,
+              0
+            ],
+            [
+              600,
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "text": "fiAVAV",
+          "liga": true,
+          "kern": true,
+          "script": "latn",
+          "language_tag": "",
+          "harfbuzz_language": "en",
+          "glyph_ids": [
+            11,
+            2,
+            3,
+            2,
+            3
+          ],
+          "clusters": [
+            0,
+            2,
+            3,
+            4,
+            5
+          ],
+          "positions": [
+            [
+              415,
+              0,
+              20,
+              0
+            ],
+            [
+              520,
+              0,
+              0,
+              0
+            ],
+            [
+              560,
+              0,
+              0,
+              0
+            ],
+            [
+              520,
+              0,
+              0,
+              0
+            ],
+            [
+              600,
+              0,
+              0,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "named-language-without-liga",
+      "path": "/tmp/psdkit-font-shape-extra-features/named-language-without-liga.ttf",
+      "sha256": "40bb98be349ff8f6f8fdbcec1fff712713b981688e5cfac0d3615329e9ad40cc",
+      "cases": [
+        {
+          "text": "fi",
+          "liga": false,
+          "kern": true,
+          "script": "latn",
+          "language_tag": "TRK ",
+          "harfbuzz_language": "tr",
+          "glyph_ids": [
+            7,
+            8
+          ],
+          "clusters": [
+            0,
+            1
+          ],
+          "positions": [
+            [
+              285,
+              0,
+              0,
+              0
+            ],
+            [
+              180,
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "text": "fi",
+          "liga": true,
+          "kern": true,
+          "script": "latn",
+          "language_tag": "TRK ",
+          "harfbuzz_language": "tr",
+          "glyph_ids": [
+            7,
+            8
+          ],
+          "clusters": [
+            0,
+            1
+          ],
+          "positions": [
+            [
+              285,
+              0,
+              0,
+              0
+            ],
+            [
+              180,
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "text": "ffi",
+          "liga": false,
+          "kern": true,
+          "script": "latn",
+          "language_tag": "TRK ",
+          "harfbuzz_language": "tr",
+          "glyph_ids": [
+            7,
+            7,
+            8
+          ],
+          "clusters": [
+            0,
+            1,
+            2
+          ],
+          "positions": [
+            [
+              310,
+              0,
+              0,
+              0
+            ],
+            [
+              285,
+              0,
+              0,
+              0
+            ],
+            [
+              180,
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "text": "ffi",
+          "liga": true,
+          "kern": true,
+          "script": "latn",
+          "language_tag": "TRK ",
+          "harfbuzz_language": "tr",
+          "glyph_ids": [
+            7,
+            7,
+            8
+          ],
+          "clusters": [
+            0,
+            1,
+            2
+          ],
+          "positions": [
+            [
+              310,
+              0,
+              0,
+              0
+            ],
+            [
+              285,
+              0,
+              0,
+              0
+            ],
+            [
+              180,
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "text": "fiAVAV",
+          "liga": false,
+          "kern": true,
+          "script": "latn",
+          "language_tag": "TRK ",
+          "harfbuzz_language": "tr",
+          "glyph_ids": [
+            7,
+            8,
+            2,
+            3,
+            2,
+            3
+          ],
+          "clusters": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "positions": [
+            [
+              285,
+              0,
+              0,
+              0
+            ],
+            [
+              180,
+              0,
+              0,
+              0
+            ],
+            [
+              520,
+              0,
+              0,
+              0
+            ],
+            [
+              560,
+              0,
+              0,
+              0
+            ],
+            [
+              520,
+              0,
+              0,
+              0
+            ],
+            [
+              600,
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "text": "fiAVAV",
+          "liga": true,
+          "kern": true,
+          "script": "latn",
+          "language_tag": "TRK ",
+          "harfbuzz_language": "tr",
+          "glyph_ids": [
+            7,
+            8,
+            2,
+            3,
+            2,
+            3
+          ],
+          "clusters": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "positions": [
+            [
+              285,
+              0,
+              0,
+              0
+            ],
+            [
+              180,
+              0,
+              0,
+              0
+            ],
+            [
+              520,
+              0,
+              0,
+              0
+            ],
+            [
+              560,
+              0,
+              0,
+              0
+            ],
+            [
+              520,
+              0,
+              0,
+              0
+            ],
+            [
+              600,
+              0,
+              0,
+              0
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "font_source_base_unchanged": true
+}

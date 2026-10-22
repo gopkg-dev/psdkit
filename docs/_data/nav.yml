@@ -1,0 +1,32 @@
+# 文档侧边导航。url 相对站点 baseurl；顺序同时决定上一页/下一页。
+- title: 开始
+  items:
+    - { title: 概览, url: /guide/ }
+    - { title: 快速开始, url: /guide/quickstart.html }
+    - { title: 能力矩阵, url: /status.html }
+- title: 使用指南
+  items:
+    - { title: PSD/PSB 与按需读取, url: /guide/reading.html }
+    - { title: 图层树与编辑, url: /guide/editing.html }
+    - { title: 合成、重绘与导出, url: /guide/rendering.html }
+    - { title: 智能对象与外链, url: /guide/smart-objects.html }
+    - { title: Warp 变形, url: /guide/warp.html }
+    - { title: 文字与字体, url: /guide/text.html }
+    - { title: 效果、调整与填充, url: /guide/effects.html }
+    - { title: 智能滤镜, url: /guide/filters.html }
+    - { title: ICC 与位深, url: /guide/color.html }
+    - { title: 预算、取消与错误, url: /guide/limits.html }
+- title: 接入
+  items:
+    - { title: Go API, url: /guide/api.html }
+    - { title: 浏览器 SDK, url: /browser.html }
+    - { title: 示例与 Playground, url: /guide/examples.html }
+- title: 项目
+  items:
+    - { title: 路线图, url: "/status.html#路线图" }
+    - { title: 参与贡献, url: /contributing.html }
+    - { title: 测试与素材, url: /testing.html }
+    - { title: 仓库结构, url: /repository.html }
+    - { title: GitHub Pages 部署, url: /deployment.html }
+    - { title: 设计规范, url: /design-handoff.html }
+    - { title: 许可与第三方声明, url: /third-party-notices.html }

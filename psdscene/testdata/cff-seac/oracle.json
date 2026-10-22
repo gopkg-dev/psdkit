@@ -1,0 +1,5783 @@
+{
+  "provenance": "Author QA: finite existing portable FontTools DecomposingRecordingPen normalized commands; fresh HB original font bytes and rerecorded HB_ABC; independent mask conversion; expected psdvector coverage and explicit integer premultiplied paint; no psdfont Glyph/RasterizeRun/textAffineRun expected route; no native AA claim.",
+  "input_oracle_sha256": "73665c3d74f4a23b772955361839a03e15acc2bebfdd3785079808d398fad6ce",
+  "producer_sha256": "de39277ba206c330747cb0d004ace77ca4be372f0fb0aaa1e55c7d45b9e24b9d",
+  "fontTools_version": "4.66.1",
+  "uharfbuzz_version": "0.56.3",
+  "Fonts": [
+    {
+      "File": "psdfont/testdata/cff1seac/Full256.otf",
+      "Name": "psdkitOwnedSeacFull256-Regular",
+      "SHA256": "5fe84c1b3ac777e3ec4617f746f40389f704d86fc6726924f168dadd276a7fbc"
+    },
+    {
+      "File": "psdfont/testdata/cff1seac/PriorTranslated.otf",
+      "Name": "psdkitOwnedSeacPriorTranslated-Regular",
+      "SHA256": "ab1f641d79017b9f6289b22417f724475e465ccdcaae8ed760918cf147edfef9"
+    },
+    {
+      "File": "psdfont/testdata/cff1seac/CustomAlias.otf",
+      "Name": "psdkitOwnedSeacCustomAlias-Regular",
+      "SHA256": "7a5f8deab70ebfa01aceeb402a7a58f391bf6cb3024a77c6def1852f853c73c2"
+    },
+    {
+      "File": "psdfont/testdata/cff1seac/SubrTerminal.otf",
+      "Name": "psdkitOwnedSeacSubrTerminal-Regular",
+      "SHA256": "06f88ef3fa4ec964ea14cc9ae487ee45e5e90f068ee572605dd1b49bd688a5be"
+    }
+  ],
+  "Cases": [
+    {
+      "Label": "Full256-policy-1-samples-4",
+      "Text": "ABC",
+      "Ends": [
+        1,
+        4
+      ],
+      "Fonts": [
+        "psdkitOwnedSeacFull256-Regular",
+        "psdkitOwnedSeacFull256-Regular"
+      ],
+      "Sizes": [
+        40,
+        40
+      ],
+      "Colors": [
+        [
+          0.65,
+          0.15,
+          0.4,
+          0.9
+        ],
+        [
+          0.35,
+          0.9,
+          0.2,
+          0.1
+        ]
+      ],
+      "Policy": 1,
+      "Liga": false,
+      "Kern": false,
+      "Transform": [
+        1,
+        0.125,
+        0.25,
+        1,
+        12,
+        52
+      ],
+      "Samples": 4,
+      "Glyphs": [
+        {
+          "Font": "psdkitOwnedSeacFull256-Regular",
+          "ID": 150,
+          "Start": 0,
+          "Length": 1,
+          "X": 0.0,
+          "Y": 0.0,
+          "Advance": 42.0,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacFull256-Regular",
+          "ID": 151,
+          "Start": 1,
+          "Length": 1,
+          "X": 42.0,
+          "Y": 0.0,
+          "Advance": 42.04,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacFull256-Regular",
+          "ID": 152,
+          "Start": 2,
+          "Length": 1,
+          "X": 84.03999999999999,
+          "Y": 0.0,
+          "Advance": 42.08,
+          "Scale": 0.04
+        }
+      ],
+      "Paints": [
+        {
+          "Color": [
+            0.65,
+            0.15,
+            0.4,
+            0.9
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 12.2,
+                      "Y": 51.25
+                    },
+                    "Preceding": {
+                      "X": 12.2,
+                      "Y": 51.25
+                    },
+                    "Leaving": {
+                      "X": 13.0,
+                      "Y": 51.35
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 14.2,
+                      "Y": 49.95
+                    },
+                    "Preceding": {
+                      "X": 13.3,
+                      "Y": 49.45
+                    },
+                    "Leaving": {
+                      "X": 14.2,
+                      "Y": 49.95
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 13.74,
+                      "Y": 51.985
+                    },
+                    "Preceding": {
+                      "X": 13.74,
+                      "Y": 51.985
+                    },
+                    "Leaving": {
+                      "X": 14.54,
+                      "Y": 52.085
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 15.74,
+                      "Y": 50.685
+                    },
+                    "Preceding": {
+                      "X": 14.84,
+                      "Y": 50.185
+                    },
+                    "Leaving": {
+                      "X": 15.74,
+                      "Y": 50.685
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Color": [
+            0.35,
+            0.9,
+            0.2,
+            0.1
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 54.199999999999996,
+                      "Y": 56.5
+                    },
+                    "Preceding": {
+                      "X": 54.199999999999996,
+                      "Y": 56.5
+                    },
+                    "Leaving": {
+                      "X": 55.0,
+                      "Y": 56.6
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 56.199999999999996,
+                      "Y": 55.2
+                    },
+                    "Preceding": {
+                      "X": 55.3,
+                      "Y": 54.7
+                    },
+                    "Leaving": {
+                      "X": 56.199999999999996,
+                      "Y": 55.2
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 55.800000000000004,
+                      "Y": 57.165
+                    },
+                    "Preceding": {
+                      "X": 55.800000000000004,
+                      "Y": 57.165
+                    },
+                    "Leaving": {
+                      "X": 56.6,
+                      "Y": 57.265
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 57.800000000000004,
+                      "Y": 55.865
+                    },
+                    "Preceding": {
+                      "X": 56.9,
+                      "Y": 55.365
+                    },
+                    "Leaving": {
+                      "X": 57.800000000000004,
+                      "Y": 55.865
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 96.24,
+                      "Y": 61.754999999999995
+                    },
+                    "Preceding": {
+                      "X": 96.24,
+                      "Y": 61.754999999999995
+                    },
+                    "Leaving": {
+                      "X": 97.03999999999999,
+                      "Y": 61.855
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 98.24,
+                      "Y": 60.455
+                    },
+                    "Preceding": {
+                      "X": 97.33999999999999,
+                      "Y": 59.955
+                    },
+                    "Leaving": {
+                      "X": 98.24,
+                      "Y": 60.455
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 97.22,
+                      "Y": 62.265
+                    },
+                    "Preceding": {
+                      "X": 97.22,
+                      "Y": 62.265
+                    },
+                    "Leaving": {
+                      "X": 98.02,
+                      "Y": 62.364999999999995
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 99.22,
+                      "Y": 60.965
+                    },
+                    "Preceding": {
+                      "X": 98.32,
+                      "Y": 60.464999999999996
+                    },
+                    "Leaving": {
+                      "X": 99.22,
+                      "Y": 60.965
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "Advance": 126.11999999999999
+    },
+    {
+      "Label": "Full256-policy-1-samples-8",
+      "Text": "ABC",
+      "Ends": [
+        1,
+        4
+      ],
+      "Fonts": [
+        "psdkitOwnedSeacFull256-Regular",
+        "psdkitOwnedSeacFull256-Regular"
+      ],
+      "Sizes": [
+        40,
+        40
+      ],
+      "Colors": [
+        [
+          0.65,
+          0.15,
+          0.4,
+          0.9
+        ],
+        [
+          0.35,
+          0.9,
+          0.2,
+          0.1
+        ]
+      ],
+      "Policy": 1,
+      "Liga": false,
+      "Kern": false,
+      "Transform": [
+        1,
+        0.125,
+        0.25,
+        1,
+        12,
+        52
+      ],
+      "Samples": 8,
+      "Glyphs": [
+        {
+          "Font": "psdkitOwnedSeacFull256-Regular",
+          "ID": 150,
+          "Start": 0,
+          "Length": 1,
+          "X": 0.0,
+          "Y": 0.0,
+          "Advance": 42.0,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacFull256-Regular",
+          "ID": 151,
+          "Start": 1,
+          "Length": 1,
+          "X": 42.0,
+          "Y": 0.0,
+          "Advance": 42.04,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacFull256-Regular",
+          "ID": 152,
+          "Start": 2,
+          "Length": 1,
+          "X": 84.03999999999999,
+          "Y": 0.0,
+          "Advance": 42.08,
+          "Scale": 0.04
+        }
+      ],
+      "Paints": [
+        {
+          "Color": [
+            0.65,
+            0.15,
+            0.4,
+            0.9
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 12.2,
+                      "Y": 51.25
+                    },
+                    "Preceding": {
+                      "X": 12.2,
+                      "Y": 51.25
+                    },
+                    "Leaving": {
+                      "X": 13.0,
+                      "Y": 51.35
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 14.2,
+                      "Y": 49.95
+                    },
+                    "Preceding": {
+                      "X": 13.3,
+                      "Y": 49.45
+                    },
+                    "Leaving": {
+                      "X": 14.2,
+                      "Y": 49.95
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 13.74,
+                      "Y": 51.985
+                    },
+                    "Preceding": {
+                      "X": 13.74,
+                      "Y": 51.985
+                    },
+                    "Leaving": {
+                      "X": 14.54,
+                      "Y": 52.085
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 15.74,
+                      "Y": 50.685
+                    },
+                    "Preceding": {
+                      "X": 14.84,
+                      "Y": 50.185
+                    },
+                    "Leaving": {
+                      "X": 15.74,
+                      "Y": 50.685
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Color": [
+            0.35,
+            0.9,
+            0.2,
+            0.1
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 54.199999999999996,
+                      "Y": 56.5
+                    },
+                    "Preceding": {
+                      "X": 54.199999999999996,
+                      "Y": 56.5
+                    },
+                    "Leaving": {
+                      "X": 55.0,
+                      "Y": 56.6
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 56.199999999999996,
+                      "Y": 55.2
+                    },
+                    "Preceding": {
+                      "X": 55.3,
+                      "Y": 54.7
+                    },
+                    "Leaving": {
+                      "X": 56.199999999999996,
+                      "Y": 55.2
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 55.800000000000004,
+                      "Y": 57.165
+                    },
+                    "Preceding": {
+                      "X": 55.800000000000004,
+                      "Y": 57.165
+                    },
+                    "Leaving": {
+                      "X": 56.6,
+                      "Y": 57.265
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 57.800000000000004,
+                      "Y": 55.865
+                    },
+                    "Preceding": {
+                      "X": 56.9,
+                      "Y": 55.365
+                    },
+                    "Leaving": {
+                      "X": 57.800000000000004,
+                      "Y": 55.865
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 96.24,
+                      "Y": 61.754999999999995
+                    },
+                    "Preceding": {
+                      "X": 96.24,
+                      "Y": 61.754999999999995
+                    },
+                    "Leaving": {
+                      "X": 97.03999999999999,
+                      "Y": 61.855
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 98.24,
+                      "Y": 60.455
+                    },
+                    "Preceding": {
+                      "X": 97.33999999999999,
+                      "Y": 59.955
+                    },
+                    "Leaving": {
+                      "X": 98.24,
+                      "Y": 60.455
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 97.22,
+                      "Y": 62.265
+                    },
+                    "Preceding": {
+                      "X": 97.22,
+                      "Y": 62.265
+                    },
+                    "Leaving": {
+                      "X": 98.02,
+                      "Y": 62.364999999999995
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 99.22,
+                      "Y": 60.965
+                    },
+                    "Preceding": {
+                      "X": 98.32,
+                      "Y": 60.464999999999996
+                    },
+                    "Leaving": {
+                      "X": 99.22,
+                      "Y": 60.965
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "Advance": 126.11999999999999
+    },
+    {
+      "Label": "Full256-policy-2-samples-4",
+      "Text": "ABC",
+      "Ends": [
+        1,
+        4
+      ],
+      "Fonts": [
+        "psdkitOwnedSeacFull256-Regular",
+        "psdkitOwnedSeacFull256-Regular"
+      ],
+      "Sizes": [
+        40,
+        40
+      ],
+      "Colors": [
+        [
+          0.65,
+          0.15,
+          0.4,
+          0.9
+        ],
+        [
+          0.35,
+          0.9,
+          0.2,
+          0.1
+        ]
+      ],
+      "Policy": 2,
+      "Liga": false,
+      "Kern": false,
+      "Transform": [
+        1,
+        0.125,
+        0.25,
+        1,
+        12,
+        52
+      ],
+      "Samples": 4,
+      "Glyphs": [
+        {
+          "Font": "psdkitOwnedSeacFull256-Regular",
+          "ID": 150,
+          "Start": 0,
+          "Length": 1,
+          "X": 0.0,
+          "Y": 0.0,
+          "Advance": 42.0,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacFull256-Regular",
+          "ID": 151,
+          "Start": 1,
+          "Length": 1,
+          "X": 42.0,
+          "Y": 0.0,
+          "Advance": 42.04,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacFull256-Regular",
+          "ID": 152,
+          "Start": 2,
+          "Length": 1,
+          "X": 84.03999999999999,
+          "Y": 0.0,
+          "Advance": 42.08,
+          "Scale": 0.04
+        }
+      ],
+      "Paints": [
+        {
+          "Color": [
+            0.65,
+            0.15,
+            0.4,
+            0.9
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 12.2,
+                      "Y": 51.25
+                    },
+                    "Preceding": {
+                      "X": 12.2,
+                      "Y": 51.25
+                    },
+                    "Leaving": {
+                      "X": 13.0,
+                      "Y": 51.35
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 14.2,
+                      "Y": 49.95
+                    },
+                    "Preceding": {
+                      "X": 13.3,
+                      "Y": 49.45
+                    },
+                    "Leaving": {
+                      "X": 14.2,
+                      "Y": 49.95
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 13.74,
+                      "Y": 51.985
+                    },
+                    "Preceding": {
+                      "X": 13.74,
+                      "Y": 51.985
+                    },
+                    "Leaving": {
+                      "X": 14.54,
+                      "Y": 52.085
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 15.74,
+                      "Y": 50.685
+                    },
+                    "Preceding": {
+                      "X": 14.84,
+                      "Y": 50.185
+                    },
+                    "Leaving": {
+                      "X": 15.74,
+                      "Y": 50.685
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Color": [
+            0.35,
+            0.9,
+            0.2,
+            0.1
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 54.199999999999996,
+                      "Y": 56.5
+                    },
+                    "Preceding": {
+                      "X": 54.199999999999996,
+                      "Y": 56.5
+                    },
+                    "Leaving": {
+                      "X": 55.0,
+                      "Y": 56.6
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 56.199999999999996,
+                      "Y": 55.2
+                    },
+                    "Preceding": {
+                      "X": 55.3,
+                      "Y": 54.7
+                    },
+                    "Leaving": {
+                      "X": 56.199999999999996,
+                      "Y": 55.2
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 55.800000000000004,
+                      "Y": 57.165
+                    },
+                    "Preceding": {
+                      "X": 55.800000000000004,
+                      "Y": 57.165
+                    },
+                    "Leaving": {
+                      "X": 56.6,
+                      "Y": 57.265
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 57.800000000000004,
+                      "Y": 55.865
+                    },
+                    "Preceding": {
+                      "X": 56.9,
+                      "Y": 55.365
+                    },
+                    "Leaving": {
+                      "X": 57.800000000000004,
+                      "Y": 55.865
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 96.24,
+                      "Y": 61.754999999999995
+                    },
+                    "Preceding": {
+                      "X": 96.24,
+                      "Y": 61.754999999999995
+                    },
+                    "Leaving": {
+                      "X": 97.03999999999999,
+                      "Y": 61.855
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 98.24,
+                      "Y": 60.455
+                    },
+                    "Preceding": {
+                      "X": 97.33999999999999,
+                      "Y": 59.955
+                    },
+                    "Leaving": {
+                      "X": 98.24,
+                      "Y": 60.455
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 97.22,
+                      "Y": 62.265
+                    },
+                    "Preceding": {
+                      "X": 97.22,
+                      "Y": 62.265
+                    },
+                    "Leaving": {
+                      "X": 98.02,
+                      "Y": 62.364999999999995
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 99.22,
+                      "Y": 60.965
+                    },
+                    "Preceding": {
+                      "X": 98.32,
+                      "Y": 60.464999999999996
+                    },
+                    "Leaving": {
+                      "X": 99.22,
+                      "Y": 60.965
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "Advance": 126.11999999999999
+    },
+    {
+      "Label": "Full256-policy-2-samples-8",
+      "Text": "ABC",
+      "Ends": [
+        1,
+        4
+      ],
+      "Fonts": [
+        "psdkitOwnedSeacFull256-Regular",
+        "psdkitOwnedSeacFull256-Regular"
+      ],
+      "Sizes": [
+        40,
+        40
+      ],
+      "Colors": [
+        [
+          0.65,
+          0.15,
+          0.4,
+          0.9
+        ],
+        [
+          0.35,
+          0.9,
+          0.2,
+          0.1
+        ]
+      ],
+      "Policy": 2,
+      "Liga": false,
+      "Kern": false,
+      "Transform": [
+        1,
+        0.125,
+        0.25,
+        1,
+        12,
+        52
+      ],
+      "Samples": 8,
+      "Glyphs": [
+        {
+          "Font": "psdkitOwnedSeacFull256-Regular",
+          "ID": 150,
+          "Start": 0,
+          "Length": 1,
+          "X": 0.0,
+          "Y": 0.0,
+          "Advance": 42.0,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacFull256-Regular",
+          "ID": 151,
+          "Start": 1,
+          "Length": 1,
+          "X": 42.0,
+          "Y": 0.0,
+          "Advance": 42.04,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacFull256-Regular",
+          "ID": 152,
+          "Start": 2,
+          "Length": 1,
+          "X": 84.03999999999999,
+          "Y": 0.0,
+          "Advance": 42.08,
+          "Scale": 0.04
+        }
+      ],
+      "Paints": [
+        {
+          "Color": [
+            0.65,
+            0.15,
+            0.4,
+            0.9
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 12.2,
+                      "Y": 51.25
+                    },
+                    "Preceding": {
+                      "X": 12.2,
+                      "Y": 51.25
+                    },
+                    "Leaving": {
+                      "X": 13.0,
+                      "Y": 51.35
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 14.2,
+                      "Y": 49.95
+                    },
+                    "Preceding": {
+                      "X": 13.3,
+                      "Y": 49.45
+                    },
+                    "Leaving": {
+                      "X": 14.2,
+                      "Y": 49.95
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 13.74,
+                      "Y": 51.985
+                    },
+                    "Preceding": {
+                      "X": 13.74,
+                      "Y": 51.985
+                    },
+                    "Leaving": {
+                      "X": 14.54,
+                      "Y": 52.085
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 15.74,
+                      "Y": 50.685
+                    },
+                    "Preceding": {
+                      "X": 14.84,
+                      "Y": 50.185
+                    },
+                    "Leaving": {
+                      "X": 15.74,
+                      "Y": 50.685
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Color": [
+            0.35,
+            0.9,
+            0.2,
+            0.1
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 54.199999999999996,
+                      "Y": 56.5
+                    },
+                    "Preceding": {
+                      "X": 54.199999999999996,
+                      "Y": 56.5
+                    },
+                    "Leaving": {
+                      "X": 55.0,
+                      "Y": 56.6
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 56.199999999999996,
+                      "Y": 55.2
+                    },
+                    "Preceding": {
+                      "X": 55.3,
+                      "Y": 54.7
+                    },
+                    "Leaving": {
+                      "X": 56.199999999999996,
+                      "Y": 55.2
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 55.800000000000004,
+                      "Y": 57.165
+                    },
+                    "Preceding": {
+                      "X": 55.800000000000004,
+                      "Y": 57.165
+                    },
+                    "Leaving": {
+                      "X": 56.6,
+                      "Y": 57.265
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 57.800000000000004,
+                      "Y": 55.865
+                    },
+                    "Preceding": {
+                      "X": 56.9,
+                      "Y": 55.365
+                    },
+                    "Leaving": {
+                      "X": 57.800000000000004,
+                      "Y": 55.865
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 96.24,
+                      "Y": 61.754999999999995
+                    },
+                    "Preceding": {
+                      "X": 96.24,
+                      "Y": 61.754999999999995
+                    },
+                    "Leaving": {
+                      "X": 97.03999999999999,
+                      "Y": 61.855
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 98.24,
+                      "Y": 60.455
+                    },
+                    "Preceding": {
+                      "X": 97.33999999999999,
+                      "Y": 59.955
+                    },
+                    "Leaving": {
+                      "X": 98.24,
+                      "Y": 60.455
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 97.22,
+                      "Y": 62.265
+                    },
+                    "Preceding": {
+                      "X": 97.22,
+                      "Y": 62.265
+                    },
+                    "Leaving": {
+                      "X": 98.02,
+                      "Y": 62.364999999999995
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 99.22,
+                      "Y": 60.965
+                    },
+                    "Preceding": {
+                      "X": 98.32,
+                      "Y": 60.464999999999996
+                    },
+                    "Leaving": {
+                      "X": 99.22,
+                      "Y": 60.965
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "Advance": 126.11999999999999
+    },
+    {
+      "Label": "PriorTranslated-policy-1-samples-4",
+      "Text": "ABC",
+      "Ends": [
+        1,
+        4
+      ],
+      "Fonts": [
+        "psdkitOwnedSeacPriorTranslated-Regular",
+        "psdkitOwnedSeacPriorTranslated-Regular"
+      ],
+      "Sizes": [
+        40,
+        40
+      ],
+      "Colors": [
+        [
+          0.65,
+          0.15,
+          0.4,
+          0.9
+        ],
+        [
+          0.35,
+          0.9,
+          0.2,
+          0.1
+        ]
+      ],
+      "Policy": 1,
+      "Liga": false,
+      "Kern": false,
+      "Transform": [
+        1,
+        0.125,
+        0.25,
+        1,
+        12,
+        52
+      ],
+      "Samples": 4,
+      "Glyphs": [
+        {
+          "Font": "psdkitOwnedSeacPriorTranslated-Regular",
+          "ID": 150,
+          "Start": 0,
+          "Length": 1,
+          "X": 0.0,
+          "Y": 0.0,
+          "Advance": 42.0,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacPriorTranslated-Regular",
+          "ID": 151,
+          "Start": 1,
+          "Length": 1,
+          "X": 42.0,
+          "Y": 0.0,
+          "Advance": 42.04,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacPriorTranslated-Regular",
+          "ID": 152,
+          "Start": 2,
+          "Length": 1,
+          "X": 84.03999999999999,
+          "Y": 0.0,
+          "Advance": 42.08,
+          "Scale": 0.04
+        }
+      ],
+      "Paints": [
+        {
+          "Color": [
+            0.65,
+            0.15,
+            0.4,
+            0.9
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 22.5,
+                      "Y": 47.1125
+                    },
+                    "Preceding": {
+                      "X": 22.5,
+                      "Y": 47.1125
+                    },
+                    "Leaving": {
+                      "X": 22.5,
+                      "Y": 47.1125
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 23.9,
+                      "Y": 46.5125
+                    },
+                    "Preceding": {
+                      "X": 23.9,
+                      "Y": 46.5125
+                    },
+                    "Leaving": {
+                      "X": 23.9,
+                      "Y": 46.5125
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 23.5,
+                      "Y": 45.6875
+                    },
+                    "Preceding": {
+                      "X": 23.5,
+                      "Y": 45.6875
+                    },
+                    "Leaving": {
+                      "X": 23.5,
+                      "Y": 45.6875
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 22.1,
+                      "Y": 46.2875
+                    },
+                    "Preceding": {
+                      "X": 22.1,
+                      "Y": 46.2875
+                    },
+                    "Leaving": {
+                      "X": 22.1,
+                      "Y": 46.2875
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 12.39,
+                      "Y": 51.545
+                    },
+                    "Preceding": {
+                      "X": 12.39,
+                      "Y": 51.545
+                    },
+                    "Leaving": {
+                      "X": 13.09,
+                      "Y": 51.245
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 13.69,
+                      "Y": 48.995
+                    },
+                    "Preceding": {
+                      "X": 12.79,
+                      "Y": 48.8825
+                    },
+                    "Leaving": {
+                      "X": 13.69,
+                      "Y": 48.995
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 13.88,
+                      "Y": 51.65375
+                    },
+                    "Preceding": {
+                      "X": 13.88,
+                      "Y": 51.65375
+                    },
+                    "Leaving": {
+                      "X": 14.58,
+                      "Y": 51.35375
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 15.18,
+                      "Y": 49.10375
+                    },
+                    "Preceding": {
+                      "X": 14.28,
+                      "Y": 48.99125
+                    },
+                    "Leaving": {
+                      "X": 15.18,
+                      "Y": 49.10375
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Color": [
+            0.35,
+            0.9,
+            0.2,
+            0.1
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 64.5,
+                      "Y": 52.3625
+                    },
+                    "Preceding": {
+                      "X": 64.5,
+                      "Y": 52.3625
+                    },
+                    "Leaving": {
+                      "X": 64.5,
+                      "Y": 52.3625
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 65.9,
+                      "Y": 51.7625
+                    },
+                    "Preceding": {
+                      "X": 65.9,
+                      "Y": 51.7625
+                    },
+                    "Leaving": {
+                      "X": 65.9,
+                      "Y": 51.7625
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 65.5,
+                      "Y": 50.9375
+                    },
+                    "Preceding": {
+                      "X": 65.5,
+                      "Y": 50.9375
+                    },
+                    "Leaving": {
+                      "X": 65.5,
+                      "Y": 50.9375
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 64.1,
+                      "Y": 51.5375
+                    },
+                    "Preceding": {
+                      "X": 64.1,
+                      "Y": 51.5375
+                    },
+                    "Leaving": {
+                      "X": 64.1,
+                      "Y": 51.5375
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 54.6,
+                      "Y": 56.705
+                    },
+                    "Preceding": {
+                      "X": 54.6,
+                      "Y": 56.705
+                    },
+                    "Leaving": {
+                      "X": 55.300000000000004,
+                      "Y": 56.405
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 55.9,
+                      "Y": 54.155
+                    },
+                    "Preceding": {
+                      "X": 55.0,
+                      "Y": 54.0425
+                    },
+                    "Leaving": {
+                      "X": 55.9,
+                      "Y": 54.155
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 55.685,
+                      "Y": 56.9375
+                    },
+                    "Preceding": {
+                      "X": 55.685,
+                      "Y": 56.9375
+                    },
+                    "Leaving": {
+                      "X": 56.385,
+                      "Y": 56.6375
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 56.985,
+                      "Y": 54.3875
+                    },
+                    "Preceding": {
+                      "X": 56.085,
+                      "Y": 54.275
+                    },
+                    "Leaving": {
+                      "X": 56.985,
+                      "Y": 54.3875
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 106.53999999999999,
+                      "Y": 57.6175
+                    },
+                    "Preceding": {
+                      "X": 106.53999999999999,
+                      "Y": 57.6175
+                    },
+                    "Leaving": {
+                      "X": 106.53999999999999,
+                      "Y": 57.6175
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 107.94,
+                      "Y": 57.0175
+                    },
+                    "Preceding": {
+                      "X": 107.94,
+                      "Y": 57.0175
+                    },
+                    "Leaving": {
+                      "X": 107.94,
+                      "Y": 57.0175
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 107.53999999999999,
+                      "Y": 56.192499999999995
+                    },
+                    "Preceding": {
+                      "X": 107.53999999999999,
+                      "Y": 56.192499999999995
+                    },
+                    "Leaving": {
+                      "X": 107.53999999999999,
+                      "Y": 56.192499999999995
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 106.14,
+                      "Y": 56.7925
+                    },
+                    "Preceding": {
+                      "X": 106.14,
+                      "Y": 56.7925
+                    },
+                    "Leaving": {
+                      "X": 106.14,
+                      "Y": 56.7925
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 96.58999999999999,
+                      "Y": 62.379999999999995
+                    },
+                    "Preceding": {
+                      "X": 96.58999999999999,
+                      "Y": 62.379999999999995
+                    },
+                    "Leaving": {
+                      "X": 97.28999999999999,
+                      "Y": 62.08
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 97.88999999999999,
+                      "Y": 59.83
+                    },
+                    "Preceding": {
+                      "X": 96.99,
+                      "Y": 59.7175
+                    },
+                    "Leaving": {
+                      "X": 97.88999999999999,
+                      "Y": 59.83
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 98.095,
+                      "Y": 62.4325
+                    },
+                    "Preceding": {
+                      "X": 98.095,
+                      "Y": 62.4325
+                    },
+                    "Leaving": {
+                      "X": 98.79499999999999,
+                      "Y": 62.1325
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 99.395,
+                      "Y": 59.8825
+                    },
+                    "Preceding": {
+                      "X": 98.49499999999999,
+                      "Y": 59.769999999999996
+                    },
+                    "Leaving": {
+                      "X": 99.395,
+                      "Y": 59.8825
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "Advance": 126.11999999999999
+    },
+    {
+      "Label": "PriorTranslated-policy-1-samples-8",
+      "Text": "ABC",
+      "Ends": [
+        1,
+        4
+      ],
+      "Fonts": [
+        "psdkitOwnedSeacPriorTranslated-Regular",
+        "psdkitOwnedSeacPriorTranslated-Regular"
+      ],
+      "Sizes": [
+        40,
+        40
+      ],
+      "Colors": [
+        [
+          0.65,
+          0.15,
+          0.4,
+          0.9
+        ],
+        [
+          0.35,
+          0.9,
+          0.2,
+          0.1
+        ]
+      ],
+      "Policy": 1,
+      "Liga": false,
+      "Kern": false,
+      "Transform": [
+        1,
+        0.125,
+        0.25,
+        1,
+        12,
+        52
+      ],
+      "Samples": 8,
+      "Glyphs": [
+        {
+          "Font": "psdkitOwnedSeacPriorTranslated-Regular",
+          "ID": 150,
+          "Start": 0,
+          "Length": 1,
+          "X": 0.0,
+          "Y": 0.0,
+          "Advance": 42.0,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacPriorTranslated-Regular",
+          "ID": 151,
+          "Start": 1,
+          "Length": 1,
+          "X": 42.0,
+          "Y": 0.0,
+          "Advance": 42.04,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacPriorTranslated-Regular",
+          "ID": 152,
+          "Start": 2,
+          "Length": 1,
+          "X": 84.03999999999999,
+          "Y": 0.0,
+          "Advance": 42.08,
+          "Scale": 0.04
+        }
+      ],
+      "Paints": [
+        {
+          "Color": [
+            0.65,
+            0.15,
+            0.4,
+            0.9
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 22.5,
+                      "Y": 47.1125
+                    },
+                    "Preceding": {
+                      "X": 22.5,
+                      "Y": 47.1125
+                    },
+                    "Leaving": {
+                      "X": 22.5,
+                      "Y": 47.1125
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 23.9,
+                      "Y": 46.5125
+                    },
+                    "Preceding": {
+                      "X": 23.9,
+                      "Y": 46.5125
+                    },
+                    "Leaving": {
+                      "X": 23.9,
+                      "Y": 46.5125
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 23.5,
+                      "Y": 45.6875
+                    },
+                    "Preceding": {
+                      "X": 23.5,
+                      "Y": 45.6875
+                    },
+                    "Leaving": {
+                      "X": 23.5,
+                      "Y": 45.6875
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 22.1,
+                      "Y": 46.2875
+                    },
+                    "Preceding": {
+                      "X": 22.1,
+                      "Y": 46.2875
+                    },
+                    "Leaving": {
+                      "X": 22.1,
+                      "Y": 46.2875
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 12.39,
+                      "Y": 51.545
+                    },
+                    "Preceding": {
+                      "X": 12.39,
+                      "Y": 51.545
+                    },
+                    "Leaving": {
+                      "X": 13.09,
+                      "Y": 51.245
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 13.69,
+                      "Y": 48.995
+                    },
+                    "Preceding": {
+                      "X": 12.79,
+                      "Y": 48.8825
+                    },
+                    "Leaving": {
+                      "X": 13.69,
+                      "Y": 48.995
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 13.88,
+                      "Y": 51.65375
+                    },
+                    "Preceding": {
+                      "X": 13.88,
+                      "Y": 51.65375
+                    },
+                    "Leaving": {
+                      "X": 14.58,
+                      "Y": 51.35375
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 15.18,
+                      "Y": 49.10375
+                    },
+                    "Preceding": {
+                      "X": 14.28,
+                      "Y": 48.99125
+                    },
+                    "Leaving": {
+                      "X": 15.18,
+                      "Y": 49.10375
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Color": [
+            0.35,
+            0.9,
+            0.2,
+            0.1
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 64.5,
+                      "Y": 52.3625
+                    },
+                    "Preceding": {
+                      "X": 64.5,
+                      "Y": 52.3625
+                    },
+                    "Leaving": {
+                      "X": 64.5,
+                      "Y": 52.3625
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 65.9,
+                      "Y": 51.7625
+                    },
+                    "Preceding": {
+                      "X": 65.9,
+                      "Y": 51.7625
+                    },
+                    "Leaving": {
+                      "X": 65.9,
+                      "Y": 51.7625
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 65.5,
+                      "Y": 50.9375
+                    },
+                    "Preceding": {
+                      "X": 65.5,
+                      "Y": 50.9375
+                    },
+                    "Leaving": {
+                      "X": 65.5,
+                      "Y": 50.9375
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 64.1,
+                      "Y": 51.5375
+                    },
+                    "Preceding": {
+                      "X": 64.1,
+                      "Y": 51.5375
+                    },
+                    "Leaving": {
+                      "X": 64.1,
+                      "Y": 51.5375
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 54.6,
+                      "Y": 56.705
+                    },
+                    "Preceding": {
+                      "X": 54.6,
+                      "Y": 56.705
+                    },
+                    "Leaving": {
+                      "X": 55.300000000000004,
+                      "Y": 56.405
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 55.9,
+                      "Y": 54.155
+                    },
+                    "Preceding": {
+                      "X": 55.0,
+                      "Y": 54.0425
+                    },
+                    "Leaving": {
+                      "X": 55.9,
+                      "Y": 54.155
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 55.685,
+                      "Y": 56.9375
+                    },
+                    "Preceding": {
+                      "X": 55.685,
+                      "Y": 56.9375
+                    },
+                    "Leaving": {
+                      "X": 56.385,
+                      "Y": 56.6375
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 56.985,
+                      "Y": 54.3875
+                    },
+                    "Preceding": {
+                      "X": 56.085,
+                      "Y": 54.275
+                    },
+                    "Leaving": {
+                      "X": 56.985,
+                      "Y": 54.3875
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 106.53999999999999,
+                      "Y": 57.6175
+                    },
+                    "Preceding": {
+                      "X": 106.53999999999999,
+                      "Y": 57.6175
+                    },
+                    "Leaving": {
+                      "X": 106.53999999999999,
+                      "Y": 57.6175
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 107.94,
+                      "Y": 57.0175
+                    },
+                    "Preceding": {
+                      "X": 107.94,
+                      "Y": 57.0175
+                    },
+                    "Leaving": {
+                      "X": 107.94,
+                      "Y": 57.0175
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 107.53999999999999,
+                      "Y": 56.192499999999995
+                    },
+                    "Preceding": {
+                      "X": 107.53999999999999,
+                      "Y": 56.192499999999995
+                    },
+                    "Leaving": {
+                      "X": 107.53999999999999,
+                      "Y": 56.192499999999995
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 106.14,
+                      "Y": 56.7925
+                    },
+                    "Preceding": {
+                      "X": 106.14,
+                      "Y": 56.7925
+                    },
+                    "Leaving": {
+                      "X": 106.14,
+                      "Y": 56.7925
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 96.58999999999999,
+                      "Y": 62.379999999999995
+                    },
+                    "Preceding": {
+                      "X": 96.58999999999999,
+                      "Y": 62.379999999999995
+                    },
+                    "Leaving": {
+                      "X": 97.28999999999999,
+                      "Y": 62.08
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 97.88999999999999,
+                      "Y": 59.83
+                    },
+                    "Preceding": {
+                      "X": 96.99,
+                      "Y": 59.7175
+                    },
+                    "Leaving": {
+                      "X": 97.88999999999999,
+                      "Y": 59.83
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 98.095,
+                      "Y": 62.4325
+                    },
+                    "Preceding": {
+                      "X": 98.095,
+                      "Y": 62.4325
+                    },
+                    "Leaving": {
+                      "X": 98.79499999999999,
+                      "Y": 62.1325
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 99.395,
+                      "Y": 59.8825
+                    },
+                    "Preceding": {
+                      "X": 98.49499999999999,
+                      "Y": 59.769999999999996
+                    },
+                    "Leaving": {
+                      "X": 99.395,
+                      "Y": 59.8825
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "Advance": 126.11999999999999
+    },
+    {
+      "Label": "PriorTranslated-policy-2-samples-4",
+      "Text": "ABC",
+      "Ends": [
+        1,
+        4
+      ],
+      "Fonts": [
+        "psdkitOwnedSeacPriorTranslated-Regular",
+        "psdkitOwnedSeacPriorTranslated-Regular"
+      ],
+      "Sizes": [
+        40,
+        40
+      ],
+      "Colors": [
+        [
+          0.65,
+          0.15,
+          0.4,
+          0.9
+        ],
+        [
+          0.35,
+          0.9,
+          0.2,
+          0.1
+        ]
+      ],
+      "Policy": 2,
+      "Liga": false,
+      "Kern": false,
+      "Transform": [
+        1,
+        0.125,
+        0.25,
+        1,
+        12,
+        52
+      ],
+      "Samples": 4,
+      "Glyphs": [
+        {
+          "Font": "psdkitOwnedSeacPriorTranslated-Regular",
+          "ID": 150,
+          "Start": 0,
+          "Length": 1,
+          "X": 0.0,
+          "Y": 0.0,
+          "Advance": 42.0,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacPriorTranslated-Regular",
+          "ID": 151,
+          "Start": 1,
+          "Length": 1,
+          "X": 42.0,
+          "Y": 0.0,
+          "Advance": 42.04,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacPriorTranslated-Regular",
+          "ID": 152,
+          "Start": 2,
+          "Length": 1,
+          "X": 84.03999999999999,
+          "Y": 0.0,
+          "Advance": 42.08,
+          "Scale": 0.04
+        }
+      ],
+      "Paints": [
+        {
+          "Color": [
+            0.65,
+            0.15,
+            0.4,
+            0.9
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 22.5,
+                      "Y": 47.1125
+                    },
+                    "Preceding": {
+                      "X": 22.5,
+                      "Y": 47.1125
+                    },
+                    "Leaving": {
+                      "X": 22.5,
+                      "Y": 47.1125
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 23.9,
+                      "Y": 46.5125
+                    },
+                    "Preceding": {
+                      "X": 23.9,
+                      "Y": 46.5125
+                    },
+                    "Leaving": {
+                      "X": 23.9,
+                      "Y": 46.5125
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 23.5,
+                      "Y": 45.6875
+                    },
+                    "Preceding": {
+                      "X": 23.5,
+                      "Y": 45.6875
+                    },
+                    "Leaving": {
+                      "X": 23.5,
+                      "Y": 45.6875
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 22.1,
+                      "Y": 46.2875
+                    },
+                    "Preceding": {
+                      "X": 22.1,
+                      "Y": 46.2875
+                    },
+                    "Leaving": {
+                      "X": 22.1,
+                      "Y": 46.2875
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 12.39,
+                      "Y": 51.545
+                    },
+                    "Preceding": {
+                      "X": 12.39,
+                      "Y": 51.545
+                    },
+                    "Leaving": {
+                      "X": 13.09,
+                      "Y": 51.245
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 13.69,
+                      "Y": 48.995
+                    },
+                    "Preceding": {
+                      "X": 12.79,
+                      "Y": 48.8825
+                    },
+                    "Leaving": {
+                      "X": 13.69,
+                      "Y": 48.995
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 13.88,
+                      "Y": 51.65375
+                    },
+                    "Preceding": {
+                      "X": 13.88,
+                      "Y": 51.65375
+                    },
+                    "Leaving": {
+                      "X": 14.58,
+                      "Y": 51.35375
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 15.18,
+                      "Y": 49.10375
+                    },
+                    "Preceding": {
+                      "X": 14.28,
+                      "Y": 48.99125
+                    },
+                    "Leaving": {
+                      "X": 15.18,
+                      "Y": 49.10375
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Color": [
+            0.35,
+            0.9,
+            0.2,
+            0.1
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 64.5,
+                      "Y": 52.3625
+                    },
+                    "Preceding": {
+                      "X": 64.5,
+                      "Y": 52.3625
+                    },
+                    "Leaving": {
+                      "X": 64.5,
+                      "Y": 52.3625
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 65.9,
+                      "Y": 51.7625
+                    },
+                    "Preceding": {
+                      "X": 65.9,
+                      "Y": 51.7625
+                    },
+                    "Leaving": {
+                      "X": 65.9,
+                      "Y": 51.7625
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 65.5,
+                      "Y": 50.9375
+                    },
+                    "Preceding": {
+                      "X": 65.5,
+                      "Y": 50.9375
+                    },
+                    "Leaving": {
+                      "X": 65.5,
+                      "Y": 50.9375
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 64.1,
+                      "Y": 51.5375
+                    },
+                    "Preceding": {
+                      "X": 64.1,
+                      "Y": 51.5375
+                    },
+                    "Leaving": {
+                      "X": 64.1,
+                      "Y": 51.5375
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 54.6,
+                      "Y": 56.705
+                    },
+                    "Preceding": {
+                      "X": 54.6,
+                      "Y": 56.705
+                    },
+                    "Leaving": {
+                      "X": 55.300000000000004,
+                      "Y": 56.405
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 55.9,
+                      "Y": 54.155
+                    },
+                    "Preceding": {
+                      "X": 55.0,
+                      "Y": 54.0425
+                    },
+                    "Leaving": {
+                      "X": 55.9,
+                      "Y": 54.155
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 55.685,
+                      "Y": 56.9375
+                    },
+                    "Preceding": {
+                      "X": 55.685,
+                      "Y": 56.9375
+                    },
+                    "Leaving": {
+                      "X": 56.385,
+                      "Y": 56.6375
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 56.985,
+                      "Y": 54.3875
+                    },
+                    "Preceding": {
+                      "X": 56.085,
+                      "Y": 54.275
+                    },
+                    "Leaving": {
+                      "X": 56.985,
+                      "Y": 54.3875
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 106.53999999999999,
+                      "Y": 57.6175
+                    },
+                    "Preceding": {
+                      "X": 106.53999999999999,
+                      "Y": 57.6175
+                    },
+                    "Leaving": {
+                      "X": 106.53999999999999,
+                      "Y": 57.6175
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 107.94,
+                      "Y": 57.0175
+                    },
+                    "Preceding": {
+                      "X": 107.94,
+                      "Y": 57.0175
+                    },
+                    "Leaving": {
+                      "X": 107.94,
+                      "Y": 57.0175
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 107.53999999999999,
+                      "Y": 56.192499999999995
+                    },
+                    "Preceding": {
+                      "X": 107.53999999999999,
+                      "Y": 56.192499999999995
+                    },
+                    "Leaving": {
+                      "X": 107.53999999999999,
+                      "Y": 56.192499999999995
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 106.14,
+                      "Y": 56.7925
+                    },
+                    "Preceding": {
+                      "X": 106.14,
+                      "Y": 56.7925
+                    },
+                    "Leaving": {
+                      "X": 106.14,
+                      "Y": 56.7925
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 96.58999999999999,
+                      "Y": 62.379999999999995
+                    },
+                    "Preceding": {
+                      "X": 96.58999999999999,
+                      "Y": 62.379999999999995
+                    },
+                    "Leaving": {
+                      "X": 97.28999999999999,
+                      "Y": 62.08
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 97.88999999999999,
+                      "Y": 59.83
+                    },
+                    "Preceding": {
+                      "X": 96.99,
+                      "Y": 59.7175
+                    },
+                    "Leaving": {
+                      "X": 97.88999999999999,
+                      "Y": 59.83
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 98.095,
+                      "Y": 62.4325
+                    },
+                    "Preceding": {
+                      "X": 98.095,
+                      "Y": 62.4325
+                    },
+                    "Leaving": {
+                      "X": 98.79499999999999,
+                      "Y": 62.1325
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 99.395,
+                      "Y": 59.8825
+                    },
+                    "Preceding": {
+                      "X": 98.49499999999999,
+                      "Y": 59.769999999999996
+                    },
+                    "Leaving": {
+                      "X": 99.395,
+                      "Y": 59.8825
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "Advance": 126.11999999999999
+    },
+    {
+      "Label": "PriorTranslated-policy-2-samples-8",
+      "Text": "ABC",
+      "Ends": [
+        1,
+        4
+      ],
+      "Fonts": [
+        "psdkitOwnedSeacPriorTranslated-Regular",
+        "psdkitOwnedSeacPriorTranslated-Regular"
+      ],
+      "Sizes": [
+        40,
+        40
+      ],
+      "Colors": [
+        [
+          0.65,
+          0.15,
+          0.4,
+          0.9
+        ],
+        [
+          0.35,
+          0.9,
+          0.2,
+          0.1
+        ]
+      ],
+      "Policy": 2,
+      "Liga": false,
+      "Kern": false,
+      "Transform": [
+        1,
+        0.125,
+        0.25,
+        1,
+        12,
+        52
+      ],
+      "Samples": 8,
+      "Glyphs": [
+        {
+          "Font": "psdkitOwnedSeacPriorTranslated-Regular",
+          "ID": 150,
+          "Start": 0,
+          "Length": 1,
+          "X": 0.0,
+          "Y": 0.0,
+          "Advance": 42.0,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacPriorTranslated-Regular",
+          "ID": 151,
+          "Start": 1,
+          "Length": 1,
+          "X": 42.0,
+          "Y": 0.0,
+          "Advance": 42.04,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacPriorTranslated-Regular",
+          "ID": 152,
+          "Start": 2,
+          "Length": 1,
+          "X": 84.03999999999999,
+          "Y": 0.0,
+          "Advance": 42.08,
+          "Scale": 0.04
+        }
+      ],
+      "Paints": [
+        {
+          "Color": [
+            0.65,
+            0.15,
+            0.4,
+            0.9
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 22.5,
+                      "Y": 47.1125
+                    },
+                    "Preceding": {
+                      "X": 22.5,
+                      "Y": 47.1125
+                    },
+                    "Leaving": {
+                      "X": 22.5,
+                      "Y": 47.1125
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 23.9,
+                      "Y": 46.5125
+                    },
+                    "Preceding": {
+                      "X": 23.9,
+                      "Y": 46.5125
+                    },
+                    "Leaving": {
+                      "X": 23.9,
+                      "Y": 46.5125
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 23.5,
+                      "Y": 45.6875
+                    },
+                    "Preceding": {
+                      "X": 23.5,
+                      "Y": 45.6875
+                    },
+                    "Leaving": {
+                      "X": 23.5,
+                      "Y": 45.6875
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 22.1,
+                      "Y": 46.2875
+                    },
+                    "Preceding": {
+                      "X": 22.1,
+                      "Y": 46.2875
+                    },
+                    "Leaving": {
+                      "X": 22.1,
+                      "Y": 46.2875
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 12.39,
+                      "Y": 51.545
+                    },
+                    "Preceding": {
+                      "X": 12.39,
+                      "Y": 51.545
+                    },
+                    "Leaving": {
+                      "X": 13.09,
+                      "Y": 51.245
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 13.69,
+                      "Y": 48.995
+                    },
+                    "Preceding": {
+                      "X": 12.79,
+                      "Y": 48.8825
+                    },
+                    "Leaving": {
+                      "X": 13.69,
+                      "Y": 48.995
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 13.88,
+                      "Y": 51.65375
+                    },
+                    "Preceding": {
+                      "X": 13.88,
+                      "Y": 51.65375
+                    },
+                    "Leaving": {
+                      "X": 14.58,
+                      "Y": 51.35375
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 15.18,
+                      "Y": 49.10375
+                    },
+                    "Preceding": {
+                      "X": 14.28,
+                      "Y": 48.99125
+                    },
+                    "Leaving": {
+                      "X": 15.18,
+                      "Y": 49.10375
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Color": [
+            0.35,
+            0.9,
+            0.2,
+            0.1
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 64.5,
+                      "Y": 52.3625
+                    },
+                    "Preceding": {
+                      "X": 64.5,
+                      "Y": 52.3625
+                    },
+                    "Leaving": {
+                      "X": 64.5,
+                      "Y": 52.3625
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 65.9,
+                      "Y": 51.7625
+                    },
+                    "Preceding": {
+                      "X": 65.9,
+                      "Y": 51.7625
+                    },
+                    "Leaving": {
+                      "X": 65.9,
+                      "Y": 51.7625
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 65.5,
+                      "Y": 50.9375
+                    },
+                    "Preceding": {
+                      "X": 65.5,
+                      "Y": 50.9375
+                    },
+                    "Leaving": {
+                      "X": 65.5,
+                      "Y": 50.9375
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 64.1,
+                      "Y": 51.5375
+                    },
+                    "Preceding": {
+                      "X": 64.1,
+                      "Y": 51.5375
+                    },
+                    "Leaving": {
+                      "X": 64.1,
+                      "Y": 51.5375
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 54.6,
+                      "Y": 56.705
+                    },
+                    "Preceding": {
+                      "X": 54.6,
+                      "Y": 56.705
+                    },
+                    "Leaving": {
+                      "X": 55.300000000000004,
+                      "Y": 56.405
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 55.9,
+                      "Y": 54.155
+                    },
+                    "Preceding": {
+                      "X": 55.0,
+                      "Y": 54.0425
+                    },
+                    "Leaving": {
+                      "X": 55.9,
+                      "Y": 54.155
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 55.685,
+                      "Y": 56.9375
+                    },
+                    "Preceding": {
+                      "X": 55.685,
+                      "Y": 56.9375
+                    },
+                    "Leaving": {
+                      "X": 56.385,
+                      "Y": 56.6375
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 56.985,
+                      "Y": 54.3875
+                    },
+                    "Preceding": {
+                      "X": 56.085,
+                      "Y": 54.275
+                    },
+                    "Leaving": {
+                      "X": 56.985,
+                      "Y": 54.3875
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 106.53999999999999,
+                      "Y": 57.6175
+                    },
+                    "Preceding": {
+                      "X": 106.53999999999999,
+                      "Y": 57.6175
+                    },
+                    "Leaving": {
+                      "X": 106.53999999999999,
+                      "Y": 57.6175
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 107.94,
+                      "Y": 57.0175
+                    },
+                    "Preceding": {
+                      "X": 107.94,
+                      "Y": 57.0175
+                    },
+                    "Leaving": {
+                      "X": 107.94,
+                      "Y": 57.0175
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 107.53999999999999,
+                      "Y": 56.192499999999995
+                    },
+                    "Preceding": {
+                      "X": 107.53999999999999,
+                      "Y": 56.192499999999995
+                    },
+                    "Leaving": {
+                      "X": 107.53999999999999,
+                      "Y": 56.192499999999995
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 106.14,
+                      "Y": 56.7925
+                    },
+                    "Preceding": {
+                      "X": 106.14,
+                      "Y": 56.7925
+                    },
+                    "Leaving": {
+                      "X": 106.14,
+                      "Y": 56.7925
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 96.58999999999999,
+                      "Y": 62.379999999999995
+                    },
+                    "Preceding": {
+                      "X": 96.58999999999999,
+                      "Y": 62.379999999999995
+                    },
+                    "Leaving": {
+                      "X": 97.28999999999999,
+                      "Y": 62.08
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 97.88999999999999,
+                      "Y": 59.83
+                    },
+                    "Preceding": {
+                      "X": 96.99,
+                      "Y": 59.7175
+                    },
+                    "Leaving": {
+                      "X": 97.88999999999999,
+                      "Y": 59.83
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 98.095,
+                      "Y": 62.4325
+                    },
+                    "Preceding": {
+                      "X": 98.095,
+                      "Y": 62.4325
+                    },
+                    "Leaving": {
+                      "X": 98.79499999999999,
+                      "Y": 62.1325
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 99.395,
+                      "Y": 59.8825
+                    },
+                    "Preceding": {
+                      "X": 98.49499999999999,
+                      "Y": 59.769999999999996
+                    },
+                    "Leaving": {
+                      "X": 99.395,
+                      "Y": 59.8825
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "Advance": 126.11999999999999
+    },
+    {
+      "Label": "CustomAlias-policy-1-samples-4",
+      "Text": "ABC",
+      "Ends": [
+        1,
+        4
+      ],
+      "Fonts": [
+        "psdkitOwnedSeacCustomAlias-Regular",
+        "psdkitOwnedSeacCustomAlias-Regular"
+      ],
+      "Sizes": [
+        40,
+        40
+      ],
+      "Colors": [
+        [
+          0.65,
+          0.15,
+          0.4,
+          0.9
+        ],
+        [
+          0.35,
+          0.9,
+          0.2,
+          0.1
+        ]
+      ],
+      "Policy": 1,
+      "Liga": false,
+      "Kern": false,
+      "Transform": [
+        1,
+        0.125,
+        0.25,
+        1,
+        12,
+        52
+      ],
+      "Samples": 4,
+      "Glyphs": [
+        {
+          "Font": "psdkitOwnedSeacCustomAlias-Regular",
+          "ID": 150,
+          "Start": 0,
+          "Length": 1,
+          "X": 0.0,
+          "Y": 0.0,
+          "Advance": 42.0,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacCustomAlias-Regular",
+          "ID": 151,
+          "Start": 1,
+          "Length": 1,
+          "X": 42.0,
+          "Y": 0.0,
+          "Advance": 42.04,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacCustomAlias-Regular",
+          "ID": 152,
+          "Start": 2,
+          "Length": 1,
+          "X": 84.03999999999999,
+          "Y": 0.0,
+          "Advance": 42.08,
+          "Scale": 0.04
+        }
+      ],
+      "Paints": [
+        {
+          "Color": [
+            0.65,
+            0.15,
+            0.4,
+            0.9
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 12.12,
+                      "Y": 50.93
+                    },
+                    "Preceding": {
+                      "X": 12.12,
+                      "Y": 50.93
+                    },
+                    "Leaving": {
+                      "X": 12.92,
+                      "Y": 51.03
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 14.120000000000001,
+                      "Y": 49.63
+                    },
+                    "Preceding": {
+                      "X": 13.22,
+                      "Y": 49.13
+                    },
+                    "Leaving": {
+                      "X": 14.120000000000001,
+                      "Y": 49.63
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 13.629999999999999,
+                      "Y": 51.7
+                    },
+                    "Preceding": {
+                      "X": 13.629999999999999,
+                      "Y": 51.7
+                    },
+                    "Leaving": {
+                      "X": 14.43,
+                      "Y": 51.8
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 15.629999999999999,
+                      "Y": 50.4
+                    },
+                    "Preceding": {
+                      "X": 14.73,
+                      "Y": 49.9
+                    },
+                    "Leaving": {
+                      "X": 15.629999999999999,
+                      "Y": 50.4
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Color": [
+            0.35,
+            0.9,
+            0.2,
+            0.1
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 54.36,
+                      "Y": 56.21
+                    },
+                    "Preceding": {
+                      "X": 54.36,
+                      "Y": 56.21
+                    },
+                    "Leaving": {
+                      "X": 55.16,
+                      "Y": 56.31
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 56.36,
+                      "Y": 54.91
+                    },
+                    "Preceding": {
+                      "X": 55.46,
+                      "Y": 54.41
+                    },
+                    "Leaving": {
+                      "X": 56.36,
+                      "Y": 54.91
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 55.42,
+                      "Y": 56.885
+                    },
+                    "Preceding": {
+                      "X": 55.42,
+                      "Y": 56.885
+                    },
+                    "Leaving": {
+                      "X": 56.22,
+                      "Y": 56.985
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 57.42,
+                      "Y": 55.585
+                    },
+                    "Preceding": {
+                      "X": 56.519999999999996,
+                      "Y": 55.085
+                    },
+                    "Leaving": {
+                      "X": 57.42,
+                      "Y": 55.585
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 96.24,
+                      "Y": 61.754999999999995
+                    },
+                    "Preceding": {
+                      "X": 96.24,
+                      "Y": 61.754999999999995
+                    },
+                    "Leaving": {
+                      "X": 97.03999999999999,
+                      "Y": 61.855
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 98.24,
+                      "Y": 60.455
+                    },
+                    "Preceding": {
+                      "X": 97.33999999999999,
+                      "Y": 59.955
+                    },
+                    "Leaving": {
+                      "X": 98.24,
+                      "Y": 60.455
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 97.77999999999999,
+                      "Y": 62.489999999999995
+                    },
+                    "Preceding": {
+                      "X": 97.77999999999999,
+                      "Y": 62.489999999999995
+                    },
+                    "Leaving": {
+                      "X": 98.57999999999998,
+                      "Y": 62.589999999999996
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 99.78,
+                      "Y": 61.19
+                    },
+                    "Preceding": {
+                      "X": 98.88,
+                      "Y": 60.69
+                    },
+                    "Leaving": {
+                      "X": 99.78,
+                      "Y": 61.19
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "Advance": 126.11999999999999
+    },
+    {
+      "Label": "CustomAlias-policy-1-samples-8",
+      "Text": "ABC",
+      "Ends": [
+        1,
+        4
+      ],
+      "Fonts": [
+        "psdkitOwnedSeacCustomAlias-Regular",
+        "psdkitOwnedSeacCustomAlias-Regular"
+      ],
+      "Sizes": [
+        40,
+        40
+      ],
+      "Colors": [
+        [
+          0.65,
+          0.15,
+          0.4,
+          0.9
+        ],
+        [
+          0.35,
+          0.9,
+          0.2,
+          0.1
+        ]
+      ],
+      "Policy": 1,
+      "Liga": false,
+      "Kern": false,
+      "Transform": [
+        1,
+        0.125,
+        0.25,
+        1,
+        12,
+        52
+      ],
+      "Samples": 8,
+      "Glyphs": [
+        {
+          "Font": "psdkitOwnedSeacCustomAlias-Regular",
+          "ID": 150,
+          "Start": 0,
+          "Length": 1,
+          "X": 0.0,
+          "Y": 0.0,
+          "Advance": 42.0,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacCustomAlias-Regular",
+          "ID": 151,
+          "Start": 1,
+          "Length": 1,
+          "X": 42.0,
+          "Y": 0.0,
+          "Advance": 42.04,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacCustomAlias-Regular",
+          "ID": 152,
+          "Start": 2,
+          "Length": 1,
+          "X": 84.03999999999999,
+          "Y": 0.0,
+          "Advance": 42.08,
+          "Scale": 0.04
+        }
+      ],
+      "Paints": [
+        {
+          "Color": [
+            0.65,
+            0.15,
+            0.4,
+            0.9
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 12.12,
+                      "Y": 50.93
+                    },
+                    "Preceding": {
+                      "X": 12.12,
+                      "Y": 50.93
+                    },
+                    "Leaving": {
+                      "X": 12.92,
+                      "Y": 51.03
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 14.120000000000001,
+                      "Y": 49.63
+                    },
+                    "Preceding": {
+                      "X": 13.22,
+                      "Y": 49.13
+                    },
+                    "Leaving": {
+                      "X": 14.120000000000001,
+                      "Y": 49.63
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 13.629999999999999,
+                      "Y": 51.7
+                    },
+                    "Preceding": {
+                      "X": 13.629999999999999,
+                      "Y": 51.7
+                    },
+                    "Leaving": {
+                      "X": 14.43,
+                      "Y": 51.8
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 15.629999999999999,
+                      "Y": 50.4
+                    },
+                    "Preceding": {
+                      "X": 14.73,
+                      "Y": 49.9
+                    },
+                    "Leaving": {
+                      "X": 15.629999999999999,
+                      "Y": 50.4
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Color": [
+            0.35,
+            0.9,
+            0.2,
+            0.1
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 54.36,
+                      "Y": 56.21
+                    },
+                    "Preceding": {
+                      "X": 54.36,
+                      "Y": 56.21
+                    },
+                    "Leaving": {
+                      "X": 55.16,
+                      "Y": 56.31
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 56.36,
+                      "Y": 54.91
+                    },
+                    "Preceding": {
+                      "X": 55.46,
+                      "Y": 54.41
+                    },
+                    "Leaving": {
+                      "X": 56.36,
+                      "Y": 54.91
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 55.42,
+                      "Y": 56.885
+                    },
+                    "Preceding": {
+                      "X": 55.42,
+                      "Y": 56.885
+                    },
+                    "Leaving": {
+                      "X": 56.22,
+                      "Y": 56.985
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 57.42,
+                      "Y": 55.585
+                    },
+                    "Preceding": {
+                      "X": 56.519999999999996,
+                      "Y": 55.085
+                    },
+                    "Leaving": {
+                      "X": 57.42,
+                      "Y": 55.585
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 96.24,
+                      "Y": 61.754999999999995
+                    },
+                    "Preceding": {
+                      "X": 96.24,
+                      "Y": 61.754999999999995
+                    },
+                    "Leaving": {
+                      "X": 97.03999999999999,
+                      "Y": 61.855
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 98.24,
+                      "Y": 60.455
+                    },
+                    "Preceding": {
+                      "X": 97.33999999999999,
+                      "Y": 59.955
+                    },
+                    "Leaving": {
+                      "X": 98.24,
+                      "Y": 60.455
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 97.77999999999999,
+                      "Y": 62.489999999999995
+                    },
+                    "Preceding": {
+                      "X": 97.77999999999999,
+                      "Y": 62.489999999999995
+                    },
+                    "Leaving": {
+                      "X": 98.57999999999998,
+                      "Y": 62.589999999999996
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 99.78,
+                      "Y": 61.19
+                    },
+                    "Preceding": {
+                      "X": 98.88,
+                      "Y": 60.69
+                    },
+                    "Leaving": {
+                      "X": 99.78,
+                      "Y": 61.19
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "Advance": 126.11999999999999
+    },
+    {
+      "Label": "CustomAlias-policy-2-samples-4",
+      "Text": "ABC",
+      "Ends": [
+        1,
+        4
+      ],
+      "Fonts": [
+        "psdkitOwnedSeacCustomAlias-Regular",
+        "psdkitOwnedSeacCustomAlias-Regular"
+      ],
+      "Sizes": [
+        40,
+        40
+      ],
+      "Colors": [
+        [
+          0.65,
+          0.15,
+          0.4,
+          0.9
+        ],
+        [
+          0.35,
+          0.9,
+          0.2,
+          0.1
+        ]
+      ],
+      "Policy": 2,
+      "Liga": false,
+      "Kern": false,
+      "Transform": [
+        1,
+        0.125,
+        0.25,
+        1,
+        12,
+        52
+      ],
+      "Samples": 4,
+      "Glyphs": [
+        {
+          "Font": "psdkitOwnedSeacCustomAlias-Regular",
+          "ID": 150,
+          "Start": 0,
+          "Length": 1,
+          "X": 0.0,
+          "Y": 0.0,
+          "Advance": 42.0,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacCustomAlias-Regular",
+          "ID": 151,
+          "Start": 1,
+          "Length": 1,
+          "X": 42.0,
+          "Y": 0.0,
+          "Advance": 42.04,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacCustomAlias-Regular",
+          "ID": 152,
+          "Start": 2,
+          "Length": 1,
+          "X": 84.03999999999999,
+          "Y": 0.0,
+          "Advance": 42.08,
+          "Scale": 0.04
+        }
+      ],
+      "Paints": [
+        {
+          "Color": [
+            0.65,
+            0.15,
+            0.4,
+            0.9
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 12.12,
+                      "Y": 50.93
+                    },
+                    "Preceding": {
+                      "X": 12.12,
+                      "Y": 50.93
+                    },
+                    "Leaving": {
+                      "X": 12.92,
+                      "Y": 51.03
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 14.120000000000001,
+                      "Y": 49.63
+                    },
+                    "Preceding": {
+                      "X": 13.22,
+                      "Y": 49.13
+                    },
+                    "Leaving": {
+                      "X": 14.120000000000001,
+                      "Y": 49.63
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 13.629999999999999,
+                      "Y": 51.7
+                    },
+                    "Preceding": {
+                      "X": 13.629999999999999,
+                      "Y": 51.7
+                    },
+                    "Leaving": {
+                      "X": 14.43,
+                      "Y": 51.8
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 15.629999999999999,
+                      "Y": 50.4
+                    },
+                    "Preceding": {
+                      "X": 14.73,
+                      "Y": 49.9
+                    },
+                    "Leaving": {
+                      "X": 15.629999999999999,
+                      "Y": 50.4
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Color": [
+            0.35,
+            0.9,
+            0.2,
+            0.1
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 54.36,
+                      "Y": 56.21
+                    },
+                    "Preceding": {
+                      "X": 54.36,
+                      "Y": 56.21
+                    },
+                    "Leaving": {
+                      "X": 55.16,
+                      "Y": 56.31
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 56.36,
+                      "Y": 54.91
+                    },
+                    "Preceding": {
+                      "X": 55.46,
+                      "Y": 54.41
+                    },
+                    "Leaving": {
+                      "X": 56.36,
+                      "Y": 54.91
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 55.42,
+                      "Y": 56.885
+                    },
+                    "Preceding": {
+                      "X": 55.42,
+                      "Y": 56.885
+                    },
+                    "Leaving": {
+                      "X": 56.22,
+                      "Y": 56.985
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 57.42,
+                      "Y": 55.585
+                    },
+                    "Preceding": {
+                      "X": 56.519999999999996,
+                      "Y": 55.085
+                    },
+                    "Leaving": {
+                      "X": 57.42,
+                      "Y": 55.585
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 96.24,
+                      "Y": 61.754999999999995
+                    },
+                    "Preceding": {
+                      "X": 96.24,
+                      "Y": 61.754999999999995
+                    },
+                    "Leaving": {
+                      "X": 97.03999999999999,
+                      "Y": 61.855
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 98.24,
+                      "Y": 60.455
+                    },
+                    "Preceding": {
+                      "X": 97.33999999999999,
+                      "Y": 59.955
+                    },
+                    "Leaving": {
+                      "X": 98.24,
+                      "Y": 60.455
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 97.77999999999999,
+                      "Y": 62.489999999999995
+                    },
+                    "Preceding": {
+                      "X": 97.77999999999999,
+                      "Y": 62.489999999999995
+                    },
+                    "Leaving": {
+                      "X": 98.57999999999998,
+                      "Y": 62.589999999999996
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 99.78,
+                      "Y": 61.19
+                    },
+                    "Preceding": {
+                      "X": 98.88,
+                      "Y": 60.69
+                    },
+                    "Leaving": {
+                      "X": 99.78,
+                      "Y": 61.19
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "Advance": 126.11999999999999
+    },
+    {
+      "Label": "CustomAlias-policy-2-samples-8",
+      "Text": "ABC",
+      "Ends": [
+        1,
+        4
+      ],
+      "Fonts": [
+        "psdkitOwnedSeacCustomAlias-Regular",
+        "psdkitOwnedSeacCustomAlias-Regular"
+      ],
+      "Sizes": [
+        40,
+        40
+      ],
+      "Colors": [
+        [
+          0.65,
+          0.15,
+          0.4,
+          0.9
+        ],
+        [
+          0.35,
+          0.9,
+          0.2,
+          0.1
+        ]
+      ],
+      "Policy": 2,
+      "Liga": false,
+      "Kern": false,
+      "Transform": [
+        1,
+        0.125,
+        0.25,
+        1,
+        12,
+        52
+      ],
+      "Samples": 8,
+      "Glyphs": [
+        {
+          "Font": "psdkitOwnedSeacCustomAlias-Regular",
+          "ID": 150,
+          "Start": 0,
+          "Length": 1,
+          "X": 0.0,
+          "Y": 0.0,
+          "Advance": 42.0,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacCustomAlias-Regular",
+          "ID": 151,
+          "Start": 1,
+          "Length": 1,
+          "X": 42.0,
+          "Y": 0.0,
+          "Advance": 42.04,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacCustomAlias-Regular",
+          "ID": 152,
+          "Start": 2,
+          "Length": 1,
+          "X": 84.03999999999999,
+          "Y": 0.0,
+          "Advance": 42.08,
+          "Scale": 0.04
+        }
+      ],
+      "Paints": [
+        {
+          "Color": [
+            0.65,
+            0.15,
+            0.4,
+            0.9
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 12.12,
+                      "Y": 50.93
+                    },
+                    "Preceding": {
+                      "X": 12.12,
+                      "Y": 50.93
+                    },
+                    "Leaving": {
+                      "X": 12.92,
+                      "Y": 51.03
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 14.120000000000001,
+                      "Y": 49.63
+                    },
+                    "Preceding": {
+                      "X": 13.22,
+                      "Y": 49.13
+                    },
+                    "Leaving": {
+                      "X": 14.120000000000001,
+                      "Y": 49.63
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 13.629999999999999,
+                      "Y": 51.7
+                    },
+                    "Preceding": {
+                      "X": 13.629999999999999,
+                      "Y": 51.7
+                    },
+                    "Leaving": {
+                      "X": 14.43,
+                      "Y": 51.8
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 15.629999999999999,
+                      "Y": 50.4
+                    },
+                    "Preceding": {
+                      "X": 14.73,
+                      "Y": 49.9
+                    },
+                    "Leaving": {
+                      "X": 15.629999999999999,
+                      "Y": 50.4
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Color": [
+            0.35,
+            0.9,
+            0.2,
+            0.1
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 54.36,
+                      "Y": 56.21
+                    },
+                    "Preceding": {
+                      "X": 54.36,
+                      "Y": 56.21
+                    },
+                    "Leaving": {
+                      "X": 55.16,
+                      "Y": 56.31
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 56.36,
+                      "Y": 54.91
+                    },
+                    "Preceding": {
+                      "X": 55.46,
+                      "Y": 54.41
+                    },
+                    "Leaving": {
+                      "X": 56.36,
+                      "Y": 54.91
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 55.42,
+                      "Y": 56.885
+                    },
+                    "Preceding": {
+                      "X": 55.42,
+                      "Y": 56.885
+                    },
+                    "Leaving": {
+                      "X": 56.22,
+                      "Y": 56.985
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 57.42,
+                      "Y": 55.585
+                    },
+                    "Preceding": {
+                      "X": 56.519999999999996,
+                      "Y": 55.085
+                    },
+                    "Leaving": {
+                      "X": 57.42,
+                      "Y": 55.585
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 96.24,
+                      "Y": 61.754999999999995
+                    },
+                    "Preceding": {
+                      "X": 96.24,
+                      "Y": 61.754999999999995
+                    },
+                    "Leaving": {
+                      "X": 97.03999999999999,
+                      "Y": 61.855
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 98.24,
+                      "Y": 60.455
+                    },
+                    "Preceding": {
+                      "X": 97.33999999999999,
+                      "Y": 59.955
+                    },
+                    "Leaving": {
+                      "X": 98.24,
+                      "Y": 60.455
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 97.77999999999999,
+                      "Y": 62.489999999999995
+                    },
+                    "Preceding": {
+                      "X": 97.77999999999999,
+                      "Y": 62.489999999999995
+                    },
+                    "Leaving": {
+                      "X": 98.57999999999998,
+                      "Y": 62.589999999999996
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 99.78,
+                      "Y": 61.19
+                    },
+                    "Preceding": {
+                      "X": 98.88,
+                      "Y": 60.69
+                    },
+                    "Leaving": {
+                      "X": 99.78,
+                      "Y": 61.19
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "Advance": 126.11999999999999
+    },
+    {
+      "Label": "SubrTerminal-policy-1-samples-4",
+      "Text": "ABC",
+      "Ends": [
+        1,
+        4
+      ],
+      "Fonts": [
+        "psdkitOwnedSeacSubrTerminal-Regular",
+        "psdkitOwnedSeacSubrTerminal-Regular"
+      ],
+      "Sizes": [
+        40,
+        40
+      ],
+      "Colors": [
+        [
+          0.65,
+          0.15,
+          0.4,
+          0.9
+        ],
+        [
+          0.35,
+          0.9,
+          0.2,
+          0.1
+        ]
+      ],
+      "Policy": 1,
+      "Liga": false,
+      "Kern": false,
+      "Transform": [
+        1,
+        0.125,
+        0.25,
+        1,
+        12,
+        52
+      ],
+      "Samples": 4,
+      "Glyphs": [
+        {
+          "Font": "psdkitOwnedSeacSubrTerminal-Regular",
+          "ID": 150,
+          "Start": 0,
+          "Length": 1,
+          "X": 0.0,
+          "Y": 0.0,
+          "Advance": 42.0,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacSubrTerminal-Regular",
+          "ID": 151,
+          "Start": 1,
+          "Length": 1,
+          "X": 42.0,
+          "Y": 0.0,
+          "Advance": 42.04,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacSubrTerminal-Regular",
+          "ID": 152,
+          "Start": 2,
+          "Length": 1,
+          "X": 84.03999999999999,
+          "Y": 0.0,
+          "Advance": 42.08,
+          "Scale": 0.04
+        }
+      ],
+      "Paints": [
+        {
+          "Color": [
+            0.65,
+            0.15,
+            0.4,
+            0.9
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 12.12,
+                      "Y": 50.93
+                    },
+                    "Preceding": {
+                      "X": 12.12,
+                      "Y": 50.93
+                    },
+                    "Leaving": {
+                      "X": 12.92,
+                      "Y": 51.03
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 14.120000000000001,
+                      "Y": 49.63
+                    },
+                    "Preceding": {
+                      "X": 13.22,
+                      "Y": 49.13
+                    },
+                    "Leaving": {
+                      "X": 14.120000000000001,
+                      "Y": 49.63
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 13.31,
+                      "Y": 51.66
+                    },
+                    "Preceding": {
+                      "X": 13.31,
+                      "Y": 51.66
+                    },
+                    "Leaving": {
+                      "X": 14.11,
+                      "Y": 51.76
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 15.309999999999999,
+                      "Y": 50.36
+                    },
+                    "Preceding": {
+                      "X": 14.41,
+                      "Y": 49.86
+                    },
+                    "Leaving": {
+                      "X": 15.309999999999999,
+                      "Y": 50.36
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Color": [
+            0.35,
+            0.9,
+            0.2,
+            0.1
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 54.12,
+                      "Y": 56.18
+                    },
+                    "Preceding": {
+                      "X": 54.12,
+                      "Y": 56.18
+                    },
+                    "Leaving": {
+                      "X": 54.92,
+                      "Y": 56.28
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 56.12,
+                      "Y": 54.88
+                    },
+                    "Preceding": {
+                      "X": 55.22,
+                      "Y": 54.38
+                    },
+                    "Leaving": {
+                      "X": 56.12,
+                      "Y": 54.88
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 55.309999999999995,
+                      "Y": 56.91
+                    },
+                    "Preceding": {
+                      "X": 55.309999999999995,
+                      "Y": 56.91
+                    },
+                    "Leaving": {
+                      "X": 56.11,
+                      "Y": 57.01
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 57.31,
+                      "Y": 55.61
+                    },
+                    "Preceding": {
+                      "X": 56.41,
+                      "Y": 55.11
+                    },
+                    "Leaving": {
+                      "X": 57.31,
+                      "Y": 55.61
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 96.16,
+                      "Y": 61.435
+                    },
+                    "Preceding": {
+                      "X": 96.16,
+                      "Y": 61.435
+                    },
+                    "Leaving": {
+                      "X": 96.96,
+                      "Y": 61.535
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 98.15999999999998,
+                      "Y": 60.135
+                    },
+                    "Preceding": {
+                      "X": 97.25999999999999,
+                      "Y": 59.635
+                    },
+                    "Leaving": {
+                      "X": 98.15999999999998,
+                      "Y": 60.135
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 97.35,
+                      "Y": 62.165
+                    },
+                    "Preceding": {
+                      "X": 97.35,
+                      "Y": 62.165
+                    },
+                    "Leaving": {
+                      "X": 98.14999999999999,
+                      "Y": 62.265
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 99.35,
+                      "Y": 60.864999999999995
+                    },
+                    "Preceding": {
+                      "X": 98.45,
+                      "Y": 60.365
+                    },
+                    "Leaving": {
+                      "X": 99.35,
+                      "Y": 60.864999999999995
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "Advance": 126.11999999999999
+    },
+    {
+      "Label": "SubrTerminal-policy-1-samples-8",
+      "Text": "ABC",
+      "Ends": [
+        1,
+        4
+      ],
+      "Fonts": [
+        "psdkitOwnedSeacSubrTerminal-Regular",
+        "psdkitOwnedSeacSubrTerminal-Regular"
+      ],
+      "Sizes": [
+        40,
+        40
+      ],
+      "Colors": [
+        [
+          0.65,
+          0.15,
+          0.4,
+          0.9
+        ],
+        [
+          0.35,
+          0.9,
+          0.2,
+          0.1
+        ]
+      ],
+      "Policy": 1,
+      "Liga": false,
+      "Kern": false,
+      "Transform": [
+        1,
+        0.125,
+        0.25,
+        1,
+        12,
+        52
+      ],
+      "Samples": 8,
+      "Glyphs": [
+        {
+          "Font": "psdkitOwnedSeacSubrTerminal-Regular",
+          "ID": 150,
+          "Start": 0,
+          "Length": 1,
+          "X": 0.0,
+          "Y": 0.0,
+          "Advance": 42.0,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacSubrTerminal-Regular",
+          "ID": 151,
+          "Start": 1,
+          "Length": 1,
+          "X": 42.0,
+          "Y": 0.0,
+          "Advance": 42.04,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacSubrTerminal-Regular",
+          "ID": 152,
+          "Start": 2,
+          "Length": 1,
+          "X": 84.03999999999999,
+          "Y": 0.0,
+          "Advance": 42.08,
+          "Scale": 0.04
+        }
+      ],
+      "Paints": [
+        {
+          "Color": [
+            0.65,
+            0.15,
+            0.4,
+            0.9
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 12.12,
+                      "Y": 50.93
+                    },
+                    "Preceding": {
+                      "X": 12.12,
+                      "Y": 50.93
+                    },
+                    "Leaving": {
+                      "X": 12.92,
+                      "Y": 51.03
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 14.120000000000001,
+                      "Y": 49.63
+                    },
+                    "Preceding": {
+                      "X": 13.22,
+                      "Y": 49.13
+                    },
+                    "Leaving": {
+                      "X": 14.120000000000001,
+                      "Y": 49.63
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 13.31,
+                      "Y": 51.66
+                    },
+                    "Preceding": {
+                      "X": 13.31,
+                      "Y": 51.66
+                    },
+                    "Leaving": {
+                      "X": 14.11,
+                      "Y": 51.76
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 15.309999999999999,
+                      "Y": 50.36
+                    },
+                    "Preceding": {
+                      "X": 14.41,
+                      "Y": 49.86
+                    },
+                    "Leaving": {
+                      "X": 15.309999999999999,
+                      "Y": 50.36
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Color": [
+            0.35,
+            0.9,
+            0.2,
+            0.1
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 54.12,
+                      "Y": 56.18
+                    },
+                    "Preceding": {
+                      "X": 54.12,
+                      "Y": 56.18
+                    },
+                    "Leaving": {
+                      "X": 54.92,
+                      "Y": 56.28
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 56.12,
+                      "Y": 54.88
+                    },
+                    "Preceding": {
+                      "X": 55.22,
+                      "Y": 54.38
+                    },
+                    "Leaving": {
+                      "X": 56.12,
+                      "Y": 54.88
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 55.309999999999995,
+                      "Y": 56.91
+                    },
+                    "Preceding": {
+                      "X": 55.309999999999995,
+                      "Y": 56.91
+                    },
+                    "Leaving": {
+                      "X": 56.11,
+                      "Y": 57.01
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 57.31,
+                      "Y": 55.61
+                    },
+                    "Preceding": {
+                      "X": 56.41,
+                      "Y": 55.11
+                    },
+                    "Leaving": {
+                      "X": 57.31,
+                      "Y": 55.61
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 96.16,
+                      "Y": 61.435
+                    },
+                    "Preceding": {
+                      "X": 96.16,
+                      "Y": 61.435
+                    },
+                    "Leaving": {
+                      "X": 96.96,
+                      "Y": 61.535
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 98.15999999999998,
+                      "Y": 60.135
+                    },
+                    "Preceding": {
+                      "X": 97.25999999999999,
+                      "Y": 59.635
+                    },
+                    "Leaving": {
+                      "X": 98.15999999999998,
+                      "Y": 60.135
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 97.35,
+                      "Y": 62.165
+                    },
+                    "Preceding": {
+                      "X": 97.35,
+                      "Y": 62.165
+                    },
+                    "Leaving": {
+                      "X": 98.14999999999999,
+                      "Y": 62.265
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 99.35,
+                      "Y": 60.864999999999995
+                    },
+                    "Preceding": {
+                      "X": 98.45,
+                      "Y": 60.365
+                    },
+                    "Leaving": {
+                      "X": 99.35,
+                      "Y": 60.864999999999995
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "Advance": 126.11999999999999
+    },
+    {
+      "Label": "SubrTerminal-policy-2-samples-4",
+      "Text": "ABC",
+      "Ends": [
+        1,
+        4
+      ],
+      "Fonts": [
+        "psdkitOwnedSeacSubrTerminal-Regular",
+        "psdkitOwnedSeacSubrTerminal-Regular"
+      ],
+      "Sizes": [
+        40,
+        40
+      ],
+      "Colors": [
+        [
+          0.65,
+          0.15,
+          0.4,
+          0.9
+        ],
+        [
+          0.35,
+          0.9,
+          0.2,
+          0.1
+        ]
+      ],
+      "Policy": 2,
+      "Liga": false,
+      "Kern": false,
+      "Transform": [
+        1,
+        0.125,
+        0.25,
+        1,
+        12,
+        52
+      ],
+      "Samples": 4,
+      "Glyphs": [
+        {
+          "Font": "psdkitOwnedSeacSubrTerminal-Regular",
+          "ID": 150,
+          "Start": 0,
+          "Length": 1,
+          "X": 0.0,
+          "Y": 0.0,
+          "Advance": 42.0,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacSubrTerminal-Regular",
+          "ID": 151,
+          "Start": 1,
+          "Length": 1,
+          "X": 42.0,
+          "Y": 0.0,
+          "Advance": 42.04,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacSubrTerminal-Regular",
+          "ID": 152,
+          "Start": 2,
+          "Length": 1,
+          "X": 84.03999999999999,
+          "Y": 0.0,
+          "Advance": 42.08,
+          "Scale": 0.04
+        }
+      ],
+      "Paints": [
+        {
+          "Color": [
+            0.65,
+            0.15,
+            0.4,
+            0.9
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 12.12,
+                      "Y": 50.93
+                    },
+                    "Preceding": {
+                      "X": 12.12,
+                      "Y": 50.93
+                    },
+                    "Leaving": {
+                      "X": 12.92,
+                      "Y": 51.03
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 14.120000000000001,
+                      "Y": 49.63
+                    },
+                    "Preceding": {
+                      "X": 13.22,
+                      "Y": 49.13
+                    },
+                    "Leaving": {
+                      "X": 14.120000000000001,
+                      "Y": 49.63
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 13.31,
+                      "Y": 51.66
+                    },
+                    "Preceding": {
+                      "X": 13.31,
+                      "Y": 51.66
+                    },
+                    "Leaving": {
+                      "X": 14.11,
+                      "Y": 51.76
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 15.309999999999999,
+                      "Y": 50.36
+                    },
+                    "Preceding": {
+                      "X": 14.41,
+                      "Y": 49.86
+                    },
+                    "Leaving": {
+                      "X": 15.309999999999999,
+                      "Y": 50.36
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Color": [
+            0.35,
+            0.9,
+            0.2,
+            0.1
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 54.12,
+                      "Y": 56.18
+                    },
+                    "Preceding": {
+                      "X": 54.12,
+                      "Y": 56.18
+                    },
+                    "Leaving": {
+                      "X": 54.92,
+                      "Y": 56.28
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 56.12,
+                      "Y": 54.88
+                    },
+                    "Preceding": {
+                      "X": 55.22,
+                      "Y": 54.38
+                    },
+                    "Leaving": {
+                      "X": 56.12,
+                      "Y": 54.88
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 55.309999999999995,
+                      "Y": 56.91
+                    },
+                    "Preceding": {
+                      "X": 55.309999999999995,
+                      "Y": 56.91
+                    },
+                    "Leaving": {
+                      "X": 56.11,
+                      "Y": 57.01
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 57.31,
+                      "Y": 55.61
+                    },
+                    "Preceding": {
+                      "X": 56.41,
+                      "Y": 55.11
+                    },
+                    "Leaving": {
+                      "X": 57.31,
+                      "Y": 55.61
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 96.16,
+                      "Y": 61.435
+                    },
+                    "Preceding": {
+                      "X": 96.16,
+                      "Y": 61.435
+                    },
+                    "Leaving": {
+                      "X": 96.96,
+                      "Y": 61.535
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 98.15999999999998,
+                      "Y": 60.135
+                    },
+                    "Preceding": {
+                      "X": 97.25999999999999,
+                      "Y": 59.635
+                    },
+                    "Leaving": {
+                      "X": 98.15999999999998,
+                      "Y": 60.135
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 97.35,
+                      "Y": 62.165
+                    },
+                    "Preceding": {
+                      "X": 97.35,
+                      "Y": 62.165
+                    },
+                    "Leaving": {
+                      "X": 98.14999999999999,
+                      "Y": 62.265
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 99.35,
+                      "Y": 60.864999999999995
+                    },
+                    "Preceding": {
+                      "X": 98.45,
+                      "Y": 60.365
+                    },
+                    "Leaving": {
+                      "X": 99.35,
+                      "Y": 60.864999999999995
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "Advance": 126.11999999999999
+    },
+    {
+      "Label": "SubrTerminal-policy-2-samples-8",
+      "Text": "ABC",
+      "Ends": [
+        1,
+        4
+      ],
+      "Fonts": [
+        "psdkitOwnedSeacSubrTerminal-Regular",
+        "psdkitOwnedSeacSubrTerminal-Regular"
+      ],
+      "Sizes": [
+        40,
+        40
+      ],
+      "Colors": [
+        [
+          0.65,
+          0.15,
+          0.4,
+          0.9
+        ],
+        [
+          0.35,
+          0.9,
+          0.2,
+          0.1
+        ]
+      ],
+      "Policy": 2,
+      "Liga": false,
+      "Kern": false,
+      "Transform": [
+        1,
+        0.125,
+        0.25,
+        1,
+        12,
+        52
+      ],
+      "Samples": 8,
+      "Glyphs": [
+        {
+          "Font": "psdkitOwnedSeacSubrTerminal-Regular",
+          "ID": 150,
+          "Start": 0,
+          "Length": 1,
+          "X": 0.0,
+          "Y": 0.0,
+          "Advance": 42.0,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacSubrTerminal-Regular",
+          "ID": 151,
+          "Start": 1,
+          "Length": 1,
+          "X": 42.0,
+          "Y": 0.0,
+          "Advance": 42.04,
+          "Scale": 0.04
+        },
+        {
+          "Font": "psdkitOwnedSeacSubrTerminal-Regular",
+          "ID": 152,
+          "Start": 2,
+          "Length": 1,
+          "X": 84.03999999999999,
+          "Y": 0.0,
+          "Advance": 42.08,
+          "Scale": 0.04
+        }
+      ],
+      "Paints": [
+        {
+          "Color": [
+            0.65,
+            0.15,
+            0.4,
+            0.9
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 12.12,
+                      "Y": 50.93
+                    },
+                    "Preceding": {
+                      "X": 12.12,
+                      "Y": 50.93
+                    },
+                    "Leaving": {
+                      "X": 12.92,
+                      "Y": 51.03
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 14.120000000000001,
+                      "Y": 49.63
+                    },
+                    "Preceding": {
+                      "X": 13.22,
+                      "Y": 49.13
+                    },
+                    "Leaving": {
+                      "X": 14.120000000000001,
+                      "Y": 49.63
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 13.31,
+                      "Y": 51.66
+                    },
+                    "Preceding": {
+                      "X": 13.31,
+                      "Y": 51.66
+                    },
+                    "Leaving": {
+                      "X": 14.11,
+                      "Y": 51.76
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 15.309999999999999,
+                      "Y": 50.36
+                    },
+                    "Preceding": {
+                      "X": 14.41,
+                      "Y": 49.86
+                    },
+                    "Leaving": {
+                      "X": 15.309999999999999,
+                      "Y": 50.36
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Color": [
+            0.35,
+            0.9,
+            0.2,
+            0.1
+          ],
+          "Mask": {
+            "Width": 1,
+            "Height": 1,
+            "HasFillRule": true,
+            "FillRule": 1,
+            "Subpaths": [
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 54.12,
+                      "Y": 56.18
+                    },
+                    "Preceding": {
+                      "X": 54.12,
+                      "Y": 56.18
+                    },
+                    "Leaving": {
+                      "X": 54.92,
+                      "Y": 56.28
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 56.12,
+                      "Y": 54.88
+                    },
+                    "Preceding": {
+                      "X": 55.22,
+                      "Y": 54.38
+                    },
+                    "Leaving": {
+                      "X": 56.12,
+                      "Y": 54.88
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 55.309999999999995,
+                      "Y": 56.91
+                    },
+                    "Preceding": {
+                      "X": 55.309999999999995,
+                      "Y": 56.91
+                    },
+                    "Leaving": {
+                      "X": 56.11,
+                      "Y": 57.01
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 57.31,
+                      "Y": 55.61
+                    },
+                    "Preceding": {
+                      "X": 56.41,
+                      "Y": 55.11
+                    },
+                    "Leaving": {
+                      "X": 57.31,
+                      "Y": 55.61
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": 1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 96.16,
+                      "Y": 61.435
+                    },
+                    "Preceding": {
+                      "X": 96.16,
+                      "Y": 61.435
+                    },
+                    "Leaving": {
+                      "X": 96.96,
+                      "Y": 61.535
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 98.15999999999998,
+                      "Y": 60.135
+                    },
+                    "Preceding": {
+                      "X": 97.25999999999999,
+                      "Y": 59.635
+                    },
+                    "Leaving": {
+                      "X": 98.15999999999998,
+                      "Y": 60.135
+                    }
+                  }
+                ]
+              },
+              {
+                "Closed": true,
+                "Operation": -1,
+                "Knots": [
+                  {
+                    "Anchor": {
+                      "X": 97.35,
+                      "Y": 62.165
+                    },
+                    "Preceding": {
+                      "X": 97.35,
+                      "Y": 62.165
+                    },
+                    "Leaving": {
+                      "X": 98.14999999999999,
+                      "Y": 62.265
+                    }
+                  },
+                  {
+                    "Anchor": {
+                      "X": 99.35,
+                      "Y": 60.864999999999995
+                    },
+                    "Preceding": {
+                      "X": 98.45,
+                      "Y": 60.365
+                    },
+                    "Leaving": {
+                      "X": 99.35,
+                      "Y": 60.864999999999995
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "Advance": 126.11999999999999
+    }
+  ]
+}

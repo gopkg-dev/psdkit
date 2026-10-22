@@ -1,0 +1,50 @@
+{%- comment -%}
+  能力矩阵：数据来自 docs/status.md 的 front matter（matrix）。
+  用法：{% include capability-matrix.html rows=page.matrix %}
+{%- endcomment -%}
+{%- assign state_labels = "done:已完成|partial:部分支持|none:未支持|na:不涉及|opt:可选近似|no:不近似" | split: "|" -%}
+<div class="matrix-legend" aria-label="图例">
+  <span class="chip chip--done"><i></i>已完成</span>
+  <span class="chip chip--partial"><i></i>部分支持</span>
+  <span class="chip chip--none"><i></i>未支持</span>
+  <span class="chip chip--na"><i></i>不涉及</span>
+  <span class="matrix-legend__sep" aria-hidden="true"></span>
+  <span class="chip chip--opt"><i></i>可选近似（默认关闭）</span>
+  <span class="chip chip--no"><i></i>不近似，超出即拒绝</span>
+</div>
+<div class="matrix" role="region" aria-label="能力矩阵" tabindex="0">
+  <table class="matrix__table">
+    <thead>
+      <tr>
+        <th scope="col">能力</th>
+        <th scope="col">读取与解析</th>
+        <th scope="col">编辑与保存</th>
+        <th scope="col">保存预览</th>
+        <th scope="col">实时重绘</th>
+        <th scope="col">显式近似</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%- for row in include.rows -%}
+      <tr>
+        <th scope="row">
+          {% if row.guide %}<a href="{{ row.guide | replace: '.md', '.html' | prepend: '/' | relative_url }}">{{ row.area }}</a>{% else %}{{ row.area }}{% endif %}
+          {% if row.gaps %}<small class="matrix__gaps">未完成：{{ row.gaps }}</small>{% endif %}
+        </th>
+        {%- assign cells = "read,edit,preview,live,approx" | split: "," -%}
+        {%- assign heads = "读取与解析,编辑与保存,保存预览,实时重绘,显式近似" | split: "," -%}
+        {%- for key in cells -%}
+        {%- assign cell = row[key] -%}
+        {%- assign state = cell[0] -%}
+        {%- assign label = "" -%}
+        {%- for pair in state_labels -%}{%- assign kv = pair | split: ":" -%}{%- if kv[0] == state -%}{%- assign label = kv[1] -%}{%- endif -%}{%- endfor -%}
+        <td data-label="{{ heads[forloop.index0] }}">
+          <span class="chip chip--{{ state }}"><i></i>{{ label }}</span>
+          {% if cell[1] != "" %}<span class="matrix__note">{{ cell[1] }}</span>{% endif %}
+        </td>
+        {%- endfor -%}
+      </tr>
+      {%- endfor -%}
+    </tbody>
+  </table>
+</div>

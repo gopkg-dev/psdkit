@@ -1,0 +1,127 @@
+{
+  "file": "testdata/cff2/fonts/RSBConsistentDefaultShift.otf",
+  "sha256": "bd8f9f7005eb00e6937c0f8123212c34773c08e943a24aba63f6990ed8fd5d80",
+  "cases": [
+    {
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.0
+        },
+        {
+          "tag": "wdth",
+          "value": 0.0
+        }
+      ],
+      "advance": 525.0,
+      "lsb": 55.0,
+      "rsb": 257.5,
+      "wrong_mixed_domain": 245.0,
+      "width": 212.5
+    },
+    {
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.125
+        },
+        {
+          "tag": "wdth",
+          "value": -0.0625
+        }
+      ],
+      "advance": 500.0,
+      "lsb": 50.0,
+      "rsb": 250.0,
+      "wrong_mixed_domain": 237.5,
+      "width": 200.0
+    },
+    {
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 0.5
+        },
+        {
+          "tag": "wdth",
+          "value": 0.5
+        }
+      ],
+      "advance": 675.0,
+      "lsb": 85.0,
+      "rsb": 307.5,
+      "wrong_mixed_domain": 295.0,
+      "width": 282.5
+    },
+    {
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.5
+        },
+        {
+          "tag": "wdth",
+          "value": -0.5
+        }
+      ],
+      "advance": 375.0,
+      "lsb": 25.0,
+      "rsb": 207.5,
+      "wrong_mixed_domain": 195.0,
+      "width": 142.5
+    },
+    {
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -0.75
+        },
+        {
+          "tag": "wdth",
+          "value": 0.25
+        }
+      ],
+      "advance": 500.0,
+      "lsb": 50.0,
+      "rsb": 262.5,
+      "wrong_mixed_domain": 250.0,
+      "width": 187.5
+    },
+    {
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": 1.0
+        },
+        {
+          "tag": "wdth",
+          "value": 1.0
+        }
+      ],
+      "advance": 800.0,
+      "lsb": 110.0,
+      "rsb": 350.0,
+      "wrong_mixed_domain": 337.5,
+      "width": 340.0
+    },
+    {
+      "coordinates": [
+        {
+          "tag": "wght",
+          "value": -1.0
+        },
+        {
+          "tag": "wdth",
+          "value": -1.0
+        }
+      ],
+      "advance": 225.0,
+      "lsb": -5.0,
+      "rsb": 157.5,
+      "wrong_mixed_domain": 145.0,
+      "width": 72.5
+    }
+  ],
+  "original_raw_math_sha256": "63818eaf0feb9114afbeba3ac9836fc7e508b8931826815b4bb7631066ba3d1c",
+  "scope": "Shared independent raw-baseline math reference; author execution, missingSTAT metadata compatibility fixture."
+}

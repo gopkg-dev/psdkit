@@ -1,0 +1,17 @@
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <a class="brand" href="{{ '/' | relative_url }}">{% include logo.html id="footer" px=24 %}<span class="brand__name">psdkit</span></a>
+      <p>纯 Go 的 PSD/PSB 读取、编辑、保存与渲染工具库。文件始终在本机处理。</p>
+    </div>
+    <nav class="site-footer__cols" aria-label="页脚导航">
+      <div><h2>文档</h2><a href="{{ '/guide/quickstart.html' | relative_url }}">快速开始</a><a href="{{ '/status.html' | relative_url }}">能力矩阵</a><a href="{{ '/guide/api.html' | relative_url }}">Go API</a><a href="{{ '/browser.html' | relative_url }}">浏览器 SDK</a></div>
+      <div><h2>工具</h2><a href="{{ '/demo/' | relative_url }}">Playground</a><a href="{{ '/guide/examples.html' | relative_url }}">运行示例</a><a href="{{ site.github_url }}">GitHub</a></div>
+      <div><h2>项目</h2><a href="{{ '/status.html#路线图' | relative_url }}">路线图</a><a href="{{ '/contributing.html' | relative_url }}">参与贡献</a><a href="{{ '/third-party-notices.html' | relative_url }}">许可与第三方声明</a></div>
+    </nav>
+  </div>
+  <div class="site-footer__legal">
+    <span>MIT License · 第三方代码保留各自许可</span>
+    <span>Photoshop 是 Adobe 的商标；psdkit 与 Adobe 无关联，也不承诺逐像素兼容。</span>
+  </div>
+</footer>

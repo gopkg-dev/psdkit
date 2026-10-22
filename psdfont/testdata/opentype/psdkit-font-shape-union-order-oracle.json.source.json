@@ -1,0 +1,601 @@
+{
+  "scope": "Independent owned GSUB union-order and duplicate GPOS lookup selection controls; request/tag order deliberately differs from lookup index order.",
+  "font": "/tmp/psdkit-font-shape-union-order.ttf",
+  "font_sha256": "38dd5d2de9a122b06ff3c3ab1d57d4756acb66e4cfeffefd1b3a226abcdb0ac1",
+  "selection_evidence": {
+    "GSUB": {
+      "features": [
+        {
+          "tag": "liga",
+          "lookup_indices": [
+            1
+          ]
+        },
+        {
+          "tag": "zzzz",
+          "lookup_indices": [
+            0
+          ]
+        }
+      ],
+      "lookup_types": [
+        4,
+        4
+      ]
+    },
+    "GPOS": {
+      "features": [
+        {
+          "tag": "kern",
+          "lookup_indices": [
+            0
+          ]
+        },
+        {
+          "tag": "zzzz",
+          "lookup_indices": [
+            0
+          ]
+        }
+      ],
+      "lookup_types": [
+        2
+      ]
+    }
+  },
+  "source_base_unchanged": true,
+  "cases": [
+    {
+      "text": "fiV",
+      "liga": true,
+      "kern": true,
+      "feature_order": [
+        {
+          "Tag": "liga",
+          "Enabled": true
+        },
+        {
+          "Tag": "zzzz",
+          "Enabled": true
+        },
+        {
+          "Tag": "kern",
+          "Enabled": true
+        }
+      ],
+      "glyphs": [
+        {
+          "glyph_id": 13,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 3,
+          "x_advance": 710,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "text": "fiV",
+      "liga": true,
+      "kern": true,
+      "feature_order": [
+        {
+          "Tag": "kern",
+          "Enabled": true
+        },
+        {
+          "Tag": "zzzz",
+          "Enabled": true
+        },
+        {
+          "Tag": "liga",
+          "Enabled": true
+        }
+      ],
+      "glyphs": [
+        {
+          "glyph_id": 13,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 3,
+          "x_advance": 710,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "text": "fiV",
+      "liga": true,
+      "kern": true,
+      "feature_order": [
+        {
+          "Tag": "zzzz",
+          "Enabled": true
+        },
+        {
+          "Tag": "liga",
+          "Enabled": true
+        },
+        {
+          "Tag": "kern",
+          "Enabled": true
+        }
+      ],
+      "glyphs": [
+        {
+          "glyph_id": 13,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 3,
+          "x_advance": 710,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "text": "fiVAV",
+      "liga": true,
+      "kern": true,
+      "feature_order": [
+        {
+          "Tag": "liga",
+          "Enabled": true
+        },
+        {
+          "Tag": "zzzz",
+          "Enabled": true
+        },
+        {
+          "Tag": "kern",
+          "Enabled": true
+        }
+      ],
+      "glyphs": [
+        {
+          "glyph_id": 13,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 3,
+          "x_advance": 710,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 4,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "text": "fiVAV",
+      "liga": true,
+      "kern": true,
+      "feature_order": [
+        {
+          "Tag": "kern",
+          "Enabled": true
+        },
+        {
+          "Tag": "zzzz",
+          "Enabled": true
+        },
+        {
+          "Tag": "liga",
+          "Enabled": true
+        }
+      ],
+      "glyphs": [
+        {
+          "glyph_id": 13,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 3,
+          "x_advance": 710,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 4,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "text": "fiVAV",
+      "liga": true,
+      "kern": true,
+      "feature_order": [
+        {
+          "Tag": "zzzz",
+          "Enabled": true
+        },
+        {
+          "Tag": "liga",
+          "Enabled": true
+        },
+        {
+          "Tag": "kern",
+          "Enabled": true
+        }
+      ],
+      "glyphs": [
+        {
+          "glyph_id": 13,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 3,
+          "x_advance": 710,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 4,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "text": "AVAV",
+      "liga": true,
+      "kern": true,
+      "feature_order": [
+        {
+          "Tag": "liga",
+          "Enabled": true
+        },
+        {
+          "Tag": "zzzz",
+          "Enabled": true
+        },
+        {
+          "Tag": "kern",
+          "Enabled": true
+        }
+      ],
+      "glyphs": [
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "text": "AVAV",
+      "liga": true,
+      "kern": true,
+      "feature_order": [
+        {
+          "Tag": "kern",
+          "Enabled": true
+        },
+        {
+          "Tag": "zzzz",
+          "Enabled": true
+        },
+        {
+          "Tag": "liga",
+          "Enabled": true
+        }
+      ],
+      "glyphs": [
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "text": "AVAV",
+      "liga": true,
+      "kern": true,
+      "feature_order": [
+        {
+          "Tag": "zzzz",
+          "Enabled": true
+        },
+        {
+          "Tag": "liga",
+          "Enabled": true
+        },
+        {
+          "Tag": "kern",
+          "Enabled": true
+        }
+      ],
+      "glyphs": [
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 1,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "text": "fiAV",
+      "liga": true,
+      "kern": true,
+      "feature_order": [
+        {
+          "Tag": "liga",
+          "Enabled": true
+        },
+        {
+          "Tag": "zzzz",
+          "Enabled": true
+        },
+        {
+          "Tag": "kern",
+          "Enabled": true
+        }
+      ],
+      "glyphs": [
+        {
+          "glyph_id": 11,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 2,
+          "x_advance": 430,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "text": "fiAV",
+      "liga": true,
+      "kern": true,
+      "feature_order": [
+        {
+          "Tag": "kern",
+          "Enabled": true
+        },
+        {
+          "Tag": "zzzz",
+          "Enabled": true
+        },
+        {
+          "Tag": "liga",
+          "Enabled": true
+        }
+      ],
+      "glyphs": [
+        {
+          "glyph_id": 11,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 2,
+          "x_advance": 430,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    },
+    {
+      "text": "fiAV",
+      "liga": true,
+      "kern": true,
+      "feature_order": [
+        {
+          "Tag": "zzzz",
+          "Enabled": true
+        },
+        {
+          "Tag": "liga",
+          "Enabled": true
+        },
+        {
+          "Tag": "kern",
+          "Enabled": true
+        }
+      ],
+      "glyphs": [
+        {
+          "glyph_id": 11,
+          "cluster_start_utf16": 0,
+          "cluster_length_utf16": 2,
+          "x_advance": 430,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 2,
+          "cluster_start_utf16": 2,
+          "cluster_length_utf16": 1,
+          "x_advance": 520,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        },
+        {
+          "glyph_id": 3,
+          "cluster_start_utf16": 3,
+          "cluster_length_utf16": 1,
+          "x_advance": 600,
+          "y_advance": 0,
+          "x_offset": 0,
+          "y_offset": 0
+        }
+      ]
+    }
+  ],
+  "script_sha256": "8e4174f5a1b479046d2904ba97c5fac966ae1526756ffbe5367f878ac97ddc0c",
+  "uharfbuzz_python_binding_version": "0.56.3",
+  "harfbuzz_engine_version": "14.6.0"
+}

@@ -1,0 +1,11 @@
+<svg class="logo-mark" width="{{ include.px | default: 28 }}" height="{{ include.px | default: 28 }}" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="logo-gradient-{{ include.id | default: 'a' }}" x1="4" y1="4" x2="28" y2="16" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22e4ff" /><stop offset=".55" stop-color="#4f7bff" /><stop offset="1" stop-color="#8b7bff" />
+    </linearGradient>
+  </defs>
+  <path d="M4 20.5 16 26.5l12-6" fill="none" stroke="#8b7bff" stroke-opacity=".5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M4 15.5 16 21.5l12-6" fill="none" stroke="#4f7bff" stroke-opacity=".85" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M16 4.5 28 10.5 16 16.5 4 10.5 16 4.5Z" fill="url(#logo-gradient-{{ include.id | default: 'a' }})" />
+  <path d="M16 4.5 28 10.5 16 16.5 4 10.5 16 4.5Z" fill="none" stroke="#e9fdff" stroke-opacity=".55" stroke-width=".8" stroke-linejoin="round" />
+</svg>

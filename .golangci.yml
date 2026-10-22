@@ -1,0 +1,45 @@
+version: "2"
+
+run:
+  go: "1.27.3"
+  timeout: 10m
+  tests: true
+
+linters:
+  default: standard
+  enable:
+    - errorlint
+    - modernize
+    - misspell
+  settings:
+    misspell:
+      ignore-rules:
+        - doub
+        - clas
+  exclusions:
+    presets: []
+    rules:
+      # Test fixture writers intentionally build byte buffers with infallible writes.
+      - path: _test\.go
+        linters:
+          - errcheck
+      # A nil Context is a documented library input, explicitly exercised by these regressions.
+      - path: _test\.go
+        linters:
+          - staticcheck
+        text: "SA1012:"
+
+formatters:
+  enable:
+    - gofmt
+    - gci
+  settings:
+    gci:
+      sections:
+        - standard
+        - default
+        - prefix(github.com/gopkg-dev/psdkit)
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0

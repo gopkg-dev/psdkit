@@ -1,0 +1,439 @@
+{
+  "scope": "Fresh legal GSUB target glyph zero and zero-size PairPos class matrix controls; source font kept unchanged; no Go result claim.",
+  "uharfbuzz_python_binding_version": "0.56.3",
+  "harfbuzz_engine_version": "14.6.0",
+  "fonts": [
+    {
+      "variant": "legal-ligature-glyph-zero",
+      "path": "/tmp/psdkit-font-shape-zero-controls/legal-ligature-glyph-zero.ttf",
+      "sha256": "f72ac3977ea923108291177bd08ae9e52472fff3a11470bd4b6c6e9f1d6f26c5",
+      "cases": [
+        {
+          "text": "fi",
+          "liga": false,
+          "kern": true,
+          "glyphs": [
+            {
+              "glyph_id": 7,
+              "cluster_start_utf16": 0,
+              "cluster_length_utf16": 1,
+              "x_advance": 285,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyph_id": 8,
+              "cluster_start_utf16": 1,
+              "cluster_length_utf16": 1,
+              "x_advance": 180,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ],
+          "library_requires_missing_glyph_on_selected_match": false
+        },
+        {
+          "text": "fi",
+          "liga": true,
+          "kern": true,
+          "glyphs": [
+            {
+              "glyph_id": 0,
+              "cluster_start_utf16": 0,
+              "cluster_length_utf16": 2,
+              "x_advance": 600,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ],
+          "library_requires_missing_glyph_on_selected_match": true
+        },
+        {
+          "text": "A",
+          "liga": false,
+          "kern": true,
+          "glyphs": [
+            {
+              "glyph_id": 2,
+              "cluster_start_utf16": 0,
+              "cluster_length_utf16": 1,
+              "x_advance": 600,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ],
+          "library_requires_missing_glyph_on_selected_match": false
+        },
+        {
+          "text": "A",
+          "liga": true,
+          "kern": true,
+          "glyphs": [
+            {
+              "glyph_id": 2,
+              "cluster_start_utf16": 0,
+              "cluster_length_utf16": 1,
+              "x_advance": 600,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ],
+          "library_requires_missing_glyph_on_selected_match": false
+        },
+        {
+          "text": "fA",
+          "liga": false,
+          "kern": true,
+          "glyphs": [
+            {
+              "glyph_id": 7,
+              "cluster_start_utf16": 0,
+              "cluster_length_utf16": 1,
+              "x_advance": 285,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyph_id": 2,
+              "cluster_start_utf16": 1,
+              "cluster_length_utf16": 1,
+              "x_advance": 600,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ],
+          "library_requires_missing_glyph_on_selected_match": false
+        },
+        {
+          "text": "fA",
+          "liga": true,
+          "kern": true,
+          "glyphs": [
+            {
+              "glyph_id": 7,
+              "cluster_start_utf16": 0,
+              "cluster_length_utf16": 1,
+              "x_advance": 285,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyph_id": 2,
+              "cluster_start_utf16": 1,
+              "cluster_length_utf16": 1,
+              "x_advance": 600,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ],
+          "library_requires_missing_glyph_on_selected_match": false
+        },
+        {
+          "text": "fiAV",
+          "liga": false,
+          "kern": true,
+          "glyphs": [
+            {
+              "glyph_id": 7,
+              "cluster_start_utf16": 0,
+              "cluster_length_utf16": 1,
+              "x_advance": 285,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyph_id": 8,
+              "cluster_start_utf16": 1,
+              "cluster_length_utf16": 1,
+              "x_advance": 180,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyph_id": 2,
+              "cluster_start_utf16": 2,
+              "cluster_length_utf16": 1,
+              "x_advance": 520,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyph_id": 3,
+              "cluster_start_utf16": 3,
+              "cluster_length_utf16": 1,
+              "x_advance": 600,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ],
+          "library_requires_missing_glyph_on_selected_match": false
+        },
+        {
+          "text": "fiAV",
+          "liga": true,
+          "kern": true,
+          "glyphs": [
+            {
+              "glyph_id": 0,
+              "cluster_start_utf16": 0,
+              "cluster_length_utf16": 2,
+              "x_advance": 600,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyph_id": 2,
+              "cluster_start_utf16": 2,
+              "cluster_length_utf16": 1,
+              "x_advance": 520,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyph_id": 3,
+              "cluster_start_utf16": 3,
+              "cluster_length_utf16": 1,
+              "x_advance": 600,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ],
+          "library_requires_missing_glyph_on_selected_match": true
+        }
+      ]
+    },
+    {
+      "variant": "zero-value-class-matrix",
+      "path": "/tmp/psdkit-font-shape-zero-controls/zero-value-class-matrix.ttf",
+      "sha256": "2ccc52d2153af1f8fc2c7503c3d08cc13a7478572e888a3c66c7fa37b5e97978",
+      "cases": [
+        {
+          "text": "fi",
+          "liga": false,
+          "kern": true,
+          "glyphs": [
+            {
+              "glyph_id": 7,
+              "cluster_start_utf16": 0,
+              "cluster_length_utf16": 1,
+              "x_advance": 310,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyph_id": 8,
+              "cluster_start_utf16": 1,
+              "cluster_length_utf16": 1,
+              "x_advance": 180,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ],
+          "library_requires_missing_glyph_on_selected_match": false
+        },
+        {
+          "text": "fi",
+          "liga": true,
+          "kern": true,
+          "glyphs": [
+            {
+              "glyph_id": 11,
+              "cluster_start_utf16": 0,
+              "cluster_length_utf16": 2,
+              "x_advance": 430,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ],
+          "library_requires_missing_glyph_on_selected_match": false
+        },
+        {
+          "text": "A",
+          "liga": false,
+          "kern": true,
+          "glyphs": [
+            {
+              "glyph_id": 2,
+              "cluster_start_utf16": 0,
+              "cluster_length_utf16": 1,
+              "x_advance": 600,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ],
+          "library_requires_missing_glyph_on_selected_match": false
+        },
+        {
+          "text": "A",
+          "liga": true,
+          "kern": true,
+          "glyphs": [
+            {
+              "glyph_id": 2,
+              "cluster_start_utf16": 0,
+              "cluster_length_utf16": 1,
+              "x_advance": 600,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ],
+          "library_requires_missing_glyph_on_selected_match": false
+        },
+        {
+          "text": "fA",
+          "liga": false,
+          "kern": true,
+          "glyphs": [
+            {
+              "glyph_id": 7,
+              "cluster_start_utf16": 0,
+              "cluster_length_utf16": 1,
+              "x_advance": 310,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyph_id": 2,
+              "cluster_start_utf16": 1,
+              "cluster_length_utf16": 1,
+              "x_advance": 600,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ],
+          "library_requires_missing_glyph_on_selected_match": false
+        },
+        {
+          "text": "fA",
+          "liga": true,
+          "kern": true,
+          "glyphs": [
+            {
+              "glyph_id": 7,
+              "cluster_start_utf16": 0,
+              "cluster_length_utf16": 1,
+              "x_advance": 310,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyph_id": 2,
+              "cluster_start_utf16": 1,
+              "cluster_length_utf16": 1,
+              "x_advance": 600,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ],
+          "library_requires_missing_glyph_on_selected_match": false
+        },
+        {
+          "text": "fiAV",
+          "liga": false,
+          "kern": true,
+          "glyphs": [
+            {
+              "glyph_id": 7,
+              "cluster_start_utf16": 0,
+              "cluster_length_utf16": 1,
+              "x_advance": 310,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyph_id": 8,
+              "cluster_start_utf16": 1,
+              "cluster_length_utf16": 1,
+              "x_advance": 180,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyph_id": 2,
+              "cluster_start_utf16": 2,
+              "cluster_length_utf16": 1,
+              "x_advance": 520,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyph_id": 3,
+              "cluster_start_utf16": 3,
+              "cluster_length_utf16": 1,
+              "x_advance": 600,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ],
+          "library_requires_missing_glyph_on_selected_match": false
+        },
+        {
+          "text": "fiAV",
+          "liga": true,
+          "kern": true,
+          "glyphs": [
+            {
+              "glyph_id": 11,
+              "cluster_start_utf16": 0,
+              "cluster_length_utf16": 2,
+              "x_advance": 415,
+              "y_advance": 0,
+              "x_offset": 20,
+              "y_offset": 0
+            },
+            {
+              "glyph_id": 2,
+              "cluster_start_utf16": 2,
+              "cluster_length_utf16": 1,
+              "x_advance": 520,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyph_id": 3,
+              "cluster_start_utf16": 3,
+              "cluster_length_utf16": 1,
+              "x_advance": 600,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ],
+          "library_requires_missing_glyph_on_selected_match": false
+        }
+      ]
+    }
+  ],
+  "source_base_unchanged": true,
+  "script_sha256": "20203d1b8006f7b2e51bde32dbcc007ccf031f1ca8c79af7104036316cf82925"
+}
