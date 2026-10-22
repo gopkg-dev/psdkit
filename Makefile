@@ -32,7 +32,7 @@ web-test:
 	npm --prefix web/demo test
 
 web: wasm
-	npm --prefix web/demo ci
+	npm --prefix web/demo ci --no-audit --no-fund
 	npm --prefix web/demo run build
 
 SITE_DIR ?= _site
