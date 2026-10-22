@@ -2,7 +2,7 @@
 
 纯 Go 的 Photoshop PSD/PSB 读取、受控编辑、保存与渲染工具库。
 
-[![psdkit智能对象替换效果](docs/assets/img/readme-hero.webp)](https://gopkg-dev.github.io/psdkit/demo/)
+[![psdkit智能对象替换效果](docs/assets/img/readme-hero.webp)](https://psdkit.asin1.com/demo/)
 
 - Go **1.27.3+**，核心库仅依赖标准库。
 - 按需读取原位深通道，保留未知块、原始区间和可编辑结构。
@@ -61,7 +61,7 @@ go run ./examples/edit -psd /tmp/example.psd -out /tmp/edited.psd
 - [GitHub Pages 部署](docs/deployment.md)、[网站设计规范](docs/design-handoff.md)。
 
 Pages 工作流把首页与文档放在站点根路径，把 Playground 放在 `demo/`。站点地址为
-[首页与文档](https://gopkg-dev.github.io/psdkit/) 和 [Playground](https://gopkg-dev.github.io/psdkit/demo/)。
+[首页与文档](https://psdkit.asin1.com/) 和 [Playground](https://psdkit.asin1.com/demo/)。
 
 ```sh
 make check       # 测试、vet、lint、格式和 SDK 测试。

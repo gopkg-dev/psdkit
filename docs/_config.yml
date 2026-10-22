@@ -1,8 +1,8 @@
 title: psdkit
 tagline: 让 PSD 成为可编程的画布
 description: 纯 Go 的 Photoshop PSD/PSB 读取、受控编辑、保存与渲染工具库；同一份实现可编译为 WebAssembly 在浏览器本机运行。
-url: https://gopkg-dev.github.io
-baseurl: /psdkit
+url: https://psdkit.asin1.com
+baseurl: ""
 repository: gopkg-dev/psdkit
 github_url: https://github.com/gopkg-dev/psdkit
 go_module: github.com/gopkg-dev/psdkit

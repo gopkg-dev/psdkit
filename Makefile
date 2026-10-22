@@ -37,9 +37,10 @@ web: wasm
 
 SITE_DIR ?= _site
 SITE_ADDR ?= 127.0.0.1:8301
+SITE_BASE_PATH ?= /psdkit
 
 docs:
-	BUNDLE_GEMFILE=$(CURDIR)/docs/Gemfile bundle exec jekyll build --source docs --destination $(SITE_DIR)
+	BUNDLE_GEMFILE=$(CURDIR)/docs/Gemfile bundle exec jekyll build --source docs --destination $(SITE_DIR) --baseurl "$(SITE_BASE_PATH)"
 
 # 与 GitHub Pages 工作流相同的组装方式：首页与文档在站点根路径，Playground 在 demo/。
 site: docs web
@@ -48,7 +49,7 @@ site: docs web
 	touch $(SITE_DIR)/.nojekyll
 
 site-preview:
-	$(GO) run ./cmd/psdkit-web-server -dir $(SITE_DIR) -base /psdkit/ -addr $(SITE_ADDR)
+	$(GO) run ./cmd/psdkit-web-server -dir $(SITE_DIR) -base $(SITE_BASE_PATH)/ -addr $(SITE_ADDR)
 
 repository-check:
 	node scripts/check-repository.mjs

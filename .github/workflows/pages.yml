@@ -41,6 +41,7 @@ jobs:
         run: make web
       - name: Assemble static site
         run: |
+          sudo chown -R "$(id -u):$(id -g)" _site
           cp -R web/demo/dist _site/demo
           touch _site/.nojekyll
       - uses: actions/upload-pages-artifact@v5
