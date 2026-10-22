@@ -1,0 +1,97 @@
+name: Release
+run-name: ${{ github.event_name == 'push' && '发布' || '验证' }} ${{ inputs.tag || github.ref_name }}
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 已存在的版本 Tag（只验证和预览说明，不创建或修改 Release）
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      tag: ${{ steps.version.outputs.tag }}
+      sha: ${{ steps.version.outputs.sha }}
+      tag-object: ${{ steps.version.outputs.tag-object }}
+      go-version: ${{ steps.version.outputs.go-version }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+      - name: 检查版本、模块路径与 main 分支归属
+        id: version
+        env:
+          RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
+        run: node scripts/release/release.mjs prepare
+
+  checks:
+    needs: prepare
+    uses: ./.github/workflows/ci.yml
+    with:
+      revision: ${{ needs.prepare.outputs.sha }}
+
+  consumer:
+    needs: [prepare, checks]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v7
+        with:
+          go-version: ${{ needs.prepare.outputs.go-version }}
+          cache: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+      - name: 从公共代理安装并运行独立 Go 项目
+        env:
+          RELEASE_TAG: ${{ needs.prepare.outputs.tag }}
+          RELEASE_SHA: ${{ needs.prepare.outputs.sha }}
+          RELEASE_TAG_OBJECT: ${{ needs.prepare.outputs.tag-object }}
+        run: node scripts/release/consumer.mjs
+      - name: 预览中文发布说明
+        env:
+          RELEASE_TAG: ${{ needs.prepare.outputs.tag }}
+          RELEASE_SHA: ${{ needs.prepare.outputs.sha }}
+          RELEASE_TAG_OBJECT: ${{ needs.prepare.outputs.tag-object }}
+        run: node scripts/release/release.mjs notes
+
+  publish:
+    if: github.event_name == 'push'
+    needs: [prepare, checks, consumer]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+      - name: 发布中文 GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ needs.prepare.outputs.tag }}
+          RELEASE_SHA: ${{ needs.prepare.outputs.sha }}
+          RELEASE_TAG_OBJECT: ${{ needs.prepare.outputs.tag-object }}
+        run: node scripts/release/release.mjs publish

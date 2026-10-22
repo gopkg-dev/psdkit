@@ -5,6 +5,12 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+  workflow_call:
+    inputs:
+      revision:
+        description: Immutable commit to check (defaults to the triggering commit).
+        type: string
+        required: false
 
 permissions:
   contents: read
@@ -17,6 +23,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.revision || github.sha }}
       - uses: actions/setup-go@v7
         with:
           go-version-file: go.mod
@@ -28,6 +36,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.revision || github.sha }}
       - uses: actions/setup-go@v7
         with:
           go-version-file: go.mod
@@ -38,6 +48,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.revision || github.sha }}
       - uses: actions/checkout@v7
         with:
           repository: gopkg-dev/psdkit-assets
@@ -53,3 +65,12 @@ jobs:
           cache-dependency-path: web/demo/package-lock.json
       - run: make web-test web
       - run: make repository-check
+
+  release-tools:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+      - run: make release-test

@@ -2,7 +2,7 @@ GO ?= go
 GOLANGCI_LINT_VERSION := v2.15.0
 GOLANGCI_LINT := $(CURDIR)/.tools/golangci-lint
 
-.PHONY: test race vet lint fmt tools wasm web web-test docs site site-preview repository-check check clean
+.PHONY: test race vet lint fmt tools wasm web web-test release-test docs site site-preview repository-check check clean
 
 test:
 	$(GO) test ./...
@@ -31,6 +31,9 @@ wasm:
 web-test:
 	npm --prefix web/demo test
 
+release-test:
+	node --test scripts/release/*.test.mjs
+
 web: wasm
 	npm --prefix web/demo ci --no-audit --no-fund
 	npm --prefix web/demo run build
@@ -54,7 +57,7 @@ site-preview:
 repository-check:
 	node scripts/check-repository.mjs
 
-check: test vet lint web-test repository-check
+check: test vet lint web-test release-test repository-check
 
 clean:
 	rm -rf bin site _site web/demo/dist web/demo/public/wasm web/demo/public/samples

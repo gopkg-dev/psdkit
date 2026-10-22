@@ -33,3 +33,8 @@ PSD Descriptor 的 `doub`、`clas` 标记不属于拼写错误。
 修改导出函数注释后运行 `go run ./cmd/psdkit-web-docs` 同步浏览器 API 目录。
 提交说明包含问题、行为和验证结果。涉及浏览器桥接需实际打开 Demo。
 当前尚未发布 v1，公共 API 仍可能调整。
+
+## 发布版本
+
+合并到 main 后推送新的版本 Tag，Release 工作流会自动运行全部 CI、验证公共 Go 模块引用，
+并创建带中文说明的 GitHub Release。预发布、失败重跑和只读验收入口见[版本发布](../docs/releases.md)。

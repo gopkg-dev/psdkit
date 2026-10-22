@@ -13,7 +13,7 @@ description: 开发环境、检查命令、代码约定与提交要求。
 - 本地构建文档需要 Ruby 与 Bundler（`bundle install --gemfile docs/Gemfile`）。
 
 ```sh
-make check       # 测试、vet、lint、格式检查、SDK 测试与仓库检查
+make check       # 测试、vet、lint、格式检查、SDK 与发布脚本测试、仓库检查
 make race        # Go 竞态检测
 make web         # Wasm 与 Playground
 make site        # 文档 + Playground 统一静态站点
@@ -38,3 +38,5 @@ make site        # 文档 + Playground 统一静态站点
 - 涉及浏览器桥接的修改需要实际打开 Playground 验证。
 
 当前尚未发布 v1，公共 API 仍可能调整。项目采用 [MIT 许可](third-party-notices.md)。
+
+维护者发布新版本时，推送版本 Tag 即可触发检查、独立项目引用验证和中文 GitHub Release，详见[版本发布](releases.md)。

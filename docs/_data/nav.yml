@@ -25,6 +25,7 @@
   items:
     - { title: 路线图, url: "/status.html#路线图" }
     - { title: 参与贡献, url: /contributing.html }
+    - { title: 版本发布, url: /releases.html }
     - { title: 测试与素材, url: /testing.html }
     - { title: 仓库结构, url: /repository.html }
     - { title: GitHub Pages 部署, url: /deployment.html }
