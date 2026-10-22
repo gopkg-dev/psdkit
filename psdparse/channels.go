@@ -96,7 +96,8 @@ func (p *parser) decodePlane(r *cursor, target *image.NRGBA, component int) {
 	row := make([]byte, width)
 	switch compression {
 	case 0:
-		if r.remaining() != int64(width)*int64(height) {
+		length := int64(width) * int64(height)
+		if !validChannelPadding(length, r.remaining()-length) {
 			r.fail("PSD raw channel length does not match dimensions")
 			return
 		}
@@ -104,8 +105,10 @@ func (p *parser) decodePlane(r *cursor, target *image.NRGBA, component int) {
 			r.read(row)
 			writeRow(target, row, y, component)
 		}
+		r.skip(r.remaining())
 	case 1:
 		lengths := p.rleRowLengths(r, height)
+		start := r.position
 		for y, length := range lengths {
 			encoded := r.bytes(length)
 			if r.err != nil {
@@ -117,9 +120,11 @@ func (p *parser) decodePlane(r *cursor, target *image.NRGBA, component int) {
 			}
 			writeRow(target, row, y, component)
 		}
-		if r.remaining() != 0 {
+		if !validChannelPadding(r.position-start, r.remaining()) {
 			r.fail("PSD RLE channel exceeds declared row lengths")
+			return
 		}
+		r.skip(r.remaining())
 	case 2, 3:
 		payload, err := openZIPPayload(r)
 		if err != nil {
@@ -147,6 +152,10 @@ func (p *parser) decodePlane(r *cursor, target *image.NRGBA, component int) {
 	default:
 		r.fail("unsupported PSD channel compression %d", compression)
 	}
+}
+
+func validChannelPadding(payload, trailing int64) bool {
+	return trailing == 0 || payload%2 == 1 && trailing == 1
 }
 
 func (p *parser) rleRowLengths(r *cursor, count int) []int64 {
@@ -188,7 +197,7 @@ func (p *parser) composite(r *cursor) {
 		for component := 0; component < p.channels; component++ {
 			for y := 0; y < height && r.err == nil; y++ {
 				r.read(row)
-				writeRow(target, row, y, component)
+				p.writeCompositeRow(target, row, y, component)
 			}
 		}
 	case 1:
@@ -206,7 +215,7 @@ func (p *parser) composite(r *cursor) {
 					r.err = err
 					return
 				}
-				writeRow(target, row, y, component)
+				p.writeCompositeRow(target, row, y, component)
 			}
 		}
 	case 2, 3:
@@ -227,7 +236,7 @@ func (p *parser) composite(r *cursor) {
 						row[x] += row[x-1]
 					}
 				}
-				writeRow(target, row, y, component)
+				p.writeCompositeRow(target, row, y, component)
 			}
 		}
 		if err := payload.finish(); err != nil {
@@ -253,4 +262,12 @@ func (p *parser) composite(r *cursor) {
 			}
 		}
 	}
+}
+
+func (p *parser) writeCompositeRow(target *image.NRGBA, row []byte, y, component int) {
+	// Saved alpha and selection channels do not imply merged-image transparency.
+	if component == 3 && !p.globalAlpha {
+		return
+	}
+	writeRow(target, row, y, component)
 }

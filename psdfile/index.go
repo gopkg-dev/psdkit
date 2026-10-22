@@ -288,8 +288,10 @@ func (d *Document) indexLayerRecord(cursor *indexCursor, budget *indexBudget) (L
 	if d.Header.Version == 2 {
 		lengthWidth = 8
 	}
+	hasRealMask := false
 	for index := range layer.Channels {
 		id := int16(cursor.u16(fmt.Sprintf("channels[%d].id", index)))
+		hasRealMask = hasRealMask || id == -3
 		length := cursor.length(lengthWidth, fmt.Sprintf("channels[%d].length", index))
 		layer.Channels[index] = ChannelRecord{ID: id, LengthWidth: lengthWidth, DeclaredLength: uint64(length)}
 	}
@@ -315,7 +317,7 @@ func (d *Document) indexLayerRecord(cursor *indexCursor, budget *indexBudget) (L
 	}
 	if mask.Length != 0 {
 		var err error
-		layer.Mask, err = indexMask(extra.child(mask, extra.path+".mask"), budget)
+		layer.Mask, err = indexMask(extra.child(mask, extra.path+".mask"), budget, hasRealMask)
 		if err != nil {
 			return layer, err
 		}
@@ -353,7 +355,7 @@ func (d *Document) indexLayerRecord(cursor *indexCursor, budget *indexBudget) (L
 	return layer, nil
 }
 
-func indexMask(cursor *indexCursor, budget *indexBudget) (*MaskRecord, error) {
+func indexMask(cursor *indexCursor, budget *indexBudget, hasReal bool) (*MaskRecord, error) {
 	if err := budget.reserve(int64(unsafe.Sizeof(MaskRecord{})), cursor.path, cursor.position); err != nil {
 		return nil, err
 	}
@@ -368,6 +370,12 @@ func indexMask(cursor *indexCursor, budget *indexBudget) (*MaskRecord, error) {
 	}
 	if cursor.err != nil {
 		return nil, cursor.err
+	}
+	// The -3 channel identifies the real header; parameter bytes alone can exceed its size.
+	if hasReal {
+		mask.HasReal = true
+		mask.RealFlags, mask.RealDefaultColor = cursor.u8("realFlags"), cursor.u8("realDefaultColor")
+		mask.RealBounds = indexRectangle(cursor, "realBounds")
 	}
 	if mask.Flags&16 != 0 {
 		mask.ParameterFlags = cursor.u8("parameterFlags")
@@ -399,14 +407,6 @@ func indexMask(cursor *indexCursor, budget *indexBudget) (*MaskRecord, error) {
 				return nil, err
 			}
 		}
-	}
-	if cursor.err != nil {
-		return nil, cursor.err
-	}
-	if mask.Span.Length != 20 && cursor.remaining() >= 18 {
-		mask.HasReal = true
-		mask.RealFlags, mask.RealDefaultColor = cursor.u8("realFlags"), cursor.u8("realDefaultColor")
-		mask.RealBounds = indexRectangle(cursor, "realBounds")
 	}
 	if cursor.err != nil {
 		return nil, cursor.err

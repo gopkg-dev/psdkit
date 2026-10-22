@@ -110,11 +110,23 @@ func compositeFixture(version, depth, channels uint16, layers []compositeFixture
 		record = append(record, 255, 0, 0, 0)
 		var extra []byte
 		if layer.mask != nil {
-			extra = binary.BigEndian.AppendUint32(extra, 20)
+			maskLength := uint32(20)
+			if layer.extraID == -3 {
+				maskLength = 36
+			}
+			extra = binary.BigEndian.AppendUint32(extra, maskLength)
 			for _, coordinate := range []uint32{0, 0, 1, 1} {
 				extra = binary.BigEndian.AppendUint32(extra, coordinate)
 			}
-			extra = append(extra, 255, 0, 0, 0)
+			extra = append(extra, 255, 0)
+			if layer.extraID == -3 {
+				extra = append(extra, 0, 255)
+				for _, coordinate := range []uint32{0, 0, 1, 1} {
+					extra = binary.BigEndian.AppendUint32(extra, coordinate)
+				}
+			} else {
+				extra = append(extra, 0, 0)
+			}
 		} else {
 			extra = binary.BigEndian.AppendUint32(extra, 0)
 		}

@@ -68,6 +68,9 @@ func (p *parser) additionalEntry(r *cursor, key string, record *layerRecord) {
 		return
 	}
 	if record == nil {
+		if key == "Mtrn" {
+			p.globalAlpha = true
+		}
 		if key == "Layr" || key == "Lr16" || key == "Lr32" {
 			r.fail("unsupported alternate PSD layer-information section %q", key)
 		}

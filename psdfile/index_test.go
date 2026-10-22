@@ -215,14 +215,14 @@ func TestIndexEmptyChannelAndMaskGeometry(t *testing.T) {
 	for _, value := range []int32{0, 0, 1, 2} {
 		indexTestNumber(&mask, value)
 	}
-	mask.Write([]byte{255, 17, 15, 200})
-	indexTestNumber(&mask, float64(2.5))
-	mask.WriteByte(100)
-	indexTestNumber(&mask, float64(1.5))
-	mask.Write([]byte{1, 0})
+	mask.Write([]byte{255, 17, 1, 0})
 	for _, value := range []int32{3, 4, 4, 7} {
 		indexTestNumber(&mask, value)
 	}
+	mask.Write([]byte{15, 200})
+	indexTestNumber(&mask, float64(2.5))
+	mask.WriteByte(100)
+	indexTestNumber(&mask, float64(1.5))
 	layers := indexTestLayerSet(1, image.Rect(8, 9, 9, 10), []int16{-2, -3},
 		[][]byte{{0, 0, 10, 11}, {0, 0, 12, 13, 14}}, mask.Bytes(), nil)
 	document, err := Parse(indexTestDocument(1, 8, 1, nil, indexTestGlobal(1, layers, nil), []byte{0, 0, 6}))

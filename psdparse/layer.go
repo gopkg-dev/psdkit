@@ -152,7 +152,11 @@ func orderedBlendSlider(value psdmodel.BlendSlider) bool {
 
 func (p *parser) mask(r *cursor, record *layerRecord) {
 	maskData := r.section(int64(r.u32()))
+	hasReal := slices.ContainsFunc(record.channels, func(value channel) bool { return value.id == -3 })
 	if maskData.remaining() == 0 {
+		if hasReal {
+			r.fail("real mask channel has no mask header")
+		}
 		return
 	}
 	if maskData.remaining() < 18 {
@@ -174,6 +178,12 @@ func (p *parser) mask(r *cursor, record *layerRecord) {
 	p.account(bounds, maskData)
 	if flags&0xe0 != 0 {
 		mask.Unsupported = append(mask.Unsupported, "暂不支持未知像素蒙版标记")
+	}
+	var realFlags, realColor uint8
+	if hasReal {
+		realFlags, realColor = maskData.u8(), maskData.u8()
+		record.realMask = rectangle(maskData)
+		p.account(record.realMask, maskData)
 	}
 	if flags&16 != 0 {
 		parameters := maskData.u8()
@@ -205,11 +215,7 @@ func (p *parser) mask(r *cursor, record *layerRecord) {
 			mask.Unsupported = append(mask.Unsupported, "暂不支持未知蒙版参数")
 		}
 	}
-	if maskData.remaining() >= 18 {
-		realFlags := maskData.u8()
-		realColor := maskData.u8()
-		record.realMask = rectangle(maskData)
-		p.account(record.realMask, maskData)
+	if hasReal {
 		if record.renderedMask {
 			userMask := *mask
 			userMask.Bounds, userMask.DefaultColor = record.realMask, &realColor

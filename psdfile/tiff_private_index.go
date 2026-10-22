@@ -449,8 +449,10 @@ func (builder *tiffPrivateBuilder) normalizeLayers(span Span) error {
 		}
 		first := len(channels)
 		ids := make([]int16, componentCount)
+		hasRealMask := false
 		for index := 0; index < componentCount && cursor.err == nil; index++ {
 			ids[index] = int16(cursor.u16())
+			hasRealMask = hasRealMask || ids[index] == -3
 			length := int64(cursor.u32())
 			channels = append(channels, channel{length: length, bounds: bounds})
 		}
@@ -469,7 +471,7 @@ func (builder *tiffPrivateBuilder) normalizeLayers(span Span) error {
 			end: extraSpan.Offset + extraSpan.Length, path: cursor.path + ".extra"}
 		maskLength := int64(extra.u32())
 		maskSpan := extra.take(maskLength)
-		maskBounds, realBounds, hasReal, err := builder.normalizeMask(maskSpan)
+		maskBounds, realBounds, hasReal, err := builder.normalizeMask(maskSpan, hasRealMask)
 		if err != nil {
 			return err
 		}
@@ -540,8 +542,12 @@ func (builder *tiffPrivateBuilder) normalizeLayers(span Span) error {
 	return cursor.err
 }
 
-func (builder *tiffPrivateBuilder) normalizeMask(span Span) (image.Rectangle, image.Rectangle, bool, error) {
+func (builder *tiffPrivateBuilder) normalizeMask(span Span, hasReal bool) (image.Rectangle, image.Rectangle, bool, error) {
 	if span.Length == 0 {
+		if hasReal {
+			return image.Rectangle{}, image.Rectangle{}, false,
+				fileError(ErrMalformed, "tiff.layers", "Layr.mask", span.Offset, "real mask channel has no mask header")
+		}
 		return image.Rectangle{}, image.Rectangle{}, false, nil
 	}
 	cursor := tiffPrivateCursor{builder: builder, position: span.Offset, end: span.Offset + span.Length, path: "Layr.mask"}
@@ -554,6 +560,11 @@ func (builder *tiffPrivateBuilder) normalizeMask(span Span) (image.Rectangle, im
 	flags := cursor.u8()
 	if flags&8 != 0 && bounds == (image.Rectangle{Max: image.Pt(0, -1)}) {
 		bounds = image.Rectangle{}
+	}
+	real := image.Rectangle{}
+	if hasReal {
+		cursor.take(2)
+		real = readBounds()
 	}
 	if flags&16 != 0 {
 		parameters := cursor.u8()
@@ -569,12 +580,6 @@ func (builder *tiffPrivateBuilder) normalizeMask(span Span) (image.Rectangle, im
 				}
 			}
 		}
-	}
-	hasReal := span.Length != 20 && cursor.end-cursor.position >= 18
-	real := image.Rectangle{}
-	if hasReal {
-		cursor.take(2)
-		real = readBounds()
 	}
 	cursor.padding(3)
 	if bounds.Dx() < 0 || bounds.Dy() < 0 || real.Dx() < 0 || real.Dy() < 0 {

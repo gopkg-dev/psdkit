@@ -149,10 +149,8 @@ func checkedLength64(r *cursor) int64 {
 }
 
 func checkDimensions(width, height int, allowEmpty bool) error {
-	if allowEmpty && width == 0 && height == 0 {
-		return nil
-	}
-	if width <= 0 || height <= 0 || width > psdmodel.MaxDimension || height > psdmodel.MaxDimension ||
+	if width < 0 || height < 0 || width > psdmodel.MaxDimension || height > psdmodel.MaxDimension ||
+		(!allowEmpty && (width == 0 || height == 0)) ||
 		int64(width)*int64(height) > psdmodel.MaxPixels {
 		return fmt.Errorf("PSD canvas, layer or mask exceeds 30000 pixels per side or 20 million pixels")
 	}
