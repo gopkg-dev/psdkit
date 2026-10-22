@@ -89,7 +89,7 @@ func (e *Editor) Save(ctx context.Context, filename string, options ...SaveOptio
 	if err := ctx.Err(); err != nil {
 		return err
 	}
-	if err := os.Rename(temporary, filename); err != nil {
+	if err := replaceSavedFile(temporary, filename); err != nil {
 		return err
 	}
 	e.savedRevision = e.revision
