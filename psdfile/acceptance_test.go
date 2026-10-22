@@ -12,7 +12,6 @@ import (
 	"math"
 	"os"
 	"path/filepath"
-	"runtime"
 	"slices"
 	"strings"
 	"testing"
@@ -264,17 +263,36 @@ func TestAcceptanceSourceOwnershipAndClose(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Cleanup(func() { _ = owned.Close() })
-	if runtime.GOOS != "windows" {
-		if err := os.Remove(filename); err != nil {
-			t.Fatal(err)
-		}
+	if err := os.Remove(filename); err != nil {
+		t.Fatal(err)
 	}
-	// Unlinking on macOS/Linux leaves an owned open descriptor usable until Close.
+	// Unlinking leaves the owned file handle usable until Close on every supported platform.
 	acceptanceAssertSpan(t, owned, fixture, "source", owned.Source)
 	if err := owned.Close(); err != nil {
 		t.Fatal(err)
 	}
 	acceptanceCheckClosed(t, owned)
+}
+
+func TestAcceptanceOpenLongSourcePath(t *testing.T) {
+	directory := t.TempDir()
+	for range 5 {
+		directory = filepath.Join(directory, strings.Repeat("nested-", 10))
+	}
+	if err := os.MkdirAll(directory, 0o700); err != nil {
+		t.Fatal(err)
+	}
+	filename := filepath.Join(directory, "原始样本.psd")
+	fixture := acceptanceDocument(1, 8, 0, 1, "")
+	if err := os.WriteFile(filename, fixture.data, 0o600); err != nil {
+		t.Fatal(err)
+	}
+	document, err := psdfile.Open(filename)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { _ = document.Close() })
+	acceptanceAssertSpan(t, document, fixture, "source", document.Source)
 }
 
 func acceptanceCheckClosed(t *testing.T, document *psdfile.Document) {

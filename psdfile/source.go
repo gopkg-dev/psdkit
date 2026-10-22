@@ -5,12 +5,11 @@ import (
 	"context"
 	"errors"
 	"io"
-	"os"
 )
 
 // Open indexes a PSD/PSB file and owns the open file until Document.Close.
 func Open(filename string, options ...LoadOptions) (*Document, error) {
-	file, err := os.Open(filename)
+	file, err := openSourceFile(filename)
 	if err != nil {
 		return nil, err
 	}

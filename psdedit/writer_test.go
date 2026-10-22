@@ -154,6 +154,11 @@ func TestWriterAtomicSaveFailuresAndClosed(t *testing.T) {
 	if err := os.WriteFile(destination, original, 0600); err != nil {
 		t.Fatal(err)
 	}
+	initialInfo, err := os.Stat(destination)
+	if err != nil {
+		t.Fatal(err)
+	}
+	permission := initialInfo.Mode().Perm()
 	err = editor.Save(context.Background(), destination, psdedit.SaveOptions{MaxOutputBytes: 10})
 	if !errors.Is(err, psdfile.ErrLimit) {
 		t.Fatalf("small output limit = %v", err)
@@ -183,7 +188,7 @@ func TestWriterAtomicSaveFailuresAndClosed(t *testing.T) {
 		t.Fatal(err)
 	}
 	info, err := os.Stat(destination)
-	if err != nil || info.Mode().Perm() != 0600 {
+	if err != nil || info.Mode().Perm() != permission {
 		t.Fatalf("destination mode = %v, %v", info, err)
 	}
 	if err := editor.Close(); err != nil {

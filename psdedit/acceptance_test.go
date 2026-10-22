@@ -655,6 +655,11 @@ func TestP2AcceptanceFailedSavesDoNotCommitOrDamageDestination(t *testing.T) {
 	if err := os.WriteFile(filename, original, 0o600); err != nil {
 		t.Fatal(err)
 	}
+	initialInfo, err := os.Stat(filename)
+	if err != nil {
+		t.Fatal(err)
+	}
+	permission := initialInfo.Mode().Perm()
 	if err := editor.Save(ctx, filename); !errors.Is(err, context.Canceled) {
 		t.Fatalf("pre-cancelled save was accepted: %v", err)
 	}
@@ -684,7 +689,7 @@ func TestP2AcceptanceFailedSavesDoNotCommitOrDamageDestination(t *testing.T) {
 		t.Fatal(err)
 	}
 	info, err := os.Stat(filename)
-	if err != nil || info.Mode().Perm() != 0o600 {
+	if err != nil || info.Mode().Perm() != permission {
 		t.Fatal("atomic replacement lost existing file permissions")
 	}
 	saved, err := os.ReadFile(filename)
