@@ -29,7 +29,8 @@ func (engine *precisionSourceRenderer) qualifyRGB16Normal(
 		if layer.Hidden || *layer.Opacity == 0 {
 			continue
 		}
-		if layer.Children != nil || layer.Clipping || layer.Mask != nil || len(layer.BlendRanges) != 0 ||
+		if layer.Children != nil || layer.Clipping || !engine.knownInactiveRGB16Mask(layer) ||
+			len(layer.BlendRanges) != 0 ||
 			layer.BlendMode != "norm" {
 			return nil
 		}

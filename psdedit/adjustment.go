@@ -13,6 +13,7 @@ import (
 
 // SetAdjustment edits an existing RGB8 adjustment layer without changing its family.
 // It owns encoded parameters and semantic views, retaining all other layer blocks and metadata.
+// Non-neutral Color Balance, legacy Brightness/Contrast and Photo Filter require an explicit save composite.
 // Modern CgEd-dependent adjustments and unrecognized source semantics are rejected before committing overlays.
 func (e *Editor) SetAdjustment(ctx context.Context, id LayerID, adjustment psdadjust.Adjustment) error {
 	if ctx == nil {
@@ -93,8 +94,7 @@ func (e *Editor) SetAdjustment(ctx context.Context, id LayerID, adjustment psdad
 		}
 		if _, err := psdadjust.Compile(*original, psdadjust.CompileOptions{
 			ApproximateHueSaturation: original.Kind == psdadjust.HueSaturation,
-		}); err != nil && original.Kind != psdadjust.BrightnessContrast &&
-			(original.Kind != psdadjust.PhotoFilter || !errors.Is(err, psdadjust.ErrUnsupported)) {
+		}); err != nil && (!errors.Is(err, psdadjust.ErrUnsupported) || !metadataAdjustmentEditable(original)) {
 			return adjustmentEditError(err)
 		}
 		originalCost := ownedAdjustmentBytes(original)
@@ -152,9 +152,20 @@ func (e *Editor) SetAdjustment(ctx context.Context, id LayerID, adjustment psdad
 	return nil
 }
 
+func metadataAdjustmentEditable(adjustment *psdadjust.Adjustment) bool {
+	switch adjustment.Kind {
+	case psdadjust.ColorBalance, psdadjust.PhotoFilter:
+		return true
+	case psdadjust.BrightnessContrast:
+		parameters := adjustment.BrightnessContrast
+		return parameters != nil && parameters.Legacy && !parameters.LabOnly
+	}
+	return false
+}
+
 func unsupportedAdjustmentKey(key string) bool {
 	switch key {
-	case "vibA", "blnc", "blwh", "clrL", "grdm", "selc", "CgEd":
+	case "vibA", "blwh", "clrL", "grdm", "selc", "CgEd":
 		return true
 	}
 	return false
@@ -162,7 +173,7 @@ func unsupportedAdjustmentKey(key string) bool {
 
 func adjustmentFamilyKey(key string) bool {
 	switch key {
-	case "nvrt", "thrs", "post", "levl", "curv", "expA", "brit", "mixr", "hue2", "hue ", "phfl":
+	case "nvrt", "thrs", "post", "levl", "curv", "expA", "brit", "blnc", "mixr", "hue2", "hue ", "phfl":
 		return true
 	}
 	return false

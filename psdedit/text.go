@@ -27,9 +27,10 @@ type TextEditOptions struct {
 	Pixels *image.NRGBA
 }
 
-// SetTextContent changes an existing single-style Latin point-text layer without a document-wide Txt2 block.
+// SetTextContent changes an existing single-style Unicode point-text layer without a document-wide Txt2 block.
 // Accurate new layer pixels are mandatory: Photoshop does not automatically refresh its saved text raster on open.
 // Newlines are normalized to carriage returns and character/paragraph ranges use UTF-16 code units.
+// Control characters other than CR/LF are unsupported, as are Unicode line and paragraph separators.
 // Ordered descriptors, unknown engine properties, typography, affine bits, warp, TySh bounds and tail are preserved.
 // The replacement source artwork is copied and committed atomically with the updated TySh payload.
 // Modern Txt2 text, multiple character/paragraph styles, paragraph text and warps return ErrUnsupported.
@@ -299,17 +300,24 @@ func textEditNormalize(ctx context.Context, value string) (string, error) {
 	if !utf8.ValidString(value) {
 		return "", editError(ErrInvalidEdit, "layers.text.content", "text is not valid UTF-8")
 	}
+	nextCheck := 0
 	for index, character := range value {
-		if index%512 == 0 && ctx.Err() != nil {
-			return "", ctx.Err()
+		if index >= nextCheck {
+			if err := ctx.Err(); err != nil {
+				return "", err
+			}
+			nextCheck = index + 512
 		}
-		if character == '\r' || character == '\n' || character >= 0x20 && character <= 0x7e ||
-			unicode.In(character, unicode.Latin) || unicode.In(character, unicode.Punct) && character < 0x3000 {
+		if character == '\r' || character == '\n' {
 			continue
 		}
-		return "", editError(ErrUnsupported, "layers.text.content", "only Latin text and ordinary punctuation are supported")
+		if unicode.IsControl(character) || character == '\u2028' || character == '\u2029' {
+			return "", editError(ErrUnsupported, "layers.text.content",
+				"control characters and Unicode line/paragraph separators are unsupported; use CR or LF")
+		}
 	}
-	return strings.ReplaceAll(strings.ReplaceAll(value, "\r\n", "\r"), "\n", "\r"), nil
+	value = strings.ReplaceAll(strings.ReplaceAll(value, "\r\n", "\r"), "\n", "\r")
+	return value, ctx.Err()
 }
 
 func textEditSource(

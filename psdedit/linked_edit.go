@@ -12,17 +12,23 @@ import (
 // ErrStaleLinkedEdit identifies editor changes made while an external resolver was running.
 var ErrStaleLinkedEdit = errors.New("PSD editor changed while resolving linked contents")
 
-// LinkedContentsResolver supplies encoded PSD/PSB bytes for an explicitly selected external link.
+// LinkedContentsResolver supplies encoded PSD/PSB, PNG, JPEG or TIFF bytes for an explicitly selected external link.
 // Metadata identifiers are opaque and should not be logged. The library never opens the retained path.
 // Returned bytes remain caller-owned and are copied before committing the edit.
 type LinkedContentsResolver func(context.Context, psdfile.LinkedFileRecord) ([]byte, error)
 
-// EmbedLinkedContents resolves and embeds an external RGB8 PSD/PSB source for all shared instances.
+// EmbedLinkedContents resolves and embeds a supported external raster source for all shared instances.
 // Destination corners remain fixed; the source and projected caches become owned editor overlays.
 // The resolver runs without the editor lock. Concurrent edits cause ErrStaleLinkedEdit without a commit.
-// This initial conversion accepts a global single-record lnkE block and at most one empty lnk2 container,
-// or an external record already inside a standard embedded-link container.
 func (e *Editor) EmbedLinkedContents(ctx context.Context, id LayerID, resolver LinkedContentsResolver) error {
+	return e.EmbedLinkedContentsWithOptions(ctx, id, resolver, SmartContentsOptions{})
+}
+
+// EmbedLinkedContentsWithOptions embeds an external source using explicit source-color and Warp policies.
+// The zero value preserves the strict rendering behavior and atomic guarantees of EmbedLinkedContents.
+func (e *Editor) EmbedLinkedContentsWithOptions(
+	ctx context.Context, id LayerID, resolver LinkedContentsResolver, options SmartContentsOptions,
+) error {
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -115,7 +121,7 @@ func (e *Editor) EmbedLinkedContents(ctx context.Context, id LayerID, resolver L
 	if e.revision != revision || e.source != source {
 		return ErrStaleLinkedEdit
 	}
-	return e.replaceContentsLocked(ctx, id, data, true)
+	return e.replaceSmartContentsWithOptionsLocked(ctx, id, data, true, nil, options)
 }
 
 func validateExternalEmbed(source *psdfile.Document, identity string, records []psdfile.LinkedFileRecord) error {
@@ -130,117 +136,17 @@ func validateExternalEmbed(source *psdfile.Document, identity string, records []
 		selected = &records[index]
 	}
 	if selected == nil || selected.Kind != "liFE" || selected.Version < 1 || selected.Version > 7 ||
-		(selected.FileType != "8BPS" && selected.FileType != "8BPB") {
-		return editError(ErrUnsupported, "linked.embed.source", "an external PSD/PSB record is required")
+		!supportedSmartContentsType(selected.FileType) {
+		return editError(ErrUnsupported, "linked.embed.source", "a supported external raster record is required")
 	}
 	if selected.Block.Key != "lnkE" {
 		return nil
 	}
-	globalSource, emptyTargets := false, 0
-	for _, record := range records {
-		if record.Block.Span == selected.Block.Span && record.ID != identity {
-			return editError(ErrUnsupported, "linked.embed.container", "mixed external containers require a merge operation")
-		}
-		if record.Block.Key == "lnk2" && record.Block.Data.Length != 0 {
-			return editError(ErrUnsupported, "linked.embed.container", "existing embedded container requires a merge operation")
-		}
-	}
-	for _, block := range source.AdditionalInfo {
-		if block.Span == selected.Block.Span && block.Data == selected.Block.Data {
-			globalSource = true
-		}
-		if block.Key != "lnk2" {
-			continue
-		}
-		if block.Data.Length != 0 {
-			return editError(ErrUnsupported, "linked.embed.container", "embedded container requires a merge operation")
-		}
-		emptyTargets++
-	}
-	if !globalSource || emptyTargets > 1 {
-		return editError(ErrUnsupported, "linked.embed.container", "external container scope or destination is ambiguous")
-	}
-	for _, set := range source.LayerSets {
-		for _, layer := range set.Layers {
-			for _, block := range layer.AdditionalInfo {
-				if block.Key == "lnk2" {
-					return editError(ErrUnsupported, "linked.embed.container", "layer-local embedded containers are unsupported")
-				}
-			}
-		}
+	scope, ok := linkedContainerScope(source, selected.Block)
+	if !ok || scope.layerSet >= 0 && scope.layerSet != source.ActiveLayerSet {
+		return editError(ErrUnsupported, "linked.embed.container", "external container is outside the active layer set")
 	}
 	return nil
-}
-
-func (e *Editor) emptyEmbeddedContainerLocked() *psdfile.AdditionalBlock {
-	for index := range e.source.AdditionalInfo {
-		block := &e.source.AdditionalInfo[index]
-		if block.Key == "lnk2" && block.Data.Length == 0 {
-			return block
-		}
-	}
-	return nil
-}
-
-func (e *Editor) movedExternalRecordsLocked(block psdfile.AdditionalBlock) []psdfile.LinkedFileRecord {
-	target := e.emptyEmbeddedContainerLocked()
-	if target == nil || target.Span != block.Span || target.Data != block.Data {
-		return nil
-	}
-	var moved []psdfile.LinkedFileRecord
-	for _, record := range e.linkedRecords {
-		overlay := e.linkedOverlays[record.ID]
-		if record.Block.Key == "lnkE" && overlay != nil && overlay.embedExternal {
-			moved = append(moved, record)
-		}
-	}
-	return moved
-}
-
-func (e *Editor) writeMovedExternalBlockLocked(block psdfile.AdditionalBlock,
-	records []psdfile.LinkedFileRecord, global bool, limit int64,
-) (writePlan, error) {
-	plan, payload := writePlan{limit: limit}, writePlan{limit: limit}
-	if !global || block.Key != "lnk2" || block.Data.Length != 0 ||
-		!writerLinkedSpan(e.source.Source, block.Span) || !writerLinkedSpan(block.Span, block.Data) ||
-		block.Data.Offset-block.Span.Offset != 8+int64(block.LengthWidth) ||
-		(block.LengthWidth != 4 && block.LengthWidth != 8) {
-		return plan, editError(ErrInvalidEdit, "save.linked.block", "empty embedded destination is inconsistent")
-	}
-	if int64(len(records)) > (e.source.Limits().MaxMetadataBytes-128)/512 {
-		return plan, editError(psdfile.ErrLimit, "save.linked.metadata", "embedded write-plan metadata exceeds its budget")
-	}
-	for _, record := range records {
-		overlay := e.linkedOverlays[record.ID]
-		part, err := writerEmbeddedExternalRecord(record, overlay.data, overlay.fileType, limit)
-		if err != nil {
-			return plan, err
-		}
-		payload.append(part)
-	}
-	if payload.err != nil {
-		return plan, payload.err
-	}
-	plan.original(psdfile.Span{Offset: block.Span.Offset, Length: 8})
-	plan.length(block.LengthWidth, payload.size, "save.linked.length")
-	plan.append(payload)
-	writerAppendPadding(&plan, block.Padding, writerReplacementPadding(payload.size, global))
-	return plan, plan.err
-}
-
-func (e *Editor) externalBlockEmbeddedLocked(block psdfile.AdditionalBlock) bool {
-	found := false
-	for _, record := range e.linkedRecords {
-		if record.Block.Span != block.Span || record.Block.Data != block.Data {
-			continue
-		}
-		overlay := e.linkedOverlays[record.ID]
-		if record.Kind != "liFE" || overlay == nil || !overlay.embedExternal {
-			return false
-		}
-		found = true
-	}
-	return found
 }
 
 func writerLinkedReplacement(record psdfile.LinkedFileRecord, replacement *linkedReplacement,

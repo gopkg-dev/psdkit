@@ -168,7 +168,7 @@ func (p *parser) additionalEntry(r *cursor, key string, record *layerRecord) {
 			enabled := legacyEffectsEnabled(r)
 			record.effectsEnabled = &enabled
 		}
-	case "brit", "levl", "curv", "expA", "nvrt", "post", "thrs", "mixr", "hue2", "hue ", "phfl":
+	case "brit", "levl", "curv", "expA", "nvrt", "post", "thrs", "mixr", "blnc", "hue2", "hue ", "phfl":
 		remaining := int64(32<<20) - p.adjustmentBytes
 		if r.remaining() > remaining {
 			r.fail("PSD adjustment metadata exceeds the aggregate budget")
@@ -191,7 +191,7 @@ func (p *parser) additionalEntry(r *cursor, key string, record *layerRecord) {
 			return
 		}
 		layer.Adjustment = adjustment
-	case "vibA", "blnc", "blwh", "clrL", "grdm", "selc", "CgEd":
+	case "vibA", "blwh", "clrL", "grdm", "selc", "CgEd":
 		layer.Unsupported = append(layer.Unsupported, "暂不支持调整图层")
 	case "SoCo":
 		fill := readVersionDescriptor(r)

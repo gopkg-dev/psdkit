@@ -44,6 +44,10 @@ func (e *Engine) invoke(ctx context.Context, request Request) (any, error) {
 		variadic := operation.variadic && index == len(operation.argumentTypes)-1
 		if variadic {
 			kind = declared.Elem()
+			if !injected(kind) && position >= len(request.Args) {
+				arguments = append(arguments, reflect.MakeSlice(declared, 0, 0))
+				continue
+			}
 		}
 		var value reflect.Value
 		var err error

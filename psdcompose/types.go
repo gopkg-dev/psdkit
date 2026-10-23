@@ -50,10 +50,11 @@ type Options struct {
 	// Nil keeps Dissolve unsupported. This noise field does not match Adobe Photoshop's field.
 	DissolveSeed *uint64
 	// ApproximateHueSaturation explicitly selects the RGB8 HSL hue/range/colorize approximation.
-	// Its native precision audit remains incomplete; default rendering supports neutral Hue/Saturation only.
+	// Its native precision audit remains incomplete; plain master Lightness is supported by default.
 	ApproximateHueSaturation bool
 	// ApproximateDropShadow selects fractional spread, displacement and partial-alpha DropShadow coverage.
-	// It enables Normal/Multiply layer and shadow blending and explicitly staged pixel masks.
+	// Ordinary Normal rasters may combine shadows and color overlays with unfeathered pixel/vector masks.
+	// It enables Normal/Multiply layer and shadow blending and staged masks; vector masks require Normal raster layers.
 	// The generic morphology and tent filter do not guarantee Photoshop pixel equivalence.
 	// Other active effect families and unsupported advanced layer interactions remain rejected.
 	ApproximateDropShadow bool

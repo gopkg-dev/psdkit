@@ -5,6 +5,7 @@ import (
 	"errors"
 	"image"
 
+	"github.com/gopkg-dev/psdkit/internal/psdartboard"
 	"github.com/gopkg-dev/psdkit/psdcompose"
 	"github.com/gopkg-dev/psdkit/psdfile"
 	"github.com/gopkg-dev/psdkit/psdmodel"
@@ -298,6 +299,11 @@ func (e *Editor) compositeBudgetLocked() (int64, error) {
 				return editError(psdfile.ErrLimit, "save.composite", "edited tree metadata exceeds decode budgets")
 			}
 			bytesNeeded += 512
+			if node.pixelMaskChange != nil && !node.pixelMaskChange.removed {
+				if err := add(node.pixelMaskChange.bounds); err != nil {
+					return err
+				}
+			}
 			if len(node.planes) != 0 {
 				if err := add(node.bounds); err != nil {
 					return err
@@ -352,6 +358,15 @@ func (e *Editor) renderCompositeNodesLocked(
 			configuration.MaxWorkingBytes = workingBytes
 		}
 	}
+	boards, boardMetadataBytes, err := e.prepareCompositeArtboardsLocked(ctx, configuration.MaxWorkingBytes)
+	if err != nil {
+		return nil, compositeRenderError(err)
+	}
+	workingBytes -= boardMetadataBytes
+	configuration.MaxWorkingBytes -= boardMetadataBytes
+	if configuration.MaxWorkingBytes <= 0 {
+		return nil, editError(psdfile.ErrLimit, "save.artboards", "artboard metadata consumes composition budget")
+	}
 	var snapshot *psdmodel.Document
 	var physical []*psdmodel.Layer
 	if len(e.source.Layers) == 0 {
@@ -371,6 +386,7 @@ func (e *Editor) renderCompositeNodesLocked(
 		return nil, editError(ErrUnsupported, "save.composite", "decoded tree does not match original physical layer records")
 	}
 	var patterns patternEditorSources
+	canvas := image.Rect(0, 0, int(e.source.Header.Width), int(e.source.Header.Height))
 	var visit func([]*editNode, bool) ([]*psdmodel.Layer, error)
 	visit = func(nodes []*editNode, hidden bool) ([]*psdmodel.Layer, error) {
 		result := make([]*psdmodel.Layer, 0, len(nodes))
@@ -391,6 +407,10 @@ func (e *Editor) renderCompositeNodesLocked(
 					return nil, editError(ErrUnsupported, "save.layers.divider", "source group divider has unknown semantics")
 				}
 				for _, channel := range record.Channels {
+					if node.pixelMaskChange != nil && node.pixelMaskChange.removed &&
+						channel.ID == node.pixelMaskChange.channelID {
+						continue
+					}
 					knownRealMask := channel.ID == -3 && record.Mask != nil && record.Mask.HasReal &&
 						record.Mask.Flags&8 != 0 && layer.VectorMask != nil
 					if !invisible && (channel.ID < -2 || channel.ID > 2) && !knownRealMask {
@@ -407,15 +427,49 @@ func (e *Editor) renderCompositeNodesLocked(
 				fill := float64(node.fillOpacity) / 255
 				layer.FillOpacity = &fill
 			}
+			if node.blendModeChanged {
+				layer.BlendMode = node.blendMode
+			} else if node.group && node.sourceIndex < 0 {
+				layer.BlendMode = "pass"
+			}
+			if node.clippingChanged {
+				layer.Clipping = node.clipping
+			}
+			if node.blendRangesChanged {
+				layer.BlendRanges = node.blendRanges
+			}
+			applyAdvancedBlending(layer, node)
+			if node.vectorMaskChange != nil && node.vectorMaskChange.dropGenerated && !node.vectorMaskChange.promoteReal {
+				layer.Mask = nil
+			}
+			if node.vectorMaskChange != nil && node.maskData != nil && node.pixelMask == nil {
+				// Removed shared parameters must not reappear from the source after vector re-addition.
+				layer.VectorDensity, layer.VectorFeather = nil, nil
+			}
+			if err := applyPixelMaskChange(ctx, layer, node.pixelMaskChange); err != nil {
+				return nil, err
+			}
+			applyPixelMaskSettings(layer, node.pixelMask)
+			if node.vectorMask != nil {
+				layer.VectorMask = node.vectorMask
+			}
+			if node.vectorMaskChange != nil && node.vectorMaskChange.removed {
+				layer.VectorMask, layer.VectorDensity, layer.VectorFeather = nil, nil, nil
+			}
 			if node.group {
-				if node.sourceIndex < 0 {
-					layer.BlendMode = "pass"
-				}
 				children, err := visit(node.children, invisible)
 				if err != nil {
 					return nil, err
 				}
 				layer.Children = children
+				prepared, cost, err := boards.prepare(ctx, node, layer, canvas,
+					min(configuration.MaxWorkingBytes, workingBytes))
+				if err != nil {
+					return nil, compositeRenderError(err)
+				}
+				layer = prepared
+				workingBytes -= cost
+				configuration.MaxWorkingBytes -= cost
 				result = append(result, layer)
 				continue
 			}
@@ -443,9 +497,6 @@ func (e *Editor) renderCompositeNodesLocked(
 			}
 			if node.effects != nil {
 				layer.Effects = node.effects
-			}
-			if node.vectorMask != nil {
-				layer.VectorMask = node.vectorMask
 			}
 			if node.placed != nil {
 				layer.Placed = node.placed
@@ -489,7 +540,20 @@ func (e *Editor) renderCompositeNodesLocked(
 	}
 	// The original merged preview is only a pixel source for a virtual background, never a render fallback.
 	snapshot.Layers, snapshot.Composite = layers, nil
+	if boards != nil {
+		// Only validated artboard metadata is consumed; unrelated source blockers remain active.
+		issues := snapshot.BlockingIssues[:0]
+		for _, issue := range snapshot.BlockingIssues {
+			if issue != psdartboard.Issue {
+				issues = append(issues, issue)
+			}
+		}
+		snapshot.BlockingIssues = issues
+	}
 	configuration.MaxWorkingBytes = min(configuration.MaxWorkingBytes, workingBytes)
+	if configuration.MaxWorkingBytes <= 0 {
+		return nil, editError(psdfile.ErrLimit, "save.artboards", "prepared artboards consume composition budget")
+	}
 	pixels, err := psdcompose.Render(ctx, snapshot, configuration)
 	if err != nil {
 		return nil, compositeRenderError(err)
@@ -500,6 +564,7 @@ func (e *Editor) renderCompositeNodesLocked(
 // Composite renders the current edited RGB8 layer tree into independently owned RGBA pixels.
 // It applies the same feature checks and total working budgets used for an automatically rebuilt saved image.
 // Rendering leaves the edit revision and saved revision unchanged.
+// Supported top-level RGB8 artboards retain their saved clipping and background without a supplied composite.
 // An optional composition policy may tighten working limits or explicitly select approximate Hue/Saturation.
 func (e *Editor) Composite(ctx context.Context, options ...psdcompose.Options) (*image.NRGBA, error) {
 	if ctx == nil {

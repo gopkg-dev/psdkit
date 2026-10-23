@@ -289,6 +289,8 @@ func (editor *Editor) ReplacePixels(id LayerID, pixels *image.NRGBA) error {
 
 // ReplaceChannel copies one existing raster channel at its source precision and original geometry.
 // RowBytes and Data must use the compact source layout, including packed MSB-first bitmap rows.
+// User-mask channels created by AddPixelMask can also be replaced, including on new layers and groups.
+// Removed user-mask channels must be recreated with AddPixelMask before their samples can be replaced.
 func (editor *Editor) ReplaceChannel(id LayerID, channelID int16, plane psdfile.Plane) error {
 	editor.mu.Lock()
 	defer editor.mu.Unlock()
@@ -299,6 +301,9 @@ func (editor *Editor) ReplaceChannel(id LayerID, channelID int16, plane psdfile.
 	if err != nil {
 		return err
 	}
+	if node.pixelMaskChange != nil && channelID == node.pixelMaskChange.channelID {
+		return editor.replaceAddedMaskChannelLocked(node, channelID, plane)
+	}
 	if node.group || node.sourceIndex < 0 || editor.source.Layers[node.sourceIndex].Divider != 0 ||
 		editor.semanticRasterLocked(node) {
 		return editError(ErrUnsupported, "layers.channels", "replacement requires an existing ordinary raster")
@@ -308,14 +313,14 @@ func (editor *Editor) ReplaceChannel(id LayerID, channelID int16, plane psdfile.
 	}
 	var channel *psdfile.ChannelRecord
 	for index := range editor.source.Layers[node.sourceIndex].Channels {
-		candidate := &editor.source.Layers[node.sourceIndex].Channels[index]
-		if candidate.ID != channelID {
+		candidate, retained := effectiveSourceChannel(node, editor.source.Layers[node.sourceIndex].Channels[index])
+		if !retained || candidate.ID != channelID {
 			continue
 		}
 		if channel != nil {
 			return editError(ErrInvalidEdit, "layers.channels", "duplicate channel identifiers are ambiguous")
 		}
-		channel = candidate
+		channel = &candidate
 	}
 	if channel == nil {
 		return editError(ErrInvalidEdit, "layers.channels", "source channel identifier was not found")
@@ -569,10 +574,14 @@ func (editor *Editor) layerInfoLocked(node *editNode, parent LayerID, withChildr
 	if err != nil {
 		return LayerInfo{}, err
 	}
+	blend, err := editor.blendModeLocked(node)
+	if err != nil {
+		return LayerInfo{}, err
+	}
 	info := LayerInfo{
 		ID: node.id, Parent: parent, Name: node.name, Visible: node.visible, Opacity: node.opacity,
-		FillOpacity: fill,
-		Bounds:      node.bounds, Group: node.group, Expanded: node.expanded,
+		FillOpacity: fill, BlendMode: blend, Clipping: editor.clippingLocked(node),
+		Bounds: node.bounds, Group: node.group, Expanded: node.expanded,
 		SourceIndex: node.sourceIndex, PSDID: node.psdID,
 	}
 	if withChildren {
@@ -755,7 +764,11 @@ func (editor *Editor) copyImageLocked(pixels *image.NRGBA, replacing *editNode) 
 		return nil, editError(psdfile.ErrLimit, "layers.pixels", "image exceeds MaxDecodePixels")
 	}
 	area := width * height
-	if area > limits.MaxDecodeBytes/4 || area*4 > limits.MaxDecodeBytes-editor.ownedBytesLocked(replacing) {
+	retained := editor.ownedBytesLocked(nil)
+	if replacing != nil && replacing.pixels != nil {
+		retained -= int64(len(replacing.pixels.Pix))
+	}
+	if area > limits.MaxDecodeBytes/4 || area*4 > limits.MaxDecodeBytes-retained {
 		return nil, editError(psdfile.ErrLimit, "layers.pixels", "owned replacements exceed MaxDecodeBytes")
 	}
 	rowBytes := int(width * 4)
@@ -816,6 +829,16 @@ func (editor *Editor) ownedBytesLocked(excluded *editNode) int64 {
 	visit = func(nodes []*editNode) {
 		for _, node := range nodes {
 			if node != excluded {
+				total += int64(len(node.maskData))
+				if node.vectorMaskChange != nil {
+					total += int64(cap(node.vectorMaskChange.data))
+				}
+				if node.pixelMaskChange != nil && node.pixelMaskChange.plane != nil {
+					total += int64(cap(node.pixelMaskChange.plane.Data))
+				}
+				if node.advancedBlending != nil {
+					total += node.advancedBlending.ownedBytes()
+				}
 				if node.fillOpacityAdded {
 					// Reserve the deferred canonical payload before the writer creates its tagged block.
 					total += 4

@@ -122,9 +122,8 @@ func Compile(adjustment Adjustment, options ...CompileOptions) (*Transform, erro
 		}
 	case BrightnessContrast:
 		parameters := adjustment.BrightnessContrast
-		if parameters == nil || parameters.Mean > 255 || parameters.Brightness < -100 || parameters.Brightness > 100 ||
-			parameters.Contrast < -100 || parameters.Contrast > 100 {
-			return nil, adjustmentError(ErrInvalid, "adjustment.brightnessContrast", 0, "invalid brightness/contrast fields")
+		if err := validateBrightnessContrast(parameters); err != nil {
+			return nil, err
 		}
 		if !parameters.Legacy || parameters.LabOnly || parameters.Brightness != 0 || parameters.Contrast != 0 {
 			return nil, adjustmentError(ErrUnsupported, "adjustment.brightnessContrast", 0,
@@ -147,6 +146,14 @@ func Compile(adjustment Adjustment, options ...CompileOptions) (*Transform, erro
 		return nil, adjustmentError(ErrUnsupported, "adjustment.kind", 0, "adjustment kind is not implemented")
 	}
 	return result, nil
+}
+
+func validateBrightnessContrast(parameters *BrightnessContrastParams) error {
+	if parameters == nil || parameters.Mean > 255 || parameters.Brightness < -100 || parameters.Brightness > 100 ||
+		parameters.Contrast < -100 || parameters.Contrast > 100 {
+		return adjustmentError(ErrInvalid, "adjustment.brightnessContrast", 0, "invalid brightness/contrast fields")
+	}
+	return nil
 }
 
 func validateColorBalance(parameters *ColorBalanceParams) error {

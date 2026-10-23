@@ -56,6 +56,10 @@ func TestLivePatternCountsItsCanvasCache(t *testing.T) {
 		t.Fatalf("retained pattern canvas was not included in the budget: %v", err)
 	}
 	layer.Pattern.Scale = 75
+	if _, err := Render(nil, document); err != nil {
+		t.Fatalf("constant single-pixel sampling was rejected: %v", err)
+	}
+	layer.PatternTile = image.NewNRGBA(image.Rect(0, 0, 2, 1))
 	if _, err := Render(nil, document); !errors.Is(err, ErrUnsupported) {
 		t.Fatalf("uncalibrated tile sampling was accepted: %v", err)
 	}

@@ -25,7 +25,7 @@
     ]
   },
   "psdadjust.Encode": {
-    "Description": "Encode serializes a known RGB8 adjustment family, preserving original bytes when semantically unchanged.\nColor Balance's known metadata can round-trip unchanged while non-neutral rendering remains unsupported.\nWith Raw supplied, the original family and supported wire representation remain fixed.\nScalar and level edits patch original fields; changed curves retain the source channel sets and extra-marker version.",
+    "Description": "Encode serializes a known RGB8 adjustment family, preserving original bytes when semantically unchanged.\nColor Balance and legacy RGB Brightness/Contrast metadata are editable independently of rendering support.\nWith Raw supplied, the original family and supported wire representation remain fixed.\nScalar and level edits patch original fields; changed curves retain the source channel sets and extra-marker version.",
     "Parameters": [
       "ctx",
       "adjustment",
@@ -104,6 +104,16 @@
       "expanded"
     ]
   },
+  "psdedit.Editor.AddPixelMask": {
+    "Description": "AddPixelMask adds an independently owned user pixel mask in document coordinates.\nThe compact plane must match bounds and the document depth; its ID is ignored and selected automatically.\nOmitting settings uses default coverage 255. At most one settings value may be supplied.\nNil vector density and feather inherit existing shared parameters; SetPixelMask can subsequently clear them.\nAn existing user mask must be removed explicitly before adding its replacement.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "bounds",
+      "plane",
+      "settings"
+    ]
+  },
   "psdedit.Editor.AddRaster": {
     "Description": "AddRaster inserts an owned RGB8 raster at a bottom-to-top sibling position; parent zero denotes the canvas.",
     "Parameters": [
@@ -112,6 +122,34 @@
       "name",
       "pixels",
       "origin"
+    ]
+  },
+  "psdedit.Editor.AddVectorMask": {
+    "Description": "AddVectorMask adds independently owned vector geometry to a layer or group without a vector mask.\nThe vector canvas must match the document. An existing user pixel mask remains unchanged.\nDuplicate vector blocks and ambiguous pixel-mask layouts return ErrUnsupported without mutation.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "mask"
+    ]
+  },
+  "psdedit.Editor.AdvancedBlending": {
+    "Description": "AdvancedBlending returns independently owned advanced settings, retaining nil for absent source tags.\nAmbiguous duplicate tags and unknown source layouts return ErrUnsupported without normalizing source bytes.",
+    "Parameters": [
+      "ctx",
+      "id"
+    ]
+  },
+  "psdedit.Editor.BlendIf": {
+    "Description": "BlendIf returns independently owned source and underlying-color Blend If sliders.\nRanges start with composite gray, followed by the document's color channels; nil means full coverage.",
+    "Parameters": [
+      "id"
+    ]
+  },
+  "psdedit.Editor.BlendIfContext": {
+    "Description": "BlendIfContext adds cancellation and working-budget checks to BlendIf.",
+    "Parameters": [
+      "ctx",
+      "id"
     ]
   },
   "psdedit.Editor.Changes": {
@@ -123,7 +161,7 @@
     "Parameters": []
   },
   "psdedit.Editor.Composite": {
-    "Description": "Composite renders the current edited RGB8 layer tree into independently owned RGBA pixels.\nIt applies the same feature checks and total working budgets used for an automatically rebuilt saved image.\nRendering leaves the edit revision and saved revision unchanged.\nAn optional composition policy may tighten working limits or explicitly select approximate Hue/Saturation.",
+    "Description": "Composite renders the current edited RGB8 layer tree into independently owned RGBA pixels.\nIt applies the same feature checks and total working budgets used for an automatically rebuilt saved image.\nRendering leaves the edit revision and saved revision unchanged.\nSupported top-level RGB8 artboards retain their saved clipping and background without a supplied composite.\nAn optional composition policy may tighten working limits or explicitly select approximate Hue/Saturation.",
     "Parameters": [
       "ctx",
       "options"
@@ -138,11 +176,20 @@
     ]
   },
   "psdedit.Editor.EmbedLinkedContents": {
-    "Description": "EmbedLinkedContents resolves and embeds an external RGB8 PSD/PSB source for all shared instances.\nDestination corners remain fixed; the source and projected caches become owned editor overlays.\nThe resolver runs without the editor lock. Concurrent edits cause ErrStaleLinkedEdit without a commit.\nThis initial conversion accepts a global single-record lnkE block and at most one empty lnk2 container,\nor an external record already inside a standard embedded-link container.",
+    "Description": "EmbedLinkedContents resolves and embeds a supported external raster source for all shared instances.\nDestination corners remain fixed; the source and projected caches become owned editor overlays.\nThe resolver runs without the editor lock. Concurrent edits cause ErrStaleLinkedEdit without a commit.",
     "Parameters": [
       "ctx",
       "id",
       "resolver"
+    ]
+  },
+  "psdedit.Editor.EmbedLinkedContentsWithOptions": {
+    "Description": "EmbedLinkedContentsWithOptions embeds an external source using explicit source-color and Warp policies.\nThe zero value preserves the strict rendering behavior and atomic guarantees of EmbedLinkedContents.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "resolver",
+      "options"
     ]
   },
   "psdedit.Editor.Layer": {
@@ -164,7 +211,22 @@
     ]
   },
   "psdedit.Editor.OpenSmartObjectSource": {
-    "Description": "OpenSmartObjectSource opens a placed layer's embedded PSD/PSB or an explicitly resolved external source.\nThe caller closes the result. Unedited embedded results borrow the editor's original source.\nReplacement overlays are copied into an independent source; external documents come from resolver.\nResolver executes without holding the editor lock and may report unavailable or stale links.",
+    "Description": "OpenSmartObjectSource opens a placed layer's embedded PSD/PSB or an explicitly resolved external source.\nThe caller closes the result. Unedited embedded results borrow the editor's original source.\nReplacement overlays are copied into an independent source; external documents come from resolver.\nResolver executes without holding the editor lock and may report unavailable or stale links.\nRaster-format sources return ErrUnsupported; ReadSmartObjectContents returns their original encoded bytes.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "resolver"
+    ]
+  },
+  "psdedit.Editor.PixelMask": {
+    "Description": "PixelMask returns independently owned settings for the layer's effective existing user pixel mask.\nA sole ordinary mask without sample channels uses its default coverage and remains editable.\nGenerated vector coverage without a real user-mask channel is not an editable pixel mask.",
+    "Parameters": [
+      "ctx",
+      "id"
+    ]
+  },
+  "psdedit.Editor.ReadSmartObjectContents": {
+    "Description": "ReadSmartObjectContents returns an independently owned copy of a placed layer's current encoded source.\nEmbedded and edited sources need no resolver. Unedited external sources require explicit caller-owned access;\nneither retained paths nor saved external caches are used as an implicit source of current external contents.\nPNG/JPEG/TIFF bytes remain in their original format. OpenSmartObjectSource remains the PSD/PSB document API.\nA concurrent edit while resolving external contents returns ErrStaleLinkedEdit instead of stale source bytes.",
     "Parameters": [
       "ctx",
       "id",
@@ -177,6 +239,20 @@
       "id"
     ]
   },
+  "psdedit.Editor.RemovePixelMask": {
+    "Description": "RemovePixelMask removes only the effective user pixel mask and its channel.\nVector geometry, generated vector coverage and shared vector density/feather remain intact.\nLayers without a user pixel mask are unchanged. Ambiguous dual user masks return ErrUnsupported.",
+    "Parameters": [
+      "ctx",
+      "id"
+    ]
+  },
+  "psdedit.Editor.RemoveVectorMask": {
+    "Description": "RemoveVectorMask removes vector geometry and its generated coverage while preserving a user pixel mask.\nLayers without vector geometry are unchanged. A real -3 user mask is retained as an ordinary -2 mask.\nUnchanged user samples retain their original encoded bytes while generated vector coverage is removed.",
+    "Parameters": [
+      "ctx",
+      "id"
+    ]
+  },
   "psdedit.Editor.Rename": {
     "Description": "Rename changes one layer's Unicode name; an identical name leaves its revision unchanged.",
     "Parameters": [
@@ -185,7 +261,7 @@
     ]
   },
   "psdedit.Editor.ReplaceChannel": {
-    "Description": "ReplaceChannel copies one existing raster channel at its source precision and original geometry.\nRowBytes and Data must use the compact source layout, including packed MSB-first bitmap rows.",
+    "Description": "ReplaceChannel copies one existing raster channel at its source precision and original geometry.\nRowBytes and Data must use the compact source layout, including packed MSB-first bitmap rows.\nUser-mask channels created by AddPixelMask can also be replaced, including on new layers and groups.\nRemoved user-mask channels must be recreated with AddPixelMask before their samples can be replaced.",
     "Parameters": [
       "id",
       "channelID",
@@ -193,7 +269,7 @@
     ]
   },
   "psdedit.Editor.ReplaceContents": {
-    "Description": "ReplaceContents replaces an embedded RGB8 PSD/PSB source and updates all its shared placed instances.\nEncoded input and projected caches are copied into owned overlays; original blocks remain immutable.\nDestination corners remain fixed when the prototype canvas changes size.\nSource-space custom controls are scaled per axis; live filters and unsupported Warp are rejected.\nPhotoshop's default Replace Contents instead retains pixel scale and the placement center.",
+    "Description": "ReplaceContents replaces an embedded RGB8 PSD/PSB, PNG, JPEG or flat RGB8 TIFF source for all shared instances.\nThe original encoded replacement format and bytes are retained; projected parent caches are RGB8.\nEncoded input and projected caches are copied into owned overlays; original blocks remain immutable.\nDestination corners remain fixed when the prototype canvas changes size.\nSource-space custom controls are scaled per axis; live filters and unsupported Warp are rejected.\nPhotoshop's default Replace Contents instead retains pixel scale and the placement center.",
     "Parameters": [
       "ctx",
       "id",
@@ -224,6 +300,15 @@
       "data"
     ]
   },
+  "psdedit.Editor.ReplaceSmartObjectContentsWithOptions": {
+    "Description": "ReplaceSmartObjectContentsWithOptions is an explicit alias for ReplaceContentsWithOptions.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "data",
+      "options"
+    ]
+  },
   "psdedit.Editor.Save": {
     "Description": "Save writes, syncs and closes a same-directory temporary file before atomic replacement.\nAny failure before replacement leaves an existing destination intact and removes the temporary file.",
     "Parameters": [
@@ -241,15 +326,60 @@
     ]
   },
   "psdedit.Editor.SetAdjustment": {
-    "Description": "SetAdjustment edits an existing RGB8 adjustment layer without changing its family.\nIt owns encoded parameters and semantic views, retaining all other layer blocks and metadata.\nModern CgEd-dependent adjustments and unrecognized source semantics are rejected before committing overlays.",
+    "Description": "SetAdjustment edits an existing RGB8 adjustment layer without changing its family.\nIt owns encoded parameters and semantic views, retaining all other layer blocks and metadata.\nNon-neutral Color Balance, legacy Brightness/Contrast and Photo Filter require an explicit save composite.\nModern CgEd-dependent adjustments and unrecognized source semantics are rejected before committing overlays.",
     "Parameters": [
       "ctx",
       "id",
       "adjustment"
     ]
   },
+  "psdedit.Editor.SetAdvancedBlending": {
+    "Description": "SetAdvancedBlending patches selected advanced settings and preserves all unrelated source bytes.\nExisting known tags are replaced in place; missing tags are inserted with canonical payloads.\nEncoding and validation finish before mutation. Unsupported rendering combinations still require an explicit preview.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "options"
+    ]
+  },
+  "psdedit.Editor.SetBlendIf": {
+    "Description": "SetBlendIf replaces all Blend If ranges; nil or empty removes them and restores full coverage.\nAll four byte endpoints are retained exactly, including overlapping black and white transitions.\nAt most 57 ranges are accepted, matching the reader's composite-plus-channel limit.\nRendering keeps its existing color-mode, extra-channel and combination support gates.",
+    "Parameters": [
+      "id",
+      "ranges"
+    ]
+  },
+  "psdedit.Editor.SetBlendIfContext": {
+    "Description": "SetBlendIfContext adds cancellation to SetBlendIf and commits only after validation and budget checks.\nCaller-owned input is copied; an identical range list leaves revision and cached previews unchanged.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "ranges"
+    ]
+  },
+  "psdedit.Editor.SetBlendMode": {
+    "Description": "SetBlendMode changes a layer or group's blend mode, including all retained group-divider overrides.\nPSD keys and common English names are accepted; LayerInfo reports the canonical four-byte PSD key.\nPass-through is limited to groups. Dissolve can be saved with an accurate explicit composite;\nautomatic previews still reject modes or combinations outside the compositor's supported scope.",
+    "Parameters": [
+      "id",
+      "mode"
+    ]
+  },
+  "psdedit.Editor.SetBlendModeContext": {
+    "Description": "SetBlendModeContext adds cancellation to the bounded metadata reads required by SetBlendMode.\nMalformed group overrides, read failures and budgets leave the editor unchanged.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "mode"
+    ]
+  },
+  "psdedit.Editor.SetClipping": {
+    "Description": "SetClipping changes whether a layer is clipped to the preceding base in bottom-to-top sibling order.\nA missing base or unsupported group combination is rejected by automatic composition, not silently flattened.",
+    "Parameters": [
+      "id",
+      "clipped"
+    ]
+  },
   "psdedit.Editor.SetEffects": {
-    "Description": "SetEffects edits existing modern RGB effects without changing their families, count or fixed semantics.\nColor and opacity are editable; interior effects also support existing RGB blend modes.\nShadow distance/local angle/blur and calibrated glow/stroke sizes use strict core validation.\nColorOverlay also accepts partial source alpha, while geometric effects require an opaque source rectangle.\nPure ColorOverlay additionally supports ordinary nested leaves and original pixel-mask semantics.\nGlobal resources, flags, descriptor structure and unsupported source metadata remain unchanged.\nEncoding and owned semantic decoding complete under a peak budget before committing editor overlays.",
+    "Description": "SetEffects edits existing modern RGB effects without changing their families, count or fixed semantics.\nColor and opacity are editable; interior effects also support existing RGB blend modes.\nShadow distance/local angle/blur and calibrated glow/stroke sizes use strict core validation.\nColorOverlay also accepts partial source alpha; strict geometric effect edits require an opaque source rectangle.\nPure ColorOverlay additionally supports ordinary nested leaves and supported pixel/vector-mask semantics.\nGlobal resources, flags, descriptor structure and unsupported source metadata remain unchanged.\nEncoding and owned semantic decoding complete under a peak budget before committing editor overlays.",
     "Parameters": [
       "ctx",
       "id",
@@ -304,19 +434,54 @@
     ]
   },
   "psdedit.Editor.SetPatternFill": {
-    "Description": "SetPatternFill changes an existing PtFl layer's local pattern reference or integer document phase.\nOnly uniquely retained RGB8 tiles at 50, 100 or 200 percent scale and zero angle are editable.\nDescriptor encodings, original entry order and pattern pixel blocks remain unchanged.\nRecognized zero descriptor alignment is regenerated inside the declared payload for Photoshop compatibility.\nThe editor never searches external files or application preset libraries.",
+    "Description": "SetPatternFill changes an existing PtFl layer's local pattern reference or sampling controls.\nRGB8 tiles support 50, 100 or 200 percent scale, whole-turn angles and bounded integer document phase.\nSingle-pixel tiles support every finite positive scale and finite angle and phase.\nKnown source scale, angle and phase controls may be replaced even when their original sampling is unsupported.\nDescriptor encodings, original entry order and pattern pixel blocks remain unchanged.\nRecognized zero descriptor alignment is regenerated inside the declared payload for Photoshop compatibility.\nThe editor never searches external files or application preset libraries.",
     "Parameters": [
       "ctx",
       "id",
       "fill"
     ]
   },
+  "psdedit.Editor.SetPatternFillWithOptions": {
+    "Description": "SetPatternFillWithOptions edits an existing local RGB8 pattern fill and optionally replaces its saved raster.\nWith Pixels, positive finite scales and finite angles are editable without enabling their live sampling.\nPhase remains integral and bounded, source descriptor layouts and local pattern references remain qualified.\nPixels must cover the current layer bounds exactly; saving an unsupported live fill needs an explicit composite.\nWith no Pixels, the same strict sampling scope as SetPatternFill applies.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "requested",
+      "options"
+    ]
+  },
+  "psdedit.Editor.SetPixelMask": {
+    "Description": "SetPixelMask edits an existing user mask's flags, default coverage and density/feather parameters.\nSource channels, mask rectangles, reserved flag bits and opaque trailing bytes remain unchanged.\nUnknown parameter layouts and ambiguous live dual masks return ErrUnsupported without changing the editor.\nSaving unsupported rendering combinations requires an accurately supplied replacement composite.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "settings"
+    ]
+  },
   "psdedit.Editor.SetSmartFilterParameters": {
-    "Description": "SetSmartFilterParameters changes existing Gaussian controls and their saved source artwork atomically.\nAccurate caller pixels are required because changing metadata does not refresh Photoshop's saved layer raster.\nFilter families, count, order, blending, placement geometry, linked contents and unknown metadata are preserved.\nRadius, filter enabled/opacity and whole-stack enabled are editable; failed edits leave overlays unchanged.",
+    "Description": "SetSmartFilterParameters changes existing known filter controls and saved source artwork atomically.\nNil Pixels automatically refreshes the selected instance from its current source; approximations remain opt-in.\nFilter families, count, order, blending, placement geometry, linked contents and unknown metadata are preserved.\nGaussian, Surface Blur, Smart Sharpen, brightness/contrast and existing hue ranges support parameter edits.\nSharpen blur/legacy modes and hue colorization are retained; failed edits leave overlays unchanged.\nAutomatic rendering and resolver callbacks run outside the editor lock; intervening edits return ErrStaleLinkedEdit.",
     "Parameters": [
       "ctx",
       "id",
       "stack",
+      "options"
+    ]
+  },
+  "psdedit.Editor.SetSmartObjectTransform": {
+    "Description": "SetSmartObjectTransform changes one existing raster smart object's destination corners and saved artwork.\nCorners are top-left, top-right, bottom-right and bottom-left in parent-document coordinates.\nShared source contents and all other instances remain unchanged. Only absent or inactive Warp is supported.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "corners"
+    ]
+  },
+  "psdedit.Editor.SetSmartObjectTransformWithOptions": {
+    "Description": "SetSmartObjectTransformWithOptions changes one placement using explicit source and sampling policies.\nEmbedded and previously updated contents need no resolver; unedited external contents require one.\nResolver runs without the editor lock. Concurrent edits return ErrStaleLinkedEdit without committing.\nMasks, effects and opacity remain separate from the refreshed artwork. Failed edits commit nothing.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "corners",
+      "resolver",
       "options"
     ]
   },
@@ -329,7 +494,7 @@
     ]
   },
   "psdedit.Editor.SetTextContent": {
-    "Description": "SetTextContent changes an existing single-style Latin point-text layer without a document-wide Txt2 block.\nAccurate new layer pixels are mandatory: Photoshop does not automatically refresh its saved text raster on open.\nNewlines are normalized to carriage returns and character/paragraph ranges use UTF-16 code units.\nOrdered descriptors, unknown engine properties, typography, affine bits, warp, TySh bounds and tail are preserved.\nThe replacement source artwork is copied and committed atomically with the updated TySh payload.\nModern Txt2 text, multiple character/paragraph styles, paragraph text and warps return ErrUnsupported.\nMoving relative masks or resizing unknown extra layer channels is also unsupported.",
+    "Description": "SetTextContent changes an existing single-style Unicode point-text layer without a document-wide Txt2 block.\nAccurate new layer pixels are mandatory: Photoshop does not automatically refresh its saved text raster on open.\nNewlines are normalized to carriage returns and character/paragraph ranges use UTF-16 code units.\nControl characters other than CR/LF are unsupported, as are Unicode line and paragraph separators.\nOrdered descriptors, unknown engine properties, typography, affine bits, warp, TySh bounds and tail are preserved.\nThe replacement source artwork is copied and committed atomically with the updated TySh payload.\nModern Txt2 text, multiple character/paragraph styles, paragraph text and warps return ErrUnsupported.\nMoving relative masks or resizing unknown extra layer channels is also unsupported.",
     "Parameters": [
       "ctx",
       "id",
@@ -338,7 +503,7 @@
     ]
   },
   "psdedit.Editor.SetVectorMask": {
-    "Description": "SetVectorMask replaces an existing vmsk/vsms block with independently owned typed vector geometry.\nDocument dimensions, mask density/feather and other source metadata stay unchanged.\nEncoding, decoding and budget checks complete before the editor revision or overlays change.\nAutomatic preview reconstruction retains the renderer's documented antialiasing approximation limits.",
+    "Description": "SetVectorMask replaces an existing or newly added vector mask with independently owned typed vector geometry.\nDocument dimensions, mask density/feather and other source metadata stay unchanged.\nEncoding, decoding and budget checks complete before the editor revision or overlays change.\nAutomatic preview reconstruction retains the renderer's documented antialiasing approximation limits.",
     "Parameters": [
       "ctx",
       "id",
@@ -368,6 +533,15 @@
       "ctx",
       "id",
       "resolver"
+    ]
+  },
+  "psdedit.Editor.UpdateLinkedContentsWithOptions": {
+    "Description": "UpdateLinkedContentsWithOptions refreshes an external source with explicit source-color and Warp policies.\nPaths and external-file persistence remain caller-controlled, with the same stale-edit protection.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "resolver",
+      "options"
     ]
   },
   "psdedit.Editor.Write": {
@@ -471,9 +645,17 @@
     ]
   },
   "psdeffects.Validate": {
-    "Description": "Validate checks active primitive semantics before a compositor allocates output or changes state.\nDisabled effects and a disabled master switch retain readable unsupported metadata.",
+    "Description": "Validate checks active primitive semantics before a compositor allocates output or changes state.\nDisabled effects and a disabled master switch retain readable unsupported metadata.\nKnown zero-opacity effects may retain valid noise and jitter without evaluating those controls.",
     "Parameters": [
       "set"
+    ]
+  },
+  "psdfile.DecodeRasterContents": {
+    "Description": "DecodeRasterContents decodes standalone PNG/JPEG and flat RGB8 TIFF contents with bounded storage.\nOptions only lower DefaultLimits, using the same decoder and ICC policy as DecodeLinkedRaster.\nPixels and ICC bytes are owned; the encoded input is borrowed only until the call returns and is never changed.\nWorkingBytes excludes the borrowed encoded input and includes codec scratch, output pixels and ICC storage.",
+    "Parameters": [
+      "ctx",
+      "data",
+      "options"
     ]
   },
   "psdfile.DecodeSmartFilters": {
@@ -648,7 +830,7 @@
     ]
   },
   "psdfile.Document.DecodeLinkedRaster": {
-    "Description": "DecodeLinkedRaster decodes indexed embedded PNG/JPEG and flat RGB8 TIFF content with bounded storage.\nStraight RGBA8 output is owned, including for 16-bit PNG input. Source ICC data is returned explicitly.\nTIFF accepts classic, single-image, top-left chunky RGB8 strips using Raw or PackBits encoding.\nExplicit TIFF associated alpha is unpremultiplied; unassociated alpha retains hidden RGB values.\nBigTIFF, private Photoshop layers, tiles and unsupported TIFF encodings return ErrUnsupported.",
+    "Description": "DecodeLinkedRaster decodes indexed embedded PNG/JPEG and flat RGB8 TIFF content with bounded storage.\nStraight RGBA8 output is owned, including for 16-bit PNG input. Source ICC data is returned explicitly.\nTIFF accepts classic, single-image, top-left chunky RGB8 strips using Raw, PackBits, LZW or Deflate encoding.\nLZW and Deflate strips also support horizontal Predictor 2.\nExplicit TIFF associated alpha is unpremultiplied; unassociated alpha retains hidden RGB values.\nBigTIFF, private Photoshop layers, tiles and unsupported TIFF encodings return ErrUnsupported.",
     "Parameters": [
       "ctx",
       "record",
@@ -725,7 +907,7 @@
     ]
   },
   "psdfile.Document.EncodeSmartFilterParameters": {
-    "Description": "EncodeSmartFilterParameters changes existing filter controls in one original SoLd/SoLE payload.\nIt returns owned block data and never mutates the source or caller metadata.\nFilter count, order, IDs, blending mode and all unrelated fields, encodings, prefix and tail are retained.\nExisting Gaussian radius, per-filter enabled/opacity and whole-stack enabled are editable.\nThis metadata operation does not refresh raster caches or document previews; saving requires a chosen render policy.",
+    "Description": "EncodeSmartFilterParameters changes existing filter controls in one original SoLd/SoLE payload.\nIt returns owned block data and never mutates the source or caller metadata.\nFilter count, order, IDs, blending mode and all unrelated fields, encodings, prefix and tail are retained.\nExisting Gaussian, Surface Blur, Smart Sharpen, brightness/contrast and hue/saturation controls are editable.\nSharpen blur/legacy modes, hue colorization and the existing hue range count/order are retained.\nPer-filter enabled/opacity and whole-stack enabled are editable; ambiguous edited fields are rejected.\nThis metadata operation does not refresh raster caches or document previews; saving requires a chosen render policy.",
     "Parameters": [
       "ctx",
       "block",
@@ -1203,6 +1385,12 @@
       "offset"
     ]
   },
+  "psdfile.linkedTIFFLZW.Read": {
+    "Description": "",
+    "Parameters": [
+      "output"
+    ]
+  },
   "psdfile.regionReaderAt.ReadAt": {
     "Description": "",
     "Parameters": [
@@ -1239,7 +1427,7 @@
     ]
   },
   "psdfilter.Apply": {
-    "Description": "Apply returns an owned filtered image, preserves input pixels and uses first-applied-to-last-applied order.\nGaussian samples premultiplied encoded-RGB and alpha; Surface Blur and Smart Sharpen retain center alpha.\nSpatial sampling clamps image edges and excludes hidden transparent colors; the source rectangle is retained.\nEach approximation requires its explicit policy; Photoshop pixel parity is not claimed.",
+    "Description": "Apply returns an owned filtered image, preserves input pixels and uses first-applied-to-last-applied order.\nGaussian samples premultiplied encoded-RGB and alpha; Surface Blur and Smart Sharpen retain center alpha.\nSpatial sampling clamps image edges and excludes hidden transparent colors; the source rectangle is retained.\nEach approximation requires its explicit policy; Photoshop pixel parity is not claimed.\nValidated Normal-blend spatial identity controls and plain master Lightness need no approximation policy.",
     "Parameters": [
       "ctx",
       "source",
@@ -1450,7 +1638,7 @@
     "Parameters": []
   },
   "psdgradient.Render": {
-    "Description": "Render returns owned straight NRGBA pixels for one classic encoded-RGB gradient fill.\nDocument coordinates determine the ramp; optional cropping never rescales its geometry.\nCaller-owned stop slices remain immutable for the call and are never changed or retained.",
+    "Description": "Render returns owned straight NRGBA pixels for one classic encoded-RGB gradient fill.\nDocument coordinates determine the ramp; optional cropping never rescales its geometry.\nCaller-owned stop slices remain immutable for the call and are never changed or retained.\nConstant RGB and opacity stops do not depend on classic interpolation or gradient geometry.\nAn independently constant component ignores its own duplicate locations and endpoint midpoints.\nIf the other component varies, ordinary geometry, smoothness and interpolation restrictions still apply.",
     "Parameters": [
       "ctx",
       "fill",
@@ -1781,7 +1969,7 @@
     ]
   },
   "psdkit.RenderSource": {
-    "Description": "RenderSource rebuilds source layers and embedded PSD/PSB/PNG/JPEG smart-object content.\nIt returns owned encoded-RGB pixels in the document or explicitly requested output profile.",
+    "Description": "RenderSource rebuilds source layers and embedded or explicitly resolved PSD/PSB/PNG/JPEG/TIFF contents.\nIt returns owned encoded-RGB pixels in the document or explicitly requested output profile.",
     "Parameters": [
       "ctx",
       "source",
@@ -1789,7 +1977,7 @@
     ]
   },
   "psdkit.RenderSourcePlacedLayer": {
-    "Description": "RenderSourcePlacedLayer rebuilds one original smart-object layer from its embedded source.\nThe owned result retains placement, masks and effects for subsequent composition.",
+    "Description": "RenderSourcePlacedLayer rebuilds one original smart-object layer from embedded or explicitly resolved contents.\nThe owned result retains placement, masks and effects for subsequent composition.",
     "Parameters": [
       "ctx",
       "source",
@@ -1896,7 +2084,7 @@
     "Parameters": []
   },
   "psdpattern.Render": {
-    "Description": "Render repeats a caller-immutable straight NRGBA tile into independently owned document pixels.\nAxis sampling supports exact repeats at 100 percent, periodic box reduction at 50 percent,\nand origin-anchored straight-RGBA interpolation at 200 percent, all with integer document-pixel phase.\nNo source pixel, descriptor parameter or ICC profile is changed or retained.",
+    "Description": "Render repeats a caller-immutable straight NRGBA tile into independently owned document pixels.\nAxis sampling supports exact repeats at 100 percent, periodic box reduction at 50 percent,\nand origin-anchored straight-RGBA interpolation at 200 percent, all with integer document-pixel phase.\nAny exactly represented whole-turn angle is equivalent to zero.\nA single-pixel tile is constant for every finite positive scale and finite angle and phase.\nNo source pixel, descriptor parameter or ICC profile is changed or retained.",
     "Parameters": [
       "ctx",
       "tile",
@@ -1906,7 +2094,7 @@
     ]
   },
   "psdpattern.Validate": {
-    "Description": "Validate checks tile ownership bounds and the verified axis sampling subset without allocating output pixels.\nIt does not read or alter caller-owned samples and never prints the opaque fill ID.",
+    "Description": "Validate checks tile ownership bounds and the axis or single-pixel subset without allocating output pixels.\nIt does not read or alter caller-owned samples and never prints the opaque fill ID.",
     "Parameters": [
       "tile",
       "fill"

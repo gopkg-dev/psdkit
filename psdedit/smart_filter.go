@@ -10,25 +10,39 @@ import (
 	"github.com/gopkg-dev/psdkit/psdfile"
 	"github.com/gopkg-dev/psdkit/psdfilter"
 	"github.com/gopkg-dev/psdkit/psdmodel"
+	"github.com/gopkg-dev/psdkit/psdscene"
 )
 
-// SmartFilterEditOptions supplies accurate replacement pixels for the edited smart-filter layer.
-// Pixels represents the projected, filtered artwork before layer opacity, pixel/vector masks and layer effects.
-// Its rectangle is the new absolute parent-document layer rectangle, including any transparent padding.
-// The caller ensures artwork agrees with the requested parameters; the library checks ownership and shape.
+// SmartFilterEditOptions selects automatic source rendering or caller-supplied accurate artwork.
+// Nil Pixels automatically rebuilds projected, filtered RGB8 artwork from current smart-object contents.
+// Render selects explicit source, color, geometry and filter policies; nil uses strict defaults without approximation.
+// Pixels and Render are mutually exclusive. Supplied Pixels retains the original ownership and shape contract.
 type SmartFilterEditOptions struct {
+	// Pixels is accurate projected, filtered artwork before layer opacity, masks and effects.
+	// Its rectangle is the absolute parent-document layer rectangle, including transparent padding.
 	Pixels *image.NRGBA
+	// Render permits supported live source policies, including explicitly selected filter approximations.
+	// OutputProfile and cached-source fallback policies are unsupported for automatic editing.
+	Render *psdscene.Options
 }
 
-// SetSmartFilterParameters changes existing Gaussian controls and their saved source artwork atomically.
-// Accurate caller pixels are required because changing metadata does not refresh Photoshop's saved layer raster.
+// SetSmartFilterParameters changes existing known filter controls and saved source artwork atomically.
+// Nil Pixels automatically refreshes the selected instance from its current source; approximations remain opt-in.
 // Filter families, count, order, blending, placement geometry, linked contents and unknown metadata are preserved.
-// Radius, filter enabled/opacity and whole-stack enabled are editable; failed edits leave overlays unchanged.
+// Gaussian, Surface Blur, Smart Sharpen, brightness/contrast and existing hue ranges support parameter edits.
+// Sharpen blur/legacy modes and hue colorization are retained; failed edits leave overlays unchanged.
+// Automatic rendering and resolver callbacks run outside the editor lock; intervening edits return ErrStaleLinkedEdit.
 func (e *Editor) SetSmartFilterParameters(
 	ctx context.Context, id LayerID, stack psdfilter.Stack, options SmartFilterEditOptions,
 ) error {
 	if ctx == nil {
 		ctx = context.Background()
+	}
+	if options.Pixels == nil {
+		return e.setSmartFilterParametersAuto(ctx, id, stack, options.Render)
+	}
+	if options.Render != nil {
+		return editError(ErrInvalidEdit, "layers.smartFilters.options", "choose supplied pixels or automatic rendering")
 	}
 	e.mu.Lock()
 	defer e.mu.Unlock()
@@ -44,9 +58,6 @@ func (e *Editor) SetSmartFilterParameters(
 	node, _, _, err := e.findNodeLocked(id)
 	if err != nil {
 		return err
-	}
-	if options.Pixels == nil {
-		return editError(ErrUnsupported, "layers.smartFilters.pixels", "accurate replacement filter pixels are required")
 	}
 	block, err := e.smartFilterEditBlock(node)
 	if err != nil {

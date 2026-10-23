@@ -10,6 +10,7 @@ import (
 	"maps"
 	"math"
 	"reflect"
+	"slices"
 
 	"github.com/gopkg-dev/psdkit/psdcompose"
 	"github.com/gopkg-dev/psdkit/psdeffects"
@@ -20,8 +21,8 @@ import (
 // SetEffects edits existing modern RGB effects without changing their families, count or fixed semantics.
 // Color and opacity are editable; interior effects also support existing RGB blend modes.
 // Shadow distance/local angle/blur and calibrated glow/stroke sizes use strict core validation.
-// ColorOverlay also accepts partial source alpha, while geometric effects require an opaque source rectangle.
-// Pure ColorOverlay additionally supports ordinary nested leaves and original pixel-mask semantics.
+// ColorOverlay also accepts partial source alpha; strict geometric effect edits require an opaque source rectangle.
+// Pure ColorOverlay additionally supports ordinary nested leaves and supported pixel/vector-mask semantics.
 // Global resources, flags, descriptor structure and unsupported source metadata remain unchanged.
 // Encoding and owned semantic decoding complete under a peak budget before committing editor overlays.
 func (e *Editor) SetEffects(ctx context.Context, id LayerID, desired psdeffects.Set) error {
@@ -32,6 +33,8 @@ func (e *Editor) SetEffects(ctx context.Context, id LayerID, desired psdeffects.
 // It does not relax descriptor, source, ownership or transactional budget validation.
 type EffectsEditOptions struct {
 	// ApproximateDropShadow allows fractional DropShadow parameters on supported raster sources.
+	// Ordinary Normal rasters may combine shadows and color overlays with unfeathered pixel/vector masks.
+	// Pixel-only masks retain the existing feather policy; placed sources cannot use active vector masks.
 	ApproximateDropShadow bool
 }
 
@@ -61,17 +64,26 @@ func (e *Editor) SetEffectsWithOptions(
 	if node.group || node.sourceIndex < 0 || node.sourceIndex >= len(e.source.Layers) {
 		return editError(ErrUnsupported, "layers.effects", "effect edits require an existing raster layer")
 	}
-	expandedSource := parent != nil || e.source.Layers[node.sourceIndex].Mask != nil
-	approximateShadow := options.ApproximateDropShadow && effectsPureDropShadow(desired)
-	if expandedSource && !effectsPureColorOverlay(desired) && !approximateShadow {
-		return editError(ErrUnsupported, "layers.effects", "masked or nested effect edits require a supported effect set")
-	}
-	block, err := e.effectsEditBlockWithOptions(node, parent, position, expandedSource, approximateShadow)
+	_, hasVector, err := e.vectorMaskBlockLocked(node)
 	if err != nil {
 		return err
 	}
-	if node.effects != nil && effectsParametersEqual(*node.effects, desired) {
-		return nil
+	pureOverlay := effectsPureColorOverlay(desired)
+	mixedShadow := effectsShadowOverlay(desired)
+	expandedSource := parent != nil || e.source.Layers[node.sourceIndex].Mask != nil || hasVector ||
+		node.pixelMaskChange != nil || node.vectorMaskChange != nil
+	approximateShadow := options.ApproximateDropShadow && (effectsPureDropShadow(desired) || mixedShadow)
+	allowVectorMask := pureOverlay || approximateShadow
+	if approximateShadow && mixedShadow &&
+		(e.source.Layers[node.sourceIndex].BlendMode != "norm" || node.blendModeChanged && node.blendMode != "norm") {
+		return editError(ErrUnsupported, "layers.effects", "shadow/color-overlay combinations require a Normal raster")
+	}
+	if expandedSource && !effectsPureColorOverlay(desired) && !approximateShadow {
+		return editError(ErrUnsupported, "layers.effects", "masked or nested effect edits require a supported effect set")
+	}
+	block, err := e.effectsEditBlockWithOptions(node, parent, position, expandedSource, approximateShadow, allowVectorMask)
+	if err != nil {
+		return err
 	}
 	limits := e.source.Limits()
 	peakRetained := e.ownedBytesLocked(nil)
@@ -84,7 +96,7 @@ func (e *Editor) SetEffectsWithOptions(
 		if geometryBudget <= 0 {
 			return editError(psdfile.ErrLimit, "layers.effects", "source metadata has no remaining working budget")
 		}
-		working, err := e.effectsRasterSource(ctx, node, geometryBudget, approximateShadow)
+		working, err := e.effectsRasterSource(ctx, node, geometryBudget, approximateShadow && !mixedShadow, allowVectorMask)
 		if err != nil {
 			return err
 		}
@@ -107,7 +119,8 @@ func (e *Editor) SetEffectsWithOptions(
 		if err := psdeffects.Validate(&check); err != nil {
 			return effectsEditError(err)
 		}
-		if !effectsPureColorOverlay(*original) && (!approximateShadow || !effectsPureDropShadow(*original)) {
+		if !effectsPureColorOverlay(*original) &&
+			(!approximateShadow || !effectsPureDropShadow(*original) && !effectsShadowOverlay(*original)) {
 			return editError(ErrUnsupported, "layers.effects", "source includes other active effect families")
 		}
 	}
@@ -119,8 +132,12 @@ func (e *Editor) SetEffectsWithOptions(
 			return err
 		}
 	}
-	if node.effects == nil && effectsParametersEqual(*original, desired) {
-		return nil
+	if node.effects != nil && effectsParametersEqual(*node.effects, desired) ||
+		node.effects == nil && effectsParametersEqual(*original, desired) {
+		if _, err := e.source.ReadAt(nil, 0); err != nil {
+			return err
+		}
+		return ctx.Err()
 	}
 	patchWorking := int64(len(original.Items))*256 + 4096
 	remaining := available - sourceBudget*2 - patchWorking
@@ -308,8 +325,7 @@ func patchLegacyEffects(ctx context.Context, data []byte, original, desired psde
 				continue
 			}
 			left, right := effect, desired.Items[position]
-			left.Descriptor, right.Descriptor = nil, nil
-			familyChanged = familyChanged || !reflect.DeepEqual(left, right)
+			familyChanged = familyChanged || !effectParametersEqual(left, right)
 			matches++
 			if matching < 0 {
 				matching = position
@@ -327,8 +343,7 @@ func patchLegacyEffects(ctx context.Context, data []byte, original, desired psde
 		}
 		// Native legacy solid-fill stores the first, topmost modern ColorOverlay instance.
 		left, right := original.Items[matching], desired.Items[matching]
-		left.Descriptor, right.Descriptor = nil, nil
-		if reflect.DeepEqual(left, right) {
+		if effectParametersEqual(left, right) {
 			continue
 		}
 		if seen[key] {
@@ -448,18 +463,43 @@ func legacyEffectRGB(data []byte, rgb [3]float64) error {
 }
 
 func (e *Editor) effectsEditBlockWithOptions(
-	node, parent *editNode, position int, allowPixelMask, approximateShadow bool,
+	node, parent *editNode, position int, allowPixelMask, approximateShadow, allowVectorMask bool,
 ) (psdfile.AdditionalBlock, error) {
 	record := e.source.Layers[node.sourceIndex]
+	current := &psdmodel.Layer{BlendMode: record.BlendMode, Clipping: record.Clipping != 0}
+	if node.blendModeChanged {
+		current.BlendMode = node.blendMode
+	}
+	if node.clippingChanged {
+		current.Clipping = node.clipping
+	}
+	if node.blendRangesChanged {
+		current.BlendRanges = node.blendRanges
+	}
+	applyAdvancedBlending(current, node)
+	if current.BlendMode != "norm" && (!approximateShadow || current.BlendMode != "mul ") || current.Clipping ||
+		len(current.ChannelRestrictions) != 0 || current.Knockout != psdmodel.KnockoutNone ||
+		current.TransparencyShapes != nil && !*current.TransparencyShapes {
+		return psdfile.AdditionalBlock{}, editError(ErrUnsupported, "layers.effects",
+			"current layer blending is outside the supported effect combinations")
+	}
+	for _, ranges := range current.BlendRanges {
+		for _, slider := range []psdmodel.BlendSlider{ranges.Source, ranges.Destination} {
+			if slider.BlackLow != 0 || slider.BlackHigh != 0 || slider.WhiteLow != 255 || slider.WhiteHigh != 255 {
+				return psdfile.AdditionalBlock{}, editError(ErrUnsupported, "layers.effects", "current Blend If is uncalibrated")
+			}
+		}
+	}
 	if record.BlendMode != "norm" && (!approximateShadow || record.BlendMode != "mul ") ||
 		record.Clipping != 0 || record.Mask != nil && !allowPixelMask ||
 		node.fillColor != nil ||
-		node.gradient != nil || node.adjustment != nil || node.placed != nil || node.vectorMask != nil {
+		node.gradient != nil || node.adjustment != nil || node.placed != nil || node.vectorMask != nil && !allowVectorMask {
 		return psdfile.AdditionalBlock{}, editError(ErrUnsupported, "layers.effects",
 			"effect source is not an ordinary Normal raster")
 	}
 	for _, channel := range record.Channels {
-		if channel.ID != -1 && (!allowPixelMask || record.Mask == nil || channel.ID != -2) &&
+		maskChannel := allowPixelMask && record.Mask != nil && channel.ID == -2 || allowVectorMask && channel.ID == -3
+		if channel.ID != -1 && !maskChannel &&
 			(channel.ID < 0 || channel.ID > 2) {
 			return psdfile.AdditionalBlock{}, editError(ErrUnsupported, "layers.effects",
 				"extra source channels are uncalibrated")
@@ -491,7 +531,11 @@ func (e *Editor) effectsEditBlockWithOptions(
 	}
 	if position+1 < len(siblings) {
 		next := siblings[position+1]
-		if next.sourceIndex >= 0 && e.source.Layers[next.sourceIndex].Clipping != 0 {
+		nextClipped := next.clippingChanged && next.clipping
+		if !next.clippingChanged && next.sourceIndex >= 0 {
+			nextClipped = e.source.Layers[next.sourceIndex].Clipping != 0
+		}
+		if nextClipped {
 			return psdfile.AdditionalBlock{}, editError(ErrUnsupported, "layers.effects",
 				"effect target is a clipping-chain base")
 		}
@@ -509,7 +553,11 @@ func (e *Editor) effectsEditBlockWithOptions(
 			if !approximateShadow {
 				return block, editError(ErrUnsupported, "layers.effects", "source has a placed layer family")
 			}
-		case "vmsk", "vsms", "SoCo", "GdFl", "PtFl", "TySh", "tySh", "Txt2":
+		case "vmsk", "vsms":
+			if !allowVectorMask {
+				return block, editError(ErrUnsupported, "layers.effects", "source has a vector mask outside the effect subset")
+			}
+		case "SoCo", "GdFl", "PtFl", "TySh", "tySh", "Txt2":
 			return block, editError(ErrUnsupported, "layers.effects", "source has an additional live layer family")
 		case "brst", "FEid", "FXid", "PxSc", "PxSD":
 			return block, editError(ErrUnsupported, "layers.effects", "source has uncalibrated advanced raster semantics")
@@ -553,7 +601,7 @@ func effectsPureColorOverlay(set psdeffects.Set) bool {
 }
 
 func (e *Editor) effectsRasterSource(
-	ctx context.Context, node *editNode, budget int64, allowOriginalPlaced bool,
+	ctx context.Context, node *editNode, budget int64, allowOriginalPlaced, allowVectorMask bool,
 ) (int64, error) {
 	view, err := e.source.ReadLayerMetadata(ctx, node.sourceIndex, psdfile.MetadataOptions{MaxBytes: budget})
 	if err != nil {
@@ -562,14 +610,18 @@ func (e *Editor) effectsRasterSource(
 	layer := view.Layer
 	if layer == nil || view.Divider != 0 || len(view.BlockingIssues) != 0 || len(layer.Unsupported) != 0 ||
 		layer.Group || layer.Placed != nil && !allowOriginalPlaced || layer.FillColor != nil || layer.Gradient != nil ||
-		layer.Pattern != nil || layer.Adjustment != nil || layer.VectorMask != nil ||
-		layer.VectorDensity != nil || layer.VectorFeather != nil || len(layer.ChannelRestrictions) != 0 ||
+		layer.Pattern != nil || layer.Adjustment != nil || layer.VectorMask != nil && !allowVectorMask ||
+		!allowVectorMask && (layer.VectorDensity != nil || layer.VectorFeather != nil) || len(layer.ChannelRestrictions) != 0 ||
 		layer.Knockout != psdmodel.KnockoutNone ||
 		layer.TransparencyShapes != nil && !*layer.TransparencyShapes {
 		return 0, editError(ErrUnsupported, "layers.effects", "source has unsupported raster or mask semantics")
 	}
-	if layer.Mask != nil && (view.PixelMaskChannel != -2 || len(layer.Mask.Unsupported) != 0) {
+	if layer.Mask != nil && (view.PixelMaskChannel != -2 && (!allowVectorMask || view.PixelMaskChannel != -3) ||
+		!effectsKnownPixelMaskIssues(layer.Mask, allowVectorMask)) {
 		return 0, editError(ErrUnsupported, "layers.effects", "source pixel mask representation is unsupported")
+	}
+	if allowVectorMask {
+		return e.effectsVectorSource(ctx, node, layer, view.WorkingBytes, budget)
 	}
 	return view.WorkingBytes, nil
 }
@@ -621,17 +673,27 @@ func effectsParametersEqual(left, right psdeffects.Set) bool {
 	if left.ObjectVersion != right.ObjectVersion || left.DescriptorVersion != right.DescriptorVersion ||
 		left.Enabled != right.Enabled || left.EffectsVisible != right.EffectsVisible || left.Scale != right.Scale ||
 		left.GlobalAngle != right.GlobalAngle || !reflect.DeepEqual(left.ModifyingCount, right.ModifyingCount) ||
-		!reflect.DeepEqual(left.Unsupported, right.Unsupported) || len(left.Items) != len(right.Items) {
+		!slices.Equal(left.Unsupported, right.Unsupported) || len(left.Items) != len(right.Items) {
 		return false
 	}
 	for index, effect := range left.Items {
 		other := right.Items[index]
-		effect.Descriptor, other.Descriptor = nil, nil
-		if !reflect.DeepEqual(effect, other) {
+		if !effectParametersEqual(effect, other) {
 			return false
 		}
 	}
 	return true
+}
+
+// effectParametersEqual ignores borrowed descriptor identity and JSON's absent-versus-empty diagnostic slices.
+// Nonempty diagnostics and all fixed effect controls still require exact equality.
+func effectParametersEqual(left, right psdeffects.Effect) bool {
+	if !slices.Equal(left.Unsupported, right.Unsupported) {
+		return false
+	}
+	left.Descriptor, right.Descriptor = nil, nil
+	left.Unsupported, right.Unsupported = nil, nil
+	return reflect.DeepEqual(left, right)
 }
 
 func effectsEditableParametersWithOptions(original, desired psdeffects.Set, approximateShadow bool) error {
@@ -677,8 +739,7 @@ func effectsEditableParametersWithOptions(original, desired psdeffects.Set, appr
 				}
 			}
 		}
-		allowed.Descriptor, wanted.Descriptor = nil, nil
-		if !reflect.DeepEqual(allowed, wanted) {
+		if !effectParametersEqual(allowed, wanted) {
 			return editError(ErrUnsupported, "layers.effects", "an effect family, fixed flag or unsupported parameter changed")
 		}
 	}

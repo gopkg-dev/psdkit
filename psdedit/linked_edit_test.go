@@ -319,24 +319,12 @@ func TestEmbedLinkedContentsReusesUniqueEmptyGlobalDestination(t *testing.T) {
 	}
 }
 
-func TestEmbedLinkedContentsRejectsAmbiguousContainersBeforeResolver(t *testing.T) {
-	for _, condition := range []string{"embedded", "empty-duplicates", "source-duplicates", "mixed-external"} {
-		t.Run(condition, func(t *testing.T) {
+func TestEmbedLinkedContentsRejectsDuplicateSourceBeforeResolver(t *testing.T) {
+	for _, key := range []string{"lnkE", "lnk2", "lnkD", "lnk3"} {
+		t.Run(key, func(t *testing.T) {
 			data := linkedEditFixture(t, 1, 7, "lnkE")
-			var payload, tags []byte
-			switch condition {
-			case "embedded":
-				payload = writerLinkedEntry("liFD", "unrelated-source", 7, []byte{1, 2}).data
-				tags = writerLinkedTag("8BIM", "lnk2", 4, payload, 4)
-			case "empty-duplicates":
-				tags = writerLinkedTag("8BIM", "lnk2", 4, nil, 4)
-				tags = append(tags, tags...)
-			case "source-duplicates":
-				payload = writerLinkedEntry("liFE", "fixture-id", 7, nil).data
-				tags = writerLinkedTag("8BIM", "lnkE", 4, payload, 4)
-			case "mixed-external":
-				data = linkedEditFixture(t, 1, 7, "lnkE", writerLinkedEntry("liFE", "unrelated-source", 7, nil).data)
-			}
+			payload := writerLinkedEntry("liFE", "fixture-id", 7, nil).data
+			tags := writerLinkedTag("8BIM", key, 4, payload, 4)
 			data = linkedInsertGlobal(t, data, tags, false)
 			editor, _ := smartEditOpen(t, data)
 			infos, _ := editor.SmartObjects(nil)
@@ -344,7 +332,7 @@ func TestEmbedLinkedContentsRejectsAmbiguousContainersBeforeResolver(t *testing.
 			err := editor.EmbedLinkedContents(nil, infos[0].ID,
 				func(context.Context, psdfile.LinkedFileRecord) ([]byte, error) { called = true; return nil, nil })
 			if !errors.Is(err, ErrUnsupported) || called || len(editor.linkedOverlays) != 0 {
-				t.Fatalf("ambiguous container %s reached its resolver or committed: %v", condition, err)
+				t.Fatalf("duplicate source in %s reached its resolver or committed: %v", key, err)
 			}
 		})
 	}

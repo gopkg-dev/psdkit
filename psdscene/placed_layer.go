@@ -4,6 +4,7 @@ import (
 	"context"
 	"image"
 
+	"github.com/gopkg-dev/psdkit/internal/psdplaced"
 	"github.com/gopkg-dev/psdkit/internal/psdrendered"
 	"github.com/gopkg-dev/psdkit/psdfile"
 	"github.com/gopkg-dev/psdkit/psdmodel"
@@ -17,6 +18,22 @@ import (
 // Its runtime RenderedEffects identity permits approximate effect composition while retaining Placed metadata.
 func RenderPlacedLayer(
 	ctx context.Context, source *psdfile.Document, layerIndex int, options ...Options,
+) (*psdmodel.Layer, error) {
+	return renderPlacedLayer(ctx, source, layerIndex, nil, options...)
+}
+
+// RenderPreparedPlacedLayer renders private editor candidates through the original source-placement pipeline.
+// Parent profiles and filter-mask records remain original; candidate filters run once on freshly projected contents.
+// Returned artwork omits parent layer masks, effects, opacity and Fill, which the editing compositor applies later.
+// The private request's encoded storage is borrowed; MaxWorkingBytes bounds additional metadata and rendering storage.
+func RenderPreparedPlacedLayer(
+	ctx context.Context, prepared psdplaced.Prepared, options ...Options,
+) (*psdmodel.Layer, error) {
+	return renderPlacedLayer(ctx, prepared.Source, prepared.LayerIndex, &prepared, options...)
+}
+
+func renderPlacedLayer(
+	ctx context.Context, source *psdfile.Document, layerIndex int, prepared *psdplaced.Prepared, options ...Options,
 ) (*psdmodel.Layer, error) {
 	if ctx == nil {
 		ctx = context.Background()
@@ -35,6 +52,11 @@ func RenderPlacedLayer(
 	if len(options) != 0 {
 		provided = options[0]
 	}
+	if prepared != nil {
+		if err := preparedPlacementOptions(*prepared, provided); err != nil {
+			return nil, err
+		}
+	}
 	if provided.ApproximateText != nil {
 		return nil, sceneError(psdfile.ErrUnsupported, "placedLayer.text", 0,
 			"use the explicit OpenType source policy for placed-layer source text")
@@ -52,7 +74,8 @@ func RenderPlacedLayer(
 	ctx, settings, err := tileConfiguration(ctx, source, canvas, []TileOptions{{
 		MaxWorkingBytes: provided.MaxWorkingBytes, MaxDepth: provided.MaxDepth, MaxDocuments: provided.MaxDocuments,
 		ExternalResolver: provided.ExternalResolver, CachedSpecialLayers: provided.CachedSpecialLayers,
-		Compose: provided.Compose, SmartFilters: provided.SmartFilters, AssumeUntaggedSRGB: provided.AssumeUntaggedSRGB,
+		ExternalRasterResolver: provided.ExternalRasterResolver,
+		Compose:                provided.Compose, SmartFilters: provided.SmartFilters, AssumeUntaggedSRGB: provided.AssumeUntaggedSRGB,
 		ApproximatePlacedProjection: provided.ApproximatePlacedProjection,
 		CachedTextLayers:            provided.CachedTextLayers, ApproximateVectorStroke: provided.ApproximateVectorStroke,
 		ApproximateCustomWarp: provided.ApproximateCustomWarp,
@@ -94,6 +117,7 @@ func RenderPlacedLayer(
 		contents: make(map[string]*image.NRGBA), legacy: renderer{
 			options: Options{MaxWorkingBytes: settings.MaxWorkingBytes, MaxDepth: settings.MaxDepth,
 				MaxDocuments: settings.MaxDocuments, ExternalResolver: settings.ExternalResolver, Compose: settings.Compose,
+				ExternalRasterResolver:      settings.ExternalRasterResolver,
 				ApproximatePlacedProjection: settings.ApproximatePlacedProjection,
 				CachedTextLayers:            settings.CachedTextLayers, ApproximateVectorStroke: settings.ApproximateVectorStroke,
 				ApproximateCustomWarp: settings.ApproximateCustomWarp,
@@ -106,6 +130,11 @@ func RenderPlacedLayer(
 		return nil, err
 	}
 	defer release()
+	if prepared != nil {
+		if err := engine.installPreparedPlacement(ctx, *prepared, layer); err != nil {
+			return nil, err
+		}
+	}
 	if err := engine.preparePlaced(ctx, source.Layers[layerIndex], layer); err != nil {
 		return nil, err
 	}
@@ -113,11 +142,13 @@ func RenderPlacedLayer(
 		return nil, sceneError(psdfile.ErrUnsupported, "placedLayer.placement", source.Layers[layerIndex].Span.Offset,
 			layer.Placed.Unsupported[0])
 	}
-	if err := engine.preparePixelMask(source.Layers[layerIndex], layer); err != nil {
-		return nil, err
-	}
-	if err := engine.loadPixelMask(ctx, source.Layers[layerIndex], layer); err != nil {
-		return nil, err
+	if prepared == nil {
+		if err := engine.preparePixelMask(source.Layers[layerIndex], layer); err != nil {
+			return nil, err
+		}
+		if err := engine.loadPixelMask(ctx, source.Layers[layerIndex], layer); err != nil {
+			return nil, err
+		}
 	}
 	if layer.RenderedEffects == nil {
 		if err := engine.reserve(psdrendered.WorkingBytes,
@@ -128,6 +159,14 @@ func RenderPlacedLayer(
 	}
 	if err := ctx.Err(); err != nil {
 		return nil, err
+	}
+	if prepared != nil {
+		if _, err := source.ReadAt(nil, 0); err != nil {
+			return nil, err
+		}
+		if _, err := prepared.Candidate.ReadAt(nil, 0); err != nil {
+			return nil, err
+		}
 	}
 	return layer, nil
 }

@@ -25,6 +25,8 @@ type LayerInfo struct {
 	Visible         bool
 	Opacity         uint8
 	FillOpacity     uint8
+	BlendMode       string
+	Clipping        bool
 	Bounds          image.Rectangle
 	Group, Expanded bool
 	SourceIndex     int
@@ -45,6 +47,7 @@ type Changes struct {
 // Rebuilt composites use Raw or RLE: ZIP requests use RLE at depths 1/8 and Raw at depths 16/32.
 // Composite and CompositeImage are mutually exclusive explicit replacement previews.
 // Supplied previews must represent the edited document; the library validates their shape, not their artwork.
+// Supported existing top-level RGB8 artboards rebuild their preview automatically when neither preview is supplied.
 type SaveOptions struct {
 	Compression    uint16
 	Composite      *psdfile.CompositePixels
@@ -122,12 +125,23 @@ type editNode struct {
 	patternTile                                 *image.NRGBA
 	effects                                     *psdeffects.Set
 	vectorMask                                  *psdvector.Mask
+	vectorMaskChange                            *vectorMaskChange
+	pixelMask                                   *PixelMaskSettings
+	pixelMaskChange                             *pixelMaskChange
+	maskData                                    []byte
+	advancedBlending                            *advancedBlendingOverlay
+	blendMode                                   string
+	clipping                                    bool
+	blendRanges                                 []psdmodel.BlendRange
+	blendRangesData                             []byte
 	placed                                      *psdmodel.Placed
 	semanticBytes                               int64
 	semanticCosts                               map[string]int64
 	nameChanged, visibleChanged, opacityChanged bool
 	fillOpacityChanged                          bool
 	fillOpacityAdded                            bool
+	blendModeChanged, clippingChanged           bool
+	blendRangesChanged                          bool
 	virtualComposite                            bool
 }
 

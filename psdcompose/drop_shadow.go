@@ -23,27 +23,67 @@ func pureDropShadowEffects(set *psdeffects.Set) bool {
 	return active
 }
 
+// dropShadowOverlayEffects admits an ordinary raster's active shadows and interior color overlays only.
+func dropShadowOverlayEffects(set *psdeffects.Set) bool {
+	if set == nil || !set.Enabled || !set.EffectsVisible {
+		return false
+	}
+	shadow, overlay := false, false
+	for _, effect := range set.Items {
+		if !effect.Enabled || effect.Opacity == 0 {
+			continue
+		}
+		switch effect.Kind {
+		case psdeffects.DropShadow:
+			shadow = true
+		case psdeffects.ColorOverlay:
+			overlay = true
+		default:
+			return false
+		}
+	}
+	return shadow && overlay
+}
+
 func dropShadowBlendSupported(mode string) bool {
 	mode = normalizeBlend(mode)
 	return mode == "norm" || mode == "mul"
 }
 
 func (plan *composePlan) registerApproximateDropShadow(layer *psdmodel.Layer, path string) error {
+	mixed := dropShadowOverlayEffects(layer.Effects)
 	if layer.Group || layer.Children != nil || layer.Pixels == nil || layer.FillColor != nil ||
 		layer.Pattern != nil || layer.PatternTile != nil || layer.Gradient != nil || layer.Adjustment != nil ||
 		!dropShadowBlendSupported(layer.BlendMode) {
 		return composeError(ErrUnsupported, path, "approximate drop shadows require a Normal or Multiply raster layer")
 	}
+	if mixed && (normalizeBlend(layer.BlendMode) != "norm" || layer.Placed != nil) {
+		return composeError(ErrUnsupported, path, "shadow/color-overlay combinations require an ordinary Normal raster")
+	}
 	if layer.Placed != nil && !layer.RenderedEffects.Valid(layer.Pixels, layer.Bounds, layer.Placed) {
 		return composeError(ErrUnsupported, path, "placed-layer effects require freshly rendered source pixels")
 	}
-	if layer.VectorMask != nil || layer.Clipping || composeCustomRanges(layer.BlendRanges) ||
+	if layer.VectorMask != nil && !layer.VectorMask.Disabled {
+		if normalizeBlend(layer.BlendMode) != "norm" || layer.Placed != nil {
+			return composeError(ErrUnsupported, path, "vector-masked shadows require an ordinary Normal raster")
+		}
+		if err := validateUnfeatheredEffectVectorMask(layer, path); err != nil {
+			return err
+		}
+	}
+	if layer.Clipping || composeCustomRanges(layer.BlendRanges) ||
 		len(layer.ChannelRestrictions) != 0 || layer.Knockout != psdmodel.KnockoutNone ||
 		layer.TransparencyShapes != nil && !*layer.TransparencyShapes {
 		return composeError(ErrUnsupported, path, "advanced layer interactions with drop shadows are unsupported")
 	}
 	for _, effect := range layer.Effects.Items {
-		if effect.Enabled && effect.Opacity != 0 && !dropShadowBlendSupported(effect.BlendMode) {
+		if !effect.Enabled || effect.Opacity == 0 {
+			continue
+		}
+		if effect.Kind == psdeffects.ColorOverlay && SupportedBlend(effect.BlendMode) {
+			continue
+		}
+		if effect.Kind != psdeffects.DropShadow || !dropShadowBlendSupported(effect.BlendMode) {
 			return composeError(ErrUnsupported, path, "drop-shadow blend mode must be Normal or Multiply")
 		}
 	}
@@ -55,8 +95,25 @@ func (plan *composePlan) registerApproximateDropShadow(layer *psdmodel.Layer, pa
 }
 
 func (plan *composePlan) dropShadowShapesWithMask(layer *psdmodel.Layer) bool {
-	return plan.options.ApproximateDropShadow && pureDropShadowEffects(layer.Effects) &&
+	return plan.options.ApproximateDropShadow &&
+		(pureDropShadowEffects(layer.Effects) || dropShadowOverlayEffects(layer.Effects)) &&
 		layer.Mask != nil && !layer.Mask.Disabled && !shadowMaskGlobal(layer)
+}
+
+func (plan *composePlan) dropShadowShapesWithVector(layer *psdmodel.Layer) bool {
+	return plan.options.ApproximateDropShadow &&
+		(pureDropShadowEffects(layer.Effects) || dropShadowOverlayEffects(layer.Effects)) &&
+		layer.VectorMask != nil && !layer.VectorMask.Disabled &&
+		(layer.VectorDensity == nil || *layer.VectorDensity != 0) && !shadowVectorMaskGlobal(layer)
+}
+
+// shadowVectorMaskGlobal follows explicit vmgm, or the original vector-mask link state for older files.
+// The PSD format gives vector global masking the same final-crossfade contract as lmgm.
+func shadowVectorMaskGlobal(layer *psdmodel.Layer) bool {
+	if layer.VectorMaskAsGlobal != nil {
+		return *layer.VectorMaskAsGlobal
+	}
+	return layer.VectorMask != nil && layer.VectorMask.NotLinked
 }
 
 // shadowMaskGlobal follows explicit lmgm first and the source mask's legacy link state when lmgm is absent.
@@ -84,15 +141,50 @@ func (plan *composePlan) paintApproximateDropShadow(
 			inside = paintDropShadowBlend(inside, plane.Color, coverage, plane.BlendMode)
 		}
 	}
-	if plan.dropShadowShapesWithMask(layer) {
+	if plan.dropShadowShapesWithMask(layer) || plan.dropShadowShapesWithVector(layer) {
 		source.alpha = float64(cache.alpha.AlphaAt(x, y).A) / 255
 	}
-	inside = paintDropShadowBlend(inside, source.color, composeOpacity(layer.FillOpacity)*opacity, mode)
-	backdrop = composeInterpolate(outside, inside, source.alpha)
-	if layer.Mask != nil && !layer.Mask.Disabled && shadowMaskGlobal(layer) {
-		return composeInterpolate(original, backdrop, plan.mask(layer.Mask, x, y))
+	if len(cache.planes.Interior) == 0 {
+		inside = paintDropShadowBlend(inside, source.color, composeOpacity(layer.FillOpacity)*opacity, mode)
+	} else {
+		inside = paintShadowOverlayInterior(layer, source, inside, cache, opacity)
 	}
-	return backdrop
+	backdrop = composeInterpolate(outside, inside, source.alpha)
+	globalCoverage := 1.0
+	globallyMasked := false
+	if layer.Mask != nil && !layer.Mask.Disabled && shadowMaskGlobal(layer) {
+		globalCoverage *= plan.mask(layer.Mask, x, y)
+		globallyMasked = true
+	}
+	if layer.VectorMask != nil && !layer.VectorMask.Disabled &&
+		(layer.VectorDensity == nil || *layer.VectorDensity != 0) && shadowVectorMaskGlobal(layer) {
+		globalCoverage *= plan.vectorAlpha(layer, x, y)
+		globallyMasked = true
+	}
+	if !globallyMasked {
+		return backdrop
+	}
+	return composeInterpolate(original, backdrop, globalCoverage)
+}
+
+// paintShadowOverlayInterior uses the same interior group and Fill stages as an unshadowed color overlay.
+// The caller applies the source-shape partition once, after shadows and all interior planes are assembled.
+func paintShadowOverlayInterior(
+	layer *psdmodel.Layer, source, backdrop composePixel, cache *effectCache, opacity float64,
+) composePixel {
+	fill := composeOpacity(layer.FillOpacity)
+	group := layer.BlendInterior != nil && *layer.BlendInterior
+	interior := paintNormalEffect(backdrop, source.color, fill)
+	if group {
+		interior = composePixel{color: source.color, alpha: 1}
+	}
+	for _, plane := range cache.planes.Interior {
+		interior = paintInteriorEffect(interior, plane)
+	}
+	if group {
+		return paintNormalEffect(backdrop, interior.color, fill*opacity)
+	}
+	return composeInterpolate(backdrop, interior, opacity)
 }
 
 func paintDropShadowBlend(backdrop composePixel, source [3]float64, alpha float64, mode string) composePixel {

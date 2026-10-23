@@ -1,7 +1,6 @@
 package psdedit
 
 import (
-	"bytes"
 	"context"
 	"encoding/binary"
 	"errors"
@@ -22,6 +21,7 @@ import (
 type SmartObjectInfo struct {
 	ID                 LayerID
 	Name, SourceID     string
+	FileType           string
 	Bounds             image.Rectangle
 	Width, Height      float64
 	SourceType         int32
@@ -67,9 +67,13 @@ func (e *Editor) SmartObjects(ctx context.Context) ([]SmartObjectInfo, error) {
 				}
 				for _, record := range linked {
 					if record.ID == placement.SourceID {
+						info.FileType = record.FileType
 						info.SourceKind, info.Embedded = record.Kind, record.Kind == "liFD"
-						if overlay := e.linkedOverlays[placement.SourceID]; overlay != nil && overlay.embedExternal {
-							info.SourceKind, info.Embedded = "liFD", true
+						if overlay := e.linkedOverlays[placement.SourceID]; overlay != nil {
+							info.FileType = overlay.fileType
+							if overlay.embedExternal {
+								info.SourceKind, info.Embedded = "liFD", true
+							}
 						}
 						break
 					}
@@ -97,7 +101,8 @@ func (e *Editor) SmartObjects(ctx context.Context) ([]SmartObjectInfo, error) {
 	return result, ctx.Err()
 }
 
-// ReplaceContents replaces an embedded RGB8 PSD/PSB source and updates all its shared placed instances.
+// ReplaceContents replaces an embedded RGB8 PSD/PSB, PNG, JPEG or flat RGB8 TIFF source for all shared instances.
+// The original encoded replacement format and bytes are retained; projected parent caches are RGB8.
 // Encoded input and projected caches are copied into owned overlays; original blocks remain immutable.
 // Destination corners remain fixed when the prototype canvas changes size.
 // Source-space custom controls are scaled per axis; live filters and unsupported Warp are rejected.
@@ -170,10 +175,23 @@ func (e *Editor) replaceSmartContentsWithOptionsLocked(
 		return err
 	}
 	placements := placementView.Records
+	active := make(map[int]bool)
+	placementEdited := false
+	var collectActive func([]*editNode)
+	collectActive = func(nodes []*editNode) {
+		for _, node := range nodes {
+			if !node.group && node.sourceIndex >= 0 {
+				active[node.sourceIndex] = true
+				placementEdited = placementEdited || node.placed != nil
+			}
+			collectActive(node.children)
+		}
+	}
+	collectActive(e.roots)
 	byIndex := make(map[int]psdfile.SmartObjectRecord)
 	byLayer := make(map[int][]psdfile.SmartObjectRecord)
 	for _, placement := range placements {
-		if placement.LayerSetIndex == e.source.ActiveLayerSet {
+		if placement.LayerSetIndex == e.source.ActiveLayerSet && active[placement.LayerIndex] {
 			byIndex[placement.LayerIndex] = placement
 			byLayer[placement.LayerIndex] = append(byLayer[placement.LayerIndex], placement)
 		}
@@ -222,8 +240,8 @@ func (e *Editor) replaceSmartContentsWithOptionsLocked(
 		overlay := e.linkedOverlays[record.ID]
 		embedded := record.Kind == "liFD" || overlay != nil && overlay.embedExternal
 		if (!embedded && ((!embedExternal && external == nil) || record.Kind != "liFE")) ||
-			(record.FileType != "8BPS" && record.FileType != "8BPB") {
-			return editError(ErrUnsupported, "smartObject.source", "content updates require an embedded PSD/PSB source")
+			!supportedSmartContentsType(record.FileType) {
+			return editError(ErrUnsupported, "smartObject.source", "content updates require a supported raster source")
 		}
 		found = true
 		placement.SourceID = record.ID
@@ -246,7 +264,7 @@ func (e *Editor) replaceSmartContentsWithOptionsLocked(
 			return err
 		}
 	}
-	if len(data) >= 26 && string(data[:4]) == "8BPS" &&
+	if !placementEdited && len(data) >= 26 && string(data[:4]) == "8BPS" &&
 		float64(binary.BigEndian.Uint32(data[18:22])) == placement.Width &&
 		float64(binary.BigEndian.Uint32(data[14:18])) == placement.Height {
 		// Equal-size contents need only source identities; release full descriptors before source indexing.
@@ -291,7 +309,7 @@ func (e *Editor) replaceSmartContentsWithOptionsLocked(
 			}
 		}
 	}
-	if len(data) < 26 || int64(len(data)) > limits.MaxFileBytes ||
+	if int64(len(data)) > limits.MaxFileBytes ||
 		int64(len(data)) > limits.MaxDecodeBytes-ownedBytes {
 		return editError(psdfile.ErrLimit, "smartObject.content", "encoded replacement exceeds the owned-content budget")
 	}
@@ -303,28 +321,24 @@ func (e *Editor) replaceSmartContentsWithOptionsLocked(
 	if parseBudget <= 0 {
 		return editError(psdfile.ErrLimit, "smartObject.working", "metadata and encoded replacement exceed working budget")
 	}
-	owned := bytes.Clone(data)
-	parseLimits := limits
-	parseLimits.MaxMetadataBytes = min(limits.MaxMetadataBytes, parseBudget)
-	content, err := psdfile.Parse(owned, psdfile.LoadOptions{Limits: parseLimits})
+	owned := make([]byte, len(data))
+	copy(owned, data)
+	content, err := decodeSmartContentsSource(ctx, owned, limits, parseBudget)
 	if err != nil {
 		return err
 	}
-	defer func() { _ = content.Close() }()
-	if content.Header.ColorMode != 3 || content.Header.Depth != 8 {
-		return editError(ErrUnsupported, "smartObject.content", "replacement must use an RGB8 prototype canvas")
-	}
+	defer func() { _ = content.close() }()
 	remaining, err := e.smartSnapshotBudgetLocked(ctx)
 	if err != nil {
 		return err
 	}
-	indexBytes := content.IndexMetadataBytes()
+	indexBytes := content.retainedBytes
 	if viewBytes > remaining || int64(len(owned)) >= remaining-viewBytes ||
 		indexBytes >= remaining-viewBytes-int64(len(owned)) {
 		return editError(psdfile.ErrLimit, "smartObject.working", "replacement index and source exceed working budget")
 	}
 	workingBytes := limits.MaxDecodeBytes - remaining + int64(len(owned)) + indexBytes + viewBytes
-	if float64(content.Header.Width) != placement.Width || float64(content.Header.Height) != placement.Height {
+	if float64(content.width) != placement.Width || float64(content.height) != placement.Height {
 		for _, node := range nodes {
 			for _, block := range e.source.Layers[node.sourceIndex].AdditionalInfo {
 				if block.Key != "PlLd" && block.Key != "plLd" {
@@ -389,8 +403,8 @@ func (e *Editor) replaceSmartContentsWithOptionsLocked(
 			(psdrender.RequiresWarpRendering(layer.Placed) && layer.Placed.Warp.Style != "custom") {
 			return editError(ErrUnsupported, "smartObject.warp", "instance needs unsupported Warp or smart-filter rendering")
 		}
-		update, err := prepareSmartPlacement(ctx, e.source, layer.Placed, byLayer[node.sourceIndex],
-			e.source.Layers[node.sourceIndex].AdditionalInfo, image.Pt(int(content.Header.Width), int(content.Header.Height)),
+		update, err := prepareSmartPlacement(ctx, e.source, layer.Placed, node.placed, byLayer[node.sourceIndex],
+			e.source.Layers[node.sourceIndex].AdditionalInfo, image.Pt(content.width, content.height),
 			min(limits.MaxDecodeBytes-workingBytes, limits.MaxDecodeBytes-budget))
 		if err != nil {
 			return err
@@ -430,13 +444,14 @@ func (e *Editor) replaceSmartContentsWithOptionsLocked(
 	if workingBytes >= limits.MaxDecodeBytes {
 		return editError(psdfile.ErrLimit, "smartObject.profile", "no working budget remains after the parent profile")
 	}
-	pixels, err := psdscene.Render(ctx, content, psdscene.Options{
-		MaxWorkingBytes:    limits.MaxDecodeBytes - workingBytes,
-		OutputProfile:      parentProfile,
-		AssumeUntaggedSRGB: options.AssumeUntaggedSRGB,
-	})
+	pixels, err := content.render(ctx, parentProfile, options.AssumeUntaggedSRGB, limits.MaxDecodeBytes-workingBytes)
 	if err != nil {
 		return compositeRenderError(err)
+	}
+	fileType := content.fileType
+	workingBytes -= content.retainedBytes
+	if err := content.close(); err != nil {
+		return err
 	}
 	workingBytes -= int64(len(parentProfile))
 	workingBytes += int64(len(pixels.Pix))
@@ -490,10 +505,6 @@ func (e *Editor) replaceSmartContentsWithOptionsLocked(
 	}
 	e.linkedRecords = linked
 	e.linkedRecordsBytes = linkedView.MetadataBytes
-	fileType := "8BPS"
-	if content.Header.Version == 2 {
-		fileType = "8BPB"
-	}
 	if previous := e.linkedOverlays[placement.SourceID]; previous != nil && previous.embedExternal {
 		embedExternal = true
 	}
@@ -525,6 +536,21 @@ func (e *Editor) replaceSmartContentsWithOptionsLocked(
 // ReplaceSmartObjectContents is an explicit alias for ReplaceContents.
 func (e *Editor) ReplaceSmartObjectContents(ctx context.Context, id LayerID, data []byte) error {
 	return e.ReplaceContents(ctx, id, data)
+}
+
+// ReplaceSmartObjectContentsWithOptions is an explicit alias for ReplaceContentsWithOptions.
+func (e *Editor) ReplaceSmartObjectContentsWithOptions(
+	ctx context.Context, id LayerID, data []byte, options SmartContentsOptions,
+) error {
+	return e.ReplaceContentsWithOptions(ctx, id, data, options)
+}
+
+func supportedSmartContentsType(fileType string) bool {
+	switch fileType {
+	case "8BPS", "8BPB", "PNGf", "JPEG", "TIFF":
+		return true
+	}
+	return false
 }
 
 func smartPlacementBlock(key string) bool {

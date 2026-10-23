@@ -3,6 +3,7 @@ package psdweb
 import (
 	"bytes"
 	"context"
+	"encoding/base64"
 	"encoding/json/jsontext"
 	"encoding/json/v2"
 	"fmt"
@@ -14,6 +15,7 @@ import (
 	"github.com/gopkg-dev/psdkit/psdedit"
 	"github.com/gopkg-dev/psdkit/psdfile"
 	"github.com/gopkg-dev/psdkit/psdfont"
+	"github.com/gopkg-dev/psdkit/psdscene"
 )
 
 func strconvItoa(value int) string { return strconv.Itoa(value) }
@@ -248,6 +250,14 @@ func (e *Engine) argument(ctx context.Context, raw jsontext.Value, kind reflect.
 		}
 		e.inject(value)
 	case reflect.Slice, reflect.Array:
+		// JSON v2 encodes fixed byte arrays as Base64; retain numeric-array input compatibility.
+		byteArray := kind.Kind() == reflect.Array && kind.Elem().Kind() == reflect.Uint8 && raw[0] == '"'
+		if byteArray {
+			if err := decodeFixedByteArray(raw, value); err != nil {
+				return reflect.Value{}, err
+			}
+			break
+		}
 		if kind == reflect.TypeFor[[]byte]() {
 			if err := json.Unmarshal(raw, value.Addr().Interface()); err != nil {
 				return reflect.Value{}, err
@@ -296,6 +306,38 @@ func (e *Engine) argument(ctx context.Context, raw jsontext.Value, kind reflect.
 		return reflect.Value{}, ErrLimit
 	}
 	return value, nil
+}
+
+func decodeFixedByteArray(raw jsontext.Value, value reflect.Value) error {
+	encodedLength := base64.StdEncoding.EncodedLen(value.Len())
+	// A JSON-escaped Base64 character needs at most six bytes; reject giant inputs before decoding strings.
+	if len(raw) < 2 || (len(raw)-2+5)/6 > encodedLength {
+		return ErrProtocol
+	}
+	var encoded string
+	if err := json.Unmarshal(raw, &encoded); err != nil {
+		return err
+	}
+	if len(encoded) != encodedLength {
+		return ErrProtocol
+	}
+	decodedLength := base64.StdEncoding.DecodedLen(len(encoded))
+	if strings.HasSuffix(encoded, "==") {
+		decodedLength -= 2
+	} else if strings.HasSuffix(encoded, "=") {
+		decodedLength--
+	}
+	if decodedLength != value.Len() {
+		return ErrProtocol
+	}
+	count, err := base64.StdEncoding.Decode(value.Slice(0, value.Len()).Bytes(), []byte(encoded))
+	if err != nil {
+		return err
+	}
+	if count != value.Len() {
+		return ErrProtocol
+	}
+	return nil
 }
 
 func (e *Engine) inject(value reflect.Value) {
@@ -361,6 +403,19 @@ func (e *Engine) resolveFont(ctx context.Context, name string) (*psdfont.Face, e
 
 func (e *Engine) resolver(kind reflect.Type) (reflect.Value, error) {
 	switch kind {
+	case reflect.TypeFor[psdscene.LinkedRasterResolver]():
+		return reflect.ValueOf(psdscene.LinkedRasterResolver(func(
+			ctx context.Context, record psdfile.LinkedFileRecord,
+		) ([]byte, error) {
+			if err := ctx.Err(); err != nil {
+				return nil, err
+			}
+			item, err := e.linkedAsset(record)
+			if err != nil {
+				return nil, err
+			}
+			return item.data, nil
+		})), nil
 	case reflect.TypeFor[psdfile.LinkedDocumentResolver]():
 		return reflect.ValueOf(psdfile.LinkedDocumentResolver(func(
 			ctx context.Context, record psdfile.LinkedFileRecord,

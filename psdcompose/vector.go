@@ -13,6 +13,7 @@ import (
 type vectorCoverage struct {
 	path     string
 	base     bool
+	bounds   image.Rectangle
 	pixels   *image.Alpha
 	feathers map[float64]*vectorFeatherCoverage
 }
@@ -31,7 +32,7 @@ func (plan *composePlan) registerVector(layer *psdmodel.Layer, path string) erro
 		return nil
 	}
 	if _, exists := plan.vectors[mask]; !exists {
-		plan.vectors[mask] = &vectorCoverage{path: path}
+		plan.vectors[mask] = &vectorCoverage{path: path, bounds: plan.window}
 	}
 	cache := plan.vectors[mask]
 	requested := float64(0)
@@ -40,13 +41,18 @@ func (plan *composePlan) registerVector(layer *psdmodel.Layer, path string) erro
 	}
 	if requested == 0 {
 		cache.base = true
+		if !plan.window.Empty() && plan.effects[layer] != nil && plan.dropShadowShapesWithVector(layer) {
+			// Shadow shape can depend on vector coverage outside the requested output, including off-canvas artwork.
+			cache.bounds = cache.bounds.Union(layer.Bounds)
+		}
 		return nil
 	}
 	if requested > plan.options.MaxFeatherRadius {
 		return composeError(ErrLimit, path, "vector feather radius exceeds the configured limit")
 	}
 	if requested != .5 && requested != 1.5 && requested != 3 || !vectorFeatherGeometry(mask) ||
-		layer.Group || layer.Children != nil || layer.Mask != nil || layer.Clipping || layer.Effects != nil ||
+		layer.Group || layer.Children != nil || layer.Mask != nil && !layer.Mask.Disabled ||
+		layer.Clipping || layer.Effects != nil ||
 		layer.Placed != nil || layer.FillColor != nil || layer.Adjustment != nil || layer.Gradient != nil ||
 		layer.Pattern != nil || layer.PatternTile != nil ||
 		layer.BlendMode != "normal" && layer.BlendMode != "norm" && layer.BlendMode != "" ||
@@ -74,10 +80,15 @@ func (plan *composePlan) reserveVectorCaches() error {
 	}
 	for _, cache := range plan.vectors {
 		if cache.base {
-			if area > plan.options.MaxWorkingBytes-plan.workingBytes {
+			width, height, err := composeDimensions(cache.bounds, cache.path+".bounds")
+			if err != nil {
+				return err
+			}
+			remaining := plan.options.MaxWorkingBytes - plan.workingBytes
+			if height != 0 && int64(width) > remaining/int64(height) {
 				return composeError(ErrLimit, cache.path, "vector coverage caches exceed working budget")
 			}
-			plan.workingBytes += area
+			plan.workingBytes += int64(width) * int64(height)
 		}
 		for _, feather := range cache.feathers {
 			remaining := plan.options.MaxWorkingBytes - plan.workingBytes
@@ -97,8 +108,9 @@ func (plan *composePlan) prepareVectors(ctx context.Context) error {
 	}
 	for mask, cache := range plan.vectors {
 		if cache.base {
-			pixels, err := psdvector.Rasterize(ctx, mask, plan.window,
-				psdvector.Options{MaxWorkingBytes: plan.options.MaxWorkingBytes - plan.workingBytes + area})
+			baseArea := int64(cache.bounds.Dx()) * int64(cache.bounds.Dy())
+			pixels, err := psdvector.Rasterize(ctx, mask, cache.bounds,
+				psdvector.Options{MaxWorkingBytes: plan.options.MaxWorkingBytes - plan.workingBytes + baseArea})
 			if err != nil {
 				return vectorComposeError(err, cache.path)
 			}

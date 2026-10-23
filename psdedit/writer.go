@@ -138,6 +138,9 @@ func (e *Editor) writeLocked(ctx context.Context, writer io.Writer, option SaveO
 		}
 		return ctx.Err()
 	}
+	if err := e.validateArtboardStructureLocked(ctx); err != nil {
+		return err
+	}
 	plan, err := e.prepareWriteLocked(ctx, option)
 	if err != nil {
 		return err

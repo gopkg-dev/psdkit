@@ -24,6 +24,9 @@ type Options struct {
 	MaxWorkingBytes        int64
 	MaxDepth, MaxDocuments int
 	ExternalResolver       psdfile.LinkedDocumentResolver
+	// ExternalRasterResolver supplies explicit PNG/JPEG/TIFF bytes for external raster records.
+	// When selected, its errors never fall back to ExternalResolver or cached layer pixels.
+	ExternalRasterResolver LinkedRasterResolver
 	CachedSpecialLayers    bool
 	// CachedTextLayers explicitly uses saved typography pixels without selecting other special-layer caches.
 	// Explicit live OpenType text keeps priority; placed contents and smart filters remain live.
@@ -99,6 +102,7 @@ func Render(ctx context.Context, source *psdfile.Document, options ...Options) (
 			configuration.MaxDocuments = provided.MaxDocuments
 		}
 		configuration.ExternalResolver = provided.ExternalResolver
+		configuration.ExternalRasterResolver = provided.ExternalRasterResolver
 		configuration.CachedSpecialLayers = provided.CachedSpecialLayers
 		configuration.CachedTextLayers = provided.CachedTextLayers
 		configuration.ApproximateVectorStroke = provided.ApproximateVectorStroke
@@ -149,7 +153,8 @@ func Render(ctx context.Context, source *psdfile.Document, options ...Options) (
 			TileOptions{MaxWorkingBytes: configuration.MaxWorkingBytes, MaxPixels: configuration.MaxWorkingBytes / 4,
 				MaxDepth: configuration.MaxDepth, MaxDocuments: configuration.MaxDocuments, Compose: configuration.Compose,
 				CachedSpecialLayers: configuration.CachedSpecialLayers, ExternalResolver: configuration.ExternalResolver,
-				CachedTextLayers: configuration.CachedTextLayers, ApproximateVectorStroke: configuration.ApproximateVectorStroke,
+				ExternalRasterResolver: configuration.ExternalRasterResolver,
+				CachedTextLayers:       configuration.CachedTextLayers, ApproximateVectorStroke: configuration.ApproximateVectorStroke,
 				ApproximateCustomWarp:       configuration.ApproximateCustomWarp,
 				ApproximatePlacedProjection: configuration.ApproximatePlacedProjection,
 				AssumeUntaggedSRGB:          configuration.AssumeUntaggedSRGB, CenteredJPEGChroma: configuration.CenteredJPEGChroma,
@@ -190,11 +195,16 @@ func (engine *renderer) render(ctx context.Context, source *psdfile.Document, de
 	defer delete(engine.active, source)
 	engine.documents++
 	startWorking := engine.working
+	externalRaster, err := engine.hasExternalRaster(ctx, source)
+	if err != nil {
+		return nil, err
+	}
 	liveFilterPolicy := engine.options.SmartFilters != nil &&
 		(engine.options.SmartFilters.ApproximateSurfaceBlur || engine.options.SmartFilters.ApproximateSmartSharpen ||
 			engine.options.SmartFilters.ApproximateBrightnessContrast || engine.options.SmartFilters.ApproximateHueSaturation)
 	if (engine.options.Compose.ApproximateDropShadow || engine.options.Compose.ApproximatePlacedColorOverlay ||
 		engine.options.ApproximatePlacedProjection ||
+		externalRaster ||
 		engine.options.ApproximateVectorStroke || engine.options.CachedTextLayers ||
 		engine.options.ApproximateCustomWarp || liveFilterPolicy || sourceHasArtboards(source)) &&
 		len(source.Layers) != 0 {
@@ -209,6 +219,7 @@ func (engine *renderer) render(ctx context.Context, source *psdfile.Document, de
 		settings := TileOptions{MaxWorkingBytes: available, MaxPixels: available / 4,
 			MaxDepth: engine.options.MaxDepth, MaxDocuments: engine.options.MaxDocuments,
 			ExternalResolver: engine.options.ExternalResolver, Compose: engine.options.Compose,
+			ExternalRasterResolver:      engine.options.ExternalRasterResolver,
 			ApproximatePlacedProjection: engine.options.ApproximatePlacedProjection,
 			CachedTextLayers:            engine.options.CachedTextLayers,
 			ApproximateVectorStroke:     engine.options.ApproximateVectorStroke,
@@ -346,7 +357,7 @@ func (engine *renderer) render(ctx context.Context, source *psdfile.Document, de
 	byID := make(map[string]psdfile.LinkedFileRecord)
 	ambiguous := make(map[string]bool)
 	for _, record := range linked {
-		if previous, exists := byID[record.ID]; exists && (previous.Kind != record.Kind || previous.Data != record.Data) {
+		if previous, exists := byID[record.ID]; exists && !sameLinkedContentRecord(previous, record) {
 			ambiguous[record.ID] = true
 		}
 		byID[record.ID] = record
@@ -420,12 +431,19 @@ func (engine *renderer) render(ctx context.Context, source *psdfile.Document, de
 			if err != nil {
 				return nil, err
 			}
-			format, err := source.LinkedRasterFormat(ctx, record)
-			if err != nil {
-				return nil, err
+			format := ""
+			if record.Kind == "liFD" {
+				format, err = source.LinkedRasterFormat(ctx, record)
+				if err != nil {
+					return nil, err
+				}
 			}
-			if record.Kind == "liFD" && format != "" {
-				prototype, err = engine.renderLinkedRaster(ctx, source, record, parentProfile, depth+1)
+			if record.Kind == "liFD" && format != "" || engine.resolvesExternalRaster(record) {
+				if record.Kind == "liFD" {
+					prototype, err = engine.renderLinkedRaster(ctx, source, record, parentProfile, depth+1)
+				} else {
+					prototype, err = engine.renderExternalRaster(ctx, source, record, parentProfile, depth+1)
+				}
 				if err != nil {
 					return nil, err
 				}

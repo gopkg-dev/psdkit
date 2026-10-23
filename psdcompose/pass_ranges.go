@@ -81,26 +81,72 @@ func singlePassRangeSource(layer *psdmodel.Layer) bool {
 	if layer == nil || layer.BlendMode != "pass" || (!layer.Group && layer.Children == nil) ||
 		len(layer.Children) != 1 || !composeCustomRanges(layer.BlendRanges) ||
 		composeCustomRanges(layer.BlendRanges[1:]) || composeOpacity(layer.FillOpacity) != 1 ||
-		!passRangeOrdinaryFlags(layer) || layer.VectorMask != nil || layer.VectorDensity != nil ||
-		layer.VectorFeather != nil || !passRangeSavedMask(layer.Mask) {
+		!passRangeOrdinaryFlags(layer) {
 		return false
 	}
 	child := layer.Children[0]
-	return child != nil && !child.Group && child.Children == nil && child.Pixels != nil &&
-		SupportedBlend(child.BlendMode) && composeOpacity(child.FillOpacity) == 1 &&
-		!composeCustomRanges(child.BlendRanges) && passRangeOrdinaryFlags(child) &&
-		child.Mask == nil && child.VectorMask == nil && child.VectorDensity == nil && child.VectorFeather == nil
+	if child == nil || child.Group || child.Children != nil || child.Pixels == nil ||
+		!SupportedBlend(child.BlendMode) || composeOpacity(child.FillOpacity) != 1 ||
+		composeCustomRanges(child.BlendRanges) || !passRangeOrdinaryFlags(child) {
+		return false
+	}
+	if normalizeBlend(child.BlendMode) == "norm" {
+		// Keep the existing Normal fallback stage unchanged; its rounding differs from the single-raster stage.
+		return layer.VectorMask == nil && layer.VectorDensity == nil && layer.VectorFeather == nil &&
+			passRangeSavedMask(layer.Mask) && child.Mask == nil && child.VectorMask == nil &&
+			child.VectorDensity == nil && child.VectorFeather == nil
+	}
+	return (passRangeSavedMask(layer.Mask) || passRangePixelMaskInactive(layer)) &&
+		passRangeVectorMaskInactive(layer) && passRangePixelMaskInactive(child) &&
+		passRangeVectorMaskInactive(child)
+}
+
+// passRangePixelMaskInactive accepts only absent or explicitly disabled known user-mask coverage.
+// Structural geometry and finite feather checks still run before capability selection.
+func passRangePixelMaskInactive(layer *psdmodel.Layer) bool {
+	mask := layer.Mask
+	if mask == nil {
+		return true
+	}
+	if !mask.Disabled {
+		return false
+	}
+	for _, issue := range mask.Unsupported {
+		// The parser attaches this legacy marker to the shared pixel-mask metadata block.
+		if issue != "暂不支持矢量蒙版羽化" || layer.VectorMask == nil || layer.VectorFeather == nil ||
+			*layer.VectorFeather <= 0 || !passRangeVectorMaskInactive(layer) {
+			return false
+		}
+	}
+	return true
+}
+
+// passRangeVectorMaskInactive ignores shared density/feather only when their known vector mask is disabled.
+// Orphaned parameters and unknown source semantics must not change the calibrated source-stage qualification.
+func passRangeVectorMaskInactive(layer *psdmodel.Layer) bool {
+	mask := layer.VectorMask
+	if mask == nil {
+		return layer.VectorDensity == nil && layer.VectorFeather == nil
+	}
+	return mask.Disabled && mask.Version == 3 && mask.Flags&^uint32(7) == 0 && len(mask.Unsupported) == 0
 }
 
 // passRangeOrdinaryFlags excludes advanced source behavior absent from the native single-child matrix.
 func passRangeOrdinaryFlags(layer *psdmodel.Layer) bool {
-	return !layer.Clipping && !layer.Background && layer.Effects == nil && layer.Adjustment == nil &&
+	return !layer.Clipping && !layer.Background && passRangeEffectsInactive(layer) && layer.Adjustment == nil &&
 		layer.FillColor == nil && layer.Gradient == nil && layer.Pattern == nil && layer.Placed == nil &&
 		layer.Knockout == psdmodel.KnockoutNone && len(layer.ChannelRestrictions) == 0 &&
 		len(layer.Unsupported) == 0 && (layer.TransparencyShapes == nil || *layer.TransparencyShapes) &&
 		(layer.BlendClipped == nil || *layer.BlendClipped) &&
 		(layer.BlendInterior == nil || !*layer.BlendInterior) &&
 		layer.MaskAsGlobal == nil && layer.VectorMaskAsGlobal == nil
+}
+
+// passRangeEffectsInactive accepts only a missing set or an explicitly disabled master visibility switch.
+// Individual disabled effects, zero opacity and unknown whole-set semantics retain their existing restrictions.
+func passRangeEffectsInactive(layer *psdmodel.Layer) bool {
+	set := layer.Effects
+	return set == nil || len(set.Unsupported) == 0 && (!set.Enabled || !set.EffectsVisible)
 }
 
 // passRangeSavedMask accepts the ordinary saved raster mask used by the native fixtures.

@@ -96,6 +96,7 @@ func WorkingEstimate(source *image.NRGBA, stack Stack, options ...Options) (Esti
 // Gaussian samples premultiplied encoded-RGB and alpha; Surface Blur and Smart Sharpen retain center alpha.
 // Spatial sampling clamps image edges and excludes hidden transparent colors; the source rectangle is retained.
 // Each approximation requires its explicit policy; Photoshop pixel parity is not claimed.
+// Validated Normal-blend spatial identity controls and plain master Lightness need no approximation policy.
 func Apply(ctx context.Context, source *image.NRGBA, stack Stack, options ...Options) (*image.NRGBA, error) {
 	return apply(ctx, source, stack, nil, options)
 }

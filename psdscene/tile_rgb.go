@@ -30,6 +30,7 @@ type rgbTileRenderer struct {
 	textIDs     []int
 	textPlan    []int64
 	placedPlans []placedTilePlan
+	prepared    *preparedPlacement
 }
 
 // RenderTile rebuilds an RGB8 source-layer window from independently decoded channel intersections.
@@ -56,6 +57,7 @@ func RenderTile(
 		working: int64(len(settings.OutputProfile)), legacy: renderer{
 			options: Options{MaxWorkingBytes: settings.MaxWorkingBytes, MaxDepth: settings.MaxDepth,
 				MaxDocuments: settings.MaxDocuments, ExternalResolver: settings.ExternalResolver, Compose: settings.Compose,
+				ExternalRasterResolver:      settings.ExternalRasterResolver,
 				ApproximatePlacedProjection: settings.ApproximatePlacedProjection,
 				CachedTextLayers:            settings.CachedTextLayers, ApproximateVectorStroke: settings.ApproximateVectorStroke,
 				ApproximateCustomWarp: settings.ApproximateCustomWarp,
@@ -475,6 +477,9 @@ func tileEffectHalo(layer *psdmodel.Layer) (int, error) {
 		if !effect.Enabled || effect.Opacity == 0 {
 			continue
 		}
+		if effect.Kind == psdeffects.ColorOverlay {
+			continue
+		}
 		amount := (math.Abs(effect.Distance)+effect.Size*3)*scale + 4
 		if math.IsNaN(amount) || math.IsInf(amount, 0) || amount < 0 || amount > 10_000 {
 			return 0, sceneError(psdfile.ErrLimit, "tile.effects", 0, "effect neighborhood exceeds bounded halo support")
@@ -506,7 +511,7 @@ func (engine *rgbTileRenderer) effectSourceWindow(layer *psdmodel.Layer) (image.
 	}
 	window := engine.window
 	for _, effect := range layer.Effects.Items {
-		if !effect.Enabled || effect.Opacity == 0 {
+		if !effect.Enabled || effect.Opacity == 0 || effect.Kind != psdeffects.DropShadow {
 			continue
 		}
 		bounds, err := psdeffects.DropShadowSourceBounds(engine.window, effect,
@@ -530,10 +535,20 @@ func (engine *rgbTileRenderer) approximateShadowSource(layer *psdmodel.Layer) bo
 	if !engine.settings.Compose.ApproximateDropShadow || !activeLayerEffects(layer) {
 		return false
 	}
+	shadow, overlay := false, false
 	for _, effect := range layer.Effects.Items {
-		if effect.Enabled && effect.Opacity != 0 && effect.Kind != psdeffects.DropShadow {
+		if !effect.Enabled || effect.Opacity == 0 {
+			continue
+		}
+		switch effect.Kind {
+		case psdeffects.DropShadow:
+			shadow = true
+		case psdeffects.ColorOverlay:
+			overlay = true
+		default:
 			return false
 		}
 	}
-	return true
+	return shadow && (!overlay || layer.Placed == nil &&
+		(layer.BlendMode == "" || layer.BlendMode == "normal" || layer.BlendMode == "norm"))
 }

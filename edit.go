@@ -8,7 +8,7 @@ import (
 )
 
 // Editor applies controlled overlays to an immutable source and writes PSD/PSB files.
-// SetFillOpacity and SetFillOpacityContext edit the common fill-opacity tag with the same source ownership.
+// Blend, clipping, Blend If, mask and advanced blending edits preserve the same source ownership.
 type Editor = psdedit.Editor
 
 // LayerID is a stable editing handle, independent of the physical record index and PSD lyid.
@@ -17,11 +17,23 @@ type LayerID = psdedit.LayerID
 // EditLayerInfo is an owned layer-tree view with bottom-to-top sibling order.
 type EditLayerInfo = psdedit.LayerInfo
 
+// AdvancedBlendingOptions selects optional advanced blending metadata changes.
+type AdvancedBlendingOptions = psdedit.AdvancedBlendingOptions
+
+// PixelMaskSettings describes editable properties of an existing pixel mask.
+type PixelMaskSettings = psdedit.PixelMaskSettings
+
 // SmartObjectInfo reports a placed layer's shared source and editable handle.
 type SmartObjectInfo = psdedit.SmartObjectInfo
 
 // SmartContentsOptions selects explicit source-color and custom-Warp policies for content replacement.
 type SmartContentsOptions = psdedit.SmartContentsOptions
+
+// SmartTransformOptions selects explicit source-color and projection policies for one placed instance.
+type SmartTransformOptions = psdedit.SmartTransformOptions
+
+// PatternFillEditOptions supplies accurate artwork when editing known pattern parameters outside live sampling.
+type PatternFillEditOptions = psdedit.PatternFillEditOptions
 
 // EditChanges reports revisions, unsaved changes and composite/structure changes relative to the source.
 type EditChanges = psdedit.Changes
@@ -47,7 +59,7 @@ type LinkedContentsUpdate = psdedit.LinkedContentsUpdate
 // LinkedContentsUpdateResolver supplies explicitly selected contents while preserving their external link.
 type LinkedContentsUpdateResolver = psdedit.LinkedContentsUpdateResolver
 
-// SmartFilterEditOptions supplies accurate owned-cache input for controlled filter parameter edits.
+// SmartFilterEditOptions selects automatic source rendering or accurate supplied artwork for filter parameter edits.
 type SmartFilterEditOptions = psdedit.SmartFilterEditOptions
 
 // EffectsEditOptions selects explicit rendering policies for controlled effect parameter edits.

@@ -28,6 +28,9 @@ func (engine *rgbTileRenderer) readProfile(ctx context.Context) (*sceneProfile, 
 func (engine *rgbTileRenderer) placement(
 	ctx context.Context, record psdfile.LayerRecord, layer *psdmodel.Layer,
 ) (psdfile.SmartObjectRecord, error) {
+	if engine.prepared != nil && engine.prepared.layer == layer {
+		return engine.prepared.placement, nil
+	}
 	var placement psdfile.SmartObjectRecord
 	if layer.Placed.Type != "raster" {
 		return placement, sceneError(psdfile.ErrUnsupported, "tile.smartObject.contents", record.Span.Offset,
@@ -87,8 +90,7 @@ func (engine *rgbTileRenderer) linkedRecords(ctx context.Context) error {
 	}
 	engine.linked = make(map[string]psdfile.LinkedFileRecord, len(view.Records))
 	for _, record := range view.Records {
-		if previous, exists := engine.linked[record.ID]; exists &&
-			(previous.Kind != record.Kind || previous.Data != record.Data) {
+		if previous, exists := engine.linked[record.ID]; exists && !sameLinkedContentRecord(previous, record) {
 			return sceneError(psdfile.ErrUnsupported, "tile.smartObject.links", record.Span.Offset,
 				"duplicate original content records are ambiguous")
 		}
@@ -103,6 +105,10 @@ func (engine *rgbTileRenderer) prototype(
 	if pixels := engine.contents[placement.SourceID]; pixels != nil {
 		return pixels, nil
 	}
+	if engine.prepared != nil && engine.prepared.contents != nil &&
+		engine.prepared.placement.SourceID == placement.SourceID {
+		return engine.preparedPrototype(ctx, placement)
+	}
 	if err := engine.linkedRecords(ctx); err != nil {
 		return nil, err
 	}
@@ -115,9 +121,12 @@ func (engine *rgbTileRenderer) prototype(
 	if err != nil {
 		return nil, err
 	}
-	format, err := engine.source.LinkedRasterFormat(ctx, record)
-	if err != nil {
-		return nil, err
+	format := ""
+	if record.Kind == "liFD" {
+		format, err = engine.source.LinkedRasterFormat(ctx, record)
+		if err != nil {
+			return nil, err
+		}
 	}
 	if engine.settings.ApproximateOpenTypeText != nil {
 		pixels, err := engine.openTypePrototype(ctx, record, format, profile)
@@ -135,6 +144,8 @@ func (engine *rgbTileRenderer) prototype(
 	var pixels *image.NRGBA
 	if record.Kind == "liFD" && format != "" {
 		pixels, err = engine.legacy.renderLinkedRaster(ctx, engine.source, record, profile, depth)
+	} else if engine.legacy.resolvesExternalRaster(record) {
+		pixels, err = engine.legacy.renderExternalRaster(ctx, engine.source, record, profile, depth)
 	} else {
 		var child *psdfile.Document
 		if record.Kind == "liFD" {
@@ -281,8 +292,9 @@ func (engine *rgbTileRenderer) preparePlaced(
 	placement, filters, plan, patch := compiled.placement, compiled.filters, compiled.projection, compiled.patch
 	geometryBytes, canvas, window, bounds := compiled.geometryBytes, compiled.canvas, compiled.window, compiled.bounds
 	if bounds.Empty() {
-		if (engine.settings.Compose.ApproximateDropShadow || engine.settings.Compose.ApproximatePlacedColorOverlay) &&
-			activeLayerEffects(layer) {
+		if engine.prepared != nil ||
+			(engine.settings.Compose.ApproximateDropShadow || engine.settings.Compose.ApproximatePlacedColorOverlay) &&
+				activeLayerEffects(layer) {
 			// Resolve and qualify live contents even when the proven projection/source intersection is empty.
 			prototype, err := engine.prototype(ctx, placement)
 			if err != nil {

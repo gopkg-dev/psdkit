@@ -122,14 +122,14 @@ func TestSmartFilterEditOwnsAccurateCacheAndSourceAwareSave(t *testing.T) {
 	}
 }
 
-func TestSmartFilterEditRejectsMissingPixelsCancellationAndInvalidFamilyAtomically(t *testing.T) {
+func TestSmartFilterEditRejectsMissingPolicyCancellationAndInvalidFamilyAtomically(t *testing.T) {
 	_, editor, stack, pixels := smartFilterNativeFixture(t)
 	original, err := editor.Changes()
 	if err != nil {
 		t.Fatal(err)
 	}
 	if err := editor.SetSmartFilterParameters(nil, 1, stack, SmartFilterEditOptions{}); !errors.Is(err, ErrUnsupported) {
-		t.Fatalf("missing accurate artwork: %v", err)
+		t.Fatalf("missing explicit live filter policy: %v", err)
 	}
 	ctx, cancel := context.WithCancel(context.Background())
 	cancel()

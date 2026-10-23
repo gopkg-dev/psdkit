@@ -247,10 +247,7 @@ func TestHueSaturationNativePlainMasterLightnessByteControls(t *testing.T) {
 		adjustment := Adjustment{Kind: HueSaturation, HueSaturation: parameters}
 		source := image.NewNRGBA(image.Rect(0, 0, 1, 1))
 		copy(source.Pix, fixture.input[:])
-		if _, err := Apply(nil, source, adjustment); !errors.Is(err, ErrUnsupported) {
-			t.Fatalf("plain lightness changed the default non-neutral rendering policy: %v", err)
-		}
-		pixels, err := Apply(nil, source, adjustment, Options{ApproximateHueSaturation: true})
+		pixels, err := Apply(nil, source, adjustment)
 		if err != nil {
 			t.Fatal(err)
 		}

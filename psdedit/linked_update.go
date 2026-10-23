@@ -11,7 +11,7 @@ import (
 	"github.com/gopkg-dev/psdkit/psdfile"
 )
 
-// LinkedContentsUpdate provides an external PSD/PSB's exact encoded contents and optional file timestamp.
+// LinkedContentsUpdate provides a supported external raster source's exact contents and optional file timestamp.
 // Data and Timestamp remain caller-owned and are copied before committing the edit.
 // Timestamp uses the retained calendar fields without inferring a filesystem path or timezone.
 // A nil Timestamp preserves the current editor value; a non-nil value requires linked-record version four or later.
@@ -20,7 +20,7 @@ type LinkedContentsUpdate struct {
 	Timestamp *psdfile.LinkedFileTimestamp
 }
 
-// LinkedContentsUpdateResolver reads an explicitly selected external PSD/PSB through caller-owned access.
+// LinkedContentsUpdateResolver reads an explicitly selected external raster source through caller-owned access.
 // The library does not open, create or overwrite any external path retained in the document.
 // To persist a changed external file, the caller writes Data through its own authorized storage workflow.
 // The supplied record and its spans describe the immutable input document, including on subsequent updates.
@@ -35,6 +35,14 @@ type LinkedContentsUpdateResolver func(context.Context, psdfile.LinkedFileRecord
 // Parent-document saving and external-file persistence are separate caller-controlled operations.
 func (e *Editor) UpdateLinkedContents(
 	ctx context.Context, id LayerID, resolver LinkedContentsUpdateResolver,
+) error {
+	return e.UpdateLinkedContentsWithOptions(ctx, id, resolver, SmartContentsOptions{})
+}
+
+// UpdateLinkedContentsWithOptions refreshes an external source with explicit source-color and Warp policies.
+// Paths and external-file persistence remain caller-controlled, with the same stale-edit protection.
+func (e *Editor) UpdateLinkedContentsWithOptions(
+	ctx context.Context, id LayerID, resolver LinkedContentsUpdateResolver, options SmartContentsOptions,
 ) error {
 	if ctx == nil {
 		ctx = context.Background()
@@ -68,7 +76,7 @@ func (e *Editor) UpdateLinkedContents(
 	if e.revision != revision || e.source != source {
 		return ErrStaleLinkedEdit
 	}
-	return e.replaceSmartContentsLocked(ctx, id, update.Data, false, &update)
+	return e.replaceSmartContentsWithOptionsLocked(ctx, id, update.Data, false, &update, options)
 }
 
 func (e *Editor) selectLinkedUpdateLocked(
@@ -138,8 +146,10 @@ func validateLinkedUpdate(
 		selected = &records[index]
 	}
 	if selected == nil || selected.Kind != "liFE" || selected.Version < 1 || selected.Version > 7 ||
-		(selected.FileType != "8BPS" && selected.FileType != "8BPB") {
-		return psdfile.LinkedFileRecord{}, editError(ErrUnsupported, "linked.update.source", "external PSD/PSB required")
+		!supportedSmartContentsType(selected.FileType) {
+		return psdfile.LinkedFileRecord{}, editError(
+			ErrUnsupported, "linked.update.source", "supported external raster required",
+		)
 	}
 	if timestamp != nil && (selected.Version < 4 || !validLinkedTimestamp(*timestamp)) {
 		return psdfile.LinkedFileRecord{}, editError(

@@ -10,7 +10,14 @@ import (
 func (engine *renderer) renderLinkedRaster(
 	ctx context.Context, source *psdfile.Document, record psdfile.LinkedFileRecord, destination *sceneProfile, depth int,
 ) (*image.NRGBA, error) {
-	if depth > engine.options.MaxDepth || engine.documents >= engine.options.MaxDocuments {
+	return engine.renderLinkedRasterLimited(ctx, source, record, destination, depth, source.Limits().MaxDecodePixels)
+}
+
+func (engine *renderer) renderLinkedRasterLimited(
+	ctx context.Context, source *psdfile.Document, record psdfile.LinkedFileRecord,
+	destination *sceneProfile, depth int, maxPixels int64,
+) (*image.NRGBA, error) {
+	if depth > engine.options.MaxDepth || engine.documents >= engine.options.MaxDocuments || maxPixels <= 0 {
 		return nil, sceneError(psdfile.ErrLimit, "smartObject.contents", record.Data.Offset,
 			"recursive content limits exceeded")
 	}
@@ -22,6 +29,7 @@ func (engine *renderer) renderLinkedRaster(
 	}
 	decoded, err := source.DecodeLinkedRaster(ctx, record, psdfile.LinkedRasterOptions{
 		MaxWorkingBytes: available, CenteredJPEGChroma: engine.options.CenteredJPEGChroma,
+		MaxPixels: min(maxPixels, source.Limits().MaxDecodePixels),
 	})
 	if err != nil {
 		return nil, err

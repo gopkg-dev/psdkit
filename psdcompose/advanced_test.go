@@ -137,8 +137,12 @@ func TestPassGroupNormalRangesIncludesOnlyCalibratedSources(t *testing.T) {
 		{name: "child tsly false", change: func(group *psdmodel.Layer) {
 			group.Children[0].TransparencyShapes = new(false)
 		}},
-		{name: "child effects", change: func(group *psdmodel.Layer) { group.Children[0].Effects = &psdeffects.Set{} }},
-		{name: "group effects", change: func(group *psdmodel.Layer) { group.Effects = &psdeffects.Set{} }},
+		{name: "child effects", change: func(group *psdmodel.Layer) {
+			group.Children[0].Effects = &psdeffects.Set{Enabled: true, EffectsVisible: true}
+		}},
+		{name: "group effects", change: func(group *psdmodel.Layer) {
+			group.Effects = &psdeffects.Set{Enabled: true, EffectsVisible: true}
+		}},
 		{name: "adjustment", change: func(group *psdmodel.Layer) {
 			group.Children[0].Adjustment = &psdadjust.Adjustment{}
 		}},

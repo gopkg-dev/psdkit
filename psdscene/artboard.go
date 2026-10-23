@@ -6,6 +6,7 @@ import (
 	"image"
 	"math"
 
+	"github.com/gopkg-dev/psdkit/internal/psdartboard"
 	"github.com/gopkg-dev/psdkit/psdcompose"
 	"github.com/gopkg-dev/psdkit/psdfile"
 	"github.com/gopkg-dev/psdkit/psdmodel"
@@ -97,6 +98,16 @@ func renderArtboardSet(
 	if err != nil {
 		return nil, err
 	}
+	for _, record := range views {
+		if record.Data == nil {
+			return nil, artboardRenderError(psdfile.ErrUnsupported, "artboard.metadata", 0,
+				"unrecognized or ambiguous artboard metadata")
+		}
+		err := budget.reserve(record.Data.MetadataBytes+256, "artboard.metadata", record.Data.Block.Data.Offset)
+		if err != nil {
+			return nil, err
+		}
+	}
 	boards, err := artboardRenderMetadata(views, source)
 	if err != nil {
 		return nil, err
@@ -121,12 +132,6 @@ func renderArtboardSet(
 			boards = boards[index : index+1]
 		}
 	}
-	for _, record := range views {
-		err := budget.reserve(record.Data.MetadataBytes+256, "artboard.metadata", record.Data.Block.Data.Offset)
-		if err != nil {
-			return nil, err
-		}
-	}
 	if err := artboardSnapshotBudget(ctx, source, &budget); err != nil {
 		return nil, err
 	}
@@ -141,7 +146,7 @@ func renderArtboardSet(
 	}
 	issues := snapshot.BlockingIssues[:0]
 	for _, issue := range snapshot.BlockingIssues {
-		if issue != "首版暂不支持画板文档" {
+		if issue != psdartboard.Issue {
 			issues = append(issues, issue)
 		}
 	}
@@ -203,34 +208,16 @@ func renderOneArtboard(
 	if err := budget.reserve(outputBytes, "artboard.output", board.Block.Data.Offset); err != nil {
 		return ArtboardImage{}, err
 	}
-	transient := int64(512) + int64(len(group.Children)+1)*8
-	if *board.BackgroundType != 3 {
-		transient += outputBytes + 512
+	window := image.Rect(0, 0, int(snapshot.Width), int(snapshot.Height))
+	ownedGroup, transient, err := psdartboard.Prepare(ctx, group, board, window,
+		configuration.MaxWorkingBytes-budget.working)
+	if err != nil {
+		return ArtboardImage{}, err
 	}
 	if err := budget.reserve(transient, "artboard.background", board.Block.Data.Offset); err != nil {
 		return ArtboardImage{}, err
 	}
 	defer func() { budget.working -= transient }()
-	ownedGroup := *group
-	if *board.BackgroundType != 3 {
-		background := image.NewNRGBA(bounds)
-		color := artboardBackgroundColor(board)
-		for y := range bounds.Dy() {
-			if err := ctx.Err(); err != nil {
-				return ArtboardImage{}, err
-			}
-			for x := range bounds.Dx() {
-				offset := y*background.Stride + x*4
-				copy(background.Pix[offset:offset+3], color[:])
-				background.Pix[offset+3] = 255
-			}
-		}
-		children := make([]*psdmodel.Layer, len(group.Children)+1)
-		children[0] = &psdmodel.Layer{Name: "Artboard background", Bounds: bounds,
-			Pixels: background, BlendMode: "normal"}
-		copy(children[1:], group.Children)
-		ownedGroup.Children = children
-	}
 	remaining := configuration.MaxWorkingBytes - budget.working
 	if remaining <= 0 {
 		return ArtboardImage{}, artboardRenderError(psdfile.ErrLimit, "artboard.composite", 0,
@@ -241,7 +228,7 @@ func renderOneArtboard(
 		compose.MaxWorkingBytes = remaining
 	}
 	boardDocument := *snapshot
-	boardDocument.Layers = []*psdmodel.Layer{&ownedGroup}
+	boardDocument.Layers = []*psdmodel.Layer{ownedGroup}
 	canvas, err := psdcompose.Render(ctx, &boardDocument, compose)
 	if err != nil {
 		return ArtboardImage{}, artboardComposeError(err)
@@ -261,152 +248,11 @@ func renderOneArtboard(
 func artboardRenderMetadata(views []psdfile.ArtboardRecord, source *psdfile.Document) (
 	[]psdfile.ArtboardRecord, error,
 ) {
-	var document *psdfile.ArtboardData
-	var boards []psdfile.ArtboardRecord
-	seen := make(map[int]bool)
-	for _, view := range views {
-		if view.Data == nil || len(view.Data.Unsupported) != 0 {
-			return nil, artboardRenderError(psdfile.ErrUnsupported, "artboard.metadata", 0,
-				"unrecognized or ambiguous artboard metadata")
-		}
-		if view.LayerIndex >= 0 {
-			if seen[view.LayerIndex] || view.LayerIndex >= len(source.Layers) || view.Data.Block.Key == "artd" {
-				return nil, artboardRenderError(psdfile.ErrUnsupported, "artboard.count", view.Data.Block.Data.Offset,
-					"duplicate or ambiguous per-layer artboard descriptors")
-			}
-			seen[view.LayerIndex] = true
-			if err := artboardRectangleMetadata(view.Data, source); err != nil {
-				return nil, err
-			}
-			boards = append(boards, view)
-		} else {
-			if document != nil || view.Data.Block.Key != "artd" {
-				return nil, artboardRenderError(psdfile.ErrUnsupported, "artboard.document", view.Data.Block.Data.Offset,
-					"one document-level artd descriptor is required")
-			}
-			document = view.Data
-		}
-	}
-	if len(boards) == 0 || document == nil {
-		return nil, artboardRenderError(psdfile.ErrUnsupported, "artboard.rectangle", 0,
-			"explicit board and document-level metadata are required")
-	}
-	if err := artboardDocumentMetadata(document, len(boards)); err != nil {
-		return nil, err
-	}
-	return boards, nil
-}
-
-func artboardRectangleMetadata(board *psdfile.ArtboardData, source *psdfile.Document) error {
-	if board.Rect == nil || board.BackgroundType == nil {
-		return artboardRenderError(psdfile.ErrUnsupported, "artboard.rectangle", board.Block.Data.Offset,
-			"explicit rectangle and background metadata are required")
-	}
-	for _, value := range []float64{board.Rect.Left, board.Rect.Top, board.Rect.Right, board.Rect.Bottom} {
-		if math.IsNaN(value) || math.IsInf(value, 0) || math.Trunc(value) != value || value < 0 ||
-			value > psdmodel.MaxDimension {
-			return artboardRenderError(psdfile.ErrUnsupported, "artboard.rectangle", board.Block.Data.Offset,
-				"saved artboard rectangles must have nonnegative integer coordinates")
-		}
-	}
-	if board.Rect.Right <= board.Rect.Left || board.Rect.Bottom <= board.Rect.Top ||
-		board.Rect.Right > float64(source.Header.Width) || board.Rect.Bottom > float64(source.Header.Height) {
-		return artboardRenderError(psdfile.ErrUnsupported, "artboard.rectangle", board.Block.Data.Offset,
-			"saved artboard rectangle must lie inside the saved canvas")
-	}
-	if *board.BackgroundType < 1 || *board.BackgroundType > 4 ||
-		*board.BackgroundType == 4 && board.BackgroundRGB == nil {
-		return artboardRenderError(psdfile.ErrUnsupported, "artboard.background", board.Block.Data.Offset,
-			"unrecognized background type or missing custom RGB color")
-	}
-	for _, entry := range board.UnknownEntries {
-		if entry.Key != "guideIndeces" {
-			return artboardRenderError(psdfile.ErrUnsupported, "artboard.parameter", entry.Data.Offset,
-				"unrecognized artboard parameter")
-		}
-	}
-	return nil
-}
-
-func artboardDocumentMetadata(document *psdfile.ArtboardData, boards int) error {
-	count, origin, expansion := false, false, false
-	var originPoint, expansionPoint [2]float64
-	for _, entry := range document.OrderedEntries {
-		switch entry.Key {
-		case "Cnt ":
-			value, valid := entry.Value.(int32)
-			count = valid && int64(value) == int64(boards)
-		case "origin", "autoExpandOffset":
-			point, valid := entry.Value.(*psdfile.Descriptor)
-			if !valid || len(point.Entries) != 2 {
-				return artboardRenderError(psdfile.ErrUnsupported, "artboard.origin", entry.Data.Offset,
-					"unrecognized saved artboard origin")
-			}
-			seen, values := [2]bool{}, [2]float64{}
-			for _, component := range point.Entries {
-				value, valid := component.Value.(float64)
-				coordinate := 0
-				if component.Key == "Vrtc" {
-					coordinate = 1
-				}
-				if !valid || math.IsNaN(value) || math.IsInf(value, 0) || math.Trunc(value) != value ||
-					math.Abs(value) > psdmodel.MaxDimension || seen[coordinate] ||
-					component.Key != "Hrzn" && component.Key != "Vrtc" {
-					return artboardRenderError(psdfile.ErrUnsupported, "artboard.origin", component.Data.Offset,
-						"saved origin must have bounded integer horizontal and vertical components")
-				}
-				seen[coordinate], values[coordinate] = true, value
-			}
-			if entry.Key == "origin" {
-				origin, originPoint = true, values
-			} else {
-				expansion, expansionPoint = true, values
-			}
-		case "autoExpandEnabled", "autoNestEnabled", "autoPositionEnabled", "shrinkwrapOnSaveEnabled":
-			if _, valid := entry.Value.(bool); !valid {
-				return artboardRenderError(psdfile.ErrUnsupported, "artboard.document", entry.Data.Offset,
-					"unrecognized artboard document option")
-			}
-		case "docDefaultNewArtboardBackgroundColor", "docDefaultNewArtboardBackgroundType":
-			// Retained defaults apply to newly created boards, not this saved board's background.
-		default:
-			return artboardRenderError(psdfile.ErrUnsupported, "artboard.document", entry.Data.Offset,
-				"unrecognized document-level artboard parameter")
-		}
-	}
-	if !count || !origin || !expansion || originPoint != expansionPoint {
-		return artboardRenderError(psdfile.ErrUnsupported, "artboard.document", document.Block.Data.Offset,
-			"explicit matching board count and saved origin metadata are required")
-	}
-	return nil
+	return psdartboard.ValidateMetadata(views, source)
 }
 
 func artboardRenderLayer(layer *psdmodel.Layer, offset int64) error {
-	if layer == nil || !layer.Group {
-		return artboardRenderError(psdfile.ErrUnsupported, "artboard.group", offset,
-			"artboard metadata must identify a group")
-	}
-	if layer.Hidden {
-		return nil
-	}
-	if layer.Mask != nil || layer.VectorMask != nil || layer.Clipping ||
-		layer.FillColor != nil || layer.Adjustment != nil || layer.Gradient != nil || layer.Pattern != nil ||
-		layer.PatternTile != nil || layer.Effects != nil || layer.Placed != nil || len(layer.Unsupported) != 0 {
-		return artboardRenderError(psdfile.ErrUnsupported, "artboard.layer", offset,
-			"artboard group has unsupported own semantics")
-	}
-	for _, blend := range layer.BlendRanges {
-		full := psdmodel.BlendSlider{WhiteLow: 255, WhiteHigh: 255}
-		if blend.Source != full || blend.Destination != full {
-			return artboardRenderError(psdfile.ErrUnsupported, "artboard.blendIf", offset, "artboard Blend If is not calibrated")
-		}
-	}
-	if layer.BlendMode != "normal" && layer.BlendMode != "norm" && layer.BlendMode != "pass" ||
-		layer.Opacity != nil && *layer.Opacity != 1 || layer.FillOpacity != nil && *layer.FillOpacity != 1 {
-		return artboardRenderError(psdfile.ErrUnsupported, "artboard.group", offset,
-			"artboard group must use normal or pass-through blending at full opacity and fill")
-	}
-	return nil
+	return psdartboard.ValidateLayer(layer, offset)
 }
 
 func artboardSnapshotBudget(ctx context.Context, source *psdfile.Document, budget *renderer) error {
@@ -475,19 +321,6 @@ func artboardSnapshotBudget(ctx context.Context, source *psdfile.Document, budge
 		}
 	}
 	return nil
-}
-
-func artboardBackgroundColor(board *psdfile.ArtboardData) [3]byte {
-	if *board.BackgroundType == 1 {
-		return [3]byte{255, 255, 255}
-	}
-	var result [3]byte
-	if *board.BackgroundType == 4 {
-		for component, value := range *board.BackgroundRGB {
-			result[component] = byte(math.Floor(value*255 + 0.5))
-		}
-	}
-	return result
 }
 
 func artboardComposeError(err error) error {

@@ -227,7 +227,7 @@ func extendedEncodedSource(t *testing.T, version uint16) (*Document, AdditionalB
 	return source, block, stack
 }
 
-func TestSmartFilterExtendedPSDPSBEncoderPreservesAndRefusesUnsupportedEdits(t *testing.T) {
+func TestSmartFilterExtendedPSDPSBEncoderPreservesAndEditsKnownControls(t *testing.T) {
 	for _, version := range []uint16{1, 2} {
 		t.Run(map[uint16]string{1: "PSD", 2: "PSB"}[version], func(t *testing.T) {
 			source, block, view := extendedEncodedSource(t, version)
@@ -270,8 +270,14 @@ func TestSmartFilterExtendedPSDPSBEncoderPreservesAndRefusesUnsupportedEdits(t *
 				requested.Filters = append([]psdfilter.Filter(nil), stack.Filters...)
 				change(&requested)
 				encoded, err := source.EncodeSmartFilterParameters(nil, block, requested)
-				if !errors.Is(err, ErrUnsupported) || encoded != nil {
-					t.Fatalf("control edit %d was silently accepted: %v", index, err)
+				if index == 4 || index == 5 {
+					if !errors.Is(err, ErrUnsupported) || encoded != nil {
+						t.Fatalf("fixed sharpen mode edit %d was accepted: %v", index, err)
+					}
+					continue
+				}
+				if err != nil || bytes.Equal(encoded, before) {
+					t.Fatalf("known control edit %d was not encoded: %v", index, err)
 				}
 			}
 			requested := stack

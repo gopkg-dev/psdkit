@@ -135,7 +135,7 @@ func (e *Editor) writeLayerLocked(
 		payload.addPart(channel.part)
 	}
 	blend := original.BlendMode
-	opacity, flags := original.Opacity, original.Flags
+	opacity, flags, clipping := original.Opacity, original.Flags, original.Clipping
 	if layer.sourceIndex < 0 {
 		if node.group && !layer.end {
 			blend = "pass"
@@ -157,9 +157,20 @@ func (e *Editor) writeLayerLocked(
 			}
 		}
 	}
+	if !layer.end {
+		if node.blendModeChanged {
+			blend = node.blendMode
+		}
+		if node.clippingChanged {
+			clipping = 0
+			if node.clipping {
+				clipping = 1
+			}
+		}
+	}
 	header = append(header, original.BlendSignature...)
 	header = append(header, blend...)
-	header = append(header, opacity, original.Clipping, flags, original.Filler)
+	header = append(header, opacity, clipping, flags, original.Filler)
 	record.bytes(header)
 	record.length(4, extra.size, "save.layer.extra")
 	record.append(extra)
@@ -218,6 +229,14 @@ func (e *Editor) writeChannelsLocked(
 		}
 		maps.Copy(replacements, node.planes)
 	}
+	if !layer.end && node.pixelMaskChange != nil {
+		change := node.pixelMaskChange
+		if change.removed {
+			delete(replacements, change.channelID)
+		} else if change.plane != nil {
+			replacements[change.channelID] = *change.plane
+		}
+	}
 	seen := make(map[int16]bool)
 	channels := make([]writerChannel, 0, len(original.Channels)+len(replacements))
 	appendChanged := func(plane psdfile.Plane) error {
@@ -253,6 +272,17 @@ func (e *Editor) writeChannelsLocked(
 		return nil
 	}
 	for _, channel := range original.Channels {
+		if !layer.end {
+			var retained bool
+			channel, retained = effectiveSourceChannel(node, channel)
+			if !retained {
+				continue
+			}
+		}
+		if !layer.end && node.pixelMaskChange != nil && node.pixelMaskChange.removed &&
+			channel.ID == node.pixelMaskChange.channelID {
+			continue
+		}
 		seen[channel.ID] = true
 		if plane, exists := replacements[channel.ID]; exists {
 			if err := appendChanged(plane); err != nil {
@@ -316,7 +346,9 @@ func (e *Editor) writeExtraLocked(limit int64, layer writeLayer, original psdfil
 		linkedChanged = linkedChanged || e.linkedBlockChangedLocked(block)
 	}
 	if layer.sourceIndex >= 0 && (layer.end || !node.nameChanged) && original.Divider == divider && !linkedChanged &&
-		(layer.end || len(node.additional) == 0) && (layer.end || !node.fillOpacityChanged) {
+		(layer.end || len(node.additional) == 0) && (layer.end || !node.fillOpacityChanged) &&
+		(layer.end || !node.blendRangesChanged) && (layer.end || node.maskData == nil) &&
+		(layer.end || node.advancedBlending == nil) && (layer.end || node.vectorMaskChange == nil) {
 		plan.original(original.Extra)
 		return plan, plan.err
 	}
@@ -326,26 +358,55 @@ func (e *Editor) writeExtraLocked(limit int64, layer writeLayer, original psdfil
 		name, id = "</Layer group>", node.endPSDID
 	}
 	if layer.sourceIndex < 0 {
-		plan.bytes(make([]byte, 8))
+		if !layer.end && node.maskData != nil {
+			plan.bytes(node.maskData)
+		} else {
+			plan.bytes(make([]byte, 4))
+		}
+		if !layer.end && node.blendRangesChanged {
+			plan.bytes(node.blendRangesData)
+		} else {
+			plan.bytes(make([]byte, 4))
+		}
 		plan.bytes(writerPascal(name))
 		plan.bytes(writerAdditional("8BIM", "luni", 4, writerUnicode(name)))
 		plan.bytes(writerAdditional("8BIM", "lyid", 4, binary.BigEndian.AppendUint32(nil, id)))
 		if divider != 0 {
-			plan.bytes(writerAdditional("8BIM", "lsct", 4, binary.BigEndian.AppendUint32(nil, divider)))
+			data := binary.BigEndian.AppendUint32(nil, divider)
+			if !layer.end && node.blendModeChanged {
+				data = append(data, []byte("8BIM"+node.blendMode)...)
+			}
+			plan.bytes(writerAdditional("8BIM", "lsct", 4, data))
+		}
+		if !layer.end {
+			appendNewVectorMask(&plan, node, original)
+			appendAdvancedBlendingLocked(&plan, node)
 		}
 		if node.fillOpacityChanged && !layer.end {
 			plan.bytes(writerAdditional("8BIM", "iOpa", 4, []byte{node.fillOpacity, 0, 0, 0}))
 		}
 		return plan, plan.err
 	}
-	plan.original(original.MaskData)
-	plan.original(original.BlendRanges)
+	if !layer.end && node.maskData != nil {
+		plan.bytes(node.maskData)
+	} else {
+		plan.original(original.MaskData)
+	}
+	if !layer.end && node.blendRangesChanged {
+		plan.bytes(node.blendRangesData)
+	} else {
+		plan.original(original.BlendRanges)
+	}
 	if node.nameChanged && !layer.end {
 		plan.bytes(writerPascal(name))
 	} else {
 		plan.original(original.NameData)
 	}
 	position := original.NameData.Offset + original.NameData.Length
+	if !layer.end {
+		appendNewVectorMask(&plan, node, original)
+		appendAdvancedBlendingLocked(&plan, node)
+	}
 	if node.fillOpacityChanged && !layer.end && node.fillOpacityAdded {
 		// Keep the original final opaque block at the end; some sources use uncounted trailing alignment.
 		plan.bytes(writerAdditional("8BIM", "iOpa", 4, []byte{node.fillOpacity, 0, 0, 0}))
@@ -355,6 +416,17 @@ func (e *Editor) writeExtraLocked(limit int64, layer writeLayer, original psdfil
 		fillSeen = fillSeen || block.Key == "iOpa"
 		if block.Span.Offset > position {
 			plan.original(psdfile.Span{Offset: position, Length: block.Span.Offset - position})
+		}
+		if !layer.end && node.vectorMaskChange != nil && (block.Key == "vmsk" || block.Key == "vsms") {
+			if !node.vectorMaskChange.removed {
+				data := node.vectorMaskChange.data
+				plan.bytes([]byte(block.Signature + block.Key))
+				plan.length(block.LengthWidth, int64(len(data)), "save.layer.vectorMask")
+				plan.bytes(data)
+				writerAppendPadding(&plan, block.Padding, writerReplacementPadding(int64(len(data)), false))
+			}
+			position = block.Span.Offset + block.Span.Length
+			continue
 		}
 		if data, changed := node.additional[block.Span.Offset]; changed && !layer.end {
 			plan.bytes([]byte(block.Signature + block.Key))

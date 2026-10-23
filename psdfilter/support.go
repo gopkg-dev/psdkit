@@ -62,20 +62,20 @@ func validateFilter(filter Filter, configuration Options) (int, error) {
 	}
 	switch filter.Kind {
 	case GaussianBlur:
-		if !configuration.ApproximateGaussian {
-			return 0, filterError(ErrUnsupported, "gaussian", "an explicit Gaussian approximation policy is required")
-		}
 		if filter.Radius > 250 {
 			return 0, filterError(ErrLimit, "gaussian.radius", "radius exceeds the bounded RGB8 filter limit")
 		}
 		if filter.Adjustment != nil {
 			return 0, filterError(ErrInvalid, "gaussian", "color controls do not belong to this algorithm")
 		}
+		if filter.Radius == 0 {
+			return 0, nil
+		}
+		if !configuration.ApproximateGaussian {
+			return 0, filterError(ErrUnsupported, "gaussian", "an explicit Gaussian approximation policy is required")
+		}
 		return gaussianSupportRadius(filter.Radius), nil
 	case SurfaceBlur:
-		if !configuration.ApproximateSurfaceBlur {
-			return 0, filterError(ErrUnsupported, "surfaceBlur", "an explicit Surface Blur approximation policy is required")
-		}
 		if !finite(filter.Threshold) || filter.Threshold < 0 || filter.Threshold > 255 {
 			return 0, filterError(ErrInvalid, "surfaceBlur.threshold", "threshold must be zero through 255")
 		}
@@ -88,11 +88,11 @@ func validateFilter(filter Filter, configuration Options) (int, error) {
 		if filter.Radius == 0 || filter.Threshold == 0 {
 			return 0, nil
 		}
+		if !configuration.ApproximateSurfaceBlur {
+			return 0, filterError(ErrUnsupported, "surfaceBlur", "an explicit Surface Blur approximation policy is required")
+		}
 		return int(math.Ceil(filter.Radius)), nil
 	case SmartSharpen:
-		if !configuration.ApproximateSmartSharpen {
-			return 0, filterError(ErrUnsupported, "smartSharpen", "an explicit Smart Sharpen approximation policy is required")
-		}
 		if !finite(filter.Amount) || filter.Amount < 0 || filter.Amount > 5 ||
 			!finite(filter.NoiseReduction) || filter.NoiseReduction < 0 || filter.NoiseReduction > 1 {
 			return 0, filterError(ErrInvalid, "smartSharpen", "amount or noise reduction is outside its bounded range")
@@ -108,6 +108,9 @@ func validateFilter(filter Filter, configuration Options) (int, error) {
 		}
 		if filter.Radius == 0 || filter.Amount == 0 {
 			return 0, nil
+		}
+		if !configuration.ApproximateSmartSharpen {
+			return 0, filterError(ErrUnsupported, "smartSharpen", "an explicit Smart Sharpen approximation policy is required")
 		}
 		return int(math.Ceil(filter.Radius + .5)), nil
 	case BrightnessContrast, HueSaturation:

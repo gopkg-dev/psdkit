@@ -9,6 +9,8 @@ import (
 // Render repeats a caller-immutable straight NRGBA tile into independently owned document pixels.
 // Axis sampling supports exact repeats at 100 percent, periodic box reduction at 50 percent,
 // and origin-anchored straight-RGBA interpolation at 200 percent, all with integer document-pixel phase.
+// Any exactly represented whole-turn angle is equivalent to zero.
+// A single-pixel tile is constant for every finite positive scale and finite angle and phase.
 // No source pixel, descriptor parameter or ICC profile is changed or retained.
 func Render(
 	ctx context.Context, tile *image.NRGBA, fill Fill, documentBounds image.Rectangle, options ...Options,
@@ -58,6 +60,9 @@ func Render(
 		return nil, patternError(ErrLimit, "output", "owned output exceeds pixel or working budgets")
 	}
 	result := image.NewNRGBA(output)
+	if singlePixelTile(tile) {
+		return renderSinglePixelPattern(ctx, result, tile)
+	}
 	if fill.Scale != 100 {
 		return renderScaledPattern(ctx, result, tile, fill)
 	}
@@ -81,7 +86,7 @@ func Render(
 	return result, nil
 }
 
-// Validate checks tile ownership bounds and the verified axis sampling subset without allocating output pixels.
+// Validate checks tile ownership bounds and the axis or single-pixel subset without allocating output pixels.
 // It does not read or alter caller-owned samples and never prints the opaque fill ID.
 func Validate(tile *image.NRGBA, fill Fill) error {
 	if err := validateTile(tile); err != nil {
@@ -90,12 +95,15 @@ func Validate(tile *image.NRGBA, fill Fill) error {
 	if !finite(fill.Scale) || fill.Scale <= 0 || !finite(fill.Angle) || !finite(fill.Phase.X) || !finite(fill.Phase.Y) {
 		return patternError(ErrInvalid, "fill", "scale, angle and phase must be finite")
 	}
+	if len(fill.Unsupported) != 0 {
+		return patternError(ErrUnsupported, "fill", "pattern contains unknown sampling semantics")
+	}
+	if singlePixelTile(tile) {
+		return nil
+	}
 	scaleSupported := fill.Scale == 50 || fill.Scale == 100 || fill.Scale == 200
 	angleSupported := math.Mod(fill.Angle, 360) == 0
-	if fill.Scale != 100 {
-		angleSupported = fill.Angle == 0
-	}
-	if len(fill.Unsupported) != 0 || !scaleSupported || !angleSupported ||
+	if !scaleSupported || !angleSupported ||
 		fill.Phase.X != math.Trunc(fill.Phase.X) || fill.Phase.Y != math.Trunc(fill.Phase.Y) {
 		return patternError(ErrUnsupported, "fill", "pattern sampling semantics are outside the verified axis subset")
 	}

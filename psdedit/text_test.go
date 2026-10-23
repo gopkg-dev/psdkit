@@ -210,7 +210,6 @@ func TestSetTextContentRejectsUnsafeFamiliesAndFailuresAtomically(t *testing.T) 
 		{name: "missing cache", text: "new", kind: ErrUnsupported},
 		{name: "modern private state", global: compositeFixtureTag("Txt2", []byte("unknown")),
 			text: "new", pixels: pixels, kind: ErrUnsupported},
-		{name: "non Latin", text: "中文", pixels: pixels, kind: ErrUnsupported},
 		{name: "invalid UTF8", text: string([]byte{0xff}), pixels: pixels, kind: ErrInvalidEdit},
 		{name: "NUL", text: "bad\x00", pixels: pixels, kind: ErrUnsupported},
 		{name: "bad cache", text: "new", pixels: &image.NRGBA{Rect: image.Rect(0, 0, 1, 1)}, kind: ErrInvalidEdit},

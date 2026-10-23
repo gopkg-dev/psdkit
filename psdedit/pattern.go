@@ -15,12 +15,32 @@ import (
 	"github.com/gopkg-dev/psdkit/psdpattern"
 )
 
-// SetPatternFill changes an existing PtFl layer's local pattern reference or integer document phase.
-// Only uniquely retained RGB8 tiles at 50, 100 or 200 percent scale and zero angle are editable.
+// PatternFillEditOptions supplies accurate layer artwork for known pattern parameters outside verified sampling.
+// Pixels contains straight-alpha RGB8 samples before layer opacity, masks and effects, in current layer bounds.
+// The editor owns a copy and validates geometry, not agreement with Photoshop's pattern sampling.
+type PatternFillEditOptions struct {
+	Pixels *image.NRGBA
+}
+
+// SetPatternFill changes an existing PtFl layer's local pattern reference or sampling controls.
+// RGB8 tiles support 50, 100 or 200 percent scale, whole-turn angles and bounded integer document phase.
+// Single-pixel tiles support every finite positive scale and finite angle and phase.
+// Known source scale, angle and phase controls may be replaced even when their original sampling is unsupported.
 // Descriptor encodings, original entry order and pattern pixel blocks remain unchanged.
 // Recognized zero descriptor alignment is regenerated inside the declared payload for Photoshop compatibility.
 // The editor never searches external files or application preset libraries.
 func (e *Editor) SetPatternFill(ctx context.Context, id LayerID, fill psdpattern.Fill) error {
+	return e.SetPatternFillWithOptions(ctx, id, &fill, PatternFillEditOptions{})
+}
+
+// SetPatternFillWithOptions edits an existing local RGB8 pattern fill and optionally replaces its saved raster.
+// With Pixels, positive finite scales and finite angles are editable without enabling their live sampling.
+// Phase remains integral and bounded, source descriptor layouts and local pattern references remain qualified.
+// Pixels must cover the current layer bounds exactly; saving an unsupported live fill needs an explicit composite.
+// With no Pixels, the same strict sampling scope as SetPatternFill applies.
+func (e *Editor) SetPatternFillWithOptions(
+	ctx context.Context, id LayerID, requested *psdpattern.Fill, options PatternFillEditOptions,
+) error {
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -35,7 +55,15 @@ func (e *Editor) SetPatternFill(ctx context.Context, id LayerID, fill psdpattern
 	if err := ctx.Err(); err != nil {
 		return err
 	}
-	if err := validatePatternEdit(fill); err != nil {
+	if requested == nil {
+		return editError(ErrInvalidEdit, "layers.pattern", "pattern parameters are required")
+	}
+	fill := *requested
+	validate := validatePatternEditSource
+	if options.Pixels != nil {
+		validate = validatePatternEditMetadata
+	}
+	if err := validate(fill); err != nil {
 		return err
 	}
 	node, _, _, err := e.findNodeLocked(id)
@@ -62,12 +90,27 @@ func (e *Editor) SetPatternFill(ctx context.Context, id LayerID, fill psdpattern
 	if !found {
 		return editError(ErrUnsupported, "layers.pattern", "layer has no original pattern descriptor")
 	}
-	if node.pattern != nil && reflect.DeepEqual(fill, *node.pattern) {
-		return nil
+	if options.Pixels == nil && node.pattern != nil && reflect.DeepEqual(fill, *node.pattern) {
+		if err := psdpattern.Validate(node.patternTile, fill); err != nil {
+			return patternEditError(err)
+		}
+		return ctx.Err()
 	}
 	limits := e.source.Limits()
 	peakRetained := e.ownedBytesLocked(nil)
 	available := limits.MaxDecodeBytes - peakRetained
+	pixelBytes := int64(0)
+	if options.Pixels != nil {
+		pixelBytes, err = e.patternEditPixelBytes(node, options.Pixels, available)
+		if err != nil {
+			return err
+		}
+		available -= pixelBytes
+		if node.pattern != nil && reflect.DeepEqual(fill, *node.pattern) && node.pixels != nil &&
+			textEditPixelsEqual(ctx, node.pixels, options.Pixels) {
+			return ctx.Err()
+		}
+	}
 	viewBudget := min(limits.MaxMetadataBytes, available/8)
 	if viewBudget <= 0 || block.Data.Length > viewBudget/8 ||
 		int64(len(fill.ID))+int64(len(fill.Name)) > available/32 {
@@ -77,7 +120,7 @@ func (e *Editor) SetPatternFill(ctx context.Context, id LayerID, fill psdpattern
 	if err != nil {
 		return patternEditError(err)
 	}
-	if err := validatePatternEdit(*original.Fill); err != nil {
+	if err := validatePatternEditSource(*original.Fill); err != nil {
 		return err
 	}
 	view, err := e.source.ReadPatternView(ctx, psdfile.MetadataOptions{MaxBytes: viewBudget})
@@ -104,9 +147,6 @@ func (e *Editor) SetPatternFill(ctx context.Context, id LayerID, fill psdpattern
 	if err != nil {
 		return patternEditError(err)
 	}
-	if node.pattern == nil && reflect.DeepEqual(fill, *original.Fill) {
-		return nil
-	}
 	patchWorking := int64(len(fill.ID)+len(fill.Name))*8 + 4096
 	remaining := available - 2*viewBudget - patchWorking
 	if remaining <= 0 {
@@ -123,8 +163,13 @@ func (e *Editor) SetPatternFill(ctx context.Context, id LayerID, fill psdpattern
 			return patternEditError(err)
 		}
 	}
-	if err := psdpattern.Validate(tile, fill); err != nil {
-		return patternEditError(err)
+	if options.Pixels == nil {
+		if err := psdpattern.Validate(tile, fill); err != nil {
+			return patternEditError(err)
+		}
+		if node.pattern == nil && reflect.DeepEqual(fill, *original.Fill) {
+			return ctx.Err()
+		}
 	}
 	remaining -= estimate.RetainedBytes + 256
 	if remaining <= 0 {
@@ -155,9 +200,6 @@ func (e *Editor) SetPatternFill(ctx context.Context, id LayerID, fill psdpattern
 			return err
 		}
 	}
-	if equal {
-		return ctx.Err()
-	}
 	backing := int64(cap(encoded))
 	bridgeBudget := min(limits.MaxMetadataBytes, remaining-encodeScratch-2*backing-4096)
 	if bridgeBudget <= 0 {
@@ -167,17 +209,31 @@ func (e *Editor) SetPatternFill(ctx context.Context, id LayerID, fill psdpattern
 	if err != nil {
 		return patternEditError(err)
 	}
-	if err := psdpattern.Validate(tile, *owned); err != nil {
-		return patternEditError(err)
+	if err := validate(*owned); err != nil {
+		return err
 	}
-	if owned.Phase != fill.Phase || owned.ID != fill.ID {
-		return editError(ErrUnsupported, "layers.pattern", "source numeric encoding cannot represent the desired phase")
+	if owned.Phase != fill.Phase || owned.ID != fill.ID || owned.Name != fill.Name ||
+		owned.Scale != fill.Scale || owned.Angle != fill.Angle || owned.Link != fill.Link {
+		return editError(ErrUnsupported, "layers.pattern", "source encoding cannot represent the requested parameters")
+	}
+	if equal && options.Pixels == nil {
+		return ctx.Err()
 	}
 	cost := int64(unsafe.Sizeof(*owned)) + int64(unsafe.Sizeof(*tile)) + int64(cap(tile.Pix)) +
 		int64(len(owned.ID)+len(owned.Name))*4 + backing - int64(len(encoded)) + 256
 	finalRetained := peakRetained - node.semanticCosts["pattern"] - int64(len(previous))
-	if finalRetained < 0 || cost+int64(len(encoded)) > limits.MaxDecodeBytes-finalRetained {
+	if options.Pixels != nil && node.pixels != nil {
+		finalRetained -= int64(len(node.pixels.Pix))
+	}
+	if finalRetained < 0 || cost+int64(len(encoded))+pixelBytes > limits.MaxDecodeBytes-finalRetained {
 		return editError(psdfile.ErrLimit, "layers.pattern", "pattern overlay exceeds the retained budget")
+	}
+	var artwork *image.NRGBA
+	if options.Pixels != nil {
+		artwork, err = nativeTextCopyImage(ctx, options.Pixels)
+		if err != nil {
+			return err
+		}
 	}
 	if err := ctx.Err(); err != nil {
 		return err
@@ -187,21 +243,71 @@ func (e *Editor) SetPatternFill(ctx context.Context, id LayerID, fill psdpattern
 	}
 	node.additional[block.Span.Offset] = encoded
 	node.pattern, node.patternTile = owned, tile
+	if artwork != nil {
+		node.pixels = artwork
+	}
 	node.setSemanticCost("pattern", cost)
 	e.markChangedLocked(false)
 	return nil
 }
 
-func validatePatternEdit(fill psdpattern.Fill) error {
-	var sample [4]byte
-	tile := &image.NRGBA{Pix: sample[:], Stride: 4, Rect: image.Rect(0, 0, 1, 1)}
-	if err := psdpattern.Validate(tile, fill); err != nil {
-		return patternEditError(err)
+func validatePatternEditMetadata(fill psdpattern.Fill) error {
+	if err := validatePatternEditSource(fill); err != nil {
+		return err
 	}
-	if fill.ID == "" || fill.Angle != 0 {
-		return editError(ErrUnsupported, "layers.pattern", "local reference and zero angle are required")
+	if fill.Phase.X != math.Trunc(fill.Phase.X) || fill.Phase.Y != math.Trunc(fill.Phase.Y) {
+		return editError(ErrUnsupported, "layers.pattern.phase", "phase must use whole document pixels")
+	}
+	if math.Abs(fill.Phase.X) > 1<<40 || math.Abs(fill.Phase.Y) > 1<<40 {
+		return editError(ErrInvalidEdit, "layers.pattern.phase", "phase exceeds exact pixel coordinate precision")
 	}
 	return nil
+}
+
+func validatePatternEditSource(fill psdpattern.Fill) error {
+	if fill.ID == "" || len(fill.Unsupported) != 0 {
+		return editError(ErrUnsupported, "layers.pattern", "known parameters and a local pattern reference are required")
+	}
+	if math.IsNaN(fill.Scale) || math.IsInf(fill.Scale, 0) || fill.Scale <= 0 ||
+		math.IsNaN(fill.Angle) || math.IsInf(fill.Angle, 0) || math.IsNaN(fill.Phase.X) ||
+		math.IsInf(fill.Phase.X, 0) || math.IsNaN(fill.Phase.Y) || math.IsInf(fill.Phase.Y, 0) {
+		return editError(ErrInvalidEdit, "layers.pattern", "positive finite scale and finite angle and phase are required")
+	}
+	return nil
+}
+
+func (e *Editor) patternEditPixelBytes(node *editNode, pixels *image.NRGBA, budget int64) (int64, error) {
+	if pixels.Rect != node.bounds {
+		return 0, editError(ErrInvalidEdit, "layers.pattern.pixels", "artwork must match the current layer bounds exactly")
+	}
+	var colors [3]int
+	alpha := 0
+	for _, channel := range e.source.Layers[node.sourceIndex].Channels {
+		if channel.ID >= 0 && channel.ID < 3 {
+			colors[channel.ID]++
+		} else if channel.ID == -1 {
+			alpha++
+		}
+	}
+	if colors != [3]int{1, 1, 1} || alpha > 1 {
+		return 0, editError(ErrUnsupported, "layers.pattern.pixels", "unambiguous source RGB channels are required")
+	}
+	for _, block := range e.source.Layers[node.sourceIndex].AdditionalInfo {
+		switch block.Key {
+		case "TySh", "tySh", "SoLd", "SoLE", "PlLd", "PxSc", "PxSD":
+			return 0, editError(ErrUnsupported, "layers.pattern.pixels", "incompatible semantic source block")
+		}
+	}
+	length, err := textEditPixelBytes(pixels, e.source.Limits(), budget)
+	if err != nil {
+		kind := ErrInvalidEdit
+		if errors.Is(err, psdfile.ErrLimit) {
+			kind = psdfile.ErrLimit
+		}
+		return 0, &psdfile.Error{Kind: kind, Feature: "edit", Path: "layers.pattern.pixels",
+			Detail: "invalid or over-budget supplied layer artwork", Cause: err}
+	}
+	return length, nil
 }
 
 func patternEditRecord(records []psdfile.PatternRecord, id string) (*psdfile.PatternRecord, error) {

@@ -245,6 +245,11 @@ func (e *Editor) writeLayerMaskLocked(limit int64, layers writePlan) (writePlan,
 		}
 		position = block.Span.Offset + block.Span.Length
 	}
+	orphaned, err := e.writeOrphanedLinkedBlocksLocked(limit)
+	if err != nil {
+		return plan, err
+	}
+	plan.append(orphaned)
 	end := e.source.LayerMaskSection.Offset + e.source.LayerMaskSection.Length
 	if end > position {
 		plan.original(psdfile.Span{Offset: position, Length: end - position})

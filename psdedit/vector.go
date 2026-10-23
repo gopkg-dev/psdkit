@@ -10,7 +10,7 @@ import (
 	"github.com/gopkg-dev/psdkit/psdvector"
 )
 
-// SetVectorMask replaces an existing vmsk/vsms block with independently owned typed vector geometry.
+// SetVectorMask replaces an existing or newly added vector mask with independently owned typed vector geometry.
 // Document dimensions, mask density/feather and other source metadata stay unchanged.
 // Encoding, decoding and budget checks complete before the editor revision or overlays change.
 // Automatic preview reconstruction retains the renderer's documented antialiasing approximation limits.
@@ -33,22 +33,15 @@ func (e *Editor) SetVectorMask(ctx context.Context, id LayerID, mask *psdvector.
 	if err != nil {
 		return err
 	}
-	if node.sourceIndex < 0 || node.sourceIndex >= len(e.source.Layers) {
-		return editError(ErrUnsupported, "layers.vectorMask", "layer has no original vector-mask block")
-	}
-	var block psdfile.AdditionalBlock
-	found := false
-	for _, candidate := range e.source.Layers[node.sourceIndex].AdditionalInfo {
-		if candidate.Key != "vmsk" && candidate.Key != "vsms" {
-			continue
-		}
-		if found {
-			return editError(ErrUnsupported, "layers.vectorMask", "multiple vector-mask blocks are ambiguous")
-		}
-		block, found = candidate, true
+	block, found, err := e.vectorMaskBlockLocked(node)
+	if err != nil {
+		return err
 	}
 	if !found {
-		return editError(ErrUnsupported, "layers.vectorMask", "layer has no original vector-mask block")
+		return editError(ErrUnsupported, "layers.vectorMask", "layer has no vector-mask block")
+	}
+	if node.vectorMaskChange != nil {
+		return e.setLifecycleVectorMaskLocked(ctx, node, mask, 0)
 	}
 	limits := e.source.Limits()
 	previous := node.additional[block.Span.Offset]

@@ -11,7 +11,8 @@ import (
 // RenderRGB16 applies the calibrated Normal/Difference subset to canonical encoded RGB16 rasters.
 // Active rasters may have partial or negative-origin bounds; the first active mode must be Normal.
 // The whole-scene MaxLayers limit bounds their count; there is no separate calibrated-layer-count ceiling.
-// Active groups, masks, clipping and Blend If are unsupported. Hidden and zero-opacity layers are skipped.
+// Active groups, masks, clipping and Blend If are unsupported; disabled masks do not affect eligibility.
+// Hidden and zero-opacity layers are skipped.
 // Source components must be exact uint16 codes divided by 65535 and opacity an exact byte divided by 255.
 // Returned components are 0..32768 codes divided by 32768; zero alpha retains current straight RGB.
 // The global active bounding rectangle starts with white RGB at alpha zero; the first active raster replaces
@@ -144,7 +145,7 @@ func validateRGB16(ctx context.Context, scene *Scene) error {
 		active++
 		mode := normalizedBlend(layer.BlendMode)
 		if active == 1 && mode != "norm" || mode != "norm" && mode != "diff" ||
-			layer.Bounds.Empty() || layer.Children != nil || layer.Clipping || layer.Mask != nil ||
+			layer.Bounds.Empty() || layer.Children != nil || layer.Clipping || layer.Mask != nil && !layer.Mask.Disabled ||
 			len(layer.BlendRanges) != 0 || layer.Pixels == nil {
 			return fmt.Errorf("%w: RGB16 requires nonempty Normal/Difference rasters with first Normal",
 				ErrUnsupported)

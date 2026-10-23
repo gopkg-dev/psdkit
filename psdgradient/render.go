@@ -11,6 +11,9 @@ import (
 // Render returns owned straight NRGBA pixels for one classic encoded-RGB gradient fill.
 // Document coordinates determine the ramp; optional cropping never rescales its geometry.
 // Caller-owned stop slices remain immutable for the call and are never changed or retained.
+// Constant RGB and opacity stops do not depend on classic interpolation or gradient geometry.
+// An independently constant component ignores its own duplicate locations and endpoint midpoints.
+// If the other component varies, ordinary geometry, smoothness and interpolation restrictions still apply.
 func Render(ctx context.Context, fill Fill, documentBounds image.Rectangle, options ...Options) (*image.NRGBA, error) {
 	if ctx == nil {
 		ctx = context.Background()
@@ -50,6 +53,18 @@ func Render(ctx context.Context, fill Fill, documentBounds image.Rectangle, opti
 	if err := Validate(fill); err != nil {
 		return nil, err
 	}
+	alignment := documentBounds
+	if fill.Align && configuration.AlignBounds != nil {
+		if err := validBounds(*configuration.AlignBounds); err != nil {
+			return nil, err
+		}
+		alignment = *configuration.AlignBounds
+	}
+	constantRGB, colorConstant := constantColorStops(fill.ColorStops)
+	constantAlpha, opacityConstant := constantOpacityStops(fill.OpacityStops)
+	if colorConstant && opacityConstant {
+		return renderConstantGradient(ctx, outputBounds, constantRGB, constantAlpha)
+	}
 	fill.ColorStops, fill.OpacityStops = slices.Clone(fill.ColorStops), slices.Clone(fill.OpacityStops)
 	slices.SortStableFunc(fill.ColorStops, func(first, second ColorStop) int {
 		return int(first.Location) - int(second.Location)
@@ -57,7 +72,7 @@ func Render(ctx context.Context, fill Fill, documentBounds image.Rectangle, opti
 	slices.SortStableFunc(fill.OpacityStops, func(first, second OpacityStop) int {
 		return int(first.Location) - int(second.Location)
 	})
-	for index := 1; index < len(fill.ColorStops); index++ {
+	for index := 1; !colorConstant && index < len(fill.ColorStops); index++ {
 		if fill.ColorStops[index].Location == fill.ColorStops[index-1].Location {
 			return nil, gradientError(ErrUnsupported, "colors.location", "co-located color stops require native validation")
 		}
@@ -65,20 +80,13 @@ func Render(ctx context.Context, fill Fill, documentBounds image.Rectangle, opti
 			return nil, gradientError(ErrUnsupported, "colors.midpoint", "endpoint midpoints require native validation")
 		}
 	}
-	for index := 1; index < len(fill.OpacityStops); index++ {
+	for index := 1; !opacityConstant && index < len(fill.OpacityStops); index++ {
 		if fill.OpacityStops[index].Location == fill.OpacityStops[index-1].Location {
 			return nil, gradientError(ErrUnsupported, "opacities.location", "co-located opacity stops require native validation")
 		}
 		if fill.OpacityStops[index].Midpoint == 0 || fill.OpacityStops[index].Midpoint == 100 {
 			return nil, gradientError(ErrUnsupported, "opacities.midpoint", "endpoint midpoints require native validation")
 		}
-	}
-	alignment := documentBounds
-	if fill.Align && configuration.AlignBounds != nil {
-		if err := validBounds(*configuration.AlignBounds); err != nil {
-			return nil, err
-		}
-		alignment = *configuration.AlignBounds
 	}
 	plan, err := prepareGeometry(fill, alignment)
 	if err != nil {
@@ -99,8 +107,13 @@ func Render(ctx context.Context, fill Fill, documentBounds image.Rectangle, opti
 			if fill.Reverse {
 				position = 1 - position
 			}
-			rgb, alpha := rampColor(fill.ColorStops, position, fill.Smoothness),
-				rampOpacity(fill.OpacityStops, position, fill.Smoothness)
+			rgb, alpha := constantRGB, constantAlpha
+			if !colorConstant {
+				rgb = rampColor(fill.ColorStops, position, fill.Smoothness)
+			}
+			if !opacityConstant {
+				alpha = rampOpacity(fill.OpacityStops, position, fill.Smoothness)
+			}
 			pixel := row*result.Stride + column*4
 			for component := range 3 {
 				result.Pix[pixel+component] = byte(math.Round(clamp(rgb[component]) * 255))
@@ -123,9 +136,6 @@ func Validate(fill Fill) error {
 		fill.Smoothness < 0 || fill.Smoothness > 4096 || len(fill.ColorStops) == 0 {
 		return gradientError(ErrInvalid, "fill", "invalid angle, scale, offset, smoothness or color stop count")
 	}
-	if fill.Smoothness != 4096 {
-		return gradientError(ErrUnsupported, "fill.smoothness", "non-default classic smoothness requires native validation")
-	}
 	if len(fill.ColorStops) > 4096 || len(fill.OpacityStops) > 4096 {
 		return gradientError(ErrLimit, "stops", "stop count exceeds the supported metadata limit")
 	}
@@ -143,6 +153,9 @@ func Validate(fill Fill) error {
 		if stop.Location > 4096 || stop.Midpoint > 100 || !finite(stop.Opacity) || stop.Opacity < 0 || stop.Opacity > 1 {
 			return gradientError(ErrInvalid, "opacities", "invalid opacity stop location, midpoint or opacity")
 		}
+	}
+	if _, _, constant := constantGradient(fill); fill.Smoothness != 4096 && !constant {
+		return gradientError(ErrUnsupported, "fill.smoothness", "non-default classic smoothness requires native validation")
 	}
 	return nil
 }

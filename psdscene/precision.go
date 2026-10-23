@@ -41,6 +41,7 @@ type precisionSourceRenderer struct {
 
 // RenderPrecision rebuilds ordinary RGB/Gray16 or RGB/Gray32 layers into owned float64 straight RGBA.
 // Eligible flat Normal RGB16 stacks use the 0..32768 integer domain with partial bounds, alpha and opacity.
+// Explicitly disabled pixel masks with known metadata retain the same unmasked Normal/Difference integers.
 // Their global active bounding rectangle starts with white RGB at alpha zero; outside it, RGBA zero is math policy.
 // This outside policy does not claim native stored samples.
 // One to four ordinary nonempty Normal/Difference rasters with first Normal also use the calibrated integers.

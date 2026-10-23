@@ -15,7 +15,7 @@ import (
 type EncodeOptions struct{ MaxBytes int64 }
 
 // Encode serializes a known RGB8 adjustment family, preserving original bytes when semantically unchanged.
-// Color Balance's known metadata can round-trip unchanged while non-neutral rendering remains unsupported.
+// Color Balance and legacy RGB Brightness/Contrast metadata are editable independently of rendering support.
 // With Raw supplied, the original family and supported wire representation remain fixed.
 // Scalar and level edits patch original fields; changed curves retain the source channel sets and extra-marker version.
 func Encode(
@@ -60,38 +60,33 @@ func Encode(
 	if len(adjustment.Raw) == 0 && !canonicalAdjustmentVersion(adjustment) {
 		return nil, adjustmentError(ErrUnsupported, "adjustment.version", 0, "unsupported new adjustment version")
 	}
-	if adjustment.Kind == ColorBalance && len(adjustment.Raw) != 0 {
-		if len(adjustment.Unsupported) != 0 {
-			return nil, adjustmentError(ErrUnsupported, "adjustment", adjustment.Span.Offset, adjustment.Unsupported[0])
+	if len(adjustment.Unsupported) != 0 {
+		return nil, adjustmentError(ErrUnsupported, "adjustment", adjustment.Span.Offset, adjustment.Unsupported[0])
+	}
+	// Known wire parameters do not require a verified pixel transfer algorithm to be encoded.
+	compileOptions := CompileOptions{ApproximateHueSaturation: adjustment.Kind == HueSaturation}
+	switch adjustment.Kind {
+	case PhotoFilter:
+		if err := validatePhotoFilter(adjustment); err != nil {
+			return nil, err
 		}
+	case ColorBalance:
 		if adjustment.Version != 0 || adjustment.ExtraVersion != 0 {
 			return nil, adjustmentError(ErrUnsupported, "adjustment.version", 0, "color balance has no version field")
 		}
 		if err := validateColorBalance(adjustment.ColorBalance); err != nil {
 			return nil, err
 		}
-		original, err := Decode(ctx, key, adjustment.Raw, DecodeOptions{MaxBytes: limit})
-		if err != nil {
+	case BrightnessContrast:
+		if err := validateBrightnessContrast(adjustment.BrightnessContrast); err != nil {
 			return nil, err
 		}
-		if sameAdjustment(adjustment, *original) {
-			data := bytes.Clone(adjustment.Raw)
-			if err := ctx.Err(); err != nil {
-				return nil, err
-			}
-			return data, nil
+		if adjustment.Version != 0 || adjustment.ExtraVersion != 0 ||
+			!adjustment.BrightnessContrast.Legacy || adjustment.BrightnessContrast.LabOnly {
+			return nil, adjustmentError(ErrUnsupported, "adjustment.brightnessContrast", 0,
+				"encoding requires legacy RGB brightness/contrast metadata")
 		}
-	}
-	// Encoding validates Hue/Saturation parameters independently of the pixel approximation policy.
-	compileOptions := CompileOptions{ApproximateHueSaturation: adjustment.Kind == HueSaturation}
-	if adjustment.Kind == PhotoFilter {
-		if len(adjustment.Unsupported) != 0 {
-			return nil, adjustmentError(ErrUnsupported, "adjustment", adjustment.Span.Offset, adjustment.Unsupported[0])
-		}
-		if err := validatePhotoFilter(adjustment); err != nil {
-			return nil, err
-		}
-	} else {
+	default:
 		if _, err := Compile(adjustment, compileOptions); err != nil {
 			return nil, err
 		}

@@ -10,6 +10,7 @@ import (
 // The caller closes the result. Unedited embedded results borrow the editor's original source.
 // Replacement overlays are copied into an independent source; external documents come from resolver.
 // Resolver executes without holding the editor lock and may report unavailable or stale links.
+// Raster-format sources return ErrUnsupported; ReadSmartObjectContents returns their original encoded bytes.
 func (e *Editor) OpenSmartObjectSource(
 	ctx context.Context, id LayerID, resolver psdfile.LinkedDocumentResolver,
 ) (*psdfile.Document, error) {
@@ -51,6 +52,10 @@ func (e *Editor) OpenSmartObjectSource(
 	}
 	limits := e.source.Limits()
 	if overlay := e.linkedOverlays[sourceID]; overlay != nil {
+		if overlay.fileType != "8BPS" && overlay.fileType != "8BPB" {
+			e.mu.RUnlock()
+			return nil, editError(ErrUnsupported, "smartObject.source", "use ReadSmartObjectContents for raster sources")
+		}
 		if int64(len(overlay.data)) > limits.MaxDecodeBytes-e.ownedBytesLocked(nil) {
 			e.mu.RUnlock()
 			return nil, editError(psdfile.ErrLimit, "smartObject.source", "owned child source exceeds the working budget")
@@ -79,6 +84,10 @@ func (e *Editor) OpenSmartObjectSource(
 	if selected == nil {
 		e.mu.RUnlock()
 		return nil, editError(ErrUnsupported, "smartObject.source", "content reference has no linked source record")
+	}
+	if selected.FileType != "8BPS" && selected.FileType != "8BPB" {
+		e.mu.RUnlock()
+		return nil, editError(ErrUnsupported, "smartObject.source", "use ReadSmartObjectContents for raster sources")
 	}
 	source := e.source
 	record := *selected

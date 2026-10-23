@@ -75,7 +75,7 @@ type CurvePoint struct{ Input, Output uint16 }
 
 // CurveChannel contains either ordered control points or an explicit 256-byte lookup table.
 // Curves use natural cubic interpolation and endpoint clamping; input coordinates must strictly increase.
-// Only monotone control values or LUT values are currently supported.
+// Control values must be monotone; explicit LUT values may use arbitrary mappings.
 type CurveChannel struct {
 	Channel uint16
 	Points  []CurvePoint
@@ -161,7 +161,7 @@ type Adjustment struct {
 type Options struct {
 	MaxPixels, MaxWorkingBytes int64
 	// ApproximateHueSaturation opts into the RGB8 HSL model whose native precision audit is incomplete.
-	// Default rendering rejects non-neutral Hue/Saturation; exact metadata decoding and encoding stay available.
+	// Plain master Lightness is supported by default; other non-neutral controls require this policy.
 	ApproximateHueSaturation bool
 }
 

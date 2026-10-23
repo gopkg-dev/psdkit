@@ -5,16 +5,8 @@ func compileCurve(table *[256]float64, curve CurveChannel) error {
 		if len(curve.Points) != 0 || len(curve.LUT) != 256 {
 			return adjustmentError(ErrInvalid, "adjustment.curves", 0, "a curve must contain points or exactly 256 LUT samples")
 		}
-		increasing, decreasing := true, true
 		for index, value := range curve.LUT {
-			if index != 0 {
-				increasing = increasing && value >= curve.LUT[index-1]
-				decreasing = decreasing && value <= curve.LUT[index-1]
-			}
 			table[index] = float64(value) / 255
-		}
-		if !increasing && !decreasing {
-			return adjustmentError(ErrUnsupported, "adjustment.curves", 0, "non-monotone curve LUTs are not implemented")
 		}
 		return nil
 	}

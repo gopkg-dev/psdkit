@@ -265,23 +265,32 @@ func (decoder *linkedTIFF) decode() (*LinkedRaster, error) {
 		tag      uint16
 		fallback int64
 		allowed  int64
-	}{{254, 0, 0}, {255, 1, 1}, {266, 1, 1}, {274, 1, 1}, {284, 1, 1}, {317, 1, 1}} {
+	}{{254, 0, 0}, {255, 1, 1}, {266, 1, 1}, {274, 1, 1}, {284, 1, 1}} {
 		value, err := decoder.scalar(requirement.tag, requirement.fallback)
 		if err != nil {
 			return nil, err
 		}
 		if value != requirement.allowed {
 			return nil, decoder.failure(ErrUnsupported, fmt.Sprintf("tag.%d", requirement.tag), 0,
-				"TIFF requires a full-resolution, top-left, chunky image without a predictor")
+				"TIFF requires a full-resolution, top-left, chunky image")
 		}
 	}
 	compression, err := decoder.scalar(259, 1)
 	if err != nil {
 		return nil, err
 	}
-	if compression != 1 && compression != 32773 {
+	deflate := compression == 8 || compression == 32946
+	if compression != 1 && compression != 5 && compression != 32773 && !deflate {
 		return nil, decoder.failure(ErrUnsupported, "compression", 0,
-			"only uncompressed and PackBits TIFF strips are supported")
+			"only uncompressed, LZW, PackBits and Deflate TIFF strips are supported")
+	}
+	predictor, err := decoder.scalar(317, 1)
+	if err != nil {
+		return nil, err
+	}
+	if predictor != 1 && (predictor != 2 || !deflate && compression != 5) {
+		return nil, decoder.failure(ErrUnsupported, "predictor", 0,
+			"TIFF horizontal prediction requires LZW or Deflate compression; other predictors are unsupported")
 	}
 	rows, err := decoder.scalar(278, math.MaxUint32)
 	if err != nil {
@@ -297,6 +306,19 @@ func (decoder *linkedTIFF) decode() (*LinkedRaster, error) {
 	if err := decoder.charge(width*height*4+width*samples+4096, "pixels", 0); err != nil {
 		return nil, err
 	}
+	if deflate {
+		// Each of two 9-bit Huffman roots can reference up to 512 secondary tables of 64 uint32 entries.
+		// Include their link slices, roots, the 32 KiB dictionary and decoder state before stream creation.
+		if err := decoder.charge(512<<10, "deflate", 0); err != nil {
+			return nil, err
+		}
+	}
+	if compression == 5 {
+		// Bound the 4096-entry prefix/suffix dictionary, reversed string, reader and fixed decoder state.
+		if err := decoder.charge(32<<10, "lzw", 0); err != nil {
+			return nil, err
+		}
+	}
 	profile, err := decoder.profile()
 	if err != nil {
 		return nil, err
@@ -304,46 +326,10 @@ func (decoder *linkedTIFF) decode() (*LinkedRaster, error) {
 	pixels := image.NewNRGBA(image.Rect(0, 0, int(width), int(height)))
 	row := make([]byte, int(width*samples))
 	for index, strip := range strips {
-		reader := io.NewSectionReader(strictRasterReaderAt{context: decoder.context, source: decoder.document},
-			decoder.span.Offset+strip.Offset, strip.Length)
-		var packed *bufio.Reader
-		if compression == 32773 {
-			packed = bufio.NewReaderSize(reader, 4096)
-		}
 		first := int64(index) * rows
-		for y := first; y < min(first+rows, height); y++ {
-			if err := decoder.context.Err(); err != nil {
-				return nil, err
-			}
-			if packed != nil {
-				err = decodeLinkedTIFFPackBits(decoder.context, packed, row)
-			} else {
-				_, err = io.ReadFull(reader, row)
-			}
-			if err != nil {
-				return nil, decoder.streamError(err, strip.Offset)
-			}
-			if err := decoder.renderRow(pixels.Pix[int(y)*pixels.Stride:], row, int(samples), alpha); err != nil {
-				return nil, err
-			}
-		}
-		if packed != nil {
-			for {
-				octet, err := packed.ReadByte()
-				if err == io.EOF {
-					break
-				}
-				if err != nil {
-					return nil, decoder.streamError(err, strip.Offset)
-				}
-				if octet != 128 {
-					return nil, decoder.failure(ErrMalformed, "strip", strip.Offset,
-						"PackBits strip contains output after its declared rows")
-				}
-				if err := decoder.context.Err(); err != nil {
-					return nil, err
-				}
-			}
+		if err := decoder.decodeStrip(strip, pixels, row, first, min(first+rows, height),
+			compression, predictor, samples, alpha); err != nil {
+			return nil, err
 		}
 	}
 	if err := decoder.context.Err(); err != nil {
@@ -441,8 +427,8 @@ func (decoder *linkedTIFF) strips(rowBytes, height, rows, compression int64) ([]
 		encodedWork += length
 		strips[index] = Span{Offset: offset, Length: length}
 	}
-	// The encoded work bound also limits arbitrarily long runs of PackBits no-op commands.
-	if compression == 32773 {
+	// Bound work from PackBits no-op commands and Deflate blocks producing little or no output.
+	if compression != 1 {
 		decoder.working = max(decoder.working, encodedWork)
 	}
 	return strips, nil

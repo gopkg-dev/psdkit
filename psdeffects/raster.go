@@ -99,6 +99,7 @@ func Rasterize(ctx context.Context, source *image.Alpha, set *Set, options ...Op
 
 // Validate checks active primitive semantics before a compositor allocates output or changes state.
 // Disabled effects and a disabled master switch retain readable unsupported metadata.
+// Known zero-opacity effects may retain valid noise and jitter without evaluating those controls.
 func Validate(set *Set) error {
 	if set == nil {
 		return effectError(ErrInvalid, "effects", "effect set is required")
@@ -141,7 +142,12 @@ func Validate(set *Set) error {
 			return effectError(ErrInvalid, "effects.noise", "noise, jitter or range is not finite")
 		}
 		if effect.Noise != 0 || effect.Jitter != 0 {
-			return effectError(ErrUnsupported, "effects.noise", "noise and jitter are not implemented")
+			if effect.Opacity != 0 {
+				return effectError(ErrUnsupported, "effects.noise", "noise and jitter are not implemented")
+			}
+			if effect.Noise < 0 || effect.Noise > 1 || effect.Jitter < 0 || effect.Jitter > 1 {
+				return effectError(ErrInvalid, "effects.noise", "noise and jitter must be zero through one")
+			}
 		}
 		if (effect.Kind == OuterGlow || effect.Kind == InnerGlow) &&
 			(effect.Range != 0.5 || effect.Technique != "SfBL") {

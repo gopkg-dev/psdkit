@@ -69,7 +69,8 @@ func (d *Document) LinkedRasterFormat(ctx context.Context, record LinkedFileReco
 
 // DecodeLinkedRaster decodes indexed embedded PNG/JPEG and flat RGB8 TIFF content with bounded storage.
 // Straight RGBA8 output is owned, including for 16-bit PNG input. Source ICC data is returned explicitly.
-// TIFF accepts classic, single-image, top-left chunky RGB8 strips using Raw or PackBits encoding.
+// TIFF accepts classic, single-image, top-left chunky RGB8 strips using Raw, PackBits, LZW or Deflate encoding.
+// LZW and Deflate strips also support horizontal Predictor 2.
 // Explicit TIFF associated alpha is unpremultiplied; unassociated alpha retains hidden RGB values.
 // BigTIFF, private Photoshop layers, tiles and unsupported TIFF encodings return ErrUnsupported.
 func (d *Document) DecodeLinkedRaster(

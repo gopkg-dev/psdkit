@@ -241,8 +241,11 @@ func TestLinkedTIFFMalformedAndUnsupportedRemainDistinct(t *testing.T) {
 		{"directory_cycle", ErrMalformed, func(data []byte) {
 			binary.LittleEndian.PutUint32(data[10+9*12:], 8)
 		}},
-		{"lzw", ErrUnsupported, func(data []byte) {
+		{"raw_as_lzw", ErrMalformed, func(data []byte) {
 			binary.LittleEndian.PutUint16(tiffTestEntry(t, data, binary.LittleEndian, 259)[8:], 5)
+		}},
+		{"unknown_compression", ErrUnsupported, func(data []byte) {
+			binary.LittleEndian.PutUint16(tiffTestEntry(t, data, binary.LittleEndian, 259)[8:], 4)
 		}},
 		{"gray", ErrUnsupported, func(data []byte) {
 			binary.LittleEndian.PutUint16(tiffTestEntry(t, data, binary.LittleEndian, 262)[8:], 1)

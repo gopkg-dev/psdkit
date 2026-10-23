@@ -10,7 +10,8 @@ import (
 )
 
 // RenderRGB16Normal composites canonical raw RGB16 RGBA using Photoshop's encoded Normal integer arithmetic.
-// Active layers must be ordinary Normal rasters without masks, clipping, groups or Blend If.
+// Active layers must be ordinary Normal rasters without active masks, clipping, groups or Blend If.
+// Disabled masks preserve the exact unmasked integer result.
 // Source components must be exact uint16 codes divided by 65535, and opacity must be a byte divided by 255.
 // Active rasters may have partial bounds, alpha and opacity. Hidden and zero-opacity layers are skipped.
 // The global active bounds' bounding rectangle starts with white RGB and zero alpha; the first active raster
@@ -140,7 +141,8 @@ func validateRGB16Normal(ctx context.Context, scene *Scene) error {
 		if layer.Hidden || layerOpacity(layer) == 0 {
 			continue
 		}
-		if layer.Children != nil || layer.Clipping || layer.Mask != nil || len(layer.BlendRanges) != 0 ||
+		if layer.Children != nil || layer.Clipping || layer.Mask != nil && !layer.Mask.Disabled ||
+			len(layer.BlendRanges) != 0 ||
 			normalizedBlend(layer.BlendMode) != "norm" {
 			return fmt.Errorf("%w: RGB16 Normal requires ordinary unmasked Normal rasters", ErrUnsupported)
 		}

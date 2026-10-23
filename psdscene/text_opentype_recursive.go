@@ -67,8 +67,16 @@ func (engine *rgbTileRenderer) openTypePrototype(
 	}
 	state := engine.settings.openTypeTraversal
 	engine.legacy.working, engine.legacy.documents = engine.working, state.documents
-	if record.Kind == "liFD" && format != "" {
-		pixels, err := engine.legacy.renderLinkedRaster(ctx, engine.source, record, destination, depth)
+	if record.Kind == "liFD" && format != "" || engine.legacy.resolvesExternalRaster(record) {
+		var pixels *image.NRGBA
+		var err error
+		if record.Kind == "liFD" {
+			pixels, err = engine.legacy.renderLinkedRasterLimited(ctx, engine.source, record,
+				destination, depth, engine.settings.MaxPixels)
+		} else {
+			pixels, err = engine.legacy.renderExternalRasterLimited(ctx, engine.source, record,
+				destination, depth, engine.settings.MaxPixels)
+		}
 		state.documents = engine.legacy.documents
 		engine.working = engine.legacy.working
 		return pixels, err

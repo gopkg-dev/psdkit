@@ -77,6 +77,7 @@ type Options struct {
 	// Legacy controls use a linear brightness shift and the retained Mean contrast pivot.
 	ApproximateBrightnessContrast bool
 	// ApproximateHueSaturation opts into psdadjust's encoded-RGB HSL transform.
+	// Plain master Lightness uses the verified RGB8 transfer without this option.
 	ApproximateHueSaturation bool
 	// MaxSampleOperations bounds spatial neighborhood samples across an active stack; zero selects 2^32.
 	MaxSampleOperations int64

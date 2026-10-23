@@ -34,7 +34,7 @@ func TestRGB16LimitedDifferenceContractAndLegacySeparation(t *testing.T) {
 			s.Layers[1].Bounds = image.Rectangle{}
 			s.Layers[1].Pixels = &psdprecision.FloatImage{}
 		},
-		func(s *psdprecision.Scene) { s.Layers[1].Mask = &psdprecision.Mask{Disabled: true} },
+		func(s *psdprecision.Scene) { s.Layers[1].Mask = &psdprecision.Mask{} },
 		func(s *psdprecision.Scene) { s.Layers[1].Clipping = true },
 		func(s *psdprecision.Scene) { s.Layers[1].Children = []*psdprecision.Layer{}; s.Layers[1].Pixels = nil },
 		func(s *psdprecision.Scene) { s.Layers[1].Opacity = new(0.3) },

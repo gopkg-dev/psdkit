@@ -359,11 +359,15 @@ func TestCompositeExplicitSourcePrecisionPreserved(t *testing.T) {
 }
 
 func TestCompositeUnsupportedRenderingRequiresExplicitPreview(t *testing.T) {
+	artboard, err := psdfile.EncodeDescriptor(t.Context(), &psdfile.Descriptor{ClassID: "artboard"}, true)
+	if err != nil {
+		t.Fatal(err)
+	}
 	for _, layer := range []compositeFixtureLayer{
 		{color: []byte{255, 0, 0, 255}, blend: "????"},
 		{color: []byte{255, 0, 0, 255}, tags: compositeFixtureTag("knko", []byte{99, 0, 0, 0})},
 		{color: []byte{255, 0, 0, 255}, extraID: 4},
-		{color: []byte{255, 0, 0, 255}, tags: compositeFixtureTag("artb", nil)},
+		{color: []byte{255, 0, 0, 255}, tags: compositeFixtureTag("artb", artboard)},
 		{color: []byte{255, 0, 0, 255}, divider: 99},
 	} {
 		editor := compositeEditor(t, compositeFixture(1, 8, 3, []compositeFixtureLayer{layer}))
@@ -377,6 +381,23 @@ func TestCompositeUnsupportedRenderingRequiresExplicitPreview(t *testing.T) {
 		preview := image.NewNRGBA(image.Rect(0, 0, 1, 1))
 		copy(preview.Pix, []byte{100, 100, 100, 255})
 		compositeExpect(t, compositeSave(t, editor, SaveOptions{CompositeImage: preview}), []byte{100, 100, 100})
+	}
+}
+
+func TestCompositeMalformedArtboardCannotProduceAutomaticPreview(t *testing.T) {
+	editor := compositeEditor(t, compositeFixture(1, 8, 3, []compositeFixtureLayer{{
+		color: []byte{255, 0, 0, 255}, tags: compositeFixtureTag("artb", nil),
+	}}))
+	if err := editor.SetOpacity(1, 128); err != nil {
+		t.Fatal(err)
+	}
+	before, _ := editor.Changes()
+	var output bytes.Buffer
+	if err := editor.Write(t.Context(), &output); !errors.Is(err, psdfile.ErrMalformed) || output.Len() != 0 {
+		t.Fatalf("malformed artboard metadata produced an automatic preview: %v", err)
+	}
+	if after, _ := editor.Changes(); after != before {
+		t.Fatal("failed artboard metadata decoding changed the edit state")
 	}
 }
 

@@ -28,7 +28,7 @@ func (engine *precisionSourceRenderer) qualifyRGB16Difference(
 		active++
 		if active == 1 && layer.BlendMode != "norm" ||
 			layer.BlendMode != "norm" && layer.BlendMode != "diff" || layer.Bounds.Empty() ||
-			layer.Children != nil || layer.Clipping || layer.Mask != nil || len(layer.BlendRanges) != 0 {
+			layer.Children != nil || layer.Clipping || !engine.knownInactiveRGB16Mask(layer) || len(layer.BlendRanges) != 0 {
 			return nil
 		}
 		if _, err := psdrgb16normal.ByteOpacity(*layer.Opacity); err != nil {

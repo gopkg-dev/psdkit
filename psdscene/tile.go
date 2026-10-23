@@ -41,6 +41,8 @@ type TileOptions struct {
 	CachedPlacedLayers bool
 	// ExternalResolver supplies explicitly selected external PSD/PSB contents.
 	ExternalResolver psdfile.LinkedDocumentResolver
+	// ExternalRasterResolver supplies explicit external PNG/JPEG/TIFF bytes, without opening saved paths.
+	ExternalRasterResolver LinkedRasterResolver
 	// MaxDocuments bounds decoded placed prototypes and defaults to 64.
 	MaxDocuments int
 	// AssumeUntaggedSRGB matches Scene's explicit policy for required tagged/untagged content conversion.
@@ -114,6 +116,7 @@ func tileConfiguration(
 		settings.ApproximateVectorStroke = provided.ApproximateVectorStroke
 		settings.ApproximateCustomWarp = provided.ApproximateCustomWarp
 		settings.ExternalResolver, settings.AssumeUntaggedSRGB = provided.ExternalResolver, provided.AssumeUntaggedSRGB
+		settings.ExternalRasterResolver = provided.ExternalRasterResolver
 		settings.CenteredJPEGChroma = provided.CenteredJPEGChroma
 		if provided.MaxDocuments != 0 {
 			settings.MaxDocuments = provided.MaxDocuments

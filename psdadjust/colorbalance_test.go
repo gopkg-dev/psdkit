@@ -49,8 +49,14 @@ func TestColorBalanceMetadataSignedOwnedAndUnchangedRoundTrip(t *testing.T) {
 	}
 	adjustment.Unsupported = nil
 	adjustment.ColorBalance.Shadows[0]++
-	if _, err := Encode(nil, *adjustment); !errors.Is(err, ErrUnsupported) {
-		t.Fatalf("unsupported visual Color Balance edit was encoded: %v", err)
+	encoded, err = Encode(nil, *adjustment)
+	expected := bytes.Clone(original)
+	expected[1]++
+	if err != nil || !bytes.Equal(encoded, expected) {
+		t.Fatalf("known Color Balance parameter edit changed unrelated bytes: %v", err)
+	}
+	if _, err := Compile(*adjustment); !errors.Is(err, ErrUnsupported) {
+		t.Fatalf("metadata editing enabled an unverified Color Balance transfer: %v", err)
 	}
 }
 

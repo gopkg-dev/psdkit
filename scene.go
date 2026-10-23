@@ -10,6 +10,10 @@ import (
 // SceneOptions bounds live RGB8 rendering and explicit external content resolution.
 type SceneOptions = psdscene.Options
 
+// LinkedRasterResolver supplies explicitly selected external PNG/JPEG/TIFF source bytes for live rendering.
+// Returned bytes remain caller-owned and immutable until the rendering call returns.
+type LinkedRasterResolver = psdscene.LinkedRasterResolver
+
 // TileOptions bounds per-tile semantic snapshots, output, halo samples and decoder work.
 type TileOptions = psdscene.TileOptions
 
@@ -49,13 +53,13 @@ func RenderArtboards(ctx context.Context, source *SourceDocument,
 	return psdscene.RenderArtboards(ctx, source, options...)
 }
 
-// RenderSource rebuilds source layers and embedded PSD/PSB/PNG/JPEG smart-object content.
+// RenderSource rebuilds source layers and embedded or explicitly resolved PSD/PSB/PNG/JPEG/TIFF contents.
 // It returns owned encoded-RGB pixels in the document or explicitly requested output profile.
 func RenderSource(ctx context.Context, source *SourceDocument, options ...SceneOptions) (*image.NRGBA, error) {
 	return psdscene.Render(ctx, source, options...)
 }
 
-// RenderSourcePlacedLayer rebuilds one original smart-object layer from its embedded source.
+// RenderSourcePlacedLayer rebuilds one original smart-object layer from embedded or explicitly resolved contents.
 // The owned result retains placement, masks and effects for subsequent composition.
 func RenderSourcePlacedLayer(ctx context.Context, source *SourceDocument, layerIndex int,
 	options ...SceneOptions,

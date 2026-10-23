@@ -19,7 +19,8 @@ type HueSaturationRange struct {
 
 // HueSaturationParams retains master, colorize and six ordered red-through-magenta range controls.
 // Padding and Unknown retain ignored source bytes, including Photoshop's auxiliary range-color triples.
-// Non-neutral RGB8 rendering requires an explicit approximation policy; native failures remain in QA.
+// Plain master Lightness uses the native-verified RGB8 byte transfer.
+// Other non-neutral RGB8 rendering requires an explicit approximation policy; native failures remain in QA.
 type HueSaturationParams struct {
 	Colorize     bool
 	Padding      uint8
@@ -107,9 +108,9 @@ func compileHueSaturation(transform *Transform, parameters *HueSaturationParams,
 	if err := validateHueSaturation(parameters); err != nil {
 		return err
 	}
-	if !approximate && (parameters.Colorize || !hueNeutral(parameters)) {
+	if !approximate && !huePlainMasterLightness(parameters) {
 		return adjustmentError(ErrUnsupported, "adjustment.hueSaturation", 0,
-			"non-neutral Hue/Saturation requires ApproximateHueSaturation")
+			"Hue, Saturation, local and Colorize controls require ApproximateHueSaturation")
 	}
 	owned := *parameters
 	owned.Unknown = nil

@@ -46,6 +46,11 @@ func cloneSmartPlacement(original *psdmodel.Placed, width, height int) (*psdmode
 		warp.Bounds = &bounds
 	}
 	placed.Warp = &warp
+	cost += int64(512+len(warp.Values)*8+len(warp.MeshPoints)*16) +
+		warpMetadataStringBytes(&warp) + warpQuiltMetadataBytes(&warp)
+	if width == original.Width && height == original.Height {
+		return &placed, cost
+	}
 	sx, sy := float64(width)/float64(original.Width), float64(height)/float64(original.Height)
 	ox, oy := 0.0, 0.0
 	if warp.Bounds != nil {
@@ -57,22 +62,28 @@ func cloneSmartPlacement(original *psdmodel.Placed, width, height int) (*psdmode
 		warp.MeshPoints[index].X = (warp.MeshPoints[index].X - ox) * sx
 		warp.MeshPoints[index].Y = (warp.MeshPoints[index].Y - oy) * sy
 	}
-	cost += int64(512+len(warp.Values)*8+len(warp.MeshPoints)*16) +
-		warpMetadataStringBytes(&warp) + warpQuiltMetadataBytes(&warp)
 	return &placed, cost
 }
 
-func prepareSmartPlacement(ctx context.Context, source *psdfile.Document, original *psdmodel.Placed,
-	records []psdfile.SmartObjectRecord, blocks []psdfile.AdditionalBlock, dimensions image.Point, budget int64,
+func prepareSmartPlacement(ctx context.Context, source *psdfile.Document, original, current *psdmodel.Placed,
+	records []psdfile.SmartObjectRecord, blocks []psdfile.AdditionalBlock,
+	dimensions image.Point, budget int64,
 ) (smartPlacementUpdate, error) {
 	var update smartPlacementUpdate
-	if original.Width == dimensions.X && original.Height == dimensions.Y {
+	transformed := current != nil && (!slices.Equal(current.Transform, original.Transform) ||
+		!slices.Equal(current.NonAffineTransform, original.NonAffineTransform))
+	resized := original.Width != dimensions.X || original.Height != dimensions.Y
+	if !resized && !transformed {
 		return update, nil
 	}
 	if budget < 1024 {
 		return update, editError(psdfile.ErrLimit, "smartObject.metadata", "owned placement exceeds working budget")
 	}
 	update.placed, update.cost = cloneSmartPlacement(original, dimensions.X, dimensions.Y)
+	if transformed {
+		update.placed.Transform = slices.Clone(current.Transform)
+		update.placed.NonAffineTransform = slices.Clone(current.NonAffineTransform)
+	}
 	if update.cost > budget {
 		return smartPlacementUpdate{}, editError(psdfile.ErrLimit, "smartObject.metadata", "placement exceeds working budget")
 	}
@@ -91,9 +102,17 @@ func prepareSmartPlacement(ctx context.Context, source *psdfile.Document, origin
 		if err != nil {
 			return smartPlacementUpdate{}, err
 		}
-		if err := patchSmartDescriptor(record.Descriptor, payload, record.Block.Data,
-			original.Width, original.Height, sx, sy); err != nil {
-			return smartPlacementUpdate{}, err
+		if resized {
+			if err := patchSmartDescriptor(record.Descriptor, payload, record.Block.Data,
+				original.Width, original.Height, sx, sy); err != nil {
+				return smartPlacementUpdate{}, err
+			}
+		}
+		if transformed {
+			if err := patchSmartTransformDescriptor(record.Descriptor, payload, record.Block.Data,
+				current.Transform); err != nil {
+				return smartPlacementUpdate{}, err
+			}
 		}
 		update.blocks[record.Block.Span.Offset] = payload
 		budget -= int64(len(payload))
@@ -110,8 +129,16 @@ func prepareSmartPlacement(ctx context.Context, source *psdfile.Document, origin
 		if err != nil {
 			return smartPlacementUpdate{}, err
 		}
-		if err := patchSmartLegacy(ctx, source, payload, block.Data, original.Width, original.Height, sx, sy); err != nil {
-			return smartPlacementUpdate{}, err
+		if resized {
+			if err := patchSmartLegacy(ctx, source, payload, block.Data, original.Width, original.Height, sx, sy); err != nil {
+				return smartPlacementUpdate{}, err
+			}
+		}
+		if transformed {
+			if err := patchSmartTransformLegacy(ctx, source, block, payload, original.Transform,
+				current.Transform); err != nil {
+				return smartPlacementUpdate{}, err
+			}
 		}
 		update.blocks[block.Span.Offset] = payload
 		budget -= int64(len(payload))

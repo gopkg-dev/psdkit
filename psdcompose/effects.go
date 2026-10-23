@@ -21,7 +21,7 @@ type effectCache struct {
 	scratchBytes          int64
 	remainingWork         int64
 	binaryShape           bool
-	pixelMaskedOverlay    bool
+	maskedColorOverlay    bool
 	approximateDropShadow bool
 }
 
@@ -33,7 +33,7 @@ func (plan *composePlan) registerEffects(layer *psdmodel.Layer, path string) err
 	if err := psdeffects.Validate(set); err != nil {
 		return composeEffectError(err, path)
 	}
-	if plan.options.ApproximateDropShadow && pureDropShadowEffects(set) {
+	if plan.options.ApproximateDropShadow && (pureDropShadowEffects(set) || dropShadowOverlayEffects(set)) {
 		return plan.registerApproximateDropShadow(layer, path)
 	}
 	active, binary := false, false
@@ -113,8 +113,15 @@ func (plan *composePlan) registerEffects(layer *psdmodel.Layer, path string) err
 		layer.Adjustment != nil || layer.Placed != nil && !livePlacedOverlay || normalizeBlend(layer.BlendMode) != "norm" {
 		return composeError(ErrUnsupported, path, "effects currently require an ordinary Normal raster layer")
 	}
-	pixelMaskedOverlay := layer.Mask != nil && pureColorOverlayEffects(set)
-	if layer.Mask != nil && !pixelMaskedOverlay || layer.VectorMask != nil || layer.Clipping ||
+	pixelMaskActive := layer.Mask != nil && !layer.Mask.Disabled
+	vectorMaskActive := layer.VectorMask != nil && !layer.VectorMask.Disabled
+	maskedColorOverlay := (pixelMaskActive || vectorMaskActive) && pureColorOverlayEffects(set)
+	if vectorMaskActive && maskedColorOverlay {
+		if err := validateUnfeatheredEffectVectorMask(layer, path); err != nil {
+			return err
+		}
+	}
+	if (pixelMaskActive || vectorMaskActive) && !maskedColorOverlay || layer.Clipping ||
 		composeCustomRanges(layer.BlendRanges) ||
 		(layer.TransparencyShapes != nil && !*layer.TransparencyShapes) {
 		return composeError(ErrUnsupported, path,
@@ -124,7 +131,7 @@ func (plan *composePlan) registerEffects(layer *psdmodel.Layer, path string) err
 		plan.effects = make(map[*psdmodel.Layer]*effectCache)
 	}
 	plan.effects[layer] = &effectCache{path: path, set: set, binaryShape: binary,
-		pixelMaskedOverlay: pixelMaskedOverlay}
+		maskedColorOverlay: maskedColorOverlay}
 	return nil
 }
 
@@ -219,8 +226,15 @@ func (plan *composePlan) prepareEffects(ctx context.Context) error {
 				if cache.binaryShape && value != 0 && value != 255 {
 					return composeError(ErrUnsupported, cache.path, "glow/stroke with partial source alpha is uncalibrated")
 				}
-				if cache.approximateDropShadow && plan.dropShadowShapesWithMask(layer) {
-					coverage := plan.shadowMask(layer.Mask, layer.Bounds.Min.X+x, layer.Bounds.Min.Y+y)
+				if cache.approximateDropShadow &&
+					(plan.dropShadowShapesWithMask(layer) || plan.dropShadowShapesWithVector(layer)) {
+					coverage := 1.0
+					if plan.dropShadowShapesWithMask(layer) {
+						coverage *= plan.shadowMask(layer.Mask, layer.Bounds.Min.X+x, layer.Bounds.Min.Y+y)
+					}
+					if plan.dropShadowShapesWithVector(layer) {
+						coverage *= plan.vectorAlpha(layer, layer.Bounds.Min.X+x, layer.Bounds.Min.Y+y)
+					}
 					value = composeByte(float64(value) / 255 * coverage)
 				}
 				alpha.Pix[y*alpha.Stride+x] = value
@@ -252,8 +266,8 @@ func (plan *composePlan) paintEffects(
 	if cache.approximateDropShadow {
 		return plan.paintApproximateDropShadow(layer, mode, source, backdrop, cache, x, y, clip)
 	}
-	if cache.pixelMaskedOverlay {
-		return plan.paintPixelMaskedColorOverlay(layer, source, backdrop, cache, x, y, clip)
+	if cache.maskedColorOverlay {
+		return plan.paintMaskedColorOverlay(layer, source, backdrop, cache, x, y, clip)
 	}
 	return plan.paintEffectPlanes(layer, source, backdrop, cache, x, y, clip)
 }

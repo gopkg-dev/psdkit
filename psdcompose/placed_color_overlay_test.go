@@ -131,7 +131,7 @@ func TestPlacedColorOverlayRequiresFreshIdentityAndLimitedInteractions(t *testin
 		{"new-backing", func(layer *psdmodel.Layer) { layer.Pixels.Pix = bytes.Clone(layer.Pixels.Pix) }},
 		{"changed-bounds", func(layer *psdmodel.Layer) { layer.Bounds = layer.Bounds.Add(image.Pt(1, 0)) }},
 		{"layer-blend", func(layer *psdmodel.Layer) { layer.BlendMode = "mul " }},
-		{"vector-mask", func(layer *psdmodel.Layer) { layer.VectorMask = &psdvector.Mask{Disabled: true} }},
+		{"vector-mask", func(layer *psdmodel.Layer) { layer.VectorMask = &psdvector.Mask{} }},
 		{"clipping", func(layer *psdmodel.Layer) { layer.Clipping = true }},
 		{"blend-if", func(layer *psdmodel.Layer) {
 			layer.BlendRanges = []psdmodel.BlendRange{{Source: psdmodel.BlendSlider{WhiteLow: 128, WhiteHigh: 255}}}

@@ -10,7 +10,10 @@ import (
 )
 
 func (e *Editor) linkedBlockChangedLocked(block psdfile.AdditionalBlock) bool {
-	if len(e.movedExternalRecordsLocked(block)) != 0 {
+	if len(e.linkedOverlays) == 0 {
+		return false
+	}
+	if e.linkedBlockReceivesMovedLocked(block) {
 		return true
 	}
 	for _, record := range e.linkedRecords {
@@ -27,20 +30,28 @@ func (e *Editor) writeLinkedBlockLocked(
 	block psdfile.AdditionalBlock, global bool, limit int64,
 ) (writePlan, error) {
 	plan := writePlan{limit: limit}
-	if moved := e.movedExternalRecordsLocked(block); len(moved) != 0 {
-		return e.writeMovedExternalBlockLocked(block, moved, global, limit)
-	}
-	if block.Key == "lnkE" && e.externalBlockEmbeddedLocked(block) && e.emptyEmbeddedContainerLocked() != nil {
-		return plan, nil
-	}
-	if !e.linkedBlockChangedLocked(block) {
-		plan.original(block.Span)
-		return plan, plan.err
+	changed := e.linkedBlockChangedLocked(block)
+	if !changed {
+		if !global {
+			plan.original(block.Span)
+			return plan, plan.err
+		}
+		scope, found := linkedContainerScope(e.source, block)
+		if !found || scope.layerSet < 0 {
+			plan.original(block.Span)
+			return plan, plan.err
+		}
 	}
 	if !writerLinkedSpan(e.source.Source, block.Span) || !writerLinkedSpan(block.Span, block.Data) ||
 		block.Data.Offset-block.Span.Offset != 8+int64(block.LengthWidth) ||
 		(block.LengthWidth != 4 && block.LengthWidth != 8) {
 		return plan, editError(ErrInvalidEdit, "save.linked.block", "linked block spans or length width are inconsistent")
+	}
+	if !changed {
+		// Relocated layer-local blocks need document-level padding, while retaining their exact payload.
+		payload := writePlan{limit: limit}
+		payload.original(block.Data)
+		return e.wrapLinkedBlockLocked(block, block.Key, global, payload)
 	}
 	metadataBytes := int64(128)
 	var ordered []int
@@ -72,7 +83,9 @@ func (e *Editor) writeLinkedBlockLocked(
 		}
 		payload.original(psdfile.Span{Offset: position, Length: record.Span.Offset - position})
 		replacement := e.linkedOverlays[record.ID]
-		if replacement == nil {
+		if e.linkedRecordMigratesLocked(record) {
+			// Its destination writes this record exactly once after all original destination records.
+		} else if replacement == nil {
 			payload.original(record.Span)
 			payload.original(record.Padding)
 		} else {
@@ -93,13 +106,77 @@ func (e *Editor) writeLinkedBlockLocked(
 	if payload.err != nil {
 		return plan, payload.err
 	}
-	lengthWidth := block.LengthWidth
-	converted := block.Key == "lnkE" && e.externalBlockEmbeddedLocked(block)
-	if converted {
-		plan.bytes([]byte(block.Signature + "lnk2"))
-		if e.source.Header.Version == 2 {
-			lengthWidth = 8
+	moved := writePlan{limit: limit}
+	if e.linkedBlockReceivesMovedLocked(block) {
+		var err error
+		moved, err = e.writeMovedLinkedRecordsLocked(block, limit, metadataBytes)
+		if err != nil {
+			return plan, err
 		}
+	}
+	if block.Key == "lnk2" {
+		payload.append(moved)
+		return e.wrapLinkedBlockLocked(block, block.Key, global, payload)
+	}
+	if block.Key != "lnkE" || payload.size != 0 {
+		retained, err := e.wrapLinkedBlockLocked(block, block.Key, global, payload)
+		if err != nil {
+			return plan, err
+		}
+		plan.append(retained)
+	}
+	if moved.size != 0 {
+		embedded, err := e.wrapLinkedBlockLocked(block, "lnk2", global, moved)
+		if err != nil {
+			return plan, err
+		}
+		plan.append(embedded)
+	}
+	return plan, plan.err
+}
+
+func (e *Editor) writeMovedLinkedRecordsLocked(
+	block psdfile.AdditionalBlock, limit, metadataBytes int64,
+) (writePlan, error) {
+	plan := writePlan{limit: limit}
+	scope, ok := linkedContainerScope(e.source, block)
+	if !ok {
+		return plan, editError(ErrInvalidEdit, "save.linked.container", "destination scope is absent")
+	}
+	var ordered []int
+	for index, record := range e.linkedRecords {
+		if !e.linkedRecordMigratesLocked(record) || !scope.contains(record.Block) {
+			continue
+		}
+		if 512 > e.source.Limits().MaxMetadataBytes-metadataBytes {
+			return plan, editError(psdfile.ErrLimit, "save.linked.metadata", "moved record metadata exceeds its budget")
+		}
+		metadataBytes += 512
+		ordered = append(ordered, index)
+	}
+	slices.SortFunc(ordered, func(first, second int) int {
+		return cmp.Compare(e.linkedRecords[first].Span.Offset, e.linkedRecords[second].Span.Offset)
+	})
+	for _, index := range ordered {
+		record := e.linkedRecords[index]
+		overlay := e.linkedOverlays[record.ID]
+		part, err := writerEmbeddedExternalRecord(record, overlay.data, overlay.fileType, limit)
+		if err != nil {
+			return plan, err
+		}
+		plan.append(part)
+	}
+	return plan, plan.err
+}
+
+func (e *Editor) wrapLinkedBlockLocked(
+	block psdfile.AdditionalBlock, key string, global bool, payload writePlan,
+) (writePlan, error) {
+	plan := writePlan{limit: payload.limit}
+	lengthWidth := block.LengthWidth
+	if key != block.Key {
+		plan.bytes([]byte("8BIM" + key))
+		lengthWidth = uint8(versionLengthWidth(e.source.Header.Version))
 	} else {
 		plan.original(psdfile.Span{Offset: block.Span.Offset, Length: 8})
 	}

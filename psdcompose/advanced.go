@@ -72,7 +72,7 @@ func passGroupIntrinsic(full, backdrop composePixel, groupAlpha float64) compose
 func passGroupNormalRanges(layer *psdmodel.Layer) bool {
 	if layer == nil || layer.BlendMode != "pass" || (!layer.Group && layer.Children == nil) ||
 		!composeCustomRanges(layer.BlendRanges) || layer.Clipping || len(layer.Children) == 0 ||
-		layer.Effects != nil || layer.Adjustment != nil || layer.FillColor != nil ||
+		!passRangeEffectsInactive(layer) || layer.Adjustment != nil || layer.FillColor != nil ||
 		layer.Gradient != nil || layer.Pattern != nil || layer.Placed != nil ||
 		layer.Knockout != psdmodel.KnockoutNone || len(layer.ChannelRestrictions) != 0 ||
 		layer.TransparencyShapes != nil && !*layer.TransparencyShapes {
@@ -86,7 +86,7 @@ func passGroupNormalRanges(layer *psdmodel.Layer) bool {
 			continue
 		}
 		if child.Group || child.Children != nil || child.Clipping || normalizeBlend(child.BlendMode) != "norm" ||
-			composeCustomRanges(child.BlendRanges) || child.Pixels == nil || child.Effects != nil ||
+			composeCustomRanges(child.BlendRanges) || child.Pixels == nil || !passRangeEffectsInactive(child) ||
 			child.Adjustment != nil || child.FillColor != nil || child.Gradient != nil ||
 			child.Pattern != nil || child.Placed != nil ||
 			child.Knockout != psdmodel.KnockoutNone || len(child.ChannelRestrictions) != 0 ||

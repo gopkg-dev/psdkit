@@ -177,7 +177,8 @@ func (engine *rgbTileRenderer) planOpenTypeLayers(
 					return err
 				}
 				linked, exists := engine.linked[compiled.placement.SourceID]
-				if !exists || linked.Kind != "liFD" && (linked.Kind != "liFE" || engine.settings.ExternalResolver == nil) {
+				if !exists || linked.Kind != "liFD" && (linked.Kind != "liFE" ||
+					engine.settings.ExternalResolver == nil && !engine.legacy.resolvesExternalRaster(linked)) {
 					return sceneError(psdfile.ErrUnsupported, "tile.text.placedSource", record.Span.Offset,
 						"original placed source is absent or requires an explicit resolver")
 				}
