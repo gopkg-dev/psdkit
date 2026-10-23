@@ -36,6 +36,26 @@ if err != nil {
 
 `Compile` 返回的 `Patch` 与 `CompileUniformGrid` 返回的 `UniformGrid` 都提供 `Forward`、`Inverse`、`Bounds` 和 `Project`，`WorkingBytes` 用于预算估算。
 
+## 编辑单个智能对象的变换
+
+`Editor.SetSmartObjectTransform(ctx, id, corners)` 修改单个栅格智能对象的目标四角，并重新生成该实例的保存像素。`corners` 是父文档坐标下的左上、右上、右下、左下四点；共享来源和其他实例保持不变。
+
+```go
+corners := [4]psdmodel.Point{
+	{X: 20, Y: 20}, {X: 220, Y: 20},
+	{X: 220, Y: 120}, {X: 20, Y: 120},
+}
+if err := editor.SetSmartObjectTransform(ctx, id, corners); err != nil {
+	return err
+}
+```
+
+当前限 RGB8 父文档、受支持的栅格来源及没有活动 Warp 的实例。它更新放置变换、图层边界和实例栅格，保留蒙版、效果、不透明度及未知字节；不编辑 Warp 网格或预设参数。退化、无效或不支持的投影原子拒绝。
+
+`SetSmartObjectTransformWithOptions(ctx, id, corners, resolver, SmartTransformOptions)` 接受明确的外链解析器和采样策略。嵌入来源或本编辑器已有更新的来源不需要 resolver；未更新的外链须显式解析。解析器在锁外执行，期间编辑器发生变化则返回 `ErrStaleLinkedEdit`。
+
+`SmartTransformOptions.AssumeUntaggedSRGB` 明确解释无配置来源；`ApproximatePlacedProjection` 允许透明边界的数学采样，默认关闭，不代表 Photoshop 像素等价。浏览器通过 `editor.SetSmartObjectTransformWithOptions` 调用，参数为 `[id, corners, options]`，resolver 由请求的 `links` 资产映射注入。
+
 > [!WARNING]
 > 受限的均匀网格具备正反映射、ROI 和预算控制，但不代表任意 quilt、预设或全部组合都能通过实时资格。`ApproximateCustomWarp` 等显式近似不会提升为 Photoshop 像素兼容。
 

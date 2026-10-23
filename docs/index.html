@@ -234,20 +234,21 @@ description: 纯 Go 的 Photoshop PSD/PSB 工具库：按需读取图层与通�
 </section>
 
 <!-- ═══════════════ 4. 支持范围 ═══════════════ -->
-<section class="scope" aria-labelledby="scope-title">
+<section id="scope" class="scope" aria-labelledby="scope-title">
   <div class="container">
     <p class="kicker">04 · 支持范围</p>
     <h2 id="scope-title" class="section-title">清楚标出，<br>能做什么、做到哪一步</h2>
-    <p class="section-lead">每项能力按五个维度分别报告。“已完成”只适用于声明范围；近似算法默认关闭，必须显式开启。数据与<a href="{{ '/status.html' | relative_url }}">能力矩阵</a>同源，来自 <code>docs/status.md</code>。</p>
+    <p class="section-lead">每项能力按五个维度分别报告。“已完成”只适用于声明范围；近似算法默认关闭，必须显式开启。与<a href="{{ '/status.html' | relative_url }}">能力矩阵</a>同步更新于 {{ status_page.updated }}。</p>
+    <p class="section-lead">{{ status_page.latest_update }} <a href="{{ '/status.html' | relative_url }}">查看完整矩阵</a></p>
 
     <div class="scope__stats">
-      <div class="stat stat--done"><strong>{{ count_done }}</strong><span>项已完成</span></div>
-      <div class="stat stat--partial"><strong>{{ count_partial }}</strong><span>项部分支持</span></div>
-      <div class="stat stat--none"><strong>{{ count_none }}</strong><span>项未支持</span></div>
+      <div class="stat stat--done"><strong>{{ count_done }}</strong><span>个能力维度已完成</span></div>
+      <div class="stat stat--partial"><strong>{{ count_partial }}</strong><span>个能力维度部分支持</span></div>
+      <div class="stat stat--none"><strong>{{ count_none }}</strong><span>个能力维度未支持</span></div>
       <div class="stat stat--opt"><strong>{{ count_opt }}</strong><span>类显式近似</span></div>
     </div>
 
-    <div class="heat" role="table" aria-label="能力完成度概览">
+    <div class="heat" role="table" aria-label="能力支持状态">
       <div class="heat__row heat__row--head" role="row">
         <span role="columnheader">能力</span><span role="columnheader">读取</span><span role="columnheader">编辑保存</span><span role="columnheader">保存预览</span><span role="columnheader">实时重绘</span><span role="columnheader">近似</span>
       </div>
@@ -259,7 +260,8 @@ description: 纯 Go 的 Photoshop PSD/PSB 工具库：按需读取图层与通�
         {%- for key in heat_keys -%}
         {%- assign cell = row[key] -%}
         {%- capture state_text -%}{%- case cell[0] -%}{%- when "done" -%}已完成{%- when "partial" -%}部分支持{%- when "none" -%}未支持{%- when "opt" -%}可选近似{%- when "no" -%}不近似{%- else -%}不涉及{%- endcase -%}{%- endcapture -%}
-        <span role="cell" class="heat__cell heat__cell--{{ cell[0] }}" title="{{ heat_heads[forloop.index0] }}：{{ state_text }}{% if cell[1] != '' %} — {{ cell[1] }}{% endif %}"><i></i><span class="visually-hidden">{{ heat_heads[forloop.index0] }}：</span><span class="heat__label">{{ state_text }}</span></span>
+        {%- capture state_short -%}{%- case cell[0] -%}{%- when "done" -%}完成{%- when "partial" -%}部分{%- when "none" -%}未支{%- when "opt" -%}近似{%- when "no" -%}不近{%- else -%}—{%- endcase -%}{%- endcapture -%}
+        <span role="cell" class="heat__cell heat__cell--{{ cell[0] }}" title="{{ heat_heads[forloop.index0] }}：{{ state_text }}{% if cell[1] != '' %} — {{ cell[1] }}{% endif %}"><i aria-hidden="true"></i><span class="visually-hidden">{{ heat_heads[forloop.index0] }}：{{ state_text }}</span><span class="heat__label" aria-hidden="true">{{ state_text }}</span><span class="heat__short" aria-hidden="true">{{ state_short }}</span></span>
         {%- endfor -%}
       </div>
       {%- endfor -%}

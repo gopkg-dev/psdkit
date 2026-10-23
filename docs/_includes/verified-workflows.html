@@ -1,0 +1,21 @@
+{%- if include.items.size > 0 -%}
+{%- assign workflow_heading = include.heading_level | default: 3 -%}
+<section class="verified-workflows" aria-labelledby="{{ include.heading_id }}">
+  <div class="verified-workflows__header">
+    <h{{ workflow_heading }} id="{{ include.heading_id }}">近期已验收 <strong>{{ include.items.size }}</strong> 个工作流</h{{ workflow_heading }}>
+    <p>每项均验证：编辑 → 保存 → 重新打开 → 继续编辑</p>
+  </div>
+  <ul class="verified-workflows__list" role="list">
+    {%- for workflow in include.items -%}
+    <li id="workflow-{{ workflow.id }}">
+      <span class="verified-workflows__check" aria-hidden="true">✓</span>
+      <div>
+        <a href="{{ workflow.guide | replace: '.md', '.html' | prepend: '/' | relative_url }}">{{ workflow.title }}</a>
+        <small>{{ workflow.area }} · {{ workflow.scope }}</small>
+      </div>
+    </li>
+    {%- endfor -%}
+  </ul>
+  <p class="verified-workflows__note">仅统计这里列出的已验收子项，不代表全部 Photoshop 功能的完成率。</p>
+</section>
+{%- endif -%}

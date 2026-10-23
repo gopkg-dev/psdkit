@@ -48,7 +48,21 @@ coverage, err := psdkit.RasterizeFontRun(ctx, run, image.Rect(0, 0, 320, 80)) //
 
 ## 编辑文字
 
-`Editor.SetTextContent` 只修改**单样式拉丁点文字**，并且必须同时提供准确的新图层像素——Photoshop 打开文件时不会自动刷新保存的文字栅格。现代 Txt2 文字、多样式、段落文字和带 Warp 的文字返回 `ErrUnsupported`。`SetNativeTextState` 导入由原生应用生成的文字状态。
+`Editor.SetTextContent(ctx, id, text, options)` 修改**单样式水平点文字**的 Unicode 内容，包括中文、emoji、组合字符、多行及空文本。必须同时提供准确的新图层像素：Photoshop 打开文件时不会自动刷新保存的文字栅格。这个入口保留现有字体与样式，不新增文字排版或字形生成能力。
+
+```go
+if err := editor.SetTextContent(ctx, id, "中文标题 😀\n第二行", psdedit.TextEditOptions{
+	Pixels: accurateTextPixels,
+}); err != nil {
+	return err
+}
+```
+
+`Pixels` 是应用图层不透明度、蒙版与效果之前的 straight-alpha RGB8 图像；其 `Rect` 是新的绝对图层边界。库复制这些像素并校验布局，但不校验画面是否与文字一致。
+
+CRLF 和 LF 统一为 CR，字符与段落范围按 **UTF-16 code unit** 重建：补充平面的 emoji 占两个单位，组合字符保持原码点序列，不做 Unicode 归一化。`Txt ` 与 EngineData 同步保存，未知描述符、字体参数、变换位型及尾部字节保留；PSD/PSB 重开后可继续编辑。
+
+非法 UTF-8 返回 `ErrInvalidEdit`；除 CR/LF 外的控制字符（含 NUL、Tab）和 U+2028/U+2029 行／段落分隔符返回 `ErrUnsupported`。现代 Txt2、多字符样式、不同段落样式、段落文字、竖排和带 Warp 的文字仍不支持。`SetNativeTextState` 可导入由原生应用生成的文字状态。
 
 ## 尚未完成
 

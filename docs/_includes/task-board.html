@@ -1,0 +1,123 @@
+{%- comment -%}
+  任务进度由叶子任务自动计算；完成状态只能随验收证据更新数据源。
+  用法：{% include task-board.html %}，或传入 plan=自定义数据。
+{%- endcomment -%}
+{%- assign task_plan = include.plan | default: site.data.task_plan -%}
+{%- assign task_total = 0 -%}
+{%- assign task_done = 0 -%}
+{%- assign next_task_title = "" -%}
+{%- assign next_group_title = "" -%}
+{%- for group in task_plan.groups -%}
+  {%- assign task_total = task_total | plus: group.tasks.size -%}
+  {%- assign completed_tasks = group.tasks | where: "status", "done" -%}
+  {%- assign task_done = task_done | plus: completed_tasks.size -%}
+  {%- for task in group.tasks -%}
+    {%- if task.id == task_plan.next_task -%}
+      {%- assign next_task_title = task.title -%}
+      {%- assign next_group_title = group.title -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endfor -%}
+{%- assign task_percent = 0 -%}
+{%- assign progress_max = task_total | at_least: 1 -%}
+{%- if task_total > 0 -%}
+  {%- assign task_percent = task_done | times: 100.0 | divided_by: task_total | round -%}
+{%- endif -%}
+{%- assign task_remaining = task_total | minus: task_done -%}
+<div class="task-board" data-task-board-content data-task-total="{{ task_total }}" data-group-total="{{ task_plan.groups.size }}">
+  <header class="task-board__header">
+    <p class="task-board__eyebrow">DEVELOPMENT PLAN</p>
+    <h1>开发任务与进度</h1>
+    <p class="task-board__intro">把剩余支持范围拆成可验收的任务，按优先级逐项完善。展开分组可查看每项的验收标准、依赖与验证证据。</p>
+    <p class="task-board__updated">计划更新于 <time datetime="{{ task_plan.updated | date: '%Y-%m-%d' }}">{{ task_plan.updated | date: '%Y-%m-%d' }}</time></p>
+  </header>
+
+  <section class="task-overview" aria-label="整体任务进度">
+    <div class="task-overview__main">
+      <div class="task-overview__heading"><span>整体完成进度</span><strong>{{ task_percent }}<small>%</small></strong></div>
+      <progress class="task-progress" value="{{ task_done }}" max="{{ progress_max }}" aria-label="整体已完成 {{ task_done }} / {{ task_total }} 项">{{ task_percent }}%</progress>
+      <p><strong>{{ task_done }} / {{ task_total }}</strong> 项已完成</p>
+    </div>
+    <div class="task-overview__stat"><span>待完成任务</span><strong>{{ task_remaining }}</strong><small>逐项验收后更新</small></div>
+    <div class="task-overview__stat"><span>能力分组</span><strong>{{ task_plan.groups.size }}</strong><small>覆盖当前开发计划</small></div>
+  </section>
+  <details class="task-rules">
+    <summary>按已验收子任务数计算进度 · 查看计算与验收规则</summary>
+    <p class="task-board__method">进度 = 已验收子任务数 ÷ 当前规划子任务数，按整数百分比显示。每项等权计数，不代表工时或 Photoshop 兼容率；筛选不改变真实进度，新增任务会更新分母。分组包含已支持基线和后续扩展，当前支持边界仍以能力矩阵为准。</p>
+    <p class="task-board__method">涉及编辑的任务均须验证编辑 → 保存 → 重新打开 → 继续编辑；实时渲染另验全图／区域一致性、预算与取消，近似仍须显式开启。只读与工程任务按各自验收标准完成。</p>
+  </details>
+
+  {%- if next_task_title != "" -%}
+  <a class="task-next" href="#{{ task_plan.next_task | escape }}">
+    <span class="task-next__label">下一项</span>
+    <span class="task-next__content"><strong>{{ next_task_title | escape }}</strong><small>{{ next_group_title | escape }}</small></span>
+    <span class="task-next__arrow" aria-hidden="true">↗</span>
+  </a>
+  {%- endif -%}
+
+  <div class="task-controls" data-task-controls hidden>
+    <div class="task-controls__filters" role="search" aria-label="筛选开发任务">
+      <label class="task-field task-field--search" for="task-search"><span>关键词</span><input id="task-search" data-task-search type="search" placeholder="搜索任务、验收标准或证据" autocomplete="off" aria-controls="task-groups"></label>
+      <label class="task-field" for="task-status"><span>任务状态</span><select id="task-status" data-task-status-filter aria-controls="task-groups"><option value="all">全部状态</option><option value="todo">未完成</option><option value="done">已完成</option></select></label>
+      <label class="task-field" for="task-priority"><span>优先级</span><select id="task-priority" data-task-priority-filter aria-controls="task-groups"><option value="all">全部优先级</option><option value="P1">P1 · 优先推进</option><option value="P2">P2 · 后续推进</option><option value="P3">P3 · 长期完善</option></select></label>
+    </div>
+    <div class="task-controls__actions">
+      <div class="task-controls__buttons"><button type="button" data-task-expand>全部展开</button><button type="button" data-task-collapse>全部收起</button></div>
+      <button class="task-controls__reset" type="button" data-task-reset>清除筛选</button>
+    </div>
+  </div>
+  <div class="task-results">
+    <p data-task-results role="status" aria-live="polite" aria-atomic="true">显示 {{ task_total }} / {{ task_total }} 项 · {{ task_plan.groups.size }} / {{ task_plan.groups.size }} 组</p>
+    <span>状态只随验收证据更新</span>
+  </div>
+  <noscript><p class="task-board__method">当前未启用 JavaScript，所有任务仍可展开查看；关键词和状态筛选需要启用 JavaScript。</p></noscript>
+
+  <div class="task-groups" id="task-groups">
+    {%- for group in task_plan.groups -%}
+    {%- assign group_done_tasks = group.tasks | where: "status", "done" -%}
+    {%- assign group_done = group_done_tasks.size -%}
+    {%- assign group_total = group.tasks.size -%}
+    {%- assign group_progress_max = group_total | at_least: 1 -%}
+    {%- assign group_percent = 0 -%}
+    {%- if group_total > 0 -%}
+      {%- assign group_percent = group_done | times: 100.0 | divided_by: group_total | round -%}
+    {%- endif -%}
+    <details class="task-group" id="group-{{ group.id | escape }}" data-task-group data-group-id="{{ group.id | escape }}" data-group-title="{{ group.title | escape }}" data-group-priority="{{ group.priority | escape }}">
+      <summary class="task-group__summary">
+        <span class="task-group__topline"><span class="task-priority task-priority--{{ group.priority | downcase | escape }}">{{ group.priority | escape }}</span><span class="task-group__chevron" aria-hidden="true"></span></span>
+        <span class="task-group__title">{{ group.title | escape }}</span>
+        <span class="task-group__description" data-group-summary>{{ group.summary | escape }}</span>
+        <span class="task-group__progress-label"><span>{{ group_done }} / {{ group_total }} 项已完成</span><strong>{{ group_percent }}%</strong></span>
+        <progress class="task-progress" value="{{ group_done }}" max="{{ group_progress_max }}" aria-label="{{ group.title | escape }}已完成 {{ group_done }} / {{ group_total }} 项">{{ group_percent }}%</progress>
+        <span class="task-group__hint"><span class="task-group__expand-hint">展开任务与验收标准</span><span class="task-group__collapse-hint">收起任务明细</span></span>
+      </summary>
+      <div class="task-group__body">
+        {%- if group.guide -%}<a class="task-group__guide" href="{{ group.guide | replace: '.md', '.html' | prepend: '/' | relative_url }}">阅读支持范围与使用指南 <span aria-hidden="true">↗</span></a>{%- endif -%}
+        <ol class="task-list" role="list">
+          {%- for task in group.tasks -%}
+          {%- assign task_priority = task.priority | default: group.priority -%}
+          <li class="task-item" id="{{ task.id | escape }}" tabindex="-1" data-task-id="{{ task.id | escape }}" data-task-status="{{ task.status | escape }}" data-task-priority="{{ task_priority | escape }}">
+            <div class="task-item__heading">
+              <span class="task-state{% if task.status == 'done' %} task-state--done{% else %} task-state--todo{% endif %}">{% if task.status == 'done' %}<span class="task-state__icon" aria-hidden="true">✓</span>已完成{% else %}<span class="task-state__icon" aria-hidden="true"></span>未完成{% endif %}</span>
+              <span class="task-priority task-priority--{{ task_priority | downcase | escape }}" title="任务优先级">{{ task_priority | escape }}</span>
+              {%- if task.id == task_plan.next_task -%}<span class="task-item__next">下一项</span>{%- endif -%}
+            </div>
+            <h3><a href="#{{ task.id | escape }}">{{ task.title | escape }}</a></h3>
+            <dl class="task-item__details">
+              <div><dt>验收标准</dt><dd>{{ task.acceptance | escape | newline_to_br }}</dd></div>
+              <div><dt>依赖任务</dt><dd>{% if task.depends_on.size > 0 %}<ul class="task-item__links" role="list">{% for dependency in task.depends_on %}{% assign dependency_title = dependency %}{% for lookup_group in task_plan.groups %}{% for lookup_task in lookup_group.tasks %}{% if lookup_task.id == dependency %}{% assign dependency_title = lookup_task.title %}{% endif %}{% endfor %}{% endfor %}<li><a href="#{{ dependency | escape }}">{{ dependency_title | escape }}</a></li>{% endfor %}</ul>{% else %}<span class="task-item__muted">无前置依赖</span>{% endif %}</dd></div>
+              <div><dt>验收证据</dt><dd>{% if task.status == 'done' and task.evidence.size > 0 %}<ul class="task-item__links task-item__evidence" role="list">{% for evidence in task.evidence %}<li><code>{{ evidence | escape }}</code></li>{% endfor %}</ul>{% else %}<span class="task-item__muted">待完成后补充验收证据</span>{% endif %}</dd></div>
+              {% if task.references.size > 0 %}<div><dt>实现参考</dt><dd><ul class="task-item__links task-item__evidence" role="list">{% for reference in task.references %}<li><code>{{ reference | escape }}</code></li>{% endfor %}</ul></dd></div>{% endif %}
+            </dl>
+          </li>
+          {%- endfor -%}
+        </ol>
+      </div>
+    </details>
+    {%- endfor -%}
+  </div>
+  <div class="task-empty" data-task-empty{% if task_total > 0 %} hidden{% endif %}>
+    <strong>没有匹配的任务</strong><p>试试其他关键词，或清除状态和优先级筛选。</p><button type="button" data-task-reset>显示全部任务</button>
+  </div>
+  <p class="visually-hidden" data-task-announcement role="status" aria-live="polite" aria-atomic="true"></p>
+</div>

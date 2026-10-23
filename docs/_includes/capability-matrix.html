@@ -26,9 +26,11 @@
     </thead>
     <tbody>
       {%- for row in include.rows -%}
+      {%- assign area_workflows = include.workflows | where: "area", row.area -%}
       <tr>
         <th scope="row">
           {% if row.guide %}<a href="{{ row.guide | replace: '.md', '.html' | prepend: '/' | relative_url }}">{{ row.area }}</a>{% else %}{{ row.area }}{% endif %}
+          {% if area_workflows.size > 0 %}<a class="matrix__verified" href="#verified-workflows">{{ area_workflows.size }} 项工作流已验收</a>{% endif %}
           {% if row.gaps %}<small class="matrix__gaps">未完成：{{ row.gaps }}</small>{% endif %}
         </th>
         {%- assign cells = "read,edit,preview,live,approx" | split: "," -%}

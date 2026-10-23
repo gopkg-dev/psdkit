@@ -56,6 +56,22 @@ engine.close();
 
 复杂文档可能按库的资格规则返回 `unsupported`，此时不会返回伪造的图片。
 
+现有顶层 RGB8 画板也使用相同的 `editor.Composite` / `editor.WritePSD` 调用，无需上传额外合成图。修改子图层后直接调用 `editor.WritePSD`，导出的文件会包含当前画板背景和裁剪生成的预览；导入该文件后可继续编辑。渲染用的临时背景不会成为保存文件中的新图层。
+
+智能滤镜参数编辑在已有算法范围内也会自动更新像素。`stack` 为该层读取并修改后的现有滤镜栈：
+
+```js
+await engine.call('editor.SetSmartFilterParameters', {
+  target: editor,
+  args: [id, stack, {}], // 默认子集；不需要 Pixels。
+});
+const saved = await engine.call('editor.WritePSD', { target: editor, args: [{}] });
+```
+
+非零高斯模糊等近似须显式传入 `{ Render: { SmartFilters: { ApproximateGaussian: true } } }`。外链来源每次调用都须传 `links` 映射，并至少提供 `{ Render: {} }` 以注入来源解析器。保存重开后仍可按相同方式继续编辑；近似选项不会因文件中存在滤镜而自动开启。完整边界见[智能滤镜](guide/filters.md)。
+
+普通 Normal 栅格层上的无羽化活动矢量／双蒙版颜色叠加，可直接调用 `editor.SetEffects`。活动像素、矢量或双蒙版上的阴影及阴影＋颜色叠加，使用 `editor.SetEffectsWithOptions` 的 `{ ApproximateDropShadow: true }`，并在 `editor.Composite`、`editor.WritePSD` 各自的选项中同样显式开启。矢量蒙版参与阴影时，两个活动蒙版均须无羽化；`lmgm`／`vmgm` 保留各自的作用阶段。导出后重新导入可继续修改已有效果；完整边界见[图层效果](guide/effects.md)。
+
 ## 能力目录
 
 `system.capabilities` 返回完整调用目录：Go API、原注释、参数名、类型、示例、JSON schema、目标类型以及精度策略提示。`args` 的顺序对应可见参数；`Context`、`io.Writer`、字体与外链解析器由 Go 注入，不需要传入。
@@ -111,6 +127,17 @@ const glyphs = await engine.call('font.raster', {
 ```
 
 不读取系统字体，不自动替换缺失字体。`font.decode` 可以通过 `alias` 对应 PSD 中原始的 PostScript 名称。外链通过调用参数 `links: { "原始 ID 或名称": "a…" }` 显式映射，不读取 PSD 中的系统路径或任意 URL。
+
+外链 PNG/JPEG/受支持的扁平 TIFF 现在可直接用于实时重绘。导入来源资产后，`render.source`、`render.tile` 和 `render.placed` 会注入栅格 resolver；每次调用均须提供映射，并传入选项对象：
+
+```js
+const live = await engine.call('render.source', {
+  args: [{ $ref: source }, {}],
+  links: { [sourceID]: externalImageAsset },
+});
+```
+
+更换映射会读取新来源；缺少映射不会使用上次调用的映射或文件里的旧缓存。保存并重开父 PSD/PSB 后，同样可以显式映射、实时重绘并继续编辑。
 
 ## 预算与超时
 

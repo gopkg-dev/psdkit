@@ -5,10 +5,14 @@
 <script>(function () { try { var t = localStorage.getItem('psdkit-theme'); if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; document.documentElement.dataset.theme = t; } catch (e) {} })();</script>
 <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}?v={{ site.time | date: '%s' }}">
 <link rel="stylesheet" href="{{ '/assets/css/docs.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+{% if page.task_board %}
+<link rel="stylesheet" href="{{ '/assets/css/tasks.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+<script type="module" src="{{ '/assets/js/task-board.js' | relative_url }}"></script>
+{% endif %}
 <script type="module" src="{{ '/assets/js/site.js' | relative_url }}"></script>
 <script type="module" src="{{ '/assets/js/docs.js' | relative_url }}"></script>
 </head>
-<body class="page-docs{% if page.wide %} page-docs--wide{% endif %}">
+<body class="page-docs{% if page.wide %} page-docs--wide{% endif %}"{% if page.task_board %} data-task-board{% endif %}>
 <a class="skip-link" href="#content">跳到正文</a>
 {% include site-header.html section="docs" %}
 {%- comment -%} 计算当前位置与上一页 / 下一页：顺序取自 _data/nav.yml。 {%- endcomment -%}

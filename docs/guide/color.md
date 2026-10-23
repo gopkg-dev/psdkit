@@ -26,6 +26,10 @@ fmt.Println(float.Width, float.Height, float.SourceDepth)
 
 `RenderSourcePrecision` 只接受 16/32 位 RGB 或灰度文档，8 位文档返回 `unsupported`，请使用 RGB8 入口。`RenderSourcePrecisionTile` 和 `VisitSourcePrecisionTiles` 按区域 / 分块计算；`PrecisionOptions` 默认 256 MiB 工作内存、两千万画布像素、一万个图层和 64 层嵌套。浏览器 SDK 把大浮点数组作为小端 `.f64le` 二进制输出，不自动量化 HDR。
 
+RGB16 的 Normal / Normal-Difference 整数路径现在允许明确禁用且元数据已知的像素蒙版，禁用蒙版样本不参与读取或合成。结果沿用原有整数算法，和无蒙版基线一致；活动蒙版不扩大该路径的资格，未知蒙版也不会被提升为已验证整数路径。
+
+高位深蒙版可通过 `SetPixelMask` 编辑；保存仍须提供准确、匹配原位深的 `SaveOptions.Composite`。已覆盖 PSD/PSB 四种通道压缩的保存重开、源精度全图／区域重绘和继续编辑，自动 RGB8 保存预览仍不适用。
+
 ## ICC 与显示转换
 
 | 入口 | 说明 |

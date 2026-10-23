@@ -13,12 +13,14 @@ psdkit 区分三样东西：**父图层保存的栅格**、**智能对象的真�
 | 来源记录 | `source.LinkedFiles`、`ReadLinkedFileView`，linked-file / placed 记录及 typed 元数据 |
 | 嵌入文档 | `OpenLinkedDocument`（PSD/PSB）、`OpenLinkedTIFFLayers`（TIFF） |
 | 嵌入图片 | `DecodeLinkedRaster`、`LinkedRasterFormat` |
-| 编辑器视图 | `editor.SmartObjects`、`editor.OpenSmartObjectSource` |
+| 编辑器视图 | `editor.SmartObjects`，包含当前 `FileType`、嵌入状态和共享实例 |
+| 当前来源原字节 | `editor.ReadSmartObjectContents`，读取原始嵌入内容、编辑覆盖层或显式解析的外链 |
+| 可编辑来源文档 | `editor.OpenSmartObjectSource`，限 PSD/PSB；PNG/JPEG/TIFF 使用原字节读取接口 |
 
 ## 替换内容
 
 ```go
-replacement, err := os.ReadFile("new-content.psd")
+replacement, err := os.ReadFile("new-content.png")
 if err != nil {
 	return err
 }
@@ -27,15 +29,32 @@ if err := editor.ReplaceContents(ctx, layerID, replacement); err != nil {
 }
 ```
 
-- `ReplaceContents` 替换嵌入的 RGB8 PSD/PSB 来源，并更新所有共享实例。原始块保持不可变，新内容进入编辑覆盖层。
+- `ReplaceContents` 支持 RGB8 PSD/PSB、PNG、JPEG 和受支持的扁平 RGB8 TIFF 来源，并更新所有共享该来源的现存实例。传入的编码字节原样保存，不会把 PNG/JPEG/TIFF 自动转成 PSD；来源记录的 `FileType` 同步更新。
+- 原始文档与调用方输入保持不可变。新来源、实例像素和尺寸元数据一起提交；任意共享实例不支持时整次操作失败。
 - 原型画布尺寸变化时保持目标四角不动；Photoshop 默认的“替换内容”则保留像素比例与中心点，两者行为不同。
-- `ReplaceSmartObjectContents` 处理共享来源；`EmbedLinkedContents` 把外链转为嵌入；`UpdateLinkedContents` 保留外链并更新内容。
+- `ReplaceSmartObjectContents` 是 `ReplaceContents` 的显式别名，两者都会替换共享来源；`ReplaceSmartObjectContentsWithOptions` 对应带选项的入口。
+
+保存父文档时，PSD/PSB writer 同时写出来源记录、更新后的实例栅格和合成预览。重新打开后，可以用 `SmartObjects` 检查来源类型，用 `ReadSmartObjectContents` 取回编码字节；PSD/PSB 来源仍可通过 `OpenSmartObjectSource` 继续编辑。
+
+扁平 TIFF 来源支持 classic、条带式 RGB8 / RGBA8，保留大小端、ICC 及原始编码字节；压缩包括未压缩、PackBits、LZW（标签 5）和 Deflate（标签 8 / 32946），LZW / Deflate 均支持 Predictor 2 水平差分。瓦片式、平面分离、高位深或其他未支持的 TIFF 组织仍拒绝，不回退到私有预览缓存。
+
+LZW 按 [TIFF 6.0 第 13–14 节](https://www.itu.int/itudoc/itu-t/com16/tiff-fx/docs/tiff6.pdf) 使用 MSB-first、9–12 位字典和规定的提前位宽切换；每条带单独清表并验证 EOI。字典工作区受预算限制，截断、越界引用、多余输出与尾随字节均拒绝。已用独立 LibTIFF 编码样本验证，并覆盖替换、外链转嵌入、保留外链更新及 PSD/PSB 保存重开后的实时重绘。
+
+## 修改单个实例的变换
+
+`SetSmartObjectTransform` 修改单个实例的目标四角，重绘该实例栅格并支持 PSD/PSB 保存重开，其他共享实例和来源原字节不变。带选项的 `SetSmartObjectTransformWithOptions` 支持显式外链解析及投影策略。当前要求 RGB8 父文档、受支持来源且没有活动 Warp，详见[变换编辑](warp.md#编辑单个智能对象的变换)。
+
+## 显式渲染策略
+
+`ReplaceContentsWithOptions`、`ReplaceSmartObjectContentsWithOptions`、`EmbedLinkedContentsWithOptions` 和 `UpdateLinkedContentsWithOptions` 接受同一种 `SmartContentsOptions`。其中 `ApproximateCustomWarp` 选择经几何证明的数学 Warp 模型，`AssumeUntaggedSRGB` 为无配置来源提供明确的 sRGB 色彩解释。
+
+默认入口和零值选项都保持严格策略。未支持的 Warp、实时智能滤镜、源格式或色彩组合返回 `unsupported`；示例成功不代表任意 Photoshop 智能对象都能替换。
+
+这些编辑入口当前要求 RGB8 父文档，PSD/PSB 替换来源也须为 RGB8。PNG/JPEG/TIFF 的编码原字节保持不变，父文档中的实例栅格使用 RGB8；提供保存合成图不会绕过编辑阶段的位深或投影限制。
 
 ## 图片转可编辑 PSD
 
-`ReplaceContentsWithOptions` 提供显式的 `SmartContentsOptions`。其中 `ApproximateCustomWarp`
-选择经几何证明的数学 Warp 模型，`AssumeUntaggedSRGB` 为无配置的印花提供明确色彩解释。
-默认 `ReplaceContents` 及零值选项保持严格策略，示例成功不代表任意 Warp 均受支持。
+需要把图片变成可编辑的嵌套 PSD 时，先调用 `BuildRasterContents`。直接传入 PNG/JPEG/TIFF 只替换来源，不会创建 PSD 图层。
 
 ```go
 data, err := psdkit.BuildRasterContents(ctx, pixels) // 不裁剪、不修改样本
@@ -53,11 +72,51 @@ if err := editor.ReplaceContents(ctx, layerID, data); err != nil {
 
 外链只通过调用方提供的 resolver 解析。psdkit **不会**把 PSD 中记录的路径当作读取本机文件或下载 URL 的授权。浏览器 SDK 用已导入资产的显式映射代替系统路径，见[浏览器 SDK](../browser.md)。
 
+| 操作 | 来源与保存行为 |
+| --- | --- |
+| `EmbedLinkedContents` | 将显式解析到的外链转成嵌入来源，并更新全部共享实例；保存重开后不再需要 resolver |
+| `UpdateLinkedContents` | 保留外链身份和路径元数据，更新来源文件大小、可选时间戳与共享实例；已有非空缓存更新，原本为空的缓存继续为空 |
+| `ReadSmartObjectContents` | 优先读取当前编辑覆盖层；未编辑的外链必须显式解析，不把旧缓存当作当前外部文件 |
+
+```go
+resolve := func(ctx context.Context, record psdfile.LinkedFileRecord) ([]byte, error) {
+	return replacement, ctx.Err() // replacement 来自调用方明确选择的文件
+}
+if err := editor.EmbedLinkedContentsWithOptions(ctx, layerID, resolve,
+	psdedit.SmartContentsOptions{AssumeUntaggedSRGB: true}); err != nil {
+	return err
+}
+```
+
+保留外链时使用 `LinkedContentsUpdateResolver`，返回 `LinkedContentsUpdate{Data: replacement}`；可选 `Timestamp` 只修改明确提供的时间戳。父 PSD/PSB 的保存与外部文件的写入是两次独立操作，后者由调用方负责。保存并重开后，仍需提供当前外部文件的显式映射，才能读取外链来源。
+
+同一外链容器内的其他记录与已有嵌入来源会保留，支持在全局或同一图层内的容器中逐个转为嵌入。删除存放来源记录的图层后，保存会将其来源记录保留到全局，避免其他共享实例失去来源。
+
+解析器在编辑器锁外执行；解析期间文档发生变化时返回 `ErrStaleLinkedEdit`，不会提交部分替换。重复或不明确的来源身份、非活动层集等不支持的结构会被拒绝。
+
 ## 实时重绘
 
-`RenderSourcePlacedLayer` 从嵌入来源重建单个智能对象图层，结果保留放置、蒙版和效果，供后续合成；`RenderSource` 在整图重绘时递归处理受支持的嵌入 PSD/PSB/PNG/JPEG 来源。变形部分见 [Warp 变形](warp.md)。
+`RenderSourcePlacedLayer` 从嵌入来源或显式解析的外链重建单个智能对象图层，结果保留放置、蒙版和效果，供后续合成；`RenderSource` 在整图重绘时递归处理受支持的 PSD/PSB/PNG/JPEG/TIFF 来源。变形部分见 [Warp 变形](warp.md)。
 
-PNG/JPEG/TIFF 和嵌套 PSD/PSB 的支持依具体路径决定；色彩、尺寸、位深和透明边界都会保留。
+外链 PSD/PSB 通过 `SceneOptions.ExternalResolver` 返回文档；外链 PNG/JPEG/扁平 TIFF 可通过新增的 `ExternalRasterResolver` 直接返回编码字节，无需先转换成 PSD。`TileOptions` 提供同名字段，区域、分块、嵌套来源和单个实例重绘使用相同策略。
+
+```go
+pixels, err := psdkit.RenderSource(ctx, source, psdkit.SceneOptions{
+	ExternalRasterResolver: func(ctx context.Context, record psdkit.LinkedFileRecord) ([]byte, error) {
+		data, ok := selectedContents[record.ID] // 由调用方明确选择的来源映射
+		if !ok {
+			return nil, fmt.Errorf("未选择此外链来源")
+		}
+		return data, ctx.Err()
+	},
+})
+```
+
+回调返回的字节在本次渲染结束前须保持不变；输出像素独立持有。来源编码须匹配记录中的 PNGf/JPEG/TIFF 类型，并通过源文件大小、像素、解码和工作内存限制。ICC 转换沿用现有显式策略；JPEG 不承诺与 Photoshop 私有解码器逐像素一致。
+
+同一父文档内共享实例复用一次已解析来源；不同父文档的同名 ID 分别解析。提供栅格 resolver 后，其错误不会回退到旧缓存或文档 resolver；未提供它时，仍兼容原有 `ExternalResolver` 返回文档的方式。
+
+`UpdateLinkedContents` 编辑、保存并重开后，可继续提供当前外部字节实时重绘，再修改内容、实例四角或不透明度并保存。外链路径与来源身份继续保留；父文档内旧缓存不充当当前外部文件。
 
 ```sh
 go run ./examples/replace-contents -help

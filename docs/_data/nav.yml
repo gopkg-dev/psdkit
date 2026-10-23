@@ -4,6 +4,7 @@
     - { title: 概览, url: /guide/ }
     - { title: 快速开始, url: /guide/quickstart.html }
     - { title: 能力矩阵, url: /status.html }
+    - { title: 任务面板, url: /tasks.html }
 - title: 使用指南
   items:
     - { title: PSD/PSB 与按需读取, url: /guide/reading.html }

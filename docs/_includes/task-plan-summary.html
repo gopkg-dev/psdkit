@@ -1,0 +1,35 @@
+{%- assign plan = site.data.task_plan -%}
+{%- assign planned_total = 0 -%}
+{%- assign planned_done = 0 -%}
+{%- for group in plan.groups -%}
+  {%- assign group_done = group.tasks | where: "status", "done" | size -%}
+  {%- assign planned_total = planned_total | plus: group.tasks.size -%}
+  {%- assign planned_done = planned_done | plus: group_done -%}
+{%- endfor -%}
+{%- assign planned_percent = 0 -%}
+{%- if planned_total > 0 -%}
+  {%- assign planned_percent = planned_done | times: 100.0 | divided_by: planned_total | round -%}
+{%- endif -%}
+{%- assign overview_heading = include.heading_level | default: 3 -%}
+<section class="plan-overview" aria-labelledby="plan-overview-title">
+  <div class="plan-overview__head">
+    <div>
+      <h{{ overview_heading }} id="plan-overview-title">任务面板 · {{ plan.groups.size }} 个任务分组</h{{ overview_heading }}>
+      <p>已验收 {{ planned_done }} / {{ planned_total }} 个子任务；进度按当前清单逐项计算。</p>
+    </div>
+    <a class="btn btn--primary btn--sm" href="{{ '/tasks.html' | relative_url }}">查看全部任务与子任务 →</a>
+  </div>
+  <div class="plan-overview__progress">
+    <progress value="{{ planned_done }}" max="{{ planned_total }}" aria-label="规划子任务验收进度">{{ planned_percent }}%</progress>
+    <strong>{{ planned_percent }}%</strong>
+  </div>
+  <ul class="plan-overview__groups" role="list">
+    {%- for group in plan.groups limit:4 -%}
+    {%- assign group_done = group.tasks | where: "status", "done" | size -%}
+    {%- assign group_percent = 0 -%}
+    {%- if group.tasks.size > 0 -%}{%- assign group_percent = group_done | times: 100.0 | divided_by: group.tasks.size | round -%}{%- endif -%}
+    <li><a href="{{ '/tasks.html' | relative_url }}#group-{{ group.id }}">{{ group.title }} <span>{{ group_done }}/{{ group.tasks.size }} · {{ group_percent }}%</span></a></li>
+    {%- endfor -%}
+  </ul>
+  <p class="plan-overview__note">百分比表示规划清单的验收进度，不表示工时或 Photoshop 兼容率；新增子任务时分母会同步更新。</p>
+</section>
