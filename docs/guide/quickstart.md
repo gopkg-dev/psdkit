@@ -14,10 +14,10 @@ description: 用一个完整的 Go 程序走通新建、打开、读取图层、
 ```sh
 mkdir psdkit-quickstart && cd psdkit-quickstart
 go mod init example.com/quickstart
-go get github.com/gopkg-dev/psdkit
+go get github.com/gopkg-dev/psdkit@v0.3.0
 ```
 
-本地开发时，用 `go mod edit -replace github.com/gopkg-dev/psdkit=/path/to/psdkit` 指向本地仓库。
+本指南对应 `v0.3.0`，支持范围见[该 Tag 的能力矩阵](https://github.com/gopkg-dev/psdkit/blob/v0.3.0/docs/status.md)。`v0.2.0` 的[历史安装与保存重开记录](../releases/verification-2026-10-24.md)保留原版本的核验结果。本地开发时，可用 `go mod edit -replace github.com/gopkg-dev/psdkit=/path/to/psdkit` 指向本地仓库；这与公共版本安装验证分开。
 
 ## 2. 新建文档并添加图层
 

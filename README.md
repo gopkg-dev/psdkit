@@ -17,8 +17,10 @@
 安装模块：
 
 ```sh
-go get github.com/gopkg-dev/psdkit
+go get github.com/gopkg-dev/psdkit@v0.3.0
 ```
+
+`v0.3.0` 的新增能力和升级范围见[发布说明](docs/releases/v0.3.0.md)，支持边界以[该 Tag 的矩阵](https://github.com/gopkg-dev/psdkit/blob/v0.3.0/docs/status.md)为准。`v0.2.0` 的[历史交付验收记录](docs/releases/verification-2026-10-24.md)保留当时的固定提交、运行链接和校验和。
 
 ## 快速开始
 

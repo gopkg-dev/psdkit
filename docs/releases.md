@@ -8,15 +8,21 @@ description: 推送版本 Tag 后自动检查、验证 Go 模块引用并生成�
 维护者将准备好的提交合并到 `main`，再推送一个新的版本 Tag，即可自动完成发版。
 不需要额外的 PAT、AI 服务或第三方发布平台；发布权限来自 GitHub Actions 内置令牌。
 
+## 已发布版本与交付核验
+
+当前文档对应 [v0.3.0](https://github.com/gopkg-dev/psdkit/releases/tag/v0.3.0)，新增能力与升级范围见[本版说明](releases/v0.3.0.md)，准确边界以[固定 Tag 的矩阵](https://github.com/gopkg-dev/psdkit/blob/v0.3.0/docs/status.md)为准。每个新版本都通过下述 Tag 工作流执行跨平台检查、公共模块引用验证和中文 Release 发布。
+
+2026-10-24 对 `v0.2.0` 的[历史交付核验](releases/verification-2026-10-24.md)保留了当时的提交、CI／Pages／Release 运行、公共代理安装和浏览器保存重开证据。这是固定时点的记录，不能代表后续 `main`、线上部署或新版本的支持范围。
+
 ## 发布步骤
 
-先确认本地 `main` 已与远端同步、版本变更已检查，再创建并推送 Tag。例如下一个补丁版本：
+先确认本地 `main` 已与远端同步、版本变更已检查，再创建并推送 Tag。例如未来的补丁版本（以下仅为示例）：
 
 ```sh
 git switch main
 git pull --ff-only origin main
-git tag -a v0.1.1 -m "psdkit v0.1.1"
-git push origin refs/tags/v0.1.1
+git tag -a v0.3.1 -m "psdkit v0.3.1"
+git push origin refs/tags/v0.3.1
 ```
 
 示例中的版本号需要按实际变更调整。工作流依次执行：
@@ -55,7 +61,7 @@ GitHub Pages 仍由 `main` 推送触发，独立于库版本 Release。
 
 ## 手动验证已有版本
 
-在 Actions → Release → **Run workflow** 中选择 `main`，输入已存在的 Tag，例如 `v0.1.0`。
+在 Actions → Release → **Run workflow** 中选择 `main`，输入已存在的 Tag，例如 `v0.2.0`。
 该入口运行同样的代码检查、公共模块引用验证和中文说明预览，**不会创建或修改 Release**。
 检查与构建针对输入 Tag 的提交；发布工具取自所选工作流版本，因此也能验证接入自动化前的版本。
 
@@ -63,8 +69,8 @@ GitHub Pages 仍由 `main` 推送触发，独立于库版本 Release。
 
 ```sh
 make release-test
-RELEASE_TAG=v0.1.0 node scripts/release/release.mjs notes
-RELEASE_TAG=v0.1.0 node scripts/release/consumer.mjs
+RELEASE_TAG=v0.2.0 node scripts/release/release.mjs notes
+RELEASE_TAG=v0.2.0 node scripts/release/consumer.mjs
 ```
 
 预览需要包含 Tag 和 `origin/main` 的完整 Git 历史；引用验证需要 Node.js 24、

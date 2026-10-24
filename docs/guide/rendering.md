@@ -18,6 +18,12 @@ RGB8 核心合成覆盖支持范围内的组、剪贴、26 种确定性混合模
 
 混合模式、剪贴、Blend If、高级混合以及像素蒙版可通过 `Editor` 修改并保存；`AddPixelMask` / `RemovePixelMask` 支持新增、删除用户像素蒙版，包括新图层和组，见[混合与蒙版编辑](editing.md#混合剪贴与-blend-if)。蒙版变动会立即参与 RGB8 合成，保存重开后保留相同覆盖效果。编辑后的 `Editor.Composite` 和默认保存预览使用相同的合成资格检查；参数可编辑不表示所有 Knockout 或高级组合都能自动重绘。
 
+实时智能对象来源可与显式 `ApproximateDropShadow` 下的纯阴影或 Normal 阴影＋颜色叠加组合；来源像素、父层像素蒙版、不透明度与效果分开计算，整图与区域包含必要的画布外阴影来源。编辑器自动预览会严格重建当前嵌入来源，不沿用上次 `EffectsEditOptions.Render` 的外链或近似策略；其余情况需显式准确合成图，见[智能对象效果边界](effects.md#智能对象当前来源与效果)。
+
+10×10／13×13 均匀 custom Warp 已接入整图、区域、分块访问、单实例和候选来源渲染，各次调用须显式 `ApproximateCustomWarp: true`；外链仍每次映射。保持已认证仿射放置、均匀切片及原边界／±0.6 guard，数学近似不会放开透视、不规则 quilt 或折叠。保存已有编辑像素与重新从来源重绘仍是不同入口，详见[均匀网格范围](warp.md#编辑-10101313-均匀网格)。
+
+已有横向 Arc Lower 预设也已接入整图、区域、分块访问和单实例来源重绘，限仿射、零透视、4×2、有限且绝对值小于100的 bend，并通过无折叠认证。包括 bend 为0，每次仍须显式开启 `ApproximateCustomWarp`，外链逐次映射；缺少策略不回退旧缓存。参数编辑、保存重开和继续编辑沿用同一数学模型，来源替换及其他预设仍拒绝，详见[预设来源重绘](warp.md#预设的整图与区域来源重绘)。
+
 ```go
 pixels, err := psdkit.RenderSource(ctx, source)
 if errors.Is(err, psdkit.ErrUnsupported) {
@@ -57,7 +63,27 @@ if err != nil {
 
 子图层可修改像素、名称、可见性和不透明度，也可新增、删除、重排或在现有画板之间移动。画板可以在根级重排或显隐。`CompositeGroup` 选择画板时包含其背景和裁剪；选择普通子组时仍不继承祖先画板，保持独立图层组预览语义。
 
-裁剪蒙版和背景只加入临时渲染快照，writer 不会新增虚拟图层或改写原蒙版采样。画板自身几何、删除或嵌套需要同步编辑画板元数据，当前拒绝；提供显式合成图也不能绕过这些结构限制。活动画板蒙版／效果、独立画板的实时智能对象及高位深完整语义仍保持原有边界。
+裁剪蒙版和背景只加入临时渲染快照，writer 不会新增虚拟图层或改写原蒙版采样。画板自身几何、删除或嵌套需要同步编辑画板元数据，当前拒绝；提供显式合成图也不能绕过这些结构限制。活动画板自身蒙版／效果及高位深完整语义仍保持原有边界。
+
+### 独立画板中的智能对象
+
+`RenderArtboard` / `RenderArtboards` 从可见智能对象的实际来源重建像素，不用已保存的实例栅格或合成预览代替。默认支持严格范围内的嵌入来源；外链通过 `ArtboardRenderOptions.Render` 显式提供 `ExternalResolver` 或 `ExternalRasterResolver`，仍不读取 PSD 中的任意路径或 URL。
+
+```go
+boards, err := psdkit.RenderArtboards(ctx, source, psdkit.ArtboardRenderOptions{
+	Render: &psdkit.SceneOptions{
+		ExternalRasterResolver: resolveSelectedRaster,
+	},
+})
+```
+
+`resolveSelectedRaster` 只返回调用方已选定的 PNG/JPEG/受支持扁平 TIFF 字节；外链 PSD/PSB 使用返回文档的 `ExternalResolver`。同次输出内共享来源只解析一次，各实例的变换、滤镜和父蒙版仍独立。单画板选择仍使用物理 `LayerIndex`，不会解析未选择画板中的来源；隐藏图层或画板不触发来源解析。结果图像的起点为零，`ArtboardImage.Bounds` 保留原画板坐标，各画板不会混入其他画板或画板外普通层。
+
+近似始终显式：`Render.ApproximatePlacedProjection`、`Render.ApproximateCustomWarp`、`Render.SmartFilters` 等只选择声明范围。外层 `ArtboardRenderOptions.Compose` 控制当前画板及其图层的合成，`Render.Compose` 控制递归来源内部的合成；两者不会自动复制或互相开启近似。
+
+外层 `MaxWorkingBytes` 包含来源快照、实时原型、各实例缓存及全部输出，`Render.MaxWorkingBytes` 非零时进一步限制来源的工作存储。未知来源、缺少外链映射、缺少近似策略、预算、取消或关闭失败均不返回部分画板。为保持实时来源语义，拒绝 `Render.CachedSpecialLayers`、`CachedTextLayers`、`OutputProfile` 以及旧 `ApproximateText`；支持范围内的实时 OpenType 仍须显式字体与策略。
+
+来源替换、画板内子层透明度等编辑后可直接自动保存 PSD/PSB，重新打开再独立输出和继续编辑；保存与写入外部来源文件仍是两次独立操作。已验证 PSD/PSB 四种压缩与两轮编辑，外链重开后必须再次提供明确来源映射。
 
 ## 显式近似
 
@@ -66,7 +92,7 @@ if err != nil {
 | 选项 | 范围 |
 | --- | --- |
 | `ApproximateVectorStroke` | 原始矢量路径的有界实心内描边 |
-| `ApproximateCustomWarp` | 自定义 Warp 的数学投影 |
+| `ApproximateCustomWarp` | 自定义单片、仿射均匀10×10／13×13网格及已认证横向 Arc Lower 预设的数学投影；预设包括零 bend 也逐次显式选择 |
 | `ApproximatePlacedProjection` | 透明边框透视放置的全画布双线性采样 |
 | `ApproximateText` / `ApproximateOpenTypeText` | 显式字体的拉丁文字渲染 |
 | `SmartFilters` | 选择实时滤镜算法与近似策略 |

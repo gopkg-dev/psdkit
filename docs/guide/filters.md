@@ -55,6 +55,12 @@ err := editor.SetSmartFilterParameters(ctx, id, stack, psdkit.SmartFilterEditOpt
 
 `source.EncodeSmartFilterParameters` 仅返回更新后的 SoLd / SoLE 参数块，不更新图层栅格或完整合成图。编辑器的自动路径复用已有算法，不扩大滤镜、来源与合成组合的支持范围。若已通过显式 `Pixels` 更新图层，但文档中其他组合无法自动合成，保存仍须提供准确的 `Composite` 或 `CompositeImage`。
 
+## 替换来源时同步重算
+
+`ReplaceContents` 以及外链转嵌入、保留外链更新，会从新来源重新计算全部共享实例的当前滤镜，而不是只替换滤镜之前的像素。各实例保留自己的变换、滤镜参数和原滤镜蒙版；当前尚未保存的参数也不会回退。父图层蒙版、效果和透明度保持独立，任一实例失败时整次来源替换不提交。
+
+带选项的入口通过 `SmartContentsOptions.SmartFilters` 直接选择策略，例如 `SmartFilters: &psdkit.SmartFilterOptions{ApproximateGaussian: true}`。这里不使用参数编辑入口的 `Render.SmartFilters` 嵌套。nil 和空选项仅允许严格子集；近似须每次显式开启，重开后也不会自动继承授权。可直接自动保存 PSD/PSB、读取保存预览，再继续替换来源或编辑滤镜，完整用法见[智能对象与外链](smart-objects.md#显式渲染策略)。
+
 ## 实时计算
 
 ```go
@@ -77,6 +83,6 @@ filtered, err := psdkit.ApplySmartFilters(ctx, pixels, pipeline, psdkit.SmartFil
 恒等子集仍检查参数范围、已知算法模式和 Normal 滤镜混合；不会因为半径或数量为 0 就忽略未知活跃参数、非 Normal 混合或非法字段。输出保留原始 alpha 和透明像素的隐藏 RGB，且仍受输出预算及取消控制。
 
 > [!CAUTION]
-> 独立调用 `RenderSource` 等实时入口时，`SmartFilters` 为 nil 仍拒绝活动智能滤镜；自动参数编辑会按空 `SmartFilters` 选择严格默认子集。两种入口都要求超出默认子集的算法显式开启对应近似选项。完整智能滤镜栈尚未完成。
+> 独立调用 `RenderSource` 等实时入口时，`SmartFilters` 为 nil 仍拒绝活动智能滤镜；自动参数编辑和来源替换按空 `SmartFilters` 选择严格默认子集。这些入口都要求超出默认子集的算法显式开启对应近似选项。完整智能滤镜栈尚未完成。
 
 默认上限：两千万像素、256 MiB 工作内存、4096 个滤镜，可通过 `MaxPixels`、`MaxWorkingBytes`、`MaxFilters` 与 `MaxSampleOperations` 调整。

@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "updated": "2026-10-23",
-  "next_task": "effects-calibrated-feather-overlay",
+  "updated": "2026-10-24",
+  "next_task": "filters-remove-instance",
   "groups": [
     {
       "id": "effects",
       "title": "图层效果",
       "priority": "P1",
-      "summary": "已有 4 个蒙版效果工作流通过验收；接下来逐项扩展羽化、图层来源、组合阶段和效果族。默认精确范围与显式近似分别验收。",
+      "summary": "已有 7 个效果工作流通过验收，新增智能对象当前来源的纯阴影／阴影＋颜色叠加，保留来源、蒙版与实例效果独立。严格嵌入来源自动保存，外链与来源近似另按显式策略处理；接下来扩展组效果与其他效果族。",
       "guide": "guide/effects.md",
       "tasks": [
         {
@@ -60,10 +60,15 @@
         {
           "id": "effects-calibrated-feather-overlay",
           "title": "已校准矩形矢量羽化＋纯颜色叠加",
-          "status": "todo",
+          "status": "done",
           "priority": "P1",
-          "acceptance": "先限普通 Normal 栅格层、单整数矩形、羽化 0.5/1.5/3、无活动像素蒙版；复用现有羽化核，独立参考验证后编辑保存重开。",
-          "evidence": [],
+          "acceptance": "普通 RGB8 Normal 栅格、单整数矩形、羽化 0.5/1.5/3、无活动像素蒙版；原生羽化采样点与独立叠加参考，PSD/PSB 四压缩编辑、自动保存、重开继续编辑；JSON 与 Wasm 调用链验证。",
+          "evidence": [
+            "psdcompose/color_overlay_vector_feather_test.go",
+            "psdcompose/vector_feather_test.go",
+            "psdedit/color_overlay_vector_feather_test.go",
+            "psdweb/feather_overlay_bridge_test.go"
+          ],
           "depends_on": [
             "vector-color-overlay"
           ],
@@ -76,10 +81,14 @@
         {
           "id": "effects-feather-shadow",
           "title": "已校准矢量／双蒙版羽化＋阴影",
-          "status": "todo",
+          "status": "done",
           "priority": "P2",
-          "acceptance": "先补已知羽化半径；明确塑形前羽化、全局隐藏阶段及双蒙版乘积，整图与 ROI 对齐，显式投影近似下编辑保存重开。",
-          "evidence": [],
+          "acceptance": "普通 RGB8 Normal 栅格、单整数矩形矢量羽化 0.5/1.5/3 与已有像素蒙版羽化模型；纯阴影及阴影＋颜色叠加逐次显式开启近似，独立核对各自塑形／最终隐藏、画布外来源与 ROI，PSD/PSB 四压缩两轮保存重开续编，JSON 与真实 Wasm 通过。",
+          "evidence": [
+            "psdcompose/feather_shadow_reference_test.go",
+            "psdedit/vector_feather_shadow_roundtrip_test.go",
+            "psdweb/feather_shadow_bridge_test.go"
+          ],
           "depends_on": [
             "effects-calibrated-feather-overlay",
             "vector-shadow"
@@ -93,10 +102,17 @@
         {
           "id": "effects-placed-shadow-overlay",
           "title": "智能对象重绘结果＋阴影与颜色叠加",
-          "status": "todo",
+          "status": "done",
           "priority": "P2",
-          "acceptance": "对受支持的当前智能对象来源和投影应用效果，避免重复烘焙像素蒙版／不透明度；源替换后编辑保存重开保持一致。",
-          "evidence": [],
+          "acceptance": "当前 RGB8 智能对象来源和投影支持纯阴影及 Normal 阴影＋颜色叠加，父近似与递归来源策略独立；严格可重建的嵌入／替换来源完成 PSD/PSB 四压缩两轮保存重开续编，不烘焙父蒙版／Fill／Opacity。外链逐次显式映射，准确合成图保存或先转嵌入；JSON、真实 Wasm、失败原子性通过。",
+          "evidence": [
+            "psdcompose/live_placed_fx_reference_test.go",
+            "psdscene/live_placed_fx_test.go",
+            "psdedit/placed_effects_roundtrip_test.go",
+            "psdedit/placed_effects_roundtrip_external_test.go",
+            "psdedit/placed_effects_roundtrip_filter_test.go",
+            "psdweb/live_placed_fx_bridge_test.go"
+          ],
           "depends_on": [
             "pixel-shadow-overlay"
           ],
@@ -317,7 +333,7 @@
       "id": "blending",
       "title": "蒙版、混合与 Blend If",
       "priority": "P1",
-      "summary": "统一计算像素／矢量蒙版生命周期及混合属性编辑。高位深总能力由对应领域统计，本组的剩余任务只扩明确可验证的蒙版与合成组合。",
+      "summary": "像素／矢量蒙版生命周期及混合属性编辑已有 7 项验收，新增无采样默认覆盖与矢量蒙版的完整闭环。高位深能力由对应领域统计，剩余工作扩明确可验证的合成组合。",
       "guide": "guide/editing.md",
       "tasks": [
         {
@@ -372,7 +388,7 @@
           "title": "无采样默认覆盖蒙版属性编辑",
           "status": "done",
           "priority": "P1",
-          "acceptance": "无像素通道时保留默认覆盖语义，允许已知属性修改并保存重开；歧义元数据拒绝，尚不能直接再加矢量蒙版。",
+          "acceptance": "无像素通道时保留默认覆盖语义，允许已知属性修改并保存重开；可与明确矢量蒙版共存，生成覆盖载体和歧义元数据不作为用户蒙版编辑。",
           "evidence": [
             "psdedit/pixel_mask_default_coverage_test.go"
           ],
@@ -393,10 +409,15 @@
         {
           "id": "blending-default-mask-add-vector",
           "title": "默认覆盖像素蒙版上新增矢量蒙版",
-          "status": "todo",
+          "status": "done",
           "priority": "P1",
-          "acceptance": "保持无采样默认覆盖的语义和属性，再添加明确矢量蒙版；不捏造未知用户采样，双蒙版编辑保存重开逐像素一致。",
-          "evidence": [],
+          "acceptance": "保留无采样默认覆盖、边界及属性，再新增明确矢量蒙版；不创建 -2/-3 采样，PSD/PSB 四压缩保存重开后继续修改 DefaultColor、密度、反相和矢量几何，源整图／区域及 JSON、Wasm 闭环一致。",
+          "evidence": [
+            "psdedit/vector_default_coverage_test.go",
+            "psdparse/vector_default_coverage_test.go",
+            "psdscene/default_mask_vector_tile_test.go",
+            "psdweb/default_mask_vector_bridge_test.go"
+          ],
           "depends_on": [
             "blending-default-only-mask-properties",
             "blending-vector-mask-lifecycle"
@@ -499,7 +520,7 @@
       "id": "smart-objects",
       "title": "智能对象与外链",
       "priority": "P1",
-      "summary": "受支持的 RGB8 来源替换、外链生命周期及显式栅格来源重绘已有闭环；嵌套、位深、滤镜与放置组合仍需分项扩展。",
+      "summary": "已有 4 项验收，来源替换会按每个共享实例的当前变换与滤镜重算；外链生命周期及显式栅格重绘保持。嵌套、位深和剩余放置组合继续分项扩展，近似仍须显式开启。",
       "guide": "guide/smart-objects.md",
       "tasks": [
         {
@@ -550,9 +571,14 @@
         {
           "id": "smart-objects-replace-active-filters",
           "title": "替换来源时同步重算活动智能滤镜",
-          "status": "todo",
+          "status": "done",
           "acceptance": "从新来源按当前实例变换和滤镜栈重绘一次，不重复滤镜且不烘焙层蒙版与效果；共享实例各自重算，滤镜近似须显式开启；编辑保存重开后参数、来源和像素一致，失败保持原事务。",
-          "evidence": [],
+          "evidence": [
+            "psdedit/smart_contents_filter_roundtrip_test.go",
+            "psdedit/smart_contents_filter_shared_test.go",
+            "psdedit/smart_contents_filter_policy_review_test.go",
+            "psdweb/smart_contents_filter_bridge_test.go"
+          ],
           "depends_on": [
             "smart-objects-shared-replace"
           ],
@@ -598,7 +624,7 @@
       "id": "text",
       "title": "文字与字体",
       "priority": "P1",
-      "summary": "单样式水平点文字可凭准确像素编辑；显式字体的受限排版与重绘已支持，自动像素和更复杂编辑布局仍需单独验收。",
+      "summary": "单样式水平点文字在已有算法内可凭显式字体和文字近似策略自动更新像素，保存重开可继续编辑；准确像素仍支持更广 Unicode 内容。多样式／Txt2、段落、竖排和 Warp 等编辑继续分别验收。",
       "guide": "guide/text.md",
       "tasks": [
         {
@@ -630,9 +656,13 @@
         {
           "id": "text-edit-auto-pixels",
           "title": "支持范围内文字编辑后自动更新像素",
-          "status": "todo",
+          "status": "done",
           "acceptance": "对已支持的单样式水平点文字，使用显式字体和已选择的文字策略自动生成未烘焙蒙版/效果的像素；参数与像素原子提交，编辑保存重开继续编辑通过；近似不自动开启。",
-          "evidence": [],
+          "evidence": [
+            "psdedit/text_auto_roundtrip_test.go",
+            "psdedit/text_auto_policy_test.go",
+            "psdweb/text_auto_bridge_test.go"
+          ],
           "depends_on": [
             "text-unicode-content-with-pixels",
             "text-explicit-font-render-subset"
@@ -726,7 +756,7 @@
       "id": "artboards",
       "title": "画板",
       "priority": "P1",
-      "summary": "现有顶层 RGB8 画板的子层编辑、自动保存和独立输出已支持；画板自身生命周期及高级重绘仍有明确边界。",
+      "summary": "已有 3 项验收，顶层 RGB8 画板支持子层编辑、自动保存及嵌入／显式外链智能对象的独立实时输出；画板自身生命周期和高级语义仍有明确边界。",
       "guide": "guide/rendering.md",
       "tasks": [
         {
@@ -820,9 +850,13 @@
         {
           "id": "artboards-live-placed-output",
           "title": "独立画板中的实时智能对象来源",
-          "status": "todo",
+          "status": "done",
           "acceptance": "独立画板输出接入明确的嵌入/外链来源解析及投影策略，不读取旧实例缓存替代实时结果；裁剪、背景、ROI、预算和编辑保存重开均验证，外链仍需显式映射。",
-          "evidence": [],
+          "evidence": [
+            "psdscene/artboard_placed_test.go",
+            "psdedit/artboard_live_placed_roundtrip_test.go",
+            "psdweb/artboard_live_placed_bridge_test.go"
+          ],
           "depends_on": [
             "artboards-top-level-render",
             "smart-objects-external-raster-live"
@@ -846,7 +880,7 @@
       "id": "engineering",
       "title": "工程与发布",
       "priority": "P1",
-      "summary": "CI、Pages 和版本发布工具链已有实现；线上发布状态、性能基线、无障碍及公开样例需继续核验。",
+      "summary": "跨平台 CI、Tag 自动发版、Pages 与公共代理安装保存重开已接通；v0.2.0 的历史交付证据固定保留，后续版本按 Tag 单独检查与发布。性能基线、完整无障碍及公开样例审核继续分别验收。",
       "guide": "releases.md",
       "tasks": [
         {
@@ -877,9 +911,14 @@
         {
           "id": "engineering-live-release-pages-verification",
           "title": "核验远端 CI／在线发布交付",
-          "status": "todo",
+          "status": "done",
           "acceptance": "核对当前远端、Tag、Release、Actions 和 Pages 运行证据；从公共代理安装真实版本并执行保存重开；同步修正过时项目状态文案。待核验不等于尚未发布。",
-          "evidence": [],
+          "evidence": [
+            "docs/releases/verification-2026-10-24.md",
+            "scripts/release/consumer.mjs",
+            "scripts/release/consumer/main.go",
+            ".github/workflows/release.yml"
+          ],
           "depends_on": [
             "engineering-ci-pages-workflows",
             "engineering-release-toolchain"
@@ -1587,7 +1626,7 @@
       "id": "warp",
       "title": "Warp 与变换",
       "priority": "P2",
-      "summary": "无活动 Warp 的单实例四角编辑和已声明几何投影已支持；网格编辑、预设整图、任意 quilt 与私有采样精度仍分开推进。",
+      "summary": "四角、4×4 单片及 10×10／13×13 均匀网格、横向 Arc Lower 预设 bend 编辑均已验收；预设已接入整图、区域、分块访问与单实例来源重绘，PSD/PSB 保存重开续编。网格与预设逐次显式近似，外链逐次映射；预设来源替换、其他预设及任意 quilt 仍待支持。",
       "guide": "guide/warp.md",
       "tasks": [
         {
@@ -1618,12 +1657,34 @@
           "priority": "P1"
         },
         {
-          "id": "warp-grid-editing",
-          "title": "已声明 Warp 网格控制点编辑保存",
-          "status": "todo",
+          "id": "warp-single-patch-editing",
+          "title": "4×4 单片自定义 Warp 控制点编辑保存",
+          "status": "done",
           "priority": "P2",
-          "acceptance": "为已有支持网格提供受控控制点编辑入口，保留共享来源及未知字段；验证有效几何、实例像素更新、PSD/PSB 保存重开继续编辑，折叠或无效控制点原子拒绝。",
-          "evidence": [],
+          "acceptance": "已有 RGB8 栅格智能对象的现代单一 SoLd／SoLE、4×4 custom 单片可编辑16个源坐标控制点；严格投影默认，数学近似与外链逐次显式。未知字节与共享来源／实例保留，更新未烘焙像素；PSD/PSB 四压缩编辑保存重开续编及来源替换／缩放恢复通过，非法几何原子拒绝。",
+          "evidence": [
+            "psdedit/smart_warp_roundtrip_test.go",
+            "psdedit/smart_warp_oracle_test.go",
+            "psdedit/smart_warp_replace_test.go",
+            "psdweb/smart_warp_bridge_test.go"
+          ],
+          "depends_on": [
+            "warp-instance-corners",
+            "warp-declared-projection-subset"
+          ]
+        },
+        {
+          "id": "warp-grid-editing",
+          "title": "10×10／13×13 均匀 Warp 网格编辑保存",
+          "status": "done",
+          "priority": "P2",
+          "acceptance": "已有 10×10／13×13 均匀网格的来源重绘与100／169点编辑，逐次显式 ApproximateCustomWarp 和外链映射；保留阶数、切片及0／±0.6 guard、共享来源与未知字节。PSD/PSB 四压缩两轮保存重开续编、独立像素／ROI、Wasm及回调原子性通过；同尺寸替换保留当前网格，变尺寸／透视网格／不均匀切片／折叠明确拒绝。",
+          "evidence": [
+            "psdedit/smart_warp_grid_roundtrip_test.go",
+            "psdscene/uniform_grid_source_test.go",
+            "psdweb/smart_warp_grid_bridge_test.go",
+            "psdwarp/grid_parameter_review_test.go"
+          ],
           "depends_on": [
             "warp-instance-corners",
             "warp-declared-projection-subset"
@@ -1632,10 +1693,15 @@
         {
           "id": "warp-preset-controls-editing",
           "title": "已声明 Warp 预设控制参数编辑保存",
-          "status": "todo",
+          "status": "done",
           "priority": "P2",
-          "acceptance": "对有独立几何证据的预设开放控制参数，保持未改来源和描述符字段；参数边界、实例重绘、PSD/PSB 保存重开继续编辑均验证，不支持预设不产生修改。",
-          "evidence": [],
+          "acceptance": "已有横向 Arc Lower、4×2、仿射、零透视、doub bend 的参数编辑与实例像素原子更新；每次显式 ApproximateCustomWarp 和外链映射，保留原生结构、来源及其他实例字节。独立控制几何与数学采样、PSD/PSB 四压缩两轮保存重开续编、JSON／真实 Wasm及回调原子性通过；未知预设、非法或重复 schema、折叠、预算和取消拒绝。来源替换未计入本项，通用预设来源重绘另项验收。",
+          "evidence": [
+            "psdedit/smart_warp_preset_roundtrip_test.go",
+            "psdweb/smart_warp_preset_bridge_test.go",
+            "psdwarp/preset_raster_test.go",
+            "internal/psdplaced/preset_warp_test.go"
+          ],
           "depends_on": [
             "warp-instance-corners",
             "warp-declared-projection-subset"
@@ -1644,9 +1710,14 @@
         {
           "id": "warp-presets-full-scene",
           "title": "已有预设几何接入整图和区域重绘",
-          "status": "todo",
-          "acceptance": "先将已有独立原生几何证据的预设接入来源重绘；全图、ROI、Tile、visitor 与显式预览同域一致；保留预算和近似门禁，预设参数编辑后保存重开结果一致。",
-          "evidence": [],
+          "status": "done",
+          "acceptance": "已有横向 Arc Lower、4×2、仿射、零透视且无折叠的几何接入整图、ROI、Tile、visitor 与单实例来源重绘；每次显式 ApproximateCustomWarp（含零 bend）和外链映射，不用旧缓存。独立原生控制记录的数学采样参考、正负原点、滤镜 opacity window、尺寸／边界／变换原始 schema 唯一性及空区域无来源读取通过；PSD/PSB 四压缩编辑保存重开重绘续编、JSON／真实 Wasm、预算／取消和竞态验证通过。来源替换、其他预设及原生像素精度未计入。",
+          "evidence": [
+            "psdscene/preset_source_test.go",
+            "internal/psdplaced/preset_descriptor_test.go",
+            "psdedit/smart_warp_preset_roundtrip_test.go",
+            "psdweb/smart_warp_preset_bridge_test.go"
+          ],
           "depends_on": [
             "warp-preset-controls-editing"
           ],

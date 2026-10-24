@@ -19,7 +19,13 @@ pages.yml 将 Jekyll 生成的首页与文档、React/Vite 构建的 Playground 
 Vite base 和 SDK Worker 默认使用相对路径，可覆盖 PSDKIT_BASE_PATH 或 workerURL。
 Wasm 与 wasm_exec.js 必须来自同一 Go 工具链。
 
-## 首次启用
+## 线上交付与历史核验
+
+线上交付以[最近成功的 Pages 工作流](https://github.com/gopkg-dev/psdkit/actions/workflows/pages.yml)及公开运行时清单为准。2026-10-24 对 `v0.2.0` 的历史核验固定于 [Pages 运行 39885197289](https://github.com/gopkg-dev/psdkit/actions/runs/39885197289)，部署提交为 `dd482b7a0e6b508561e1c35dbcf38f9c4355e339`。当时已实测页面、运行时文件及浏览器保存重开；固定链接、资源校验和与完整步骤见[历史交付记录](releases/verification-2026-10-24.md)。
+
+线上内容来自实际部署的提交。本地工作区更新任务和文档后，须经过提交与 Pages 部署才会反映到公共域名；本地预览更新不表示线上已同步。历史核验中的提交与哈希不随新部署改写。
+
+## 配置与后续部署
 
 1. 审核源码提交并推送到 gopkg-dev/psdkit 的 main。
 2. GitHub Settings → Pages → Source 选择 GitHub Actions。

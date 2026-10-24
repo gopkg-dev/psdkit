@@ -28,8 +28,10 @@ psdkit 是纯 Go 的 Photoshop PSD/PSB 工具库：按需读取图层与通道�
 需要 **Go 1.27.3+**。安装模块：
 
 ```sh
-go get github.com/gopkg-dev/psdkit
+go get github.com/gopkg-dev/psdkit@v0.3.0
 ```
+
+本指南对应 `v0.3.0`，变更见[发布说明](../releases/v0.3.0.md)，支持范围以[该 Tag 的能力矩阵](https://github.com/gopkg-dev/psdkit/blob/v0.3.0/docs/status.md)为准。`v0.2.0` 的[历史交付核验](../releases/verification-2026-10-24.md)不包含后续版本新增能力。
 
 本地开发时，可以用 module `replace` 指向本地仓库：
 
