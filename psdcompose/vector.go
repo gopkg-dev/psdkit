@@ -50,9 +50,11 @@ func (plan *composePlan) registerVector(layer *psdmodel.Layer, path string) erro
 	if requested > plan.options.MaxFeatherRadius {
 		return composeError(ErrLimit, path, "vector feather radius exceeds the configured limit")
 	}
+	shadow := plan.effects[layer] != nil && plan.effects[layer].approximateDropShadow &&
+		calibratedShadowVectorFeather(layer)
 	if requested != .5 && requested != 1.5 && requested != 3 || !vectorFeatherGeometry(mask) ||
-		layer.Group || layer.Children != nil || layer.Mask != nil && !layer.Mask.Disabled ||
-		layer.Clipping || layer.Effects != nil ||
+		layer.Group || layer.Children != nil || layer.Mask != nil && !layer.Mask.Disabled && !shadow ||
+		layer.Clipping || layer.Effects != nil && !calibratedVectorFeatherOverlay(layer) && !shadow ||
 		layer.Placed != nil || layer.FillColor != nil || layer.Adjustment != nil || layer.Gradient != nil ||
 		layer.Pattern != nil || layer.PatternTile != nil ||
 		layer.BlendMode != "normal" && layer.BlendMode != "norm" && layer.BlendMode != "" ||
@@ -63,14 +65,42 @@ func (plan *composePlan) registerVector(layer *psdmodel.Layer, path string) erro
 	if cache.feathers == nil {
 		cache.feathers = make(map[float64]*vectorFeatherCoverage)
 	}
-	if cache.feathers[requested] == nil {
-		canvas := plan.window
-		// One geometry-independent finite support is calibrated against the native rectangle controls.
-		radius := int(math.Ceil(requested * 2.25))
-		cache.feathers[requested] = &vectorFeatherCoverage{path: path, sigma: featherSigma(requested),
-			radius: radius, canvas: canvas, expanded: canvas.Inset(-radius)}
+	canvas := plan.window
+	if !canvas.Empty() && shadow && plan.dropShadowShapesWithVector(layer) {
+		// Feathered shadow shapes sample the complete raster source, including artwork outside the output or canvas.
+		canvas = canvas.Union(layer.Bounds)
 	}
+	if existing := cache.feathers[requested]; existing != nil {
+		canvas = canvas.Union(existing.canvas)
+	}
+	// One geometry-independent finite support is calibrated against the native rectangle controls.
+	radius := int(math.Ceil(requested * 2.25))
+	expanded, err := vectorFeatherExpanded(canvas, radius, path)
+	if err != nil {
+		return err
+	}
+	if cache.feathers[requested] == nil {
+		cache.feathers[requested] = &vectorFeatherCoverage{path: path, sigma: featherSigma(requested),
+			radius: radius}
+	}
+	cache.feathers[requested].canvas, cache.feathers[requested].expanded = canvas, expanded
 	return nil
+}
+
+func vectorFeatherExpanded(canvas image.Rectangle, radius int, path string) (image.Rectangle, error) {
+	if _, _, err := composeDimensions(canvas, path+".bounds"); err != nil {
+		return image.Rectangle{}, err
+	}
+	integerLimit := int(^uint(0) >> 1)
+	if canvas.Min.X < -integerLimit-1+radius || canvas.Min.Y < -integerLimit-1+radius ||
+		canvas.Max.X > integerLimit-radius || canvas.Max.Y > integerLimit-radius {
+		return image.Rectangle{}, composeError(ErrLimit, path, "expanded vector geometry overflows coordinates")
+	}
+	expanded := canvas.Inset(-radius)
+	if _, _, err := composeDimensions(expanded, path+".expanded"); err != nil {
+		return image.Rectangle{}, err
+	}
+	return expanded, nil
 }
 
 func (plan *composePlan) reserveVectorCaches() error {
@@ -91,11 +121,15 @@ func (plan *composePlan) reserveVectorCaches() error {
 			plan.workingBytes += int64(width) * int64(height)
 		}
 		for _, feather := range cache.feathers {
+			width, height, err := composeDimensions(feather.canvas, feather.path+".bounds")
+			if err != nil {
+				return err
+			}
 			remaining := plan.options.MaxWorkingBytes - plan.workingBytes
-			if remaining < 256 || area > (remaining-256)/8 {
+			if remaining < 256 || height != 0 && int64(width) > (remaining-256)/8/int64(height) {
 				return composeError(ErrLimit, feather.path, "vector feather caches exceed working budget")
 			}
-			plan.workingBytes += area*8 + 256
+			plan.workingBytes += int64(width)*int64(height)*8 + 256
 		}
 	}
 	return nil

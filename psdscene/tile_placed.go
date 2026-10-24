@@ -4,6 +4,7 @@ import (
 	"context"
 	"image"
 
+	"github.com/gopkg-dev/psdkit/internal/psdplaced"
 	"github.com/gopkg-dev/psdkit/internal/psdrendered"
 	"github.com/gopkg-dev/psdkit/psdfile"
 	"github.com/gopkg-dev/psdkit/psdfilter"
@@ -194,7 +195,7 @@ type placedTilePlan struct {
 	placement              psdfile.SmartObjectRecord
 	filters                *sceneSmartFilter
 	projection             *psdrender.ProjectionPlan
-	patch                  *psdwarp.Patch
+	patch                  psdplaced.WarpProjection
 	geometryBytes          int64
 	canvas, window, bounds image.Rectangle
 	ready                  bool
@@ -204,14 +205,12 @@ func (engine *rgbTileRenderer) compilePlacedPlan(
 	ctx context.Context, record psdfile.LayerRecord, layer *psdmodel.Layer,
 ) (placedTilePlan, error) {
 	var result placedTilePlan
-	if layer.Placed.Warp != nil && layer.Placed.Warp.Style != "custom" &&
-		psdrender.RequiresWarpRendering(layer.Placed) {
-		return result, sceneError(psdfile.ErrUnsupported, "tile.smartObject.warp", record.Span.Offset,
-			"the active preset or distorted warp requires its own live renderer")
-	}
 	placement, err := engine.placement(ctx, record, layer)
 	if err != nil {
 		return result, err
+	}
+	if err := validateScenePresetDescriptor(layer.Placed, placement.Descriptor); err != nil {
+		return result, sceneProjectionError(err, "tile.smartObject.warp", placement.Block.Data.Offset)
 	}
 	engine.legacy.working = engine.working
 	filters, err := engine.legacy.prepareSmartFilters(ctx, placement, layer)
@@ -242,15 +241,15 @@ func (engine *rgbTileRenderer) compilePlacedPlan(
 		window = window.Intersect(canvas)
 	}
 	var plan *psdrender.ProjectionPlan
-	var patch *psdwarp.Patch
+	var patch psdplaced.WarpProjection
 	var geometryBytes int64
 	var bounds image.Rectangle
-	if layer.Placed.Warp != nil && layer.Placed.Warp.Style == "custom" {
+	if hasSceneWarp(layer.Placed) {
 		available := engine.settings.MaxWorkingBytes - engine.working
 		if available <= 0 {
 			return result, sceneError(psdfile.ErrLimit, "tile.smartObject.warp", 0, "no warp geometry budget remains")
 		}
-		patch, err = compileSceneWarp(ctx, layer.Placed, engine.settings.ApproximateCustomWarp,
+		patch, err = engine.compilePlacedWarp(ctx, layer,
 			psdwarp.Options{MaxBytes: available})
 		if err != nil {
 			return result, sceneProjectionError(err, "tile.smartObject.warp", record.Span.Offset)
@@ -259,7 +258,12 @@ func (engine *rgbTileRenderer) compilePlacedPlan(
 		if err := engine.reserve(geometryBytes, "tile.smartObject.warp", 0); err != nil {
 			return result, err
 		}
-		bounds, err = patch.Bounds(window)
+		if window.Empty() {
+			// Warp bounds use an empty rectangle to mean no clipping; a regional empty window must stay empty.
+			bounds = window
+		} else {
+			bounds, err = patch.Bounds(window)
+		}
 	} else {
 		plan, err = psdrender.CompileProjectionRegion(layer, canvas, window)
 		if err == nil {

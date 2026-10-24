@@ -39,11 +39,12 @@ func (e *Editor) UpdateLinkedContents(
 	return e.UpdateLinkedContentsWithOptions(ctx, id, resolver, SmartContentsOptions{})
 }
 
-// UpdateLinkedContentsWithOptions refreshes an external source with explicit source-color and Warp policies.
+// UpdateLinkedContentsWithOptions refreshes an external source with explicit color, Warp and filter policies.
 // Paths and external-file persistence remain caller-controlled, with the same stale-edit protection.
 func (e *Editor) UpdateLinkedContentsWithOptions(
 	ctx context.Context, id LayerID, resolver LinkedContentsUpdateResolver, options SmartContentsOptions,
 ) error {
+	options = cloneSmartContentsOptions(options)
 	if ctx == nil {
 		ctx = context.Background()
 	}

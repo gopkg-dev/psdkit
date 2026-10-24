@@ -34,7 +34,9 @@ type TileOptions struct {
 	CachedTextLayers bool
 	// ApproximateVectorStroke explicitly selects solid inside stroke rasterization from original vector paths.
 	ApproximateVectorStroke bool
-	// ApproximateCustomWarp explicitly selects the mathematical cubic-plus-homography custom warp model.
+	// ApproximateCustomWarp selects mathematical single-patch, affine uniform-quilt or horizontal Arc Lower projection.
+	// Uniform 10x10/13x13 grids retain strict slice and nonfolding checks; Arc Lower requires affine 4x2 geometry.
+	// Presets require this selection even with zero bend; projective quilts and presets remain unsupported.
 	ApproximateCustomWarp bool
 	// CachedPlacedLayers explicitly selects saved placed-layer rasters instead of resolving live source contents.
 	// Live failures never fall back to this policy automatically.

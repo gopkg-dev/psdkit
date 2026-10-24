@@ -139,6 +139,9 @@ func (engine *rgbTileRenderer) renderOpenTypeChild(
 	// Parent artwork limits are expressed in parent document coordinates, never in the child glyph domain.
 	policy.Bounds = nil
 	settings := engine.settings
+	if engine.sourceCompose != nil {
+		settings.Compose = *engine.sourceCompose
+	}
 	settings.MaxWorkingBytes = available
 	settings.MaxPixels = min(engine.settings.MaxPixels, child.Limits().MaxDecodePixels, available/4)
 	settings.ApproximateOpenTypeText = &policy

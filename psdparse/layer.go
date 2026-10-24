@@ -268,12 +268,9 @@ func (p *parser) layerPixels(r *cursor, record *layerRecord) {
 			return
 		}
 	}
-	if layer.VectorMask != nil && layer.Mask != nil {
-		if record.renderedMask {
-			layer.Mask = record.userMask
-		} else if layer.Mask.Pixels == nil {
-			layer.Mask = nil
-		}
+	// Only generated coverage is replaced; an ordinary mask without samples still owns its default coverage.
+	if layer.VectorMask != nil && layer.Mask != nil && record.renderedMask {
+		layer.Mask = record.userMask
 	}
 	if layer.FillColor != nil && layer.Pixels != nil {
 		for offset := 0; offset < len(layer.Pixels.Pix); offset += 4 {

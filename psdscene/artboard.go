@@ -17,6 +17,12 @@ import (
 type ArtboardRenderOptions struct {
 	MaxWorkingBytes int64
 	Compose         psdcompose.Options
+	// Render selects live placed-source resolution, filters and explicit approximation policies.
+	// Nil uses strict embedded sources. External contents always require an explicit resolver.
+	// Compose above styles the board; Render.Compose styles recursively rendered source contents only.
+	// A nonzero Render.MaxWorkingBytes further bounds retained live-source storage and its scratch.
+	// Saved special-layer caches, output-profile conversion and legacy approximate text are not accepted.
+	Render *Options
 	// LayerIndex selects a physical source layer for RenderArtboard in a document with multiple boards.
 	// Nil requires exactly one artboard. RenderArtboards requires nil and renders every board.
 	LayerIndex *int
@@ -34,6 +40,7 @@ type ArtboardImage struct {
 // RenderArtboard rebuilds one top-level PSD/PSB RGB8 artboard from its live layer tree and retained background.
 // Its owned zero-origin image clips to the saved board rectangle and excludes other boards and outside layers.
 // Children use the RGB8 compositor's supported blend, mask, adjustment, fill and effect semantics.
+// Placed layers resolve live embedded originals; external mappings and approximation policies are explicit in Render.
 // Saved origin metadata has already been applied to layer coordinates and is never applied a second time.
 func RenderArtboard(
 	ctx context.Context, source *psdfile.Document, options ...ArtboardRenderOptions,
@@ -47,7 +54,7 @@ func RenderArtboard(
 
 // RenderArtboards rebuilds every top-level RGB8 artboard independently, in physical source-layer order.
 // Every image is owned and cropped to its board; overlapping boards never contribute to one another.
-// The source is decoded once, and the working limit includes all returned images and transient composition.
+// The source is decoded once; the budget includes output images, shared live originals and composition scratch.
 func RenderArtboards(
 	ctx context.Context, source *psdfile.Document, options ...ArtboardRenderOptions,
 ) ([]ArtboardImage, error) {
@@ -93,7 +100,19 @@ func renderArtboardSet(
 		source.Header.Height > psdmodel.MaxDimension {
 		return nil, artboardRenderError(psdfile.ErrLimit, "header", 0, "saved canvas exceeds the snapshot dimension limit")
 	}
+	liveSettings, childCompose, liveLimit, err := artboardSourceConfiguration(ctx, source, configuration)
+	if err != nil {
+		return nil, err
+	}
 	budget := renderer{options: Options{MaxWorkingBytes: configuration.MaxWorkingBytes}}
+	policyBytes := artboardSourcePolicyBytes(liveSettings)
+	if liveLimit != 0 && policyBytes > liveLimit {
+		return nil, artboardRenderError(psdfile.ErrLimit, "artboard.source.policy", 0,
+			"owned source policies exceed the source working limit")
+	}
+	if err := budget.reserve(policyBytes, "artboard.source.policy", 0); err != nil {
+		return nil, err
+	}
 	views, err := source.Artboards(ctx, psdfile.MetadataOptions{MaxBytes: configuration.MaxWorkingBytes})
 	if err != nil {
 		return nil, err
@@ -159,6 +178,9 @@ func renderArtboardSet(
 	results := make([]ArtboardImage, 0, len(boards))
 	patterns := patternSceneSources{tiles: make(map[string]*image.NRGBA)}
 	invisible := hiddenLayers(snapshot.Layers)
+	live := artboardPlacedRenderer{settings: liveSettings, childCompose: childCompose,
+		limit: liveLimit, retained: policyBytes}
+	defer live.close()
 	for _, record := range boards {
 		group := physical[record.LayerIndex]
 		topLevel := false
@@ -177,8 +199,9 @@ func renderArtboardSet(
 				continue
 			}
 			if layer.Placed != nil {
-				return nil, artboardRenderError(psdfile.ErrUnsupported, "artboard.smartObject", record.Data.Block.Span.Offset,
-					"independent artboard smart objects require live source resolution")
+				if err := live.prepare(ctx, source, physical, layer, &budget); err != nil {
+					return nil, err
+				}
 			}
 			if err := budget.renderPattern(ctx, source, layer, &patterns); err != nil {
 				return nil, err
@@ -189,6 +212,12 @@ func renderArtboardSet(
 			return nil, err
 		}
 		results = append(results, result)
+	}
+	if err := ctx.Err(); err != nil {
+		return nil, err
+	}
+	if _, err := source.ReadAt(nil, 0); err != nil {
+		return nil, err
 	}
 	return results, nil
 }
@@ -315,7 +344,7 @@ func artboardSnapshotBudget(ctx context.Context, source *psdfile.Document, budge
 				return err
 			}
 		}
-		if !layer.Bounds.Empty() && (!seen[3] || !seen[4] || !seen[5]) {
+		if layer.Divider == 0 && !layer.Bounds.Empty() && (!seen[3] || !seen[4] || !seen[5]) {
 			return artboardRenderError(psdfile.ErrUnsupported, "artboard.layer.channel", layer.Span.Offset,
 				"ordinary RGB raster channels are required")
 		}

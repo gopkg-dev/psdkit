@@ -189,8 +189,8 @@ func TestShadowOverlayScenePolicyAndPointwiseOverlayHalo(t *testing.T) {
 		t.Fatal("ordinary Normal mixed effects did not select the shadow source window")
 	}
 	layer.Placed = &psdmodel.Placed{}
-	if engine.approximateShadowSource(layer) {
-		t.Fatal("mixed placed effects were admitted")
+	if !engine.approximateShadowSource(layer) {
+		t.Fatal("explicit mixed placed effects lost their shadow source neighborhood")
 	}
 	layer.Effects.Items = layer.Effects.Items[1:]
 	if !engine.approximateShadowSource(layer) {

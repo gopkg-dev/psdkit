@@ -72,20 +72,45 @@ func prepareSmartPlacement(ctx context.Context, source *psdfile.Document, origin
 	var update smartPlacementUpdate
 	transformed := current != nil && (!slices.Equal(current.Transform, original.Transform) ||
 		!slices.Equal(current.NonAffineTransform, original.NonAffineTransform))
+	meshEdited := smartCurrentWarpMeshChanged(original, current)
 	resized := original.Width != dimensions.X || original.Height != dimensions.Y
-	if !resized && !transformed {
+	if resized && original.Warp != nil && original.Warp.Split {
+		return update, editError(ErrUnsupported, "smartObject.warp.size",
+			"split Warp source resizing requires a separately supported slice-domain update")
+	}
+	if !resized && !transformed && !meshEdited {
 		return update, nil
+	}
+	if meshEdited {
+		if original.Warp == nil || current.Width <= 0 || current.Height <= 0 || transformed {
+			return update, editError(ErrUnsupported, "smartObject.warp", "current Warp geometry cannot be carried safely")
+		}
+		for _, block := range blocks {
+			if block.Key == "PlLd" || block.Key == "plLd" {
+				return update, editError(ErrUnsupported, "smartObject.warp",
+					"edited Warp with legacy placement is unsupported")
+			}
+		}
 	}
 	if budget < 1024 {
 		return update, editError(psdfile.ErrLimit, "smartObject.metadata", "owned placement exceeds working budget")
 	}
-	update.placed, update.cost = cloneSmartPlacement(original, dimensions.X, dimensions.Y)
+	geometry := original
+	if meshEdited {
+		// Scale the current controls from their current source canvas, never the original control net.
+		geometry = current
+	}
+	update.placed, update.cost = cloneSmartPlacement(geometry, dimensions.X, dimensions.Y)
 	if transformed {
 		update.placed.Transform = slices.Clone(current.Transform)
 		update.placed.NonAffineTransform = slices.Clone(current.NonAffineTransform)
 	}
 	if update.cost > budget {
 		return smartPlacementUpdate{}, editError(psdfile.ErrLimit, "smartObject.metadata", "placement exceeds working budget")
+	}
+	resizeMetadata := resized
+	if meshEdited {
+		resizeMetadata = resizeMetadata || !sameSmartWarpBounds(original.Warp.Bounds, update.placed.Warp.Bounds)
 	}
 	update.blocks = make(map[int64][]byte, len(records))
 	sx, sy := float64(dimensions.X)/float64(original.Width), float64(dimensions.Y)/float64(original.Height)
@@ -102,7 +127,7 @@ func prepareSmartPlacement(ctx context.Context, source *psdfile.Document, origin
 		if err != nil {
 			return smartPlacementUpdate{}, err
 		}
-		if resized {
+		if resizeMetadata {
 			if err := patchSmartDescriptor(record.Descriptor, payload, record.Block.Data,
 				original.Width, original.Height, sx, sy); err != nil {
 				return smartPlacementUpdate{}, err
@@ -111,6 +136,12 @@ func prepareSmartPlacement(ctx context.Context, source *psdfile.Document, origin
 		if transformed {
 			if err := patchSmartTransformDescriptor(record.Descriptor, payload, record.Block.Data,
 				current.Transform); err != nil {
+				return smartPlacementUpdate{}, err
+			}
+		}
+		if meshEdited {
+			if err := patchSmartWarpMesh(record.Descriptor, payload, record.Block.Data,
+				update.placed.Warp.MeshPoints); err != nil {
 				return smartPlacementUpdate{}, err
 			}
 		}
@@ -144,6 +175,36 @@ func prepareSmartPlacement(ctx context.Context, source *psdfile.Document, origin
 		budget -= int64(len(payload))
 	}
 	return update, nil
+}
+
+func smartCurrentWarpMeshChanged(original, current *psdmodel.Placed) bool {
+	if current == nil || current.Warp == nil || current.Warp.Style != "custom" {
+		return false
+	}
+	if original.Warp == nil || current.Width != original.Width || current.Height != original.Height ||
+		len(current.Warp.MeshPoints) != len(original.Warp.MeshPoints) ||
+		!sameSmartWarpBounds(original.Warp.Bounds, current.Warp.Bounds) {
+		return true
+	}
+	for index, point := range current.Warp.MeshPoints {
+		previous := original.Warp.MeshPoints[index]
+		if math.Float64bits(point.X) != math.Float64bits(previous.X) ||
+			math.Float64bits(point.Y) != math.Float64bits(previous.Y) {
+			return true
+		}
+	}
+	return false
+}
+
+func sameSmartWarpBounds(first, second *psdmodel.WarpBounds) bool {
+	if first == nil || second == nil {
+		return first == second
+	}
+	return first.Pixels == second.Pixels && first.Units == second.Units &&
+		math.Float64bits(first.Left) == math.Float64bits(second.Left) &&
+		math.Float64bits(first.Top) == math.Float64bits(second.Top) &&
+		math.Float64bits(first.Right) == math.Float64bits(second.Right) &&
+		math.Float64bits(first.Bottom) == math.Float64bits(second.Bottom)
 }
 
 func patchSmartLegacy(ctx context.Context, source *psdfile.Document, payload []byte, span psdfile.Span,

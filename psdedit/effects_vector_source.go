@@ -13,6 +13,7 @@ import (
 // effectsVectorSource qualifies current mask geometry without retaining rasterized mask samples.
 func (e *Editor) effectsVectorSource(
 	ctx context.Context, node *editNode, layer *psdmodel.Layer, working, budget int64,
+	pureOverlay, approximateShadow bool,
 ) (int64, error) {
 	record := e.source.Layers[node.sourceIndex]
 	if metadata := record.Mask; metadata != nil {
@@ -45,7 +46,7 @@ func (e *Editor) effectsVectorSource(
 	if node.vectorMaskChange != nil && node.vectorMaskChange.removed {
 		mask = nil
 	}
-	if layer.VectorMask != nil || mask != nil {
+	if mask != nil && !mask.Disabled {
 		mode := record.BlendMode
 		if node.blendModeChanged {
 			mode = node.blendMode
@@ -63,9 +64,14 @@ func (e *Editor) effectsVectorSource(
 		return working, ctx.Err()
 	}
 	settings := state.layout.settings
-	if settings.VectorFeather != nil && *settings.VectorFeather != 0 ||
-		state.hasUser && !settings.Disabled && settings.Feather != nil && *settings.Feather != 0 {
-		return 0, editError(ErrUnsupported, "layers.effects.mask", "vector-masked effects require unfeathered active masks")
+	activePixel := state.hasUser && !settings.Disabled
+	if settings.VectorFeather != nil && *settings.VectorFeather != 0 &&
+		(!pureOverlay && !approximateShadow || activePixel && !approximateShadow ||
+			!effectsCalibratedVectorFeather(mask, *settings.VectorFeather)) ||
+		activePixel && settings.Feather != nil && *settings.Feather != 0 &&
+			(!approximateShadow || !effectsCalibratedVectorGeometry(mask)) {
+		return 0, editError(ErrUnsupported, "layers.effects.mask",
+			"active vector effects require known mask feather and calibrated rectangle overlay or explicit shadow policy")
 	}
 	if mask != layer.VectorMask {
 		if err := validateEffectsVectorSource(ctx, mask, budget-working); err != nil {
@@ -73,6 +79,42 @@ func (e *Editor) effectsVectorSource(
 		}
 	}
 	return working + 1, ctx.Err()
+}
+
+// effectsCalibratedVectorFeather mirrors the compositor's existing single integer rectangle qualification.
+func effectsCalibratedVectorFeather(mask *psdvector.Mask, radius float64) bool {
+	return (radius == .5 || radius == 1.5 || radius == 3) && effectsCalibratedVectorGeometry(mask)
+}
+
+func effectsCalibratedVectorGeometry(mask *psdvector.Mask) bool {
+	if mask == nil || mask.Version != 3 ||
+		mask.Flags&^uint32(7) != 0 || len(mask.Unsupported) != 0 || len(mask.Subpaths) != 1 {
+		return false
+	}
+	path := mask.Subpaths[0]
+	if !path.Closed || path.Operation != 1 || len(path.Knots) != 4 || path.Unknown1 > 1 || path.Unknown2 != 0 {
+		return false
+	}
+	for _, value := range path.Reserved {
+		if value != 0 {
+			return false
+		}
+	}
+	for index, knot := range path.Knots {
+		point := knot.Anchor
+		if point.X != knot.Preceding.X || point.Y != knot.Preceding.Y ||
+			point.X != knot.Leaving.X || point.Y != knot.Leaving.Y ||
+			math.IsNaN(point.X) || math.IsNaN(point.Y) || math.IsInf(point.X, 0) || math.IsInf(point.Y, 0) ||
+			math.Trunc(point.X) != point.X || math.Trunc(point.Y) != point.Y ||
+			math.Abs(point.X) > 1<<40 || math.Abs(point.Y) > 1<<40 {
+			return false
+		}
+		next, opposite := path.Knots[(index+1)%4].Anchor, path.Knots[(index+2)%4].Anchor
+		if (point.X == next.X) == (point.Y == next.Y) || point.X == opposite.X || point.Y == opposite.Y {
+			return false
+		}
+	}
+	return true
 }
 
 func validateEffectsVectorSource(ctx context.Context, mask *psdvector.Mask, budget int64) error {

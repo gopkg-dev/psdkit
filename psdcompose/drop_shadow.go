@@ -3,6 +3,7 @@ package psdcompose
 import (
 	"github.com/gopkg-dev/psdkit/psdeffects"
 	"github.com/gopkg-dev/psdkit/psdmodel"
+	"github.com/gopkg-dev/psdkit/psdvector"
 )
 
 // pureDropShadowEffects separates the approximation from previously qualified effect families.
@@ -23,7 +24,7 @@ func pureDropShadowEffects(set *psdeffects.Set) bool {
 	return active
 }
 
-// dropShadowOverlayEffects admits an ordinary raster's active shadows and interior color overlays only.
+// dropShadowOverlayEffects admits a raster's active shadows and interior color overlays only.
 func dropShadowOverlayEffects(set *psdeffects.Set) bool {
 	if set == nil || !set.Enabled || !set.EffectsVisible {
 		return false
@@ -57,8 +58,8 @@ func (plan *composePlan) registerApproximateDropShadow(layer *psdmodel.Layer, pa
 		!dropShadowBlendSupported(layer.BlendMode) {
 		return composeError(ErrUnsupported, path, "approximate drop shadows require a Normal or Multiply raster layer")
 	}
-	if mixed && (normalizeBlend(layer.BlendMode) != "norm" || layer.Placed != nil) {
-		return composeError(ErrUnsupported, path, "shadow/color-overlay combinations require an ordinary Normal raster")
+	if mixed && normalizeBlend(layer.BlendMode) != "norm" {
+		return composeError(ErrUnsupported, path, "shadow/color-overlay combinations require a Normal raster")
 	}
 	if layer.Placed != nil && !layer.RenderedEffects.Valid(layer.Pixels, layer.Bounds, layer.Placed) {
 		return composeError(ErrUnsupported, path, "placed-layer effects require freshly rendered source pixels")
@@ -67,8 +68,17 @@ func (plan *composePlan) registerApproximateDropShadow(layer *psdmodel.Layer, pa
 		if normalizeBlend(layer.BlendMode) != "norm" || layer.Placed != nil {
 			return composeError(ErrUnsupported, path, "vector-masked shadows require an ordinary Normal raster")
 		}
-		if err := validateUnfeatheredEffectVectorMask(layer, path); err != nil {
+		if err := validateEffectVectorMaskMetadata(layer, path); err != nil {
 			return err
+		}
+		if layer.VectorFeather != nil && *layer.VectorFeather != 0 && !calibratedShadowVectorFeather(layer) {
+			return composeError(ErrUnsupported, path,
+				"vector-masked shadows require calibrated .5/1.5/3 single integer rectangle feather")
+		}
+		if layer.Mask != nil && !layer.Mask.Disabled && layer.Mask.Feather != nil && *layer.Mask.Feather != 0 &&
+			!calibratedShadowVectorGeometry(layer.VectorMask) {
+			return composeError(ErrUnsupported, path,
+				"feathered dual-mask shadows require a single integer rectangle vector mask")
 		}
 	}
 	if layer.Clipping || composeCustomRanges(layer.BlendRanges) ||
@@ -92,6 +102,20 @@ func (plan *composePlan) registerApproximateDropShadow(layer *psdmodel.Layer, pa
 	}
 	plan.effects[layer] = &effectCache{path: path, set: layer.Effects, approximateDropShadow: true}
 	return nil
+}
+
+// calibratedShadowVectorFeather reuses the established vector field without broadening its geometry or radii.
+// Its caller must separately require the explicit shadow policy and ordinary Normal raster source.
+func calibratedShadowVectorFeather(layer *psdmodel.Layer) bool {
+	if layer.VectorFeather == nil {
+		return false
+	}
+	radius := *layer.VectorFeather
+	return (radius == .5 || radius == 1.5 || radius == 3) && calibratedShadowVectorGeometry(layer.VectorMask)
+}
+
+func calibratedShadowVectorGeometry(mask *psdvector.Mask) bool {
+	return mask != nil && len(mask.Subpaths) == 1 && vectorFeatherGeometry(mask)
 }
 
 func (plan *composePlan) dropShadowShapesWithMask(layer *psdmodel.Layer) bool {

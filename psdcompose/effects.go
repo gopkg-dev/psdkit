@@ -27,7 +27,18 @@ type effectCache struct {
 
 func (plan *composePlan) registerEffects(layer *psdmodel.Layer, path string) error {
 	set := layer.Effects
-	if set == nil || !set.Enabled || !set.EffectsVisible {
+	if set == nil {
+		return nil
+	}
+	if !set.Enabled || !set.EffectsVisible {
+		if layer.VectorMask != nil && !layer.VectorMask.Disabled &&
+			layer.VectorFeather != nil && *layer.VectorFeather != 0 {
+			for _, effect := range set.Items {
+				if effect.Kind == psdeffects.ColorOverlay && !calibratedVectorFeatherOverlay(layer) {
+					return composeError(ErrUnsupported, path, "dormant feathered overlays require calibrated known masks and effects")
+				}
+			}
+		}
 		return nil
 	}
 	if err := psdeffects.Validate(set); err != nil {
@@ -116,7 +127,7 @@ func (plan *composePlan) registerEffects(layer *psdmodel.Layer, path string) err
 	pixelMaskActive := layer.Mask != nil && !layer.Mask.Disabled
 	vectorMaskActive := layer.VectorMask != nil && !layer.VectorMask.Disabled
 	maskedColorOverlay := (pixelMaskActive || vectorMaskActive) && pureColorOverlayEffects(set)
-	if vectorMaskActive && maskedColorOverlay {
+	if vectorMaskActive && maskedColorOverlay && !calibratedVectorFeatherOverlay(layer) {
 		if err := validateUnfeatheredEffectVectorMask(layer, path); err != nil {
 			return err
 		}

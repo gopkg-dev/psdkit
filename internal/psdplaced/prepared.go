@@ -1,7 +1,10 @@
 // Package psdplaced carries private candidate placement inputs between editing and source rendering.
 package psdplaced
 
-import "github.com/gopkg-dev/psdkit/psdfile"
+import (
+	"github.com/gopkg-dev/psdkit/psdeffects"
+	"github.com/gopkg-dev/psdkit/psdfile"
+)
 
 // Prepared identifies a candidate modern placement while retaining its original parent sources.
 // Source and Candidate remain caller-owned and open throughout rendering; neither is modified or closed.
@@ -14,4 +17,10 @@ type Prepared struct {
 	LayerIndex        int
 	Contents          []byte
 	FileType          string
+	// Effects supplies current parent effects solely to qualify the required source neighborhood.
+	// Source rendering retains this metadata but does not apply its colors or alpha to artwork.
+	Effects *psdeffects.Set
+	// EffectsApproximateDropShadow selects only this parent's source-neighborhood calculation.
+	// It never enables approximation in recursively rendered contents.
+	EffectsApproximateDropShadow bool
 }

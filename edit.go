@@ -32,6 +32,12 @@ type SmartContentsOptions = psdedit.SmartContentsOptions
 // SmartTransformOptions selects explicit source-color and projection policies for one placed instance.
 type SmartTransformOptions = psdedit.SmartTransformOptions
 
+// SmartWarpEditOptions selects explicit live source policies for one existing supported Warp edit.
+type SmartWarpEditOptions = psdedit.SmartWarpEditOptions
+
+// SmartWarpPresetParameters changes the existing native bend while retaining its preset type and schema.
+type SmartWarpPresetParameters = psdedit.SmartWarpPresetParameters
+
 // PatternFillEditOptions supplies accurate artwork when editing known pattern parameters outside live sampling.
 type PatternFillEditOptions = psdedit.PatternFillEditOptions
 
@@ -44,7 +50,7 @@ type SaveOptions = psdedit.SaveOptions
 // CreateOptions selects a new RGB8 document's PSD/PSB version and allocation limits.
 type CreateOptions = psdedit.CreateOptions
 
-// TextEditOptions supplies accurate replacement source pixels for a supported legacy text edit.
+// TextEditOptions selects supplied artwork or explicit approximate rendering for a supported text edit.
 type TextEditOptions = psdedit.TextEditOptions
 
 // NativeTextStateOptions imports caller-supplied native text state, accurate layer artwork and document preview.

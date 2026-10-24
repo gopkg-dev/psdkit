@@ -8,6 +8,7 @@ import (
 )
 
 // SceneOptions bounds live RGB8 rendering and explicit external content resolution.
+// Certified horizontal Arc Lower presets require explicit ApproximateCustomWarp, including a zero bend.
 type SceneOptions = psdscene.Options
 
 // LinkedRasterResolver supplies explicitly selected external PNG/JPEG/TIFF source bytes for live rendering.
@@ -15,6 +16,7 @@ type SceneOptions = psdscene.Options
 type LinkedRasterResolver = psdscene.LinkedRasterResolver
 
 // TileOptions bounds per-tile semantic snapshots, output, halo samples and decoder work.
+// Certified preset sampling requires explicit ApproximateCustomWarp and the current call's external source mappings.
 type TileOptions = psdscene.TileOptions
 
 // RenderSourceTile rebuilds an RGB8 window without allocating the complete source canvas.
@@ -34,12 +36,14 @@ func VisitSourceTiles(ctx context.Context, source *SourceDocument, bounds image.
 }
 
 // ArtboardRenderOptions bounds RGB8 artboard renders and optionally selects one physical board.
+// Render supplies live placed-source resolvers and explicit source approximation policies.
 type ArtboardRenderOptions = psdscene.ArtboardRenderOptions
 
 // ArtboardImage contains one board's owned pixels and retained saved coordinates.
 type ArtboardImage = psdscene.ArtboardImage
 
 // RenderArtboard rebuilds one selected board from its live layers and saved background.
+// Visible smart objects use actual contents; external sources and approximations require explicit Render policies.
 func RenderArtboard(ctx context.Context, source *SourceDocument,
 	options ...ArtboardRenderOptions,
 ) (*image.NRGBA, error) {
@@ -47,6 +51,7 @@ func RenderArtboard(ctx context.Context, source *SourceDocument,
 }
 
 // RenderArtboards rebuilds every top-level RGB8 PSD/PSB artboard independently.
+// Shared live contents are resolved once per call while each board retains its own background and crop.
 func RenderArtboards(ctx context.Context, source *SourceDocument,
 	options ...ArtboardRenderOptions,
 ) ([]ArtboardImage, error) {

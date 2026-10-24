@@ -33,7 +33,7 @@ type pixelMaskLayout struct {
 }
 
 // PixelMask returns independently owned settings for the layer's effective existing user pixel mask.
-// A sole ordinary mask without sample channels uses its default coverage and remains editable.
+// An ordinary mask without sample channels uses uniform default coverage, also beside a vector mask.
 // Generated vector coverage without a real user-mask channel is not an editable pixel mask.
 func (e *Editor) PixelMask(ctx context.Context, id LayerID) (PixelMaskSettings, error) {
 	if ctx == nil {
@@ -152,9 +152,9 @@ func (e *Editor) readPixelMaskLocked(
 	}
 	channels := e.pixelMaskChannelsLocked(node)
 	vectorBlocks := e.pixelMaskVectorBlocksLocked(node)
-	if len(channels) == 0 && vectorBlocks != 0 {
+	if len(channels) == 0 && vectorBlocks > 1 {
 		return nil, pixelMaskLayout{}, editError(ErrUnsupported, "layers.pixelMask",
-			"vector-mask metadata without a user-mask channel is not an editable pixel mask")
+			"multiple vector-mask blocks have ambiguous mask ownership")
 	}
 	if len(data) >= 22 && data[21]&8 != 0 {
 		if vectorBlocks != 1 {

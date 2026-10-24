@@ -368,17 +368,6 @@ func TestVectorLifecycleClearsRemovedVectorParametersBeforeReaddition(t *testing
 	}
 }
 
-func TestVectorLifecycleRejectsDefaultOnlyUserMaskWithoutMutation(t *testing.T) {
-	data := defaultCoverageMaskFixture(t, 1, pixelMaskTestPayload(0, 0, 0), nil)
-	editor := compositeEditor(t, data)
-	if err := editor.AddVectorMask(nil, 1, lifecycleVectorMask(t)); !errors.Is(err, ErrUnsupported) {
-		t.Fatalf("adding vector changed default-only user mask ownership: %v", err)
-	}
-	if editor.revision != 0 || editor.roots[0].vectorMaskChange != nil {
-		t.Fatal("rejected default-only combination changed state")
-	}
-}
-
 func TestVectorLifecycleRemovedRealMaskCannotReappearWithoutVector(t *testing.T) {
 	for _, version := range []uint16{1, 2} {
 		payload := append(pixelMaskTestPayload(8, 0, 255), pixelMaskTestPayload(0)[:16]...)

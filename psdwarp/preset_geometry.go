@@ -8,8 +8,9 @@ import (
 	"github.com/gopkg-dev/psdkit/psdmodel"
 )
 
-// PresetGeometry owns certified preset coordinates without exposing an unverified pixel renderer.
-// The first supported preset is horizontal Arc Lower with no perspective distortion or quilt slices.
+// PresetGeometry owns certified preset coordinates with explicitly selected mathematical pixel sampling.
+// The supported preset is horizontal Arc Lower with no perspective distortion or quilt slices.
+// Mathematical sampling does not claim Photoshop-native pixel equivalence.
 type PresetGeometry struct{ patch *Patch }
 
 // CompilePresetGeometry validates and copies native horizontal Arc Lower placement geometry.

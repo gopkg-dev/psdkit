@@ -158,7 +158,7 @@ func (engine *rgbTileRenderer) installPreparedPlacement(
 	}
 	layer.Placed = view.Layer.Placed
 	// Parent-layer styling is applied only when composing the edited layer, never in its saved artwork.
-	layer.Mask, layer.VectorMask, layer.Effects = nil, nil, nil
+	layer.Mask, layer.VectorMask, layer.Effects = nil, nil, prepared.Effects
 	layer.VectorDensity, layer.VectorFeather, layer.Opacity, layer.FillOpacity = nil, nil, nil, nil
 	layer.MaskAsGlobal, layer.VectorMaskAsGlobal = nil, nil
 	engine.maskIDs[layer] = 0

@@ -33,8 +33,10 @@ type Options struct {
 	CachedTextLayers bool
 	// ApproximateVectorStroke enables bounded solid inside strokes from original vector paths.
 	ApproximateVectorStroke bool
-	// ApproximateCustomWarp selects the certified cubic-plus-homography mathematical projection.
-	// It does not certify Photoshop's projective custom-warp composition.
+	// ApproximateCustomWarp selects certified mathematical custom or horizontal Arc Lower preset projection.
+	// Custom projection permits single-patch homographies and affine uniform 10x10/13x13 quilts with valid source slices.
+	// Arc Lower requires affine 4x2 geometry without perspective, quilt slices or folds, even when bend is zero.
+	// It does not certify Photoshop-native pixels or permit projective quilts or presets.
 	ApproximateCustomWarp bool
 	Compose               psdcompose.Options
 	// ApproximatePlacedProjection selects full-canvas bilinear sampling for transparent-border projective placements.
@@ -409,14 +411,12 @@ func (engine *renderer) render(ctx context.Context, source *psdfile.Document, de
 		if layer.Placed == nil {
 			continue
 		}
-		if psdrender.RequiresWarpRendering(layer.Placed) &&
-			(layer.Placed.Warp == nil || layer.Placed.Warp.Style != "custom") {
-			return nil, sceneError(psdfile.ErrUnsupported, "smartObject.warp", source.Layers[index].Span.Offset,
-				"the active Warp preset or quilt surface requires a live implementation")
-		}
 		placement, exists := byIndex[index]
 		if !exists || placement.SourceType != 2 {
 			return nil, sceneError(psdfile.ErrUnsupported, "smartObject.contents", source.Layers[index].Span.Offset, "placed layer has no modern raster content reference")
+		}
+		if err := validateScenePresetDescriptor(layer.Placed, placement.Descriptor); err != nil {
+			return nil, sceneProjectionError(err, "smartObject.warp", placement.Block.Data.Offset)
 		}
 		record, exists := byID[placement.SourceID]
 		if ambiguous[placement.SourceID] {
@@ -499,9 +499,19 @@ func (engine *renderer) render(ctx context.Context, source *psdfile.Document, de
 		var pixels *image.NRGBA
 		var origin image.Point
 		var projectErr error
-		if layer.Placed.Warp != nil && layer.Placed.Warp.Style == "custom" {
-			patch, err := psdwarp.Compile(ctx, layer.Placed)
+		if hasSceneWarp(layer.Placed) {
+			available := engine.options.MaxWorkingBytes - engine.working
+			if available <= 0 {
+				return nil, sceneError(psdfile.ErrLimit, "smartObject.warp", placement.Block.Data.Offset,
+					"no original warp geometry budget remains")
+			}
+			patch, err := compileSceneWarp(ctx, layer.Placed, engine.options.ApproximateCustomWarp,
+				psdwarp.Options{MaxBytes: available})
 			if err != nil {
+				return nil, sceneProjectionError(err, "smartObject.warp", placement.Block.Data.Offset)
+			}
+			geometryBytes := patch.WorkingBytes()
+			if err := engine.reserve(geometryBytes, "smartObject.warp", placement.Block.Data.Offset); err != nil {
 				return nil, err
 			}
 			bounds, err := patch.Bounds(image.Rect(0, 0, snapshot.Width, snapshot.Height))
@@ -511,10 +521,10 @@ func (engine *renderer) render(ctx context.Context, source *psdfile.Document, de
 			if err := engine.reserveRectangle(bounds, placement.Block.Data.Offset); err != nil {
 				return nil, err
 			}
-			pixels, origin, projectErr = psdrender.ProjectWarp(ctx, layer, prototype,
+			pixels, origin, projectErr = projectSceneWarp(ctx, patch, prototype,
 				image.Rect(0, 0, snapshot.Width, snapshot.Height),
-				psdrender.WarpOptions{MaxBytes: engine.options.MaxWorkingBytes - engine.working +
-					int64(bounds.Dx())*int64(bounds.Dy())*4})
+				engine.options.MaxWorkingBytes-engine.working+geometryBytes+int64(bounds.Dx())*int64(bounds.Dy())*4)
+			engine.working -= geometryBytes
 		} else {
 			plan, err := psdrender.CompileProjection(layer, snapshot.Width, snapshot.Height, false)
 			if err != nil {

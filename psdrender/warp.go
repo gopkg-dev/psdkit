@@ -18,8 +18,9 @@ func CompileWarp(ctx context.Context, layer *Layer, options ...WarpOptions) (*ps
 	return psdwarp.Compile(ctx, layer.Placed, options...)
 }
 
-// CompilePresetWarpGeometry certifies supported native preset coordinates without exposing pixel projection.
-// Horizontal Arc Lower has native control evidence; its texture tessellation remains outside the live renderer.
+// CompilePresetWarpGeometry certifies supported native preset coordinates without allocating pixels.
+// The returned geometry offers explicitly selected mathematical sampling, without native pixel equivalence.
+// Scene rendering supports horizontal Arc Lower with explicit ApproximateCustomWarp; default projection is unchanged.
 func CompilePresetWarpGeometry(
 	ctx context.Context, layer *Layer, options ...WarpOptions,
 ) (*psdwarp.PresetGeometry, error) {

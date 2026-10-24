@@ -16,11 +16,20 @@ import (
 )
 
 // defaultCoverageMaskFixture adds independent mask metadata without encoding a sample channel.
-func defaultCoverageMaskFixture(t *testing.T, version uint16, payload, tags []byte) []byte {
+func defaultCoverageMaskFixture(t *testing.T, version uint16, payload, tags []byte, depths ...uint16) []byte {
 	t.Helper()
-	data := compositeFixture(version, 8, 4, []compositeFixtureLayer{
+	depth := uint16(8)
+	if len(depths) != 0 {
+		depth = depths[0]
+	}
+	data := compositeFixture(version, depth, 4, []compositeFixtureLayer{
 		{color: []byte{180, 90, 30, 255}, tags: tags},
 	})
+	return defaultCoverageLayerMaskFixture(t, data, 0, payload)
+}
+
+func defaultCoverageLayerMaskFixture(t *testing.T, data []byte, layerIndex int, payload []byte) []byte {
+	t.Helper()
 	source, err := psdfile.Parse(data)
 	if err != nil {
 		t.Fatal(err)
@@ -30,13 +39,13 @@ func defaultCoverageMaskFixture(t *testing.T, version uint16, payload, tags []by
 		t.Fatal("test fixture requires an even mask payload length")
 	}
 	for _, offset := range []int64{source.LayerMaskSection.Offset, source.LayerInfo.Offset} {
-		if version == 2 {
+		if source.Header.Version == 2 {
 			binary.BigEndian.PutUint64(data[offset:], binary.BigEndian.Uint64(data[offset:])+uint64(len(payload)))
 		} else {
 			binary.BigEndian.PutUint32(data[offset:], binary.BigEndian.Uint32(data[offset:])+uint32(len(payload)))
 		}
 	}
-	record := source.Layers[0]
+	record := source.Layers[layerIndex]
 	offset := record.Extra.Offset - 4
 	binary.BigEndian.PutUint32(data[offset:], binary.BigEndian.Uint32(data[offset:])+uint32(len(payload)))
 	binary.BigEndian.PutUint32(data[record.MaskData.Offset:], uint32(len(payload)))
@@ -165,8 +174,6 @@ func TestPixelMaskDefaultCoverageRefusesAmbiguousMetadataAtomically(t *testing.T
 		real    bool
 	}{
 		{name: "generated", payload: pixelMaskTestPayload(8, 0, 0)},
-		{name: "vector metadata", payload: pixelMaskTestPayload(0, 0, 0),
-			tags: compositeFixtureTag("vmsk", editVectorPayload())},
 		{name: "generated vector", payload: pixelMaskTestPayload(8, 0, 0),
 			tags: compositeFixtureTag("vmsk", editVectorPayload())},
 		{name: "active real metadata", payload: append(pixelMaskTestPayload(0, 0, 255), make([]byte, 16)...), real: true},

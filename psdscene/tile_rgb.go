@@ -31,6 +31,9 @@ type rgbTileRenderer struct {
 	textPlan    []int64
 	placedPlans []placedTilePlan
 	prepared    *preparedPlacement
+
+	// sourceCompose separates parent paint from explicitly selected recursively rendered content paint.
+	sourceCompose *psdcompose.Options
 }
 
 // RenderTile rebuilds an RGB8 source-layer window from independently decoded channel intersections.
@@ -354,6 +357,9 @@ func (engine *rgbTileRenderer) preparePixelMask(record psdfile.LayerRecord, laye
 	if layer.Mask == nil || layer.Mask.Disabled || engine.maskIDs[layer] == 0 {
 		return nil
 	}
+	if tileDefaultCoverageMask(record, engine.maskIDs[layer]) {
+		return nil
+	}
 	radius := 0
 	if layer.Mask.Feather != nil && *layer.Mask.Feather != 0 {
 		value := *layer.Mask.Feather
@@ -464,6 +470,26 @@ func tileMaskChannel(record psdfile.LayerRecord, id int16) (int, error) {
 	return channelIndex, nil
 }
 
+// tileDefaultCoverageMask identifies an ordinary user mask that owns metadata without any sample channels.
+func tileDefaultCoverageMask(record psdfile.LayerRecord, id int16) bool {
+	mask := record.Mask
+	if id != -2 || mask == nil || mask.HasReal || mask.Flags&(8|0xe0) != 0 || mask.ParameterFlags&0xf0 != 0 {
+		return false
+	}
+	for _, channel := range record.Channels {
+		if channel.ID == -2 || channel.ID == -3 {
+			return false
+		}
+	}
+	vectors := 0
+	for _, block := range record.AdditionalInfo {
+		if block.Key == "vmsk" || block.Key == "vsms" {
+			vectors++
+		}
+	}
+	return vectors <= 1
+}
+
 func tileEffectHalo(layer *psdmodel.Layer) (int, error) {
 	if layer.Effects == nil || !layer.Effects.Enabled || !layer.Effects.EffectsVisible {
 		return 0, nil
@@ -549,6 +575,6 @@ func (engine *rgbTileRenderer) approximateShadowSource(layer *psdmodel.Layer) bo
 			return false
 		}
 	}
-	return shadow && (!overlay || layer.Placed == nil &&
+	return shadow && (!overlay ||
 		(layer.BlendMode == "" || layer.BlendMode == "normal" || layer.BlendMode == "norm"))
 }

@@ -10,7 +10,6 @@ import (
 	"github.com/gopkg-dev/psdkit/psdfile"
 	"github.com/gopkg-dev/psdkit/psdmodel"
 	"github.com/gopkg-dev/psdkit/psdrender"
-	"github.com/gopkg-dev/psdkit/psdscene"
 )
 
 // prepareCompositeLocked prepares owned merged bytes without changing the immutable source or edit overlays.
@@ -502,20 +501,26 @@ func (e *Editor) renderCompositeNodesLocked(
 				layer.Placed = node.placed
 			}
 			if !invisible && configuration.ApproximateDropShadow && layer.Placed != nil &&
-				layer.Effects != nil && effectsPureDropShadow(*layer.Effects) {
-				if node.placed != nil || node.pixels != nil || len(node.planes) != 0 {
+				layer.Effects != nil && (effectsPureDropShadow(*layer.Effects) || effectsShadowOverlay(*layer.Effects)) {
+				if len(node.planes) != 0 {
 					return nil, editError(ErrUnsupported, "save.layers.effects",
-						"placed shadow previews require unchanged original placement and source channels")
+						"placed shadow previews require original RGB channel semantics")
 				}
 				projectionBudget := workingBytes / 2
 				if projectionBudget <= 0 {
 					return nil, editError(psdfile.ErrLimit, "save.layers.effects", "no placed source budget remains")
 				}
-				live, err := psdscene.RenderPlacedLayer(ctx, e.source, node.sourceIndex, psdscene.Options{
-					MaxWorkingBytes: projectionBudget, Compose: configuration,
-				})
+				stage, err := e.prepareEffectsPlacedSourceLocked(ctx, node, layer.Effects, nil, projectionBudget)
 				if err != nil {
 					return nil, compositeRenderError(err)
+				}
+				live, err := stage.render(ctx)
+				_ = stage.prepared.Candidate.Close()
+				if err != nil {
+					return nil, compositeRenderError(err)
+				}
+				if _, err := effectsPlacedPixels(live); err != nil {
+					return nil, err
 				}
 				area := int64(live.Pixels.Rect.Dx()) * int64(live.Pixels.Rect.Dy())
 				if area > projectionBudget/4 {

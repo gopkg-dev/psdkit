@@ -16,6 +16,7 @@ import (
 	"github.com/gopkg-dev/psdkit/psdeffects"
 	"github.com/gopkg-dev/psdkit/psdfile"
 	"github.com/gopkg-dev/psdkit/psdmodel"
+	"github.com/gopkg-dev/psdkit/psdscene"
 )
 
 // SetEffects edits existing modern RGB effects without changing their families, count or fixed semantics.
@@ -23,6 +24,7 @@ import (
 // Shadow distance/local angle/blur and calibrated glow/stroke sizes use strict core validation.
 // ColorOverlay also accepts partial source alpha; strict geometric effect edits require an opaque source rectangle.
 // Pure ColorOverlay additionally supports ordinary nested leaves and supported pixel/vector-mask semantics.
+// Calibrated single-rectangle vector feather accepts .5/1.5/3 with no active user pixel mask.
 // Global resources, flags, descriptor structure and unsupported source metadata remain unchanged.
 // Encoding and owned semantic decoding complete under a peak budget before committing editor overlays.
 func (e *Editor) SetEffects(ctx context.Context, id LayerID, desired psdeffects.Set) error {
@@ -33,13 +35,23 @@ func (e *Editor) SetEffects(ctx context.Context, id LayerID, desired psdeffects.
 // It does not relax descriptor, source, ownership or transactional budget validation.
 type EffectsEditOptions struct {
 	// ApproximateDropShadow allows fractional DropShadow parameters on supported raster sources.
-	// Ordinary Normal rasters may combine shadows and color overlays with unfeathered pixel/vector masks.
-	// Pixel-only masks retain the existing feather policy; placed sources cannot use active vector masks.
+	// Ordinary Normal rasters may combine shadows and color overlays with supported pixel/vector masks.
+	// Vector feather accepts calibrated .5/1.5/3 integer rectangles, including supported feathered user masks.
+	// Pixel masks retain the existing feather policy; placed sources cannot use active vector masks.
+	// Fresh Normal placed sources may combine shadows and color overlays without using their saved raster caches.
 	ApproximateDropShadow bool
+	// Render supplies this edit's live placed-source resolvers and independently selected source policies.
+	// Nil uses strict embedded sources and strict supported smart filters; all source approximation stays off.
+	// Parent approximation never enables a recursive source approximation.
+	// Callbacks run outside the editor lock; intervening edits return ErrStaleLinkedEdit.
+	// The source policy is not retained for saves: automatic previews resolve strict embedded sources again.
+	// External or approximate-only sources require embedding supported contents or an explicit accurate preview.
+	Render *psdscene.Options
 }
 
 // SetEffectsWithOptions edits existing effects under an explicit rendering policy.
 // SaveOptions.ApproximateDropShadow must also be selected when rebuilding an approximate saved preview.
+// Supported placed shadows resolve current contents and atomically commit unstyled source pixels with effect metadata.
 func (e *Editor) SetEffectsWithOptions(
 	ctx context.Context, id LayerID, desired psdeffects.Set, options EffectsEditOptions,
 ) error {
@@ -62,7 +74,7 @@ func (e *Editor) SetEffectsWithOptions(
 		return err
 	}
 	if node.group || node.sourceIndex < 0 || node.sourceIndex >= len(e.source.Layers) {
-		return editError(ErrUnsupported, "layers.effects", "effect edits require an existing raster layer")
+		return editError(ErrUnsupported, "layers.effects", "effect edits require an existing RGB leaf layer")
 	}
 	_, hasVector, err := e.vectorMaskBlockLocked(node)
 	if err != nil {
@@ -70,8 +82,9 @@ func (e *Editor) SetEffectsWithOptions(
 	}
 	pureOverlay := effectsPureColorOverlay(desired)
 	mixedShadow := effectsShadowOverlay(desired)
+	placedSource := effectsHasPlacedSource(e.source.Layers[node.sourceIndex])
 	expandedSource := parent != nil || e.source.Layers[node.sourceIndex].Mask != nil || hasVector ||
-		node.pixelMaskChange != nil || node.vectorMaskChange != nil
+		node.pixelMaskChange != nil || node.vectorMaskChange != nil || placedSource
 	approximateShadow := options.ApproximateDropShadow && (effectsPureDropShadow(desired) || mixedShadow)
 	allowVectorMask := pureOverlay || approximateShadow
 	if approximateShadow && mixedShadow &&
@@ -96,7 +109,8 @@ func (e *Editor) SetEffectsWithOptions(
 		if geometryBudget <= 0 {
 			return editError(psdfile.ErrLimit, "layers.effects", "source metadata has no remaining working budget")
 		}
-		working, err := e.effectsRasterSource(ctx, node, geometryBudget, approximateShadow && !mixedShadow, allowVectorMask)
+		working, err := e.effectsRasterSource(ctx, node, geometryBudget,
+			approximateShadow, allowVectorMask, pureOverlay, approximateShadow)
 		if err != nil {
 			return err
 		}
@@ -132,8 +146,8 @@ func (e *Editor) SetEffectsWithOptions(
 			return err
 		}
 	}
-	if node.effects != nil && effectsParametersEqual(*node.effects, desired) ||
-		node.effects == nil && effectsParametersEqual(*original, desired) {
+	if !placedSource && (node.effects != nil && effectsParametersEqual(*node.effects, desired) ||
+		node.effects == nil && effectsParametersEqual(*original, desired)) {
 		if _, err := e.source.ReadAt(nil, 0); err != nil {
 			return err
 		}
@@ -208,7 +222,7 @@ func (e *Editor) SetEffectsWithOptions(
 			return err
 		}
 	}
-	if equal {
+	if equal && !placedSource {
 		return ctx.Err()
 	}
 	bridgeBudget := min(limits.MaxMetadataBytes,
@@ -229,6 +243,57 @@ func (e *Editor) SetEffectsWithOptions(
 	if finalRetained < 0 || cost+int64(len(encoded))+legacyBytes > limits.MaxDecodeBytes-finalRetained {
 		return editError(psdfile.ErrLimit, "layers.effects", "owned effect overlay exceeds the retained budget")
 	}
+	var live *psdmodel.Layer
+	var sourcePixels *image.NRGBA
+	if placedSource {
+		sourceBudget := remaining - bridgeBudget - cost - int64(cap(encoded)) - legacyBytes
+		stage, err := e.prepareEffectsPlacedSourceLocked(ctx, node, owned, options.Render, sourceBudget)
+		if err != nil {
+			return err
+		}
+		revision, source := e.revision, e.source
+		e.mu.Unlock()
+		live, err = stage.render(ctx)
+		_ = stage.prepared.Candidate.Close()
+		e.mu.Lock()
+		if err != nil {
+			return compositeRenderError(err)
+		}
+		if err := e.checkMutableLocked(); err != nil {
+			return err
+		}
+		if e.revision != revision || e.source != source {
+			return ErrStaleLinkedEdit
+		}
+		sourcePixels, err = effectsPlacedPixels(live)
+		if err != nil {
+			return err
+		}
+		if err := e.smartTransformGeometryLocked(ctx, node, live.Bounds, false); err != nil {
+			return err
+		}
+		if equal && node.pixels != nil && node.bounds == live.Bounds &&
+			textEditPixelsEqual(ctx, node.pixels, sourcePixels) && reflect.DeepEqual(node.placed, live.Placed) {
+			if _, err := e.source.ReadAt(nil, 0); err != nil {
+				return err
+			}
+			return ctx.Err()
+		}
+		placedCost := e.effectsPlacedMetadataCost(node, live.Placed)
+		pixelBytes := int64(cap(sourcePixels.Pix))
+		current := e.ownedBytesLocked(nil)
+		if current+stage.retained > limits.MaxDecodeBytes-pixelBytes-placedCost-cost-int64(cap(encoded))-legacyBytes {
+			return editError(psdfile.ErrLimit, "layers.effects.source", "fresh artwork exceeds the retained peak budget")
+		}
+		if node.pixels != nil {
+			finalRetained -= int64(len(node.pixels.Pix))
+		}
+		finalRetained -= node.semanticCosts["placed"]
+		if finalRetained < 0 || pixelBytes+placedCost+cost+int64(len(encoded))+legacyBytes >
+			limits.MaxDecodeBytes-finalRetained {
+			return editError(psdfile.ErrLimit, "layers.effects.source", "fresh artwork exceeds the retained budget")
+		}
+	}
 	if err := ctx.Err(); err != nil {
 		return err
 	}
@@ -242,6 +307,11 @@ func (e *Editor) SetEffectsWithOptions(
 	maps.Copy(node.additional, legacy)
 	node.effects = owned
 	node.setSemanticCost("effects", cost)
+	if live != nil {
+		node.pixels, node.bounds, node.placed = sourcePixels, live.Bounds, live.Placed
+		node.setSemanticCost("placed", e.effectsPlacedMetadataCost(node, live.Placed)+
+			int64(cap(sourcePixels.Pix)-len(sourcePixels.Pix)))
+	}
 	e.markChangedLocked(false)
 	return nil
 }
@@ -493,7 +563,8 @@ func (e *Editor) effectsEditBlockWithOptions(
 	if record.BlendMode != "norm" && (!approximateShadow || record.BlendMode != "mul ") ||
 		record.Clipping != 0 || record.Mask != nil && !allowPixelMask ||
 		node.fillColor != nil ||
-		node.gradient != nil || node.adjustment != nil || node.placed != nil || node.vectorMask != nil && !allowVectorMask {
+		node.gradient != nil || node.adjustment != nil || node.placed != nil && !approximateShadow ||
+		node.vectorMask != nil && !allowVectorMask {
 		return psdfile.AdditionalBlock{}, editError(ErrUnsupported, "layers.effects",
 			"effect source is not an ordinary Normal raster")
 	}
@@ -601,7 +672,8 @@ func effectsPureColorOverlay(set psdeffects.Set) bool {
 }
 
 func (e *Editor) effectsRasterSource(
-	ctx context.Context, node *editNode, budget int64, allowOriginalPlaced, allowVectorMask bool,
+	ctx context.Context, node *editNode, budget int64,
+	allowOriginalPlaced, allowVectorMask, pureOverlay, approximateShadow bool,
 ) (int64, error) {
 	view, err := e.source.ReadLayerMetadata(ctx, node.sourceIndex, psdfile.MetadataOptions{MaxBytes: budget})
 	if err != nil {
@@ -621,7 +693,7 @@ func (e *Editor) effectsRasterSource(
 		return 0, editError(ErrUnsupported, "layers.effects", "source pixel mask representation is unsupported")
 	}
 	if allowVectorMask {
-		return e.effectsVectorSource(ctx, node, layer, view.WorkingBytes, budget)
+		return e.effectsVectorSource(ctx, node, layer, view.WorkingBytes, budget, pureOverlay, approximateShadow)
 	}
 	return view.WorkingBytes, nil
 }

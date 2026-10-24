@@ -324,6 +324,7 @@ func (e *Editor) pixelMaskStateLocked(ctx context.Context, node *editNode) (pixe
 			return unsupported("generated coverage requires one unambiguous vector-mask block")
 		}
 		state.generated = false
+		return state, nil
 	}
 	if state.generated {
 		state.channelID = -3
@@ -335,10 +336,11 @@ func (e *Editor) pixelMaskStateLocked(ctx context.Context, node *editNode) (pixe
 		if real != 0 || state.hasReal {
 			return unsupported("dual user masks have ambiguous lifecycle semantics")
 		}
-		// A mask without samples still applies its default coverage when no vector mask owns this metadata.
-		state.hasUser = primary == 1 || vectorBlocks == 0
+		// Ordinary metadata remains a default-coverage user mask even when vector geometry is present.
+		// Generated vector coverage uses the explicit flag above and never acquires user-mask ownership here.
+		state.hasUser = true
 	}
-	if state.hasUser && (state.generated || primary == 1) {
+	if state.hasUser {
 		state.layout, err = decodePixelMaskLayout(data, e.pixelMaskChannelsLocked(node))
 	}
 	return state, err

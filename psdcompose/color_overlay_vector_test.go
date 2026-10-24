@@ -117,8 +117,15 @@ func vectorOverlayReferencePixel(layer *psdmodel.Layer, x, y int, coverage float
 		return color.NRGBA{R: 73, G: 119, B: 211, A: 167}
 	}
 	pixel := layer.Pixels.NRGBAAt(x-layer.Bounds.Min.X, y-layer.Bounds.Min.Y)
+	fill, opacity := 1.0, 1.0
+	if layer.FillOpacity != nil {
+		fill = *layer.FillOpacity
+	}
+	if layer.Opacity != nil {
+		opacity = *layer.Opacity
+	}
 	source := [4]float64{float64(pixel.R) / 255, float64(pixel.G) / 255,
-		float64(pixel.B) / 255, 74.0 / 255}
+		float64(pixel.B) / 255, fill}
 	painted := vectorOverlayReferenceOver(backdrop, source, "norm")
 	if interior {
 		painted = source
@@ -129,9 +136,9 @@ func vectorOverlayReferencePixel(layer *psdmodel.Layer, x, y int, coverage float
 		painted = vectorOverlayReferenceOver(painted,
 			[4]float64{effect.Color[0], effect.Color[1], effect.Color[2], effect.Opacity}, effect.BlendMode)
 	}
-	amount := float64(pixel.A) / 255 * (186.0 / 255) * coverage
+	amount := float64(pixel.A) / 255 * opacity * coverage
 	if interior {
-		painted[3] = amount * (74.0 / 255)
+		painted[3] = amount * fill
 		painted = vectorOverlayReferenceOver(backdrop, painted, "norm")
 	} else {
 		alpha := backdrop[3]*(1-amount) + painted[3]*amount

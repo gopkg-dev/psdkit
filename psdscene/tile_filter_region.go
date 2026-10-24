@@ -22,7 +22,7 @@ func (engine *rgbTileRenderer) filterOpacityFacts(
 		workLimit = 256 << 20
 	}
 	var work int64
-	if layer.Placed.Warp == nil || layer.Placed.Warp.Style != "custom" {
+	if !hasSceneWarp(layer.Placed) {
 		corners, err := psdrender.PlacedCorners(layer.Placed)
 		if err != nil {
 			return nil, err
@@ -137,8 +137,8 @@ func (engine *rgbTileRenderer) opacityWindow(
 	var projected *image.NRGBA
 	var origin image.Point
 	var err error
-	if layer.Placed.Warp != nil && layer.Placed.Warp.Style == "custom" {
-		patch, compileErr := compileSceneWarp(ctx, layer.Placed, engine.settings.ApproximateCustomWarp,
+	if hasSceneWarp(layer.Placed) {
+		patch, compileErr := engine.compilePlacedWarp(ctx, layer,
 			psdwarp.Options{MaxBytes: available - area*4})
 		if compileErr != nil {
 			return nil, sceneProjectionError(compileErr, "tile.smartObject.opacity", 0)

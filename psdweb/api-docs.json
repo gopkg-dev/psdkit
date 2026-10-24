@@ -125,7 +125,7 @@
     ]
   },
   "psdedit.Editor.AddVectorMask": {
-    "Description": "AddVectorMask adds independently owned vector geometry to a layer or group without a vector mask.\nThe vector canvas must match the document. An existing user pixel mask remains unchanged.\nDuplicate vector blocks and ambiguous pixel-mask layouts return ErrUnsupported without mutation.",
+    "Description": "AddVectorMask adds independently owned vector geometry to a layer or group without a vector mask.\nThe vector canvas must match the document. An existing user pixel mask remains unchanged.\nAn ordinary pixel mask without sample channels retains its uniform default coverage.\nDuplicate vector blocks and ambiguous pixel-mask layouts return ErrUnsupported without mutation.",
     "Parameters": [
       "ctx",
       "id",
@@ -184,7 +184,7 @@
     ]
   },
   "psdedit.Editor.EmbedLinkedContentsWithOptions": {
-    "Description": "EmbedLinkedContentsWithOptions embeds an external source using explicit source-color and Warp policies.\nThe zero value preserves the strict rendering behavior and atomic guarantees of EmbedLinkedContents.",
+    "Description": "EmbedLinkedContentsWithOptions embeds an external source using explicit color, Warp and filter policies.\nThe zero value preserves the strict rendering behavior and atomic guarantees of EmbedLinkedContents.",
     "Parameters": [
       "ctx",
       "id",
@@ -219,7 +219,7 @@
     ]
   },
   "psdedit.Editor.PixelMask": {
-    "Description": "PixelMask returns independently owned settings for the layer's effective existing user pixel mask.\nA sole ordinary mask without sample channels uses its default coverage and remains editable.\nGenerated vector coverage without a real user-mask channel is not an editable pixel mask.",
+    "Description": "PixelMask returns independently owned settings for the layer's effective existing user pixel mask.\nAn ordinary mask without sample channels uses uniform default coverage, also beside a vector mask.\nGenerated vector coverage without a real user-mask channel is not an editable pixel mask.",
     "Parameters": [
       "ctx",
       "id"
@@ -269,7 +269,7 @@
     ]
   },
   "psdedit.Editor.ReplaceContents": {
-    "Description": "ReplaceContents replaces an embedded RGB8 PSD/PSB, PNG, JPEG or flat RGB8 TIFF source for all shared instances.\nThe original encoded replacement format and bytes are retained; projected parent caches are RGB8.\nEncoded input and projected caches are copied into owned overlays; original blocks remain immutable.\nDestination corners remain fixed when the prototype canvas changes size.\nSource-space custom controls are scaled per axis; live filters and unsupported Warp are rejected.\nPhotoshop's default Replace Contents instead retains pixel scale and the placement center.",
+    "Description": "ReplaceContents replaces an embedded RGB8 PSD/PSB, PNG, JPEG or flat RGB8 TIFF source for all shared instances.\nThe original encoded replacement format and bytes are retained; projected parent caches are RGB8.\nEncoded input and projected caches are copied into owned overlays; original blocks remain immutable.\nDestination corners remain fixed when the prototype canvas changes size.\nSource-space custom controls are scaled per axis; supported live filters are recalculated from new contents.\nFilter approximation remains disabled unless selected through ReplaceContentsWithOptions.\nPhotoshop's default Replace Contents instead retains pixel scale and the placement center.",
     "Parameters": [
       "ctx",
       "id",
@@ -379,7 +379,7 @@
     ]
   },
   "psdedit.Editor.SetEffects": {
-    "Description": "SetEffects edits existing modern RGB effects without changing their families, count or fixed semantics.\nColor and opacity are editable; interior effects also support existing RGB blend modes.\nShadow distance/local angle/blur and calibrated glow/stroke sizes use strict core validation.\nColorOverlay also accepts partial source alpha; strict geometric effect edits require an opaque source rectangle.\nPure ColorOverlay additionally supports ordinary nested leaves and supported pixel/vector-mask semantics.\nGlobal resources, flags, descriptor structure and unsupported source metadata remain unchanged.\nEncoding and owned semantic decoding complete under a peak budget before committing editor overlays.",
+    "Description": "SetEffects edits existing modern RGB effects without changing their families, count or fixed semantics.\nColor and opacity are editable; interior effects also support existing RGB blend modes.\nShadow distance/local angle/blur and calibrated glow/stroke sizes use strict core validation.\nColorOverlay also accepts partial source alpha; strict geometric effect edits require an opaque source rectangle.\nPure ColorOverlay additionally supports ordinary nested leaves and supported pixel/vector-mask semantics.\nCalibrated single-rectangle vector feather accepts .5/1.5/3 with no active user pixel mask.\nGlobal resources, flags, descriptor structure and unsupported source metadata remain unchanged.\nEncoding and owned semantic decoding complete under a peak budget before committing editor overlays.",
     "Parameters": [
       "ctx",
       "id",
@@ -387,7 +387,7 @@
     ]
   },
   "psdedit.Editor.SetEffectsWithOptions": {
-    "Description": "SetEffectsWithOptions edits existing effects under an explicit rendering policy.\nSaveOptions.ApproximateDropShadow must also be selected when rebuilding an approximate saved preview.",
+    "Description": "SetEffectsWithOptions edits existing effects under an explicit rendering policy.\nSaveOptions.ApproximateDropShadow must also be selected when rebuilding an approximate saved preview.\nSupported placed shadows resolve current contents and atomically commit unstyled source pixels with effect metadata.",
     "Parameters": [
       "ctx",
       "id",
@@ -485,6 +485,24 @@
       "options"
     ]
   },
+  "psdedit.Editor.SetSmartObjectWarp": {
+    "Description": "SetSmartObjectWarp replaces the control points of one existing supported custom raster placement.\nPoints retain the existing row-major order and source-coordinate pixel units; bounds and placement corners remain.\nCurrent contents and supported filters rebuild unmasked source pixels; shared contents and peer instances remain.\nExisting uniform 10x10 and 13x13 grids require explicit Render.ApproximateCustomWarp; their slice schema remains.\nPresets, irregular quilts, legacy mirrors, folds and ambiguous descriptors are unsupported and commit nothing.\nRendering and explicit resolver callbacks run without the editor lock; intervening edits return ErrStaleLinkedEdit.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "points",
+      "options"
+    ]
+  },
+  "psdedit.Editor.SetSmartObjectWarpPreset": {
+    "Description": "SetSmartObjectWarpPreset changes the bend of one existing horizontal Arc Lower raster placement.\nNative 4x2 affine geometry, zero perspective and an absolute bend below 100 are required.\nRender.ApproximateCustomWarp must be explicitly enabled, including for a zero bend.\nExplicit external resolvers and source policies apply to this edit only; shared peer placements remain unchanged.\nUnsupported presets, schemas or resolver results commit neither parameters nor replacement artwork.",
+    "Parameters": [
+      "ctx",
+      "id",
+      "parameters",
+      "options"
+    ]
+  },
   "psdedit.Editor.SetSolidFill": {
     "Description": "SetSolidFill changes an existing RGB solid-color layer's live fill and saved descriptor.\nRGB components are encoded values between zero and one; opacity remains a separate layer property.\nVector geometry, original raster caches and unrelated descriptor entries are retained.",
     "Parameters": [
@@ -494,7 +512,7 @@
     ]
   },
   "psdedit.Editor.SetTextContent": {
-    "Description": "SetTextContent changes an existing single-style Unicode point-text layer without a document-wide Txt2 block.\nAccurate new layer pixels are mandatory: Photoshop does not automatically refresh its saved text raster on open.\nNewlines are normalized to carriage returns and character/paragraph ranges use UTF-16 code units.\nControl characters other than CR/LF are unsupported, as are Unicode line and paragraph separators.\nOrdered descriptors, unknown engine properties, typography, affine bits, warp, TySh bounds and tail are preserved.\nThe replacement source artwork is copied and committed atomically with the updated TySh payload.\nModern Txt2 text, multiple character/paragraph styles, paragraph text and warps return ErrUnsupported.\nMoving relative masks or resizing unknown extra layer channels is also unsupported.",
+    "Description": "SetTextContent changes an existing single-style Unicode point-text layer without a document-wide Txt2 block.\nNil Pixels renders supported source text into a whole-canvas raster using the explicitly selected text policy.\nAutomatic font callbacks run outside the editor lock; intervening edits return ErrStaleLinkedEdit.\nNewlines are normalized to carriage returns and character/paragraph ranges use UTF-16 code units.\nControl characters other than CR/LF are unsupported, as are Unicode line and paragraph separators.\nOrdered descriptors, unknown engine properties, typography, affine bits, warp, TySh bounds and tail are preserved.\nThe replacement source artwork is copied and committed atomically with the updated TySh payload.\nModern Txt2 text, multiple character/paragraph styles, paragraph text and warps return ErrUnsupported.\nMoving relative masks or resizing unknown extra layer channels is also unsupported.",
     "Parameters": [
       "ctx",
       "id",
@@ -536,7 +554,7 @@
     ]
   },
   "psdedit.Editor.UpdateLinkedContentsWithOptions": {
-    "Description": "UpdateLinkedContentsWithOptions refreshes an external source with explicit source-color and Warp policies.\nPaths and external-file persistence remain caller-controlled, with the same stale-edit protection.",
+    "Description": "UpdateLinkedContentsWithOptions refreshes an external source with explicit color, Warp and filter policies.\nPaths and external-file persistence remain caller-controlled, with the same stale-edit protection.",
     "Parameters": [
       "ctx",
       "id",
@@ -599,6 +617,13 @@
     "Description": "",
     "Parameters": [
       "data"
+    ]
+  },
+  "psdedit.textAutoReader.ReadAt": {
+    "Description": "",
+    "Parameters": [
+      "data",
+      "offset"
     ]
   },
   "psdeffects.Decode": {
@@ -1677,7 +1702,7 @@
     ]
   },
   "psdkit.CompilePresetWarpGeometry": {
-    "Description": "CompilePresetWarpGeometry prepares owned horizontal Arc Lower coordinates with validated source metadata.\nCoordinate certification and native pixel sampling have separate acceptance scopes.",
+    "Description": "CompilePresetWarpGeometry prepares owned horizontal Arc Lower coordinates with validated source metadata.\nCompilation allocates no pixels; mathematical sampling is explicit and native sampling remains unverified.\nScene rendering uses this certified subset only with explicit ApproximateCustomWarp; default projection is unchanged.",
     "Parameters": [
       "ctx",
       "placed",
@@ -1933,7 +1958,7 @@
     ]
   },
   "psdkit.RenderArtboard": {
-    "Description": "RenderArtboard rebuilds one selected board from its live layers and saved background.",
+    "Description": "RenderArtboard rebuilds one selected board from its live layers and saved background.\nVisible smart objects use actual contents; external sources and approximations require explicit Render policies.",
     "Parameters": [
       "ctx",
       "source",
@@ -1941,7 +1966,7 @@
     ]
   },
   "psdkit.RenderArtboards": {
-    "Description": "RenderArtboards rebuilds every top-level RGB8 PSD/PSB artboard independently.",
+    "Description": "RenderArtboards rebuilds every top-level RGB8 PSD/PSB artboard independently.\nShared live contents are resolved once per call while each board retains its own background and crop.",
     "Parameters": [
       "ctx",
       "source",
@@ -2127,7 +2152,7 @@
     ]
   },
   "psdrender.CompilePresetWarpGeometry": {
-    "Description": "CompilePresetWarpGeometry certifies supported native preset coordinates without exposing pixel projection.\nHorizontal Arc Lower has native control evidence; its texture tessellation remains outside the live renderer.",
+    "Description": "CompilePresetWarpGeometry certifies supported native preset coordinates without allocating pixels.\nThe returned geometry offers explicitly selected mathematical sampling, without native pixel equivalence.\nScene rendering supports horizontal Arc Lower with explicit ApproximateCustomWarp; default projection is unchanged.",
     "Parameters": [
       "ctx",
       "layer",
@@ -2551,6 +2576,15 @@
     "Parameters": [
       "ctx",
       "point"
+    ]
+  },
+  "psdwarp.PresetGeometry.ProjectMathematicalWithOptions": {
+    "Description": "ProjectMathematicalWithOptions samples certified preset geometry with the mathematical patch rasterizer.\nCallers must explicitly select this approximation; Photoshop-native pixel equivalence is unverified.\nThe current operation's MaxBytes includes all retained preset geometry, output and raster scratch.\nInput pixels, compiled geometry and its original options remain unchanged.",
+    "Parameters": [
+      "ctx",
+      "source",
+      "canvas",
+      "options"
     ]
   },
   "psdwarp.PresetGeometry.WorkingBytes": {

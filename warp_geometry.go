@@ -7,6 +7,7 @@ import (
 )
 
 // PresetWarpGeometry owns validated forward and inverse coordinates for a supported Warp preset.
+// Its mathematical pixel sampler requires explicit selection and does not claim native pixel equivalence.
 type PresetWarpGeometry = psdwarp.PresetGeometry
 
 // WarpGeometryOptions bounds retained geometry and inverse traversal.
@@ -26,7 +27,8 @@ func CompileUniformGridWarpGeometry(
 }
 
 // CompilePresetWarpGeometry prepares owned horizontal Arc Lower coordinates with validated source metadata.
-// Coordinate certification and native pixel sampling have separate acceptance scopes.
+// Compilation allocates no pixels; mathematical sampling is explicit and native sampling remains unverified.
+// Scene rendering uses this certified subset only with explicit ApproximateCustomWarp; default projection is unchanged.
 func CompilePresetWarpGeometry(
 	ctx context.Context, placed *Placed, options ...WarpGeometryOptions,
 ) (*PresetWarpGeometry, error) {

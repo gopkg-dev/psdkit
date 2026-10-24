@@ -24,11 +24,12 @@ func (e *Editor) EmbedLinkedContents(ctx context.Context, id LayerID, resolver L
 	return e.EmbedLinkedContentsWithOptions(ctx, id, resolver, SmartContentsOptions{})
 }
 
-// EmbedLinkedContentsWithOptions embeds an external source using explicit source-color and Warp policies.
+// EmbedLinkedContentsWithOptions embeds an external source using explicit color, Warp and filter policies.
 // The zero value preserves the strict rendering behavior and atomic guarantees of EmbedLinkedContents.
 func (e *Editor) EmbedLinkedContentsWithOptions(
 	ctx context.Context, id LayerID, resolver LinkedContentsResolver, options SmartContentsOptions,
 ) error {
+	options = cloneSmartContentsOptions(options)
 	if ctx == nil {
 		ctx = context.Background()
 	}

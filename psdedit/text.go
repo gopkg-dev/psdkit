@@ -15,20 +15,25 @@ import (
 	"unsafe"
 
 	"github.com/gopkg-dev/psdkit/psdfile"
+	"github.com/gopkg-dev/psdkit/psdscene"
 	"github.com/gopkg-dev/psdkit/psdtext"
 )
 
-// TextEditOptions supplies accurate replacement pixels for the edited text layer.
+// TextEditOptions selects supplied artwork or explicit approximate source rendering for edited text.
 // Pixels contains straight-alpha RGB8 source artwork before layer opacity, masks and effects.
 // Its rectangle is the new absolute document-coordinate layer rectangle, including any transparent padding.
 // The caller must ensure that these pixels represent text with the retained typography and affine transform.
 // The library validates geometry and ownership, not agreement between the supplied artwork and text.
+// Nil Pixels requires Render with an explicit font resolver and exactly one approximate text policy.
+// Pixels and Render are mutually exclusive; output profiles and cached-source fallbacks are unsupported.
 type TextEditOptions struct {
 	Pixels *image.NRGBA
+	Render *psdscene.Options
 }
 
 // SetTextContent changes an existing single-style Unicode point-text layer without a document-wide Txt2 block.
-// Accurate new layer pixels are mandatory: Photoshop does not automatically refresh its saved text raster on open.
+// Nil Pixels renders supported source text into a whole-canvas raster using the explicitly selected text policy.
+// Automatic font callbacks run outside the editor lock; intervening edits return ErrStaleLinkedEdit.
 // Newlines are normalized to carriage returns and character/paragraph ranges use UTF-16 code units.
 // Control characters other than CR/LF are unsupported, as are Unicode line and paragraph separators.
 // Ordered descriptors, unknown engine properties, typography, affine bits, warp, TySh bounds and tail are preserved.
@@ -38,6 +43,12 @@ type TextEditOptions struct {
 func (e *Editor) SetTextContent(ctx context.Context, id LayerID, text string, options TextEditOptions) error {
 	if ctx == nil {
 		ctx = context.Background()
+	}
+	if options.Pixels == nil {
+		return e.setTextContentAuto(ctx, id, text, options.Render)
+	}
+	if options.Render != nil {
+		return editError(ErrInvalidEdit, "layers.text.options", "choose supplied pixels or automatic rendering")
 	}
 	e.mu.Lock()
 	defer e.mu.Unlock()
@@ -53,9 +64,6 @@ func (e *Editor) SetTextContent(ctx context.Context, id LayerID, text string, op
 	node, _, _, err := e.findNodeLocked(id)
 	if err != nil {
 		return err
-	}
-	if options.Pixels == nil {
-		return editError(ErrUnsupported, "layers.text.pixels", "accurate replacement text pixels are required")
 	}
 	block, err := e.textEditBlock(node)
 	if err != nil {
@@ -74,81 +82,15 @@ func (e *Editor) SetTextContent(ctx context.Context, id LayerID, text string, op
 	if work <= 0 || int64(len(text)) > work/64 {
 		return editError(psdfile.ErrLimit, "layers.text", "new text and pixels exceed the peak working budget")
 	}
-	text, err = textEditNormalize(ctx, text)
+	identical := node.pixels != nil && node.bounds == options.Pixels.Rect &&
+		textEditPixelsEqual(ctx, node.pixels, options.Pixels)
+	encoded, err := e.encodeTextEditLocked(ctx, node, block, text, work, identical)
 	if err != nil {
 		return err
 	}
-	bridgeBudget := min(limits.MaxMetadataBytes, work/4)
-	payload := node.additional[block.Span.Offset]
-	if payload == nil {
-		if block.Data.Length > bridgeBudget/4 {
-			return editError(psdfile.ErrLimit, "layers.text", "source text payload exceeds the working budget")
-		}
-		payload, err = textEditReadPayload(ctx, e.source, block.Data)
-		if err != nil {
-			return err
-		}
-	}
-	bridge, record, err := textEditSource(ctx, payload, limits, bridgeBudget)
-	if err != nil {
-		return textEditError(err)
-	}
-	defer func() { _ = bridge.Close() }()
-	engineBudget, metadataBudget := min(limits.MaxMetadataBytes, work/6), min(limits.MaxMetadataBytes, work/12)
-	engine, err := bridge.DecodeTextEngine(ctx, record, psdtext.DecodeOptions{MaxBytes: engineBudget})
-	if err != nil {
-		return textEditError(err)
-	}
-	metadata, err := engine.Metadata(ctx, psdtext.MetadataOptions{MaxBytes: metadataBudget,
-		MaxRuns: limits.MaxDescriptorItems, MaxFonts: limits.MaxDescriptorItems})
-	if err != nil {
-		return textEditError(err)
-	}
-	if err := textEditCapability(ctx, record, metadata); err != nil {
-		return err
-	}
-	if record.Text == text && node.pixels != nil && node.bounds == options.Pixels.Rect &&
-		textEditPixelsEqual(ctx, node.pixels, options.Pixels) {
+	if encoded == nil {
 		return ctx.Err()
 	}
-	patchBudget := work / 12
-	if err := patchTextEngine(ctx, engine, metadata, text, patchBudget, limits.MaxDescriptorItems); err != nil {
-		return err
-	}
-	encodedEngine, err := psdtext.Encode(ctx, engine, psdtext.EncodeOptions{MaxBytes: work / 12,
-		MaxDepth: min(256, limits.MaxDescriptorDepth), MaxNodes: limits.MaxDescriptorItems})
-	if err != nil {
-		return textEditError(err)
-	}
-	for index := range record.TextDescriptor.Entries {
-		entry := &record.TextDescriptor.Entries[index]
-		switch entry.Key {
-		case "Txt ":
-			entry.Value = text
-		case "EngineData":
-			entry.Value = encodedEngine
-		}
-	}
-	encodeLimits := limits
-	encodeLimits.MaxMetadataBytes = min(limits.MaxMetadataBytes, work/12)
-	encodedDescriptor, err := bridge.EncodeDescriptor(ctx, record.TextDescriptor, true,
-		psdfile.DescriptorEncodeOptions{Limits: encodeLimits, MaxEncodedBytes: work / 12})
-	if err != nil {
-		return textEditError(err)
-	}
-	start := record.Block.Data.Offset
-	prefixLength := record.Prefix.Length
-	suffixStart := record.WarpVersionData.Offset - start
-	length := prefixLength + int64(len(encodedDescriptor)) + int64(len(payload)) - suffixStart
-	// Native TySh counts its final alignment bytes inside the local tagged-block payload.
-	length += (4 - length%4) % 4
-	if length < 0 || length > work/12 || uint64(length) > uint64(^uint(0)>>1) {
-		return editError(psdfile.ErrLimit, "layers.text", "updated text payload exceeds the working budget")
-	}
-	encoded := make([]byte, int(length))
-	position := copy(encoded, payload[:prefixLength])
-	position += copy(encoded[position:], encodedDescriptor)
-	copy(encoded[position:], payload[suffixStart:])
 	owned := image.NewNRGBA(image.Rect(0, 0, options.Pixels.Rect.Dx(), options.Pixels.Rect.Dy()))
 	for row := range owned.Rect.Dy() {
 		for column := 0; column < owned.Stride; column += 32 << 10 {
@@ -174,6 +116,91 @@ func (e *Editor) SetTextContent(ctx context.Context, id LayerID, text string, op
 	node.setSemanticCost("text", 256)
 	e.markChangedLocked(false)
 	return nil
+}
+
+func (e *Editor) encodeTextEditLocked(
+	ctx context.Context, node *editNode, block psdfile.AdditionalBlock, text string, work int64, skipIdentical bool,
+) ([]byte, error) {
+	limits := e.source.Limits()
+	if work <= 0 || int64(len(text)) > work/64 {
+		return nil, editError(psdfile.ErrLimit, "layers.text", "new text exceeds the peak working budget")
+	}
+	var err error
+	text, err = textEditNormalize(ctx, text)
+	if err != nil {
+		return nil, err
+	}
+	bridgeBudget := min(limits.MaxMetadataBytes, work/4)
+	payload := node.additional[block.Span.Offset]
+	if payload == nil {
+		if block.Data.Length > bridgeBudget/4 {
+			return nil, editError(psdfile.ErrLimit, "layers.text", "source text payload exceeds the working budget")
+		}
+		payload, err = textEditReadPayload(ctx, e.source, block.Data)
+		if err != nil {
+			return nil, err
+		}
+	}
+	bridge, record, err := textEditSource(ctx, payload, limits, bridgeBudget)
+	if err != nil {
+		return nil, textEditError(err)
+	}
+	defer func() { _ = bridge.Close() }()
+	engineBudget, metadataBudget := min(limits.MaxMetadataBytes, work/6), min(limits.MaxMetadataBytes, work/12)
+	engine, err := bridge.DecodeTextEngine(ctx, record, psdtext.DecodeOptions{MaxBytes: engineBudget})
+	if err != nil {
+		return nil, textEditError(err)
+	}
+	metadata, err := engine.Metadata(ctx, psdtext.MetadataOptions{MaxBytes: metadataBudget,
+		MaxRuns: limits.MaxDescriptorItems, MaxFonts: limits.MaxDescriptorItems})
+	if err != nil {
+		return nil, textEditError(err)
+	}
+	if err := textEditCapability(ctx, record, metadata); err != nil {
+		return nil, err
+	}
+	if record.Text == text && skipIdentical {
+		return nil, ctx.Err()
+	}
+	patchBudget := work / 12
+	if err := patchTextEngine(ctx, engine, metadata, text, patchBudget, limits.MaxDescriptorItems); err != nil {
+		return nil, err
+	}
+	encodedEngine, err := psdtext.Encode(ctx, engine, psdtext.EncodeOptions{MaxBytes: work / 12,
+		MaxDepth: min(256, limits.MaxDescriptorDepth), MaxNodes: limits.MaxDescriptorItems})
+	if err != nil {
+		return nil, textEditError(err)
+	}
+	for index := range record.TextDescriptor.Entries {
+		entry := &record.TextDescriptor.Entries[index]
+		switch entry.Key {
+		case "Txt ":
+			entry.Value = text
+		case "EngineData":
+			entry.Value = encodedEngine
+		}
+	}
+	encodeLimits := limits
+	encodeLimits.MaxMetadataBytes = min(limits.MaxMetadataBytes, work/12)
+	encodedDescriptor, err := bridge.EncodeDescriptor(ctx, record.TextDescriptor, true,
+		psdfile.DescriptorEncodeOptions{Limits: encodeLimits, MaxEncodedBytes: work / 12})
+	if err != nil {
+		return nil, textEditError(err)
+	}
+	start := record.Block.Data.Offset
+	prefixLength := record.Prefix.Length
+	suffixStart := record.WarpVersionData.Offset - start
+	length := prefixLength + int64(len(encodedDescriptor)) + int64(len(payload)) - suffixStart
+	// Native TySh counts its final alignment bytes inside the local tagged-block payload.
+	length += (4 - length%4) % 4
+	if length < 0 || length > work/12 || uint64(length) > uint64(^uint(0)>>1) {
+		return nil, editError(psdfile.ErrLimit, "layers.text", "updated text payload exceeds the working budget")
+	}
+	encoded := make([]byte, int(length))
+	position := copy(encoded, payload[:prefixLength])
+	position += copy(encoded[position:], encodedDescriptor)
+	copy(encoded[position:], payload[suffixStart:])
+	return encoded, ctx.Err()
 }
 
 func textEditReadPayload(ctx context.Context, source *psdfile.Document, span psdfile.Span) ([]byte, error) {

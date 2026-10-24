@@ -264,7 +264,9 @@ func smartEditPlacement(t *testing.T, left int, peerProblem string) []byte {
 				{Key: "enab", Type: "bool", Value: true},
 				{Key: "filterFXList", Type: "VlLs", Value: []psdfile.DescriptorValue{{Type: "Objc",
 					Value: &psdfile.Descriptor{ClassID: "filter", Entries: []psdfile.DescriptorEntry{
+						{Key: "filterID", Type: "long", Value: int32(0x12345678)},
 						{Key: "enab", Type: "bool", Value: true},
+						{Key: "Fltr", Type: "Objc", Value: &psdfile.Descriptor{ClassID: "unknownFilter"}},
 					}},
 				}}},
 			}},

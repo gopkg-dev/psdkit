@@ -20,17 +20,57 @@ func pureColorOverlayEffects(set *psdeffects.Set) bool {
 	return active
 }
 
+// calibratedVectorFeatherOverlay admits only the established rectangle feather field with interior overlays.
+func calibratedVectorFeatherOverlay(layer *psdmodel.Layer) bool {
+	set := layer.Effects
+	if set == nil || len(set.Unsupported) != 0 ||
+		layer.Mask != nil && !layer.Mask.Disabled || layer.VectorFeather == nil || layer.VectorMask == nil ||
+		len(layer.VectorMask.Subpaths) != 1 {
+		return false
+	}
+	overlay := false
+	for _, effect := range set.Items {
+		if len(effect.Unsupported) != 0 {
+			return false
+		}
+		if effect.Kind == psdeffects.ColorOverlay {
+			overlay = true
+			continue
+		}
+		if effect.Enabled && effect.Opacity != 0 {
+			return false
+		}
+	}
+	// Dormant overlay sets still need known metadata before their ordinary feather path can be reused.
+	validation := *set
+	validation.Enabled, validation.EffectsVisible = true, true
+	if psdeffects.Validate(&validation) != nil {
+		return false
+	}
+	radius := *layer.VectorFeather
+	return overlay && (radius == .5 || radius == 1.5 || radius == 3) && vectorFeatherGeometry(layer.VectorMask)
+}
+
 func validateUnfeatheredEffectVectorMask(layer *psdmodel.Layer, path string) error {
+	if err := validateEffectVectorMaskMetadata(layer, path); err != nil {
+		return err
+	}
 	mask := layer.VectorMask
 	if mask == nil || mask.Disabled {
 		return nil
 	}
-	if len(mask.Unsupported) != 0 || mask.Flags&^uint32(7) != 0 || mask.Version != 0 && mask.Version != 3 {
-		return composeError(ErrUnsupported, path, "masked effects require known vector-mask metadata")
-	}
 	if layer.VectorFeather != nil && *layer.VectorFeather != 0 ||
 		layer.Mask != nil && !layer.Mask.Disabled && layer.Mask.Feather != nil && *layer.Mask.Feather != 0 {
 		return composeError(ErrUnsupported, path, "effects with an active vector mask require unfeathered masks")
+	}
+	return nil
+}
+
+func validateEffectVectorMaskMetadata(layer *psdmodel.Layer, path string) error {
+	mask := layer.VectorMask
+	if mask != nil && !mask.Disabled &&
+		(len(mask.Unsupported) != 0 || mask.Flags&^uint32(7) != 0 || mask.Version != 0 && mask.Version != 3) {
+		return composeError(ErrUnsupported, path, "masked effects require known vector-mask metadata")
 	}
 	return nil
 }

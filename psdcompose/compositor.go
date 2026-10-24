@@ -493,8 +493,14 @@ func (plan *composePlan) capability(layer *psdmodel.Layer, path string) error {
 		return composeError(ErrUnsupported, path+".pixels", "visible layer has no saved raster pixels")
 	}
 	if layer.Mask != nil && !layer.Mask.Disabled {
-		if len(layer.Mask.Unsupported) != 0 {
-			return composeError(ErrUnsupported, path+".mask", layer.Mask.Unsupported[0])
+		for _, issue := range layer.Mask.Unsupported {
+			// Older decoders attach vector feather's former blanket limitation to the shared pixel-mask block.
+			cache := plan.effects[layer]
+			if issue == "暂不支持矢量蒙版羽化" && cache != nil && cache.approximateDropShadow &&
+				calibratedShadowVectorFeather(layer) {
+				continue
+			}
+			return composeError(ErrUnsupported, path+".mask", issue)
 		}
 	}
 	return nil

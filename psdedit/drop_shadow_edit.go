@@ -17,7 +17,7 @@ func effectsPureDropShadow(set psdeffects.Set) bool {
 	return active
 }
 
-// effectsShadowOverlay admits the explicitly approximate ordinary-raster shadow/interior-overlay combination.
+// effectsShadowOverlay admits the explicitly approximate raster shadow/interior-overlay combination.
 func effectsShadowOverlay(set psdeffects.Set) bool {
 	shadow, overlay := false, false
 	for _, effect := range set.Items {

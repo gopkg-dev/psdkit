@@ -25,6 +25,7 @@ func RenderPlacedLayer(
 // RenderPreparedPlacedLayer renders private editor candidates through the original source-placement pipeline.
 // Parent profiles and filter-mask records remain original; candidate filters run once on freshly projected contents.
 // Returned artwork omits parent layer masks, effects, opacity and Fill, which the editing compositor applies later.
+// Explicit candidate parent effects only determine the necessary source neighborhood and remain unpainted metadata.
 // The private request's encoded storage is borrowed; MaxWorkingBytes bounds additional metadata and rendering storage.
 func RenderPreparedPlacedLayer(
 	ctx context.Context, prepared psdplaced.Prepared, options ...Options,
@@ -125,6 +126,11 @@ func renderPlacedLayer(
 				CenteredJPEGChroma: settings.CenteredJPEGChroma, SmartFilters: settings.SmartFilters},
 			active: map[*psdfile.Document]bool{source: true}, documents: 1,
 		}}
+	if prepared != nil && prepared.Effects != nil {
+		childCompose := settings.Compose
+		engine.sourceCompose = &childCompose
+		engine.settings.Compose.ApproximateDropShadow = prepared.EffectsApproximateDropShadow
+	}
 	release, err := engine.enterOpenTypeDocument()
 	if err != nil {
 		return nil, err

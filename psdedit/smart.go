@@ -9,7 +9,9 @@ import (
 	"math"
 	"unsafe"
 
+	"github.com/gopkg-dev/psdkit/internal/psdplaced"
 	"github.com/gopkg-dev/psdkit/psdfile"
+	"github.com/gopkg-dev/psdkit/psdfilter"
 	"github.com/gopkg-dev/psdkit/psdmodel"
 	"github.com/gopkg-dev/psdkit/psdrender"
 	"github.com/gopkg-dev/psdkit/psdscene"
@@ -105,7 +107,8 @@ func (e *Editor) SmartObjects(ctx context.Context) ([]SmartObjectInfo, error) {
 // The original encoded replacement format and bytes are retained; projected parent caches are RGB8.
 // Encoded input and projected caches are copied into owned overlays; original blocks remain immutable.
 // Destination corners remain fixed when the prototype canvas changes size.
-// Source-space custom controls are scaled per axis; live filters and unsupported Warp are rejected.
+// Source-space custom controls are scaled per axis; supported live filters are recalculated from new contents.
+// Filter approximation remains disabled unless selected through ReplaceContentsWithOptions.
 // Photoshop's default Replace Contents instead retains pixel scale and the placement center.
 func (e *Editor) ReplaceContents(ctx context.Context, id LayerID, data []byte) error {
 	if ctx == nil {
@@ -118,11 +121,14 @@ func (e *Editor) ReplaceContents(ctx context.Context, id LayerID, data []byte) e
 
 // SmartContentsOptions explicitly selects rendering policies for replacement source pixels and caches.
 type SmartContentsOptions struct {
-	// ApproximateCustomWarp permits the certified mathematical cubic-plus-homography model.
-	// It does not claim Photoshop pixel equivalence or enable unsupported quilt geometry.
+	// ApproximateCustomWarp permits certified mathematical custom envelopes and uniform 10x10/13x13 grids.
+	// It does not claim Photoshop pixel equivalence or enable irregular quilts or split-source resizing.
 	ApproximateCustomWarp bool
 	// AssumeUntaggedSRGB interprets an untagged replacement as sRGB before conversion to the parent profile.
 	AssumeUntaggedSRGB bool
+	// SmartFilters explicitly permits supported filter approximations when refreshing each shared instance.
+	// Nil uses strict filter algorithms with every approximation disabled.
+	SmartFilters *psdfilter.Options
 }
 
 // ReplaceContentsWithOptions replaces shared embedded contents using explicit rendering policies.
@@ -130,12 +136,21 @@ type SmartContentsOptions struct {
 func (e *Editor) ReplaceContentsWithOptions(
 	ctx context.Context, id LayerID, data []byte, options SmartContentsOptions,
 ) error {
+	options = cloneSmartContentsOptions(options)
 	if ctx == nil {
 		ctx = context.Background()
 	}
 	e.mu.Lock()
 	defer e.mu.Unlock()
 	return e.replaceSmartContentsWithOptionsLocked(ctx, id, data, false, nil, options)
+}
+
+func cloneSmartContentsOptions(options SmartContentsOptions) SmartContentsOptions {
+	if options.SmartFilters != nil {
+		filters := *options.SmartFilters
+		options.SmartFilters = &filters
+	}
+	return options
 }
 
 func (e *Editor) replaceContentsLocked(ctx context.Context, id LayerID, data []byte, embedExternal bool) error {
@@ -264,6 +279,28 @@ func (e *Editor) replaceSmartContentsWithOptionsLocked(
 			return err
 		}
 	}
+	var nodes []*editNode
+	var collect func([]*editNode)
+	collect = func(items []*editNode) {
+		for _, node := range items {
+			if peer, ok := byIndex[node.sourceIndex]; ok && peer.SourceID == placement.SourceID && !node.group {
+				nodes = append(nodes, node)
+			}
+			collect(node.children)
+		}
+	}
+	collect(e.roots)
+	for _, node := range nodes {
+		if node.placed != nil && node.placed.Warp != nil && node.placed.Warp.Style != "" &&
+			node.placed.Warp.Style != "none" && node.placed.Warp.Style != "custom" {
+			return editError(ErrUnsupported, "smartObject.warp.preset.source",
+				"source replacement for current preset edits requires a separately supported projection transaction")
+		}
+	}
+	if smartContentsHasFilters(byLayer, placement.SourceID) {
+		return e.replaceFilteredSmartContentsLocked(ctx, nodes, placement.SourceID, data, linkedView,
+			placementView.MetadataBytes, embedExternal, external, options)
+	}
 	if !placementEdited && len(data) >= 26 && string(data[:4]) == "8BPS" &&
 		float64(binary.BigEndian.Uint32(data[18:22])) == placement.Width &&
 		float64(binary.BigEndian.Uint32(data[14:18])) == placement.Height {
@@ -277,17 +314,6 @@ func (e *Editor) replaceSmartContentsWithOptionsLocked(
 		placementView.Records, byLayer = nil, nil
 		placement.Descriptor, placement.Warp, placement.Transform, placement.NonAffine = nil, nil, nil, nil
 	}
-	var nodes []*editNode
-	var collect func([]*editNode)
-	collect = func(items []*editNode) {
-		for _, node := range items {
-			if peer, ok := byIndex[node.sourceIndex]; ok && peer.SourceID == placement.SourceID && !node.group {
-				nodes = append(nodes, node)
-			}
-			collect(node.children)
-		}
-	}
-	collect(e.roots)
 	ownedBytes := e.ownedBytesLocked(nil) - e.linkedRecordsBytes
 	if previous := e.linkedOverlays[placement.SourceID]; previous != nil {
 		ownedBytes -= linkedReplacementOwnedBytes(previous)
@@ -467,17 +493,12 @@ func (e *Editor) replaceSmartContentsWithOptionsLocked(
 		var value *image.NRGBA
 		var origin image.Point
 		if layer.Placed.Warp != nil && layer.Placed.Warp.Style == "custom" {
-			compile := psdwarp.Compile
-			if options.ApproximateCustomWarp {
-				compile = psdwarp.CompileMathematical
-			}
-			patch, compileErr := compile(ctx, layer.Placed, psdwarp.Options{
-				MaxBytes: available, MaxPixels: limits.MaxDecodePixels,
-			})
+			projectionOptions := psdwarp.Options{MaxBytes: available, MaxPixels: limits.MaxDecodePixels}
+			patch, compileErr := psdplaced.CompileWarp(ctx, layer.Placed, options.ApproximateCustomWarp, projectionOptions)
 			if compileErr != nil {
 				return smartProjectionError(compileErr)
 			}
-			value, origin, err = patch.Project(ctx, pixels, canvas)
+			value, origin, err = patch.ProjectWithOptions(ctx, pixels, canvas, projectionOptions)
 		} else {
 			plan, compileErr := psdrender.CompileProjection(&layer, canvas.Dx(), canvas.Dy(), false)
 			if compileErr != nil {

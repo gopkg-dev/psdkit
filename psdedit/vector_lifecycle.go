@@ -18,6 +18,7 @@ type vectorMaskChange struct {
 
 // AddVectorMask adds independently owned vector geometry to a layer or group without a vector mask.
 // The vector canvas must match the document. An existing user pixel mask remains unchanged.
+// An ordinary pixel mask without sample channels retains its uniform default coverage.
 // Duplicate vector blocks and ambiguous pixel-mask layouts return ErrUnsupported without mutation.
 func (e *Editor) AddVectorMask(ctx context.Context, id LayerID, mask *psdvector.Mask) error {
 	if ctx == nil {
@@ -51,10 +52,6 @@ func (e *Editor) AddVectorMask(ctx context.Context, id LayerID, mask *psdvector.
 	}
 	if state.generated || state.hasReal {
 		return editError(ErrUnsupported, "layers.vectorMask", "mask layout cannot safely acquire vector geometry")
-	}
-	// A default-only pixel mask needs a real channel to remain a user mask beside vector geometry.
-	if state.hasUser && len(e.pixelMaskChannelsLocked(node)) == 0 {
-		return editError(ErrUnsupported, "layers.vectorMask", "default-only user mask has no independent sample channel")
 	}
 	scratch := int64(0)
 	if node.maskData == nil {

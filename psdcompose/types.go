@@ -53,7 +53,8 @@ type Options struct {
 	// Its native precision audit remains incomplete; plain master Lightness is supported by default.
 	ApproximateHueSaturation bool
 	// ApproximateDropShadow selects fractional spread, displacement and partial-alpha DropShadow coverage.
-	// Ordinary Normal rasters may combine shadows and color overlays with unfeathered pixel/vector masks.
+	// Normal rasters and freshly rendered placed sources may combine shadows and color overlays with pixel masks.
+	// Ordinary Normal rasters additionally support calibrated .5/1.5/3 rectangular vector or dual-mask feather.
 	// It enables Normal/Multiply layer and shadow blending and staged masks; vector masks require Normal raster layers.
 	// The generic morphology and tent filter do not guarantee Photoshop pixel equivalence.
 	// Other active effect families and unsupported advanced layer interactions remain rejected.
