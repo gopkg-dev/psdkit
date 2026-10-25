@@ -887,10 +887,10 @@
           "id": "engineering-ci-pages-workflows",
           "title": "跨平台 CI 与 Pages 本地流程配置",
           "status": "done",
-          "acceptance": "配置 Linux、macOS、Windows 的 race/vet、lint、SDK/Wasm、仓库检查及 Pages 构建；PR 不执行部署；此项只验收流程代码齐备，不代表线上运行已核验。",
+          "acceptance": "配置 Linux、macOS、Windows 的 race/vet、lint、SDK/Wasm、仓库检查及静态网站构建与 COS 发布；PR 不执行部署；此项只验收流程代码齐备，不代表线上运行已核验。",
           "evidence": [
             ".github/workflows/ci.yml",
-            ".github/workflows/pages.yml"
+            ".github/workflows/cos.yml"
           ],
           "depends_on": [],
           "priority": "P1"

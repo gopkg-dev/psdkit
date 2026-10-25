@@ -60,7 +60,7 @@ go run ./examples/edit -psd /tmp/example.psd -out /tmp/edited.psd
 - [使用文档](docs/guide/index.md)、[快速开始](docs/guide/quickstart.md)、[运行示例](examples/README.md)、[能力矩阵](docs/status.md)。
 - [浏览器 Demo](web/demo/README.md)、[Worker SDK](web/sdk/README.md)。
 - [贡献指南](.github/CONTRIBUTING.md)、[测试与素材](docs/testing.md)、[仓库边界](docs/repository.md)。
-- [GitHub Pages 部署](docs/deployment.md)、[网站设计规范](docs/design-handoff.md)。
+- [腾讯 COS 网站部署](docs/deployment.md)、[网站设计规范](docs/design-handoff.md)。
 
 Pages 工作流把首页与文档放在站点根路径，把 Playground 放在 `demo/`。站点地址为
 [首页与文档](https://psdkit.asin1.com/) 和 [Playground](https://psdkit.asin1.com/demo/)。

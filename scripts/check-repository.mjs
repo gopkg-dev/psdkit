@@ -4,8 +4,10 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
+const deleted = new Set(execFileSync('git', ['ls-files', '-z', '--deleted'],
+  { cwd: root, encoding: 'utf8' }).split('\0').filter(Boolean));
 const files = [...new Set(execFileSync('git', ['ls-files', '-z', '--cached', '--others', '--exclude-standard'],
-  { cwd: root, encoding: 'utf8' }).split('\0').filter(Boolean))];
+  { cwd: root, encoding: 'utf8' }).split('\0').filter(file => file && !deleted.has(file)))];
 const failures = [];
 for (const file of files) {
   const path = resolve(root, file);
@@ -17,7 +19,7 @@ for (const file of files) {
     for (const match of text.matchAll(/\]\(([^\s)]+)\)/g)) {
       const target = match[1].split('#')[0];
       if (!target || /^(?:[a-z]+:|\/)/i.test(target)) continue;
-      // Playground 由 Pages 工作流构建到站点的 demo/ 下，文档中的相对链接在源码树中不存在。
+      // Playground 由网站工作流构建到站点的 demo/ 下，文档中的相对链接在源码树中不存在。
       if (file.startsWith('docs/') && /^(?:\.\.\/)*demo\/$/.test(target)) continue;
       try { await stat(resolve(dirname(path), decodeURIComponent(target))); }
       catch { failures.push(`${file}: missing local link ${target}`); }

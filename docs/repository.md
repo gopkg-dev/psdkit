@@ -16,7 +16,7 @@ title: 仓库结构
 | docs / .github | 首页、使用文档与 CI/Pages |
 
 根目录仅保留 README.md 与 LICENSE 两份说明文件。贡献和安全说明位于 .github/；
-路线图、第三方说明和其他使用文档集中在 docs/，由 GitHub Pages 发布。
+路线图、第三方说明和其他使用文档集中在 docs/，由 GitHub Actions 构建后发布到腾讯 COS。
 
 以下目录与核心源码分开保存：
 

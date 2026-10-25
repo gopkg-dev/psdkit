@@ -45,7 +45,7 @@ SITE_BASE_PATH ?= /psdkit
 docs:
 	BUNDLE_GEMFILE=$(CURDIR)/docs/Gemfile bundle exec jekyll build --source docs --destination $(SITE_DIR) --baseurl "$(SITE_BASE_PATH)"
 
-# 与 GitHub Pages 工作流相同的组装方式：首页与文档在站点根路径，Playground 在 demo/。
+# 与 COS 网站工作流相同的组装方式：首页与文档在站点根路径，Playground 在 demo/。
 site: docs web
 	rm -rf $(SITE_DIR)/demo
 	cp -R web/demo/dist $(SITE_DIR)/demo

@@ -44,7 +44,7 @@ description: 首页、文档与 Playground 共用的品牌、色彩、字体、�
 
 | 约定 | 要求 |
 | --- | --- |
-| 部署 | GitHub Pages 纯静态；`psdkit.asin1.com` 的首页与文档在 `/`，Playground 在 `/demo/`；本地默认 `/psdkit/` 前缀 |
+| 部署 | 腾讯 COS 纯静态；`psdkit.asin1.com` 的首页与文档在 `/`，Playground 在 `/demo/`；本地默认 `/psdkit/` 前缀 |
 | Worker | 相对 `./wasm/worker.js` 或显式 `workerURL`，不写死根路径 |
 | 执行 | 真实 Go Wasm，不用 Canvas 重写算法 |
 | 文件 | 本机导入，不添加上传服务 |

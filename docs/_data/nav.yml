@@ -29,6 +29,6 @@
     - { title: 版本发布, url: /releases.html }
     - { title: 测试与素材, url: /testing.html }
     - { title: 仓库结构, url: /repository.html }
-    - { title: GitHub Pages 部署, url: /deployment.html }
+    - { title: 腾讯 COS 网站部署, url: /deployment.html }
     - { title: 设计规范, url: /design-handoff.html }
     - { title: 许可与第三方声明, url: /third-party-notices.html }

@@ -1,0 +1,84 @@
+name: Tencent COS Website
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cos-website-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      BUNDLE_GEMFILE: ${{ github.workspace }}/docs/Gemfile
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7
+        with:
+          repository: gopkg-dev/psdkit-assets
+          path: .sample-assets
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+          cache: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+          cache: npm
+          cache-dependency-path: web/demo/package-lock.json
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '4.0'
+          bundler-cache: true
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - run: make check
+      - name: Check COS deployment safeguards
+        run: python -B -m unittest discover -s scripts -p 'test_deploy_cos.py'
+      - name: Build complete static site at the domain root
+        run: make site SITE_BASE_PATH=
+      - name: Validate public deployment files
+        run: python scripts/deploy-cos.py --site _site --dry-run --revision "$GITHUB_SHA"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: static-site
+          path: _site
+          if-no-files-found: error
+          retention-days: 7
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: cos-production
+      url: https://psdkit.asin1.com/
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: scripts/cos-requirements.txt
+      - uses: actions/download-artifact@v8
+        with:
+          name: static-site
+          path: _site
+      - name: Install Tencent COS SDK
+        run: python -m pip install -r scripts/cos-requirements.txt
+      - name: Publish static site to COS
+        env:
+          COS_SECRET_ID: ${{ secrets.COS_SECRET_ID }}
+          COS_SECRET_KEY: ${{ secrets.COS_SECRET_KEY }}
+          COS_BUCKET: ${{ vars.COS_BUCKET }}
+          COS_REGION: ${{ vars.COS_REGION }}
+        run: python scripts/deploy-cos.py --site _site --revision "$GITHUB_SHA"
