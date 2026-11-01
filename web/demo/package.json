@@ -10,5 +10,5 @@
     "test": "node --test ../sdk/client.test.mjs ../sdk/samples.test.mjs ../sdk/apparel-prints.test.mjs ../sdk/print-sessions.test.mjs"
   },
   "dependencies": {"react": "19.3.1", "react-dom": "19.3.1"},
-  "devDependencies": {"vite": "8.3.4", "@vitejs/plugin-react": "6.1.2"}
+  "devDependencies": {"vite": "8.3.5", "@vitejs/plugin-react": "6.1.2"}
 }
